@@ -5,8 +5,8 @@ export default class extends Component {
     render() {
         return(
             <>
-                <nav className="navbar bg-light shadow p-3 mb-5 bg-body-tertiary rounded">
-                    <div className="container-fluid">
+                <nav className="navbar navbar-xspand-lg bg-white shadow-sm py-3">
+                    <div className="container">
                         <img src="/images/iCareLogo.png" alt="logo" height="50"/>
                             <ul className="navbar-nav">
                                 <li className="nav-item">
@@ -19,3 +19,4 @@ export default class extends Component {
         )
     }
 }
+

@@ -1,13 +1,17 @@
 import { Component } from "react";
 import { Outlet } from "react-router-dom";
+import Navbar from "./../component/navbar"
+import Footer from "./../component/footer"
 
 export default class extends Component {
     render() {
         return(
-            <>
-                <h1> Layout { this.props?.Layer  ?? 'Unset Layer'}</h1>
-                <br/>
-                <Outlet />
+            <>  
+                <Navbar />
+                <div className="container">
+                    <Outlet />
+                </div>
+                <Footer />
             </>
         )
     }

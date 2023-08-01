@@ -1,0 +1,7 @@
+.border-only-bottom {
+    border: none;
+    border-bottom: 1px solid #000 !important;
+    border-radius: 0 !important;
+    box-shadow: none;
+    outline: none;
+}

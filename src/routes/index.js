@@ -1,19 +1,14 @@
 import Layout from "./../views/main";
 
 export default [
-    {   
-        title: 'Login',
-        path: '',
-        component: import('./../views/auth/login')
-    },
     {
-        title:'Apps',
+        path: '',
         component: Layout,
         children: [
             {
-                title:'Beranda',
-                path:'dashboard',
-                component: import('./../views/dashboard')
+                title:'Login',
+                path:'',
+                component: import('./../views/auth/login')
             }
         ]
     }

@@ -7,29 +7,27 @@ export default class extends Component {
     render() {
         return(
             <>
-                <Navbar></Navbar>   
-
-                <div className="card mx-auto col-md-4 col-sm-8 col-xs-12">
-                    <div className="card-logo mx-auto">
-                        <img src="/images/iCareLogo.png" alt="Logo"/>
+                <div className="col-md-4 col-sm-7 col-xs-10 col-12 my-5 mx-auto">
+                    <div className="card shadow-sm rounded">
+                        <div className="card-body">
+                            <div className="col-12 text-center my-3">
+                                <img src="/images/iCareLogo.png" alt="Logo iCare" height="50" />
+                            </div>
+                            <form>
+                                <div className="mb-3">
+                                    <label className="text-primary">EMAIL</label>
+                                    <input type="text" className="form-control border-only-bottom"/>
+                                </div>
+                                <div className="mb-3">
+                                    <label className="text-primary">PASSWORD</label>
+                                    <input type="password" className="form-control border-only-bottom" />
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div className="card-body mx-auto">
-                        <form onSubmit={ this.submit }> 
-                            <FormInput 
-                                type="text"
-                                name="Username"
-                                label="username"
-                            /><br/>
-                            <FormInput
-                                type="password"
-                                name="Passowrd"
-                                label="password"
-                            /><br/>
-                            <button>Login</button>
-                        </form>
-                    </div>
-                </div> 
+                </div>
             </>
         )
     }
 }
+
