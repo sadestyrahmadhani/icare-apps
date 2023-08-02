@@ -5,24 +5,25 @@ export default class extends Component {
     render() {
         return(
             <>
+                <hr />
                 <nav className="navbar navbar-xspand-lg bg-white shadow-sm py-3">
                     <div className="container">
                         <img src="/images/iCareLogo.png" alt="logo" height="40"/>
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <Link className="nav-link" to=""> Beranda </Link>
+                                    <Link className="nav-link text-link fw-semibold" to=""> Beranda </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to=""> Tentang </Link>
+                                    <Link className="nav-link text-link fw-semibold" to=""> Tentang </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to=""> Fitur </Link>
+                                    <Link className="nav-link text-link fw-semibold" to=""> Fitur </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to=""> Keuntungan </Link>
+                                    <Link className="nav-link text-link fw-semibold" to=""> Keuntungan </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to=""> Testimoni </Link>
+                                    <Link className="nav-link text-link fw-semibold" to=""> Testimoni </Link>
                                 </li>
                             </ul>
                     </div>

@@ -1,3 +1,7 @@
+hr {
+    border: 5px solid;
+    border-color: #7C0041;
+}
 .navbar-nav {
     display: block;
     margin-left: auto;
@@ -9,14 +13,13 @@
     list-style: none;
 }
 
-.nav-link {
+.text-link {
     padding: 10px 15px;
-    font-size: 10px;
-    font-weight: bold;
-    color: #013289;
+    font-size: 12px;
+    color: #014C90;
 }
 
-.nav-link:hover {
+.text-link:hover {
     color: #4154F1;
 }
 
@@ -26,4 +29,14 @@
     border-radius: 0 !important;
     box-shadow: none;
     outline: none;
+}
+
+.btn-login {
+    background-color: #014C90;
+    color: #fff;
+}
+
+.size-10px {
+    font-size: 10px;
+    color: #014C90;
 }

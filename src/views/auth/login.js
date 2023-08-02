@@ -17,19 +17,19 @@ export default class extends Component {
                                     </div>
                                     <form>
                                         <div className="mb-3">
-                                            <label className="text-primary fs-6">EMAIL</label>
+                                            <label className="size-10px fw-medium">EMAIL</label>
                                             <input type="text" className="form-control border-only-bottom"/>
                                         </div>
                                         <div className="mb-4">
-                                            <label className="text-primary">PASSWORD</label>
+                                            <label className="size-10px fw-medium">PASSWORD</label>
                                             <input type="password" className="form-control border-only-bottom" />
                                         </div>
-                                        <div className="mb-3 mx-auto text-center">
-                                            <button className="btn btn-primary px-5 py-1">LOGIN</button>
+                                        <div className="mb-2 mx-auto text-center">
+                                            <button className="btn btn-login px-5 py-1 my-1">LOGIN</button>
                                         </div>
                                         <div className="text-center">
-                                            <Link className="nav-link" to="">Belum Punya akun ?</Link><br/>
-                                            <Link className="nav-link"  to="">Lupa Password ?</Link>
+                                            <Link className="nav-link size-10px fw-medium my-2" to="">Belum Punya akun ?</Link>
+                                            <Link className="nav-link size-10px fw-medium my-2"  to="">Lupa Password ?</Link>
                                         </div>
                                     </form>
                                 </div>
