@@ -1,6 +1,16 @@
-hr {
+.main-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    display: flex;
+    z-index: -1;
+}
+.hr-custom {
     border: 5px solid;
     border-color: #7C0041;
+    opacity: 1;
 }
 .navbar-nav {
     display: block;
@@ -23,12 +33,17 @@ hr {
     color: #4154F1;
 }
 
+.row-height {
+    height: 90vh;
+}
+
 .border-only-bottom {
     border: none;
     border-bottom: 1px solid #000 !important;
     border-radius: 0 !important;
-    box-shadow: none;
-    outline: none;
+    box-shadow: none !important;
+    outline: none !important;
+    font-size: 10px;
 }
 
 .btn-login {
@@ -39,4 +54,20 @@ hr {
 .size-10px {
     font-size: 10px;
     color: #014C90;
+}
+
+.title-icare {
+    color: #014C90;
+}
+
+.card-about {
+    background-color: #F6F9FF;
+}
+
+.description-icare {
+    font-size: small;
+}
+
+.section-about {
+    height: 60vh;
 }
