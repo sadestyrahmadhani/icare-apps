@@ -9,6 +9,16 @@ export default [
                 title:'Login',
                 path:'',
                 component: import('./../views/auth/login')
+            },
+            {
+                title:'Dashboard',
+                path:'dashboard',
+                component: import('./../views/dashboard')
+            },
+            {
+                title:'Riwayat',
+                path:'riwayat',
+                component: import('./../views/riwayat')
             }
         ]
     }

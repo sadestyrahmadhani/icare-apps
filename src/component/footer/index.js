@@ -1,10 +1,11 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-export default class extends Component {
-    render() {
+export default class extends React.Component {
+    render () {
+        return (
         <>
-            <footer className="footer bg-dark p-3">
+            <footer className="footer bg-light p-3">
                 <div className="col">
                     <ul>
                         <li>
@@ -23,5 +24,6 @@ export default class extends Component {
                 </div>
             </footer>
         </>
+        )
     }
 }

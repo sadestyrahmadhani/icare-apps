@@ -1,13 +1,13 @@
 import { Component } from "react";
 import { Outlet } from "react-router-dom";
-import Navbar from "./../component/navbar"
+import Nav from "./../component/nav"
 import Footer from "./../component/footer"
 
 export default class extends Component {
     render() {
         return(
             <>  
-                <Navbar />
+                <Nav />
                 <div className="container">
                     <Outlet />
                 </div>
