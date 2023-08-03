@@ -1,8 +1,6 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import FormInput from "./../../component/form/input";
 import Carousel from "../../component/carousel";
-import Footer from "./../../component/footer"
 
 
 export default class extends Component {

@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
-import ObjectRoute from './../routes';
 import React from 'react';
+import ObjectRoute from './../routes';
 
 const mappingRoutes = (routes) => {
     return routes.map((value, key) => {
