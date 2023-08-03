@@ -79,5 +79,10 @@
 }
 
 .custom-height {
-    height: calc(100% - 1rem);
+    height: calc(100% - 1rem) !important;
 } 
+
+.list-items {
+    color: #000;
+    text-decoration: none;
+}

@@ -1,6 +1,8 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import FormInput from "./../../component/form/input";
+import Carousel from "../../component/carousel";
+import Footer from "./../../component/footer"
 
 
 export default class extends Component {
@@ -46,108 +48,186 @@ export default class extends Component {
 
 
             {/* about section */}
-                <section className="section-about">
-                    <div className="card-about mb-5">
-                        <div className="row g-0 mx-auto">
-                            <div className="col-md-6">
-                                <div className="card-body pt-5 px-5 mx-5">
-                                    <h4 className="title-icare text-center fw-bold mb-5">Mengapa iCare?</h4>
-                                    <p className="card-text description-icare lh-sm">iCare adalah aplikasi mobile yang dapat digunakan untuk mempermudah <b>eskalasi problem</b> dan <b>permintaan layanan</b> yang dibutuhkan oleh pelanggan Astragraphia.</p>
+                    <section className="section-about">
+                        <div className="card-about mb-5">
+                            <div className="row g-0 mx-auto">
+                                <div className="col-md-6">
+                                    <div className="card-body pt-5 px-5 mx-5">
+                                        <h4 className="title-icare text-center fw-bold mb-5">Mengapa iCare?</h4>
+                                        <p className="card-text description-icare lh-sm">iCare adalah aplikasi mobile yang dapat digunakan untuk mempermudah <b>eskalasi problem</b> dan <b>permintaan layanan</b> yang dibutuhkan oleh pelanggan Astragraphia.</p>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/WthGEU-Rig4" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
                                 </div>
                             </div>
-                            <div className="col-md-6">
-                                <iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/WthGEU-Rig4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </section>
+
+
+            {/* fitur section */}
+                <section className="section-fitur" style={{height:'95vh'}}>
+                    <div className="container">
+                        <h4 className="title-icare text-center fw-bold mb-3"> Fitur iCare</h4>
+                        <div className="row">
+                            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
+                                <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #2DB5F9"}}>
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                        <div className="text-center">
+                                            <img src="/images/breakfix.png" alt="breakfix" width="70"/>
+                                            <h5 className="card-title"> Breakfix </h5>
+                                            <p className="card-text" style={{fontSize:"11px"}}>Sebagai layanan customer untuk permintaan perbaikan pada mesin.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
+                                <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #F58B09"}}>
+                                    <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                        <div className="text-center">
+                                            <img src="/images/supplies.png" alt="supplies" width="70"/>
+                                            <h5 className="card-title"> Supplies </h5>
+                                            <p className="card-text" style={{fontSize:"11px"}}>Sebagai layanan customer untuk permintaan consumable dan sparepart.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
+                                <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #0EDA52"}}>
+                                    <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                        <div className="text-center">
+                                            <img src="/images/collect-meter-install.png" alt="install" width="70"/>
+                                            <h5 className="card-title"> Install </h5>
+                                            <p className="card-text" style={{fontSize:"11px"}}>Sebagai layanan customer untuk permintaan setting konfigurasi mesin.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
+                                <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #B40EDE"}}>
+                                    <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                        <div className="text-center">
+                                            <img src="/images/collect-meter-install.png" alt="collect meter" width="70"/>
+                                            <h5 className="card-title"> Collect Meter </h5>
+                                            <p className="card-text" style={{fontSize:"11px"}}>Sebagai layanan customer untuk permintaan informasi billing meter yang ada pada mesin printer Astragraphia.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-4 col-sm-6 col-12">
+                                <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #E23845"}}>
+                                    <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                        <div className="text-center">
+                                            <img src="/images/riwayat.png" alt="riwayat" width="70"/>
+                                            <h5 className="card-title"> Riwayat </h5>
+                                            <p className="card-text" style={{fontSize:"11px"}}>Untuk melihat histori permintaan layanan sebelumnya.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-4 col-sm-6 col-12">
+                                <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #B629DD"}}>
+                                    <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                        <div className="text-center">
+                                            <img src="/images/informasi.png" alt="informasi" width="70"/>
+                                            <h5 className="card-title"> Informasi </h5>
+                                            <p className="card-text" style={{fontSize:"11px"}}>Untuk melihat status notifikasi dari permintaan layanan yang dibuat.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-4 col-sm-6 col-12">
+                                <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #EE31A3"}}>
+                                    <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                        <div className="text-center">
+                                            <img src="/images/setting.png" alt="setting" width="70"/>
+                                            <h5 className="card-title"> Setting </h5>
+                                            <p className="card-text" style={{fontSize:"11px"}}>Untuk melihat konfigurasi pada aplikasi iCare seperti perubahan Data Diri, Alamat, EQ, dll.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
 
-            {/* fitur section */}
-            <section className="section-fitur">
-                <div className="container">
-                    <h4 className="title-icare text-center fw-bold mb-5"> Fitur iCare</h4>
-                    <div className="row">
-                        <div className="col-lg-3 col-md-3 col-sm-6 col-12">
-                            <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #2DB5F9"}}>
-                                <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
-                                    <div className="text-center">
-                                        <img src="/images/breakfix.png" alt="breakfix" width="70"/>
-                                        <h5 className="card-title"> Breakfix </h5>
-                                        <p className="card-text" style={{fontSize:"11px"}}>Sebagai layanan customer untuk permintaan perbaikan pada mesin.</p>
+            {/* profit-section */}
+                <section className="profit-section" style={{height:'60vh'}}>
+                    <div className="container">
+                        <h4 className="title-icare text-center fw-bold mb-3">Keuntungan</h4>
+                        <div className="row">
+                            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
+                                <div className="card custom-height shadow-lg mb-5">
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'3rem 5rem'}}>
+                                        <div className="text-center">
+                                            <img src="/images/easy.png" alt="riwayat" width="50" />
+                                            <h5 className="card-title"> Riwayat </h5>
+                                            <p className="card-text" style={{fontSize:'11px'}}>Memudahkan customer pada saat permintaan layanan.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-lg-3 col-md-3 col-sm-6 col-12">
-                            <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #F58B09"}}>
-                                <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
-                                    <div className="text-center">
-                                        <img src="/images/supplies.png" alt="supplies" width="70"/>
-                                        <h5 className="card-title"> Supplies </h5>
-                                        <p className="card-text" style={{fontSize:"11px"}}>Sebagai layanan customer untuk permintaan consumable dan sparepart.</p>
+                            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
+                                <div className="card custom-height shadow-lg mb-5">
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'3rem 5rem'}}>
+                                        <div className="text-center">
+                                            <img src="/images/monitoring.png" alt="monitoring" width="50" />
+                                            <h5 className="card-title"> Monitoring </h5>
+                                            <p className="card-text" style={{fontSize:'11px'}}>Customer dapat memonitor status permintaan layanan.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-lg-3 col-md-3 col-sm-6 col-12">
-                            <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #0EDA52"}}>
-                                <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
-                                    <div className="text-center">
-                                        <img src="/images/collect-meter-install.png" alt="install" width="70"/>
-                                        <h5 className="card-title"> Install </h5>
-                                        <p className="card-text" style={{fontSize:"11px"}}>Sebagai layanan customer untuk permintaan setting konfigurasi mesin.</p>
+                            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
+                                <div className="card custom-height shadow-lg mb-5">
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'3rem 5rem'}}>
+                                        <div className="text-center">
+                                            <img src="/images/setting.png" alt="setting" width="50" />
+                                            <h5 className="card-title"> Setting </h5>
+                                            <p className="card-text" style={{fontSize:'11px'}}>Meningkatkan kualitas layanan Astragraphia.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-lg-3 col-md-3 col-sm-6 col-12">
-                            <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #B40EDE"}}>
-                                <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
-                                    <div className="text-center">
-                                        <img src="/images/collect-meter-install.png" alt="collect meter" width="70"/>
-                                        <h5 className="card-title"> Collect Meter </h5>
-                                        <p className="card-text" style={{fontSize:"11px"}}>Sebagai layanan customer untuk permintaan informasi billing meter yang ada pada mesin printer Astragraphia.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                            <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #E23845"}}>
-                                <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
-                                    <div className="text-center">
-                                        <img src="/images/riwayat.png" alt="riwayat" width="70"/>
-                                        <h5 className="card-title"> Riwayat </h5>
-                                        <p className="card-text" style={{fontSize:"11px"}}>Untuk melihat histori permintaan layanan sebelumnya.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                            <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #B629DD"}}>
-                                <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
-                                    <div className="text-center">
-                                        <img src="/images/informasi.png" alt="informasi" width="70"/>
-                                        <h5 className="card-title"> Informasi </h5>
-                                        <p className="card-text" style={{fontSize:"11px"}}>Untuk melihat status notifikasi dari permintaan layanan yang dibuat.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                            <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #EE31A3"}}>
-                                <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
-                                    <div className="text-center">
-                                        <img src="/images/setting.png" alt="setting" width="70"/>
-                                        <h5 className="card-title"> Setting </h5>
-                                        <p className="card-text" style={{fontSize:"11px"}}>Untuk melihat konfigurasi pada aplikasi iCare seperti perubahan Data Diri, Alamat, EQ, dll.</p>
+                            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
+                                <div className="card custom-height shadow-lg mb-5">
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'3rem 5rem'}}>
+                                        <div className="text-center">
+                                            <img src="/images/satisfaction.png" alt="satisfaction" width="50" />
+                                            <h5 className="card-title"> Satisfaction </h5>
+                                            <p className="card-text" style={{fontSize:'11px'}}>Meningkatkan kepuasan pelanggan.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </section>
+
+
+            {/* testimonials-section */}
+                <section className="testimonials-section" style={{height:'60vh'}}>
+                    <div className="container">
+                        <h4 className="title-icare text-center fw-bold mb-3">Testimonials</h4>
+                        <Carousel />
+                    </div>
+                </section>
+
+
+            {/* pakai iCare sekarang */}
+                <div className="row" style={{borderTop: '1px solid #d4d8ff'}}>
+                    <div className="col-lg-5 col-md-5 col-12 py-5">
+                        <img src="/images/iCareLogo.png" alt="Logo iCare" className="mb-2" width="110" />
+                        <p className="mb-1" style={{fontSize:'24px'}}>Pakai iCare Sekarang!</p>
+                        <p className="text-danger" style={{fontSize:'12px'}}>Kemudahan <b>eskalasi problem</b> dan <b>permintaan layanan</b> dalam satu genggaman.</p>
+                    </div>
+                    <div className="col-lg-7 col-md-7 col-12">
+                        <div className="container">
+                            <img src="/images/peta.png" alt="iCare" height="260" />
+                        </div>
+                    </div>
                 </div>
-            </section>
             </>
         )
     }
