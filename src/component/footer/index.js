@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
+import Route from "../../core/route";
 import 'font-awesome/css/font-awesome.min.css';
 
 export default class extends Component {
@@ -15,7 +16,7 @@ export default class extends Component {
                                             <Link className="list-items" style={{textDecoration:'none', fontSize:'12px'}}>Bantuan dan Panduan</Link>
                                         </li>
                                         <li>
-                                            <Link className="list-items" style={{textDecoration:'none', fontSize:'12px'}}>Kebijakan Privasi</Link>
+                                            <Link className="list-items" style={{textDecoration:'none', fontSize:'12px'}} to="kebijakan-privasi">Kebijakan Privasi</Link>
                                         </li>
                                         <li>
                                             <Link className="list-items" style={{textDecoration:'none', fontSize:'12px'}}>Tentang iCare</Link>
