@@ -21,7 +21,12 @@ export default [
                 path:'riwayat',
                 component: import('./../views/riwayat')
             },
-                      
+            {
+                title: 'Address',
+                path:'address',
+                component: import('../views/alamat')
+            }
+            
         ]
     },
     {
