@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = (props) => {
     const [ scrolling, setScrolling ] = useState(false)
 
     useEffect(() => {
@@ -22,36 +22,54 @@ const Navbar = () => {
 
     return(
         <>
-            <div className={scrolling ? 'bg-white shadow':''} style={{position:'sticky', top:0, zIndex:'999'}} >
-                <hr className="m-0 p-0 hr-custom" />
-                <nav className={`navbar navbar-exspand-lg py-3`} >
-                    <div className="container">
-                        <img src="/images/iCareLogo.png" alt="logo" height="40"/>
-                        <ul className="navbar-nav">
-                            <li className="nav-item">
-                                <Link className="nav-link text-link fw-semibold" to=""> Beranda </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link text-link fw-semibold" to=""> Tentang </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link text-link fw-semibold" to=""> Fitur </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link text-link fw-semibold" to=""> Keuntungan </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link text-link fw-semibold" to=""> Testimoni </Link>
-                            </li>
-                        </ul>
+            {
+                props?.versi == "2" ?
+                (
+                    <div className="bg-white shadow-sm" style={{position:'sticky', top:0, zIndex:'999'}} >
+                        <hr className="m-0 p-0 hr-custom" />
+                        <nav className={`navbar navbar-exspand-lg p-0 py-2`} >
+                            <div className="container">
+                                <img src="/images/iCareLogo.png" alt="logo" height="40"/>
+                                <ul className="navbar-nav">
+                                    <li className="nav-item">
+                                        <Link className="nav-link text-link fw-semibold" to="/"> Beranda </Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
                     </div>
-                </nav>
-            </div>
+                )
+                : (
+                    <div className={scrolling ? 'bg-white shadow':''} style={{position:'sticky', top:0, zIndex:'999'}} >
+                        <hr className="m-0 p-0 hr-custom" />
+                        <nav className={`navbar navbar-exspand-lg p-0 py-2`} >
+                            <div className="container">
+                                <img src="/images/iCareLogo.png" alt="logo" height="40"/>
+                                <ul className="navbar-nav">
+                                    <li className="nav-item">
+                                        <Link className="nav-link text-link fw-semibold" to="/"> Beranda </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link text-link fw-semibold" to=""> Tentang </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link text-link fw-semibold" to=""> Fitur </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link text-link fw-semibold" to=""> Keuntungan </Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link text-link fw-semibold" to=""> Testimoni </Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                )
+            } 
         </>
     )
 }
 
 export default Navbar
-
-
 

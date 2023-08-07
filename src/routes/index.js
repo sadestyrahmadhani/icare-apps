@@ -1,5 +1,6 @@
 import Layout from "./../views/main";
 
+
 export default [
     {
         path: '',
@@ -20,17 +21,23 @@ export default [
                 path:'riwayat',
                 component: import('./../views/riwayat')
             },
-            {
-                title:'Kebijakan Privasi',
-                path:'kebijakan-privasi',
-                component: import('../views/kebijakan-privasi')
-            },
-            {
-                title:'Registrasi',
-                path:'register',
-                component: import('../views/auth/register')
-            },
-            
+                      
         ]
+    },
+    {
+        title:'Kebijakan-Privasi',
+        path:'kebijakan-privasi/:type?',
+        component: import('./../views/kebijakan-privasi')
+    }, 
+    {
+        title:'Registrasi',
+        path:'register',
+        component: import('../views/auth/register')
+    },
+    {
+        title:'Lupa-Password',
+        path:'lupa-password',
+        component: import('../views/lupa-password')
     }
 ]
+

@@ -34,8 +34,8 @@ export default class extends Component {
                                             <button className="btn btn-login px-5 py-1 my-1">LOGIN</button>
                                         </div>
                                         <div className="text-center">
-                                            <Link className="nav-link size-10px fw-medium my-2" to="register">Belum Punya akun ?</Link>
-                                            <Link className="nav-link size-10px fw-medium my-2"  to="">Lupa Password ?</Link>
+                                            <Link className="nav-link size-10px fw-medium my-2" to="kebijakan-privasi/register">Belum Punya akun ?</Link>
+                                            <Link className="nav-link size-10px fw-medium my-2"  to="/lupa-password">Lupa Password ?</Link>
                                         </div>
                                     </form>
                                 </div>

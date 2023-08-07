@@ -8,7 +8,7 @@
     z-index: -1;
 }
 .hr-custom {
-    border: 5px solid;
+    border: 4px solid;
     border-color: #7C0041;
     opacity: 1;
 }
@@ -21,7 +21,7 @@
 .nav-item {
     display: inline-block;
     list-style: none;
-    padding: 20px;
+    padding: 15px;
 }
 
 
@@ -111,3 +111,12 @@
 .slick-list {
     padding: 30px !important;
 }
+
+.btn.disabled {
+    background-color: #9c9c9c;
+    border: none;
+    color: #fff;
+}
+
+
+

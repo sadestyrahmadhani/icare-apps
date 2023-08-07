@@ -57,7 +57,7 @@ const Carousel = () => {
         <Slider {...setting}>
             { carouselData.map((val, key) => {
                 return(
-                    <div className={ `card slide-card custom-height shadow-lg ${ slideIndex == key ? 'active' : ''}`}>
+                    <div className={ `card slide-card custom-height shadow-lg ${ slideIndex == key ? 'active' : ''}`} key={key}>
                         <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'5rem'}}>
                             <div className="text-center">
                                 <div className="col-12 text-center">
@@ -69,7 +69,7 @@ const Carousel = () => {
                                 </div>
                                 <p className="description-rating fst-italic mb-5" style={{fontSize:'10px'}}> { val.description} </p>
                                 <h6 className="name-cust fw-bold"> {val.name} </h6>
-                                <p className="text-secondary-body fw-medium"> {val.company} </p>
+                                <p className="text-secondary-body fw-medium" style={{fontSize:'12px', color:'#bfbfbf'}}> {val.company} </p>
                             </div>
                         </div>
                     </div>
@@ -80,3 +80,4 @@ const Carousel = () => {
 }
 
 export default Carousel
+
