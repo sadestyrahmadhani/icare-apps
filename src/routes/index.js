@@ -25,6 +25,11 @@ export default [
                 title: 'Address',
                 path:'address',
                 component: import('../views/alamat')
+            },
+            {
+                title: "Change Password",
+                path: 'change-password',
+                component: import('../views/ubah-password')
             }
             
         ]
