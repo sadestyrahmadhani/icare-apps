@@ -3,17 +3,17 @@ import { Link } from "react-router-dom";
 
 
 export default class extends Component {
-    // constructor(props) {
-    //     super(props)
-    //     this.state = {
-    //         checkBoxCheckCount:0
-    //     }
-    // }
+    constructor(props) {
+        super(props)
+        this.state = {
+            checkBoxCheckCount:0
+        }
+    }
 
-    // checkCheckBox() {
-    //     var checkbox = document.querySelector('.problem-checkbox:checked')
-    //     this.setState({checkBoxCheckCount:checkbox.length})
-    // }
+    checkCheckBox() {
+        var checkbox = document.querySelector('.problem-checkbox:checked')
+        this.setState({checkBoxCheckCount:checkbox.length})
+    }
 
     render() {
         return(
@@ -94,7 +94,7 @@ export default class extends Component {
                                 </div>
                             </div>
                             <div className="col-md-4 col-sm-6 col-12 mb-4">
-                                <input type="text" className="py-2 w-100" /*disabled={this.state.checkBoxCheckCount == 0}*/ />
+                                <input type="text" className="py-2 w-100" disabled={this.state.checkBoxCheckCount == 0} />
                             </div>
                             <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                 <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Tambah Deskripsi</label>
@@ -102,6 +102,9 @@ export default class extends Component {
                             <input type="text" className="py-2 mb-5" />
                             <div className="text-center">
                                 <p className="text-danger text-decoration-underline fst-italic text-center mt-3" style={{fontSize:'10px'}}>Please upload photo meter information/photo machine</p>
+                                <div className="file-icon mb-3">
+                                    <i className="fa fa-file-image-o fs-4 rounded-circle p-2" style={{backgroundColor:"#014C90", color:'#fff'}} />
+                                </div>
                                 <button className="btn btn-login py-2 px-5" style={{fontSize:'12px'}}>Submit</button>
                             </div>
                         </div>

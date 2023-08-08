@@ -33,7 +33,7 @@ function ConditionFooter() {
 function ConditionRegister(props) {
     const [isCheck, setIsCheck] = useState(true)
     return(
-        <div className="d-flex align-items-center">
+        <div className="text">
             <input type="checkbox" id="checklist" onChange={ () => setIsCheck(!isCheck) } /> 
             <label className="mb-4" style={{fontSize:'10px'}} htmlFor="checklist" >Saya setuju dengan kebijakan ini</label> <br/>
             <Link className={ `btn btn-login px-5 py-2 fw-medium ${ isCheck ? 'disabled' :'' }` } style={{fontSize:'11px'}} to="/register" >SUBMIT</Link>

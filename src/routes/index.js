@@ -23,44 +23,48 @@ export default [
                 component: import('./../views/riwayat')
             },
             {
-<<<<<<< HEAD
                 title:'Breakfix',
                 path:'breakfix',
                 component: import('./../views/menu/breakfix')
-            }
-                      
-=======
+            },
+            {
                 title:'Informasi',
                 path:'informasi',
                 component: import('./../views/informasi')
             },
             {
-                title:'Daftar-EQ',
-                path:'daftar-eq',
-                component: import('./../views/daftar-eq')
-            },
-            {
-                title:'Data-Diri',
-                path:'data-diri',
-                component: import('./../views/data-diri')
+                path:'',
+                component:'',
+                children: [
+                    {
+                        title:'Daftar-EQ',
+                        path:'daftar-eq',
+                        component: import('./../views/daftar-eq')
+                    },
+                    {
+                        title:'Data-Diri',
+                        path:'data-diri',
+                        component: import('./../views/data-diri')
+                    },
+                    {
+                        title: 'Address',
+                        path:'address',
+                        component: import('../views/alamat')
+                    },
+                    {
+                        title: "Change Password",
+                        path: 'change-password',
+                        component: import('../views/ubah-password')
+                    }      
+                ]
             },
             {
                 title:'Install',
                 path:'install',
-                component: import('./../views/install'),
+                component: import('../views/install'),
             },
-            {
-                title: 'Address',
-                path:'address',
-                component: import('../views/alamat')
-            },
-            {
-                title: "Change Password",
-                path: 'change-password',
-                component: import('../views/ubah-password')
-            }
             
->>>>>>> df2db79f8316cd1d7f2e9acbe24ba3cc50742d12
+            
         ]
     },
     {

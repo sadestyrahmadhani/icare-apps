@@ -24,8 +24,12 @@
 }
 
 .nav-dash {
-    font-size: 10px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.nav-dash:focus {
+    color: #014C90;
 }
 
 
