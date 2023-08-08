@@ -14,6 +14,6 @@ export default class extends Component {
                 <Footer />
             </>
         )
-    
+    }
 }
  
