@@ -8,12 +8,11 @@ export default class extends Component {
     render () {
         return (
             <>
-            <div className="container pt-5">
-                <div className="container pt-5">
-                    <h4 style={{color:'darkblue'}}>Informasi</h4>
-                    <hr style={{width:'10%', border:'1px solid', color:'darkblue'}}/>
-                </div>
+            <div className="container pt-5 pb-5">
                 <div className="container">
+                    <h4 style={{color:'#014C90', borderBottom:'4px solid #014C90', width:'10%'}}>Informasi</h4>
+                </div>
+                <div className="container pt-5">
                     <div className="card border-0" style={{boxShadow:'5px 5px 20px 20px rgba(0, 0, 0, 0.1)'}}>
                         <div className="card-body">
                             <div className="row">

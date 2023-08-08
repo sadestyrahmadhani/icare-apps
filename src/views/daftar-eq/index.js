@@ -5,12 +5,11 @@ export default class extends Component {
     render () {
         return (
             <>
-            <div className="container pt-5 pb-5">
-                <div className="container pt-5">
+            <div className="container pt-3 pb-5">
+                <div className="container">
                     <div className="row">
                         <div className="col">
-                            <h4 style={{color:'darkblue'}}>Daftar EQ</h4>
-                            <hr style={{width:'20%', border:'2px solid', borderColor:'blue'}}/>
+                            <h4 style={{color:'#014C90', borderBottom:'4px solid #014C90', width:'21%'}}>Daftar EQ</h4>
                         </div>
                         <div className="col-md-auto">
                             <form className="search">

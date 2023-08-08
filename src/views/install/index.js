@@ -131,7 +131,7 @@ export default class extends Component {
                                 <div className="card-body text-center">
                                     <div className="card-text">
                                         <p style={{color:'magenta', fontStyle:'italic'}}><u>Please upload photo meter infromation / photo machine.</u></p>
-                                        <i className="fa fa-file" style={{fontSize:'30px', color:'white', backgroundColor:'blue', width:'60px', height:'60px', padding:'15px', borderRadius:'100px'}}></i>
+                                        <i className="fa fa-file-image-o" style={{fontSize:'30px', color:'white', backgroundColor:'blue', width:'60px', height:'60px', padding:'15px', borderRadius:'100px'}}></i>
                                     </div>
                                 </div>
                             </div>
