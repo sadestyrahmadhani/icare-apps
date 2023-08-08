@@ -14,6 +14,8 @@ export default class extends Component {
                 <hr className="m-0 p-0 hr-custom"/>
                 {/* <Navbar /> */}
                 <Nav />
+                
+                <Navbar />
                 <div className="container">
                     <Outlet />
                 </div>

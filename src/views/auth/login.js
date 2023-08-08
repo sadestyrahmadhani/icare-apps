@@ -7,6 +7,10 @@ export default class extends Component {
     render() {
         return(
             <>
+            {/* main-background */}
+                <div className="main-background">
+                    <img src="/images/Vector1.png" alt="background" width="100%"/>
+                </div>
 
             {/* beranda/login */}
                 <div className="row row-height my-5 pt-5">
@@ -30,8 +34,8 @@ export default class extends Component {
                                             <button className="btn btn-login px-5 py-1 my-1">LOGIN</button>
                                         </div>
                                         <div className="text-center">
-                                            <Link className="nav-link size-10px fw-medium my-2" to="">Belum Punya akun ?</Link>
-                                            <Link className="nav-link size-10px fw-medium my-2"  to="">Lupa Password ?</Link>
+                                            <Link className="nav-link size-10px fw-medium my-2" to="kebijakan-privasi/register">Belum Punya akun ?</Link>
+                                            <Link className="nav-link size-10px fw-medium my-2"  to="/lupa-password">Lupa Password ?</Link>
                                         </div>
                                     </form>
                                 </div>
@@ -64,8 +68,8 @@ export default class extends Component {
 
 
             {/* fitur section */}
-                <section className="section-fitur" style={{height:'95vh'}}>
-                    <div className="container">
+                <section className="section-fitur">
+                    <div className="container mb-5">
                         <h4 className="title-icare text-center fw-bold mb-3"> Fitur iCare</h4>
                         <div className="row">
                             <div className="col-lg-3 col-md-3 col-sm-6 col-12">
@@ -81,7 +85,7 @@ export default class extends Component {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-6 col-12">
                                 <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #F58B09"}}>
-                                    <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
                                         <div className="text-center">
                                             <img src="/images/supplies.png" alt="supplies" width="70"/>
                                             <h5 className="card-title"> Supplies </h5>
@@ -92,7 +96,7 @@ export default class extends Component {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-6 col-12">
                                 <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #0EDA52"}}>
-                                    <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
                                         <div className="text-center">
                                             <img src="/images/collect-meter-install.png" alt="install" width="70"/>
                                             <h5 className="card-title"> Install </h5>
@@ -103,7 +107,7 @@ export default class extends Component {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-6 col-12">
                                 <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #B40EDE"}}>
-                                    <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
                                         <div className="text-center">
                                             <img src="/images/collect-meter-install.png" alt="collect meter" width="70"/>
                                             <h5 className="card-title"> Collect Meter </h5>
@@ -114,7 +118,7 @@ export default class extends Component {
                             </div>
                             <div className="col-lg-4 col-md-4 col-sm-6 col-12">
                                 <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #E23845"}}>
-                                    <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
                                         <div className="text-center">
                                             <img src="/images/riwayat.png" alt="riwayat" width="70"/>
                                             <h5 className="card-title"> Riwayat </h5>
@@ -125,7 +129,7 @@ export default class extends Component {
                             </div>
                             <div className="col-lg-4 col-md-4 col-sm-6 col-12">
                                 <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #B629DD"}}>
-                                    <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
                                         <div className="text-center">
                                             <img src="/images/informasi.png" alt="informasi" width="70"/>
                                             <h5 className="card-title"> Informasi </h5>
@@ -136,7 +140,7 @@ export default class extends Component {
                             </div>
                             <div className="col-lg-4 col-md-4 col-sm-6 col-12">
                                 <div className="card custom-height shadow-lg mb-3" style={{borderBottom:"4px solid #EE31A3"}}>
-                                    <div className="card-body  d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 5rem"}}>
                                         <div className="text-center">
                                             <img src="/images/setting.png" alt="setting" width="70"/>
                                             <h5 className="card-title"> Setting </h5>
@@ -151,8 +155,8 @@ export default class extends Component {
 
 
             {/* profit-section */}
-                <section className="profit-section" style={{height:'60vh'}}>
-                    <div className="container">
+                <section className="profit-section">
+                    <div className="container mb-5">
                         <h4 className="title-icare text-center fw-bold mb-3">Keuntungan</h4>
                         <div className="row">
                             <div className="col-lg-3 col-md-3 col-sm-6 col-12">
@@ -205,9 +209,9 @@ export default class extends Component {
 
 
             {/* testimonials-section */}
-                <section className="testimonials-section" style={{height:'60vh'}}>
-                    <div className="container">
-                        <h4 className="title-icare text-center fw-bold mb-3">Testimonials</h4>
+                <section className="testimonials-section">
+                    <div className="container mb-5">
+                        <h4 className="title-icare text-center fw-bold">Testimonials</h4>
                         <Carousel />
                     </div>
                 </section>
