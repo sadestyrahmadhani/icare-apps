@@ -1,9 +1,13 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import Carousel from "../../component/carousel";
-
+import { setToken } from "../../core/local-storage";
 
 export default class extends Component {
+    constructor(props) {
+        super(props)
+        this.submit = this.submit.bind(this)
+    }
     render() {
         return(
             <>
@@ -21,7 +25,7 @@ export default class extends Component {
                                     <div className="col-12 text-center pt-3">
                                         <img src="/images/iCareLogo.png" alt="Logo iCare" height="50" />
                                     </div>
-                                    <form>
+                                    <form onSubmit={ this.submit }>
                                         <div className="mb-3">
                                             <label className="size-10px fw-medium">EMAIL</label>
                                             <input type="text" className="form-control border-only-bottom"/>
@@ -232,6 +236,12 @@ export default class extends Component {
                 </div>
             </>
         )
+    }
+
+    submit(e) {
+        e.preventDefault() 
+        setToken("78ghjkl") 
+        this.props.router.navigate("/dashboard")
     }
 }
 
