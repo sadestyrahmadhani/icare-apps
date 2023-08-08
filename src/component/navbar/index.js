@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getToken } from "../../core/local-storage";
+import { Dropdown } from "bootstrap";
 
 const Navbar = (props) => {
     const [ scrolling, setScrolling ] = useState(false)
@@ -70,10 +71,34 @@ const Navbar = (props) => {
                                             </Link>
                                         </li>
                                         <li className="nav-item mx-3">
-                                            <Link className="nav-link" to="">
-                                                <i className="fa fa-gear me-2" style={{fontSize:'14px', color:'grey'}}></i>
-                                                <span className="nav-dash">PENGATURAN</span>
-                                            </Link>
+                                            <div className="dropdown">
+                                                <Link className="dropdown-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-aria-expanded="false">
+                                                    <i className="fa fa-gear me-2" style={{fontSize:'14px', color:'grey'}}></i>
+                                                    <span className="nav-dash">PENGATURAN</span>
+                                                </Link>
+                                                <ul className="dropdown-menu">
+                                                    <li className="dropdown-item">
+                                                        <Link className="dropdown-link">Data Diri</Link>
+                                                        <i className="fa fa-chevron-right"></i>
+                                                    </li>
+                                                    <li className="dropdown-item">
+                                                        <Link className="dropdown-link">Daftar Alamat</Link>
+                                                        <i className="fa fa-chevron-right"></i>
+                                                    </li>
+                                                    <li className="dropdown-item">
+                                                        <Link className="dropdown-link">Daftar EQ</Link>
+                                                        <i className="fa fa-chevron-right"></i>
+                                                    </li>
+                                                    <li className="dropdown-item">
+                                                        <Link className="dropdown-link">Kata Sandi</Link>
+                                                        <i className="fa fa-chevron-right"></i>
+                                                    </li>
+                                                    <li className="dropdown-item">
+                                                        <Link className="dropdown-link">Keluar</Link>
+                                                        <i className="fa fa-chevron-right"></i>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </li>
                                     </ul>
                                     <div className="account">
@@ -114,6 +139,16 @@ const Navbar = (props) => {
         </>
     )
 }
+
+// Dropdown() {
+//     const [selectorOption, setSelectorOption] = useState('Option 1')
+//     const option = ['Option 1','Option 2','Option 3','Option 4','Option 5']
+    
+    
+//     const handleOptionChange = (event) => {
+//         setSelectorOption(event.target.value)
+//     }
+// }
 
 export default Navbar
 

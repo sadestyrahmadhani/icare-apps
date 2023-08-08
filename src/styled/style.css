@@ -26,6 +26,7 @@
 .nav-dash {
     font-size: 12px;
     font-weight: 700;
+    text-decoration: none;
 }
 
 .nav-dash:focus {

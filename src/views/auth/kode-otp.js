@@ -9,8 +9,8 @@ export default class extends Component {
             <>
                 <Navbar versi="2" />
                 <div className="container">
-                    <div className="card-title text-center mx-auto my-3 mb-5" style={{borderBottom:'3px solid #014C90', width:'110px'}}>
-                        <h4 className="title-icare" style={{fontSize:'16px'}}>Lupa Password</h4>
+                    <div className="card-title text-center mx-auto my-3 mb-5" style={{borderBottom:'3px solid #014C90', width:'80px'}}>
+                        <h4 className="title-icare" style={{fontSize:'16px'}}>Kode OTP</h4>
                     </div>
                     <div className="col-md-5 col-sm-8 col-12 mx-auto">
                         <div className="card px-4 mb-5">
