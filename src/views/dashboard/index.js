@@ -63,16 +63,12 @@ export default class extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="container pt-5">
+                    <div className="container pt-5 pb-5">
                         <div className="news pt-5">
-                            <div className="container text-center pt-5">
-                                <div className="container pt-5">
-                                    
-                                </div>
-                                <h3 className="pt-5">Astragraphia News</h3>
-                                <div className="container">
-
-                                </div>
+                            <div className="d-flex align-items-center w-100 pt-5">
+                                <hr className="w-100" style={{color:'blue'}}/>
+                                <div className="d-block px-4" style={{whiteSpace:'nowrap', fontSize:'30px', color:'darkblue'}}>Astragraphia News</div>
+                                <hr className="w-100" style={{color:'blue'}}/>
                             </div>
                             <div className="container pt-5">
                                 <div className="card text-bg-dark">
@@ -90,6 +86,42 @@ export default class extends Component {
                             </div>
                             <div className="container pt-5">
                                 <div className="row row-cols-1 row-cols-md-3 g-4">
+                                    <div className="col">
+                                        <div className="card h-100">
+                                            <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
+                                            <div className="card-body">
+                                                <p className="card-text">2023-06-28 10:00:00</p>
+                                                <h6 className="card-title">Astragraphia Cabang Batam Gelar Workshop dan Update Teknologi Produk Serta Solusi Bagi Pelanggan Di Wilayah Tanjung Pinang</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="card h-100">
+                                            <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
+                                            <div className="card-body">
+                                                <p className="card-text">2023-06-28 10:00:00</p>
+                                                <h6 className="card-title">Astragraphia Cabang Batam Gelar Workshop dan Update Teknologi Produk Serta Solusi Bagi Pelanggan Di Wilayah Tanjung Pinang</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="card h-100">
+                                            <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
+                                            <div className="card-body">
+                                                <p className="card-text">2023-06-28 10:00:00</p>
+                                                <h6 className="card-title">Astragraphia Cabang Batam Gelar Workshop dan Update Teknologi Produk Serta Solusi Bagi Pelanggan Di Wilayah Tanjung Pinang</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="card h-100">
+                                            <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
+                                            <div className="card-body">
+                                                <p className="card-text">2023-06-28 10:00:00</p>
+                                                <h6 className="card-title">Astragraphia Cabang Batam Gelar Workshop dan Update Teknologi Produk Serta Solusi Bagi Pelanggan Di Wilayah Tanjung Pinang</h6>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="col">
                                         <div className="card h-100">
                                             <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
