@@ -35,6 +35,7 @@ export default [
                 ]
             },
             {
+                      
                 title:'Informasi',
                 path:'informasi',
                 component: import('./../views/informasi')
@@ -75,7 +76,6 @@ export default [
                 path:'install',
                 component: import('../views/menu/install'),
             },
-            
             
         ]
     },
