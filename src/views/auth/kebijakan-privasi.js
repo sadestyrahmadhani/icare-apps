@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "../../component/navbar";
-import Footer from "./../../component/footer";
+import Footer from "../../component/footer";
 
 function ConditionFooter() {
     const Params = useParams() 
@@ -33,7 +33,7 @@ function ConditionFooter() {
 function ConditionRegister(props) {
     const [isCheck, setIsCheck] = useState(true)
     return(
-        <div>
+        <div className="text">
             <input type="checkbox" id="checklist" onChange={ () => setIsCheck(!isCheck) } /> 
             <label className="mb-4" style={{fontSize:'10px'}} htmlFor="checklist" >Saya setuju dengan kebijakan ini</label> <br/>
             <Link className={ `btn btn-login px-5 py-2 fw-medium ${ isCheck ? 'disabled' :'' }` } style={{fontSize:'11px'}} to="/register" >SUBMIT</Link>

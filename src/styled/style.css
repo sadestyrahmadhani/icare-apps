@@ -14,7 +14,6 @@
 }
 .navbar-nav {
     display: block;
-    margin-left: auto;
     margin-right: 10px;
 }
 
@@ -22,6 +21,15 @@
     display: inline-block;
     list-style: none;
     padding: 15px;
+}
+
+.nav-dash {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.nav-dash:focus {
+    color: #014C90;
 }
 
 

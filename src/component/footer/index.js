@@ -32,7 +32,7 @@ export default class extends Component {
                                 <p className="mb-2" style={{fontSize:'12px'}}>Follow Us</p>
                                 <div className="d-flex align-items-center mb-2">
                                     <Link className="list-items" to="https://www.youtube.com/user/Astragraphia" target="_blank" rel="noopener noreferrer">
-                                        <i className="fa fa-youtube me-2" style={{fontSize:'22px'}}></i>
+                                        <i className="fa fa-youtube-play me-2" style={{fontSize:'22px'}}></i>
                                         <span style={{fontSize:'12px',}}>Astragraphia Document Solution</span>
                                     </Link>
                                 </div>

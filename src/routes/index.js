@@ -23,42 +23,54 @@ export default [
                 component: import('./../views/riwayat')
             },
             {
+                title:'Breakfix',
+                path:'breakfix',
+                component: import('./../views/menu/breakfix')
+            },
+            {
                 title:'Informasi',
                 path:'informasi',
                 component: import('./../views/informasi')
             },
             {
-                title:'Daftar-EQ',
-                path:'daftar-eq',
-                component: import('./../views/daftar-eq')
-            },
-            {
-                title:'Data-Diri',
-                path:'data-diri',
-                component: import('./../views/data-diri')
+                path:'',
+                component:'',
+                children: [
+                    {
+                        title:'Daftar-EQ',
+                        path:'daftar-eq',
+                        component: import('./../views/daftar-eq')
+                    },
+                    {
+                        title:'Data-Diri',
+                        path:'data-diri',
+                        component: import('./../views/data-diri')
+                    },
+                    {
+                        title: 'Address',
+                        path:'address',
+                        component: import('../views/alamat')
+                    },
+                    {
+                        title: "Change Password",
+                        path: 'change-password',
+                        component: import('../views/ubah-password')
+                    }      
+                ]
             },
             {
                 title:'Install',
                 path:'install',
-                component: import('./../views/install'),
+                component: import('../views/install'),
             },
-            {
-                title: 'Address',
-                path:'address',
-                component: import('../views/alamat')
-            },
-            {
-                title: "Change Password",
-                path: 'change-password',
-                component: import('../views/ubah-password')
-            }
+            
             
         ]
     },
     {
         title:'Kebijakan-Privasi',
         path:'kebijakan-privasi/:type?',
-        component: import('./../views/kebijakan-privasi')
+        component: import('../views/auth/kebijakan-privasi')
     }, 
     {
         title:'Registrasi',
@@ -68,7 +80,12 @@ export default [
     {
         title:'Lupa-Password',
         path:'lupa-password',
-        component: import('../views/lupa-password')
+        component: import('../views/auth/lupa-password')
+    },
+    {
+        title:'Kode-OTP',
+        path:'kode-otp',
+        component: import('../views/auth/kode-otp')
     }
 ]
 
