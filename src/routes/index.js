@@ -61,7 +61,7 @@ export default [
             {
                 title:'Install',
                 path:'install',
-                component: import('../views/install'),
+                component: import('../views/menu/install'),
             },
             
             

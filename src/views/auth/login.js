@@ -48,7 +48,7 @@ export default class extends Component {
                     </div>
                     <div className="background col-3">
                         <img src="/images/Cahyo_MFD.png" alt="images 1" width="90%" />
-                        <h3 className="title-icare text-center fw-bold">Solusi untuk skalasi problem dan permintaan layanan.</h3>
+                        <h3 className="title-icare text-center fw-bold">Solusi untuk eskalasi problem dan permintaan layanan.</h3>
                     </div>
                 </div>
 

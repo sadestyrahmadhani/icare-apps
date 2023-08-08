@@ -1,6 +1,7 @@
 import { Component } from "react";
 import Navbar from "../../component/navbar";
 import Footer from "../../component/footer";
+import { Link } from "react-router-dom";
 
 export default class extends Component {
     render() {
@@ -25,7 +26,7 @@ export default class extends Component {
                                     </div>
                                 </form>
                                 <div className="text-center">
-                                    <button className="btn btn-login px-5 py-2 fw-medium" style={{fontSize:'11px'}}>SUBMIT</button>
+                                    <Link className="btn btn-login px-5 py-2 fw-medium" style={{fontSize:'11px'}} to="/kode-otp">SUBMIT</Link>
                                 </div>
                             </div>
                         </div>
