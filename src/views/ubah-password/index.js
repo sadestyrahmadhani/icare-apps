@@ -6,8 +6,8 @@ export default class extends Component {
             <>
                 {/* <Navbar versi="2" /> */}
                 <div className="container">
-                    <div className="card-title text-center mx-auto my-3 mb-5" style={{borderBottom: '3px solid #014C90', width: '135px'}}>
-                        <h4 className="title-icare fw-bold" style={{fontSize: '16px'}}>Ubah Kata Sandi</h4>
+                    <div className="card-title text-center mx-auto my-5 mb-5" style={{borderBottom: '3px solid #014C90', width: '185px'}}>
+                        <h4 className="title-icare fw-bold" style={{fontSize: '22px'}}>Ubah Kata Sandi</h4>
                     </div>
                     <div className="col-md-5 col-sm-7 col-12 mx-auto">
                         <div className="card mb-5">
@@ -15,15 +15,25 @@ export default class extends Component {
                                 <form>
                                     <div className="mb-3">
                                         <label className="fw-medium form-control border border-dark" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Lama</label>
-                                        <input type="password" className="form-control border border-1 border-dark" style={{borderRadius: '0px'}}/>
+                                        <div className="d-flex border border-dark">
+                                            <input type="password" className="form-control" style={{boxShadow: 'none', textDecoration: 'none'}}/>
+                                            <i className="fa fa-eye fa-lg my-auto me-2"></i>
+                                        </div>
                                     </div>
                                     <div className="mb-3">
                                         <label className="fw-medium form-control border border-dark" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Baru</label>
-                                        <input type="password" className="form-control border border-1 border-dark" style={{borderRadius: '0px'}}/>
+                                        <div className="border border-dark d-flex">
+                                            <input type="password" className="form-control" style={{boxShadow: 'none', textDecoration: 'none'}}/>
+                                            <i className="fa fa-eye fa-lg my-auto me-2"></i>
+                                        </div>
                                     </div>
                                     <div className="mb-3">
                                         <label className="fw-medium form-control border border-dark" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Ulangi Kata Sandi Baru</label>
-                                        <input type="password" className="form-control border border-1 border-dark" style={{borderRadius: '0px'}}/>
+                                        <div className="d-flex border border-dark">
+                                            <input type="password" className="form-control" style={{boxShadow: 'none', textDecoration: 'none'}}/>
+                                            <i className="fa fa-eye fa-lg my-auto me-2"></i>
+
+                                        </div>
                                     </div>
                                 </form>
                                 <div className="text-center">
