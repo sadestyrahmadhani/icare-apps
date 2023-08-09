@@ -28,7 +28,7 @@ export default class extends Component {
                                     </div>
                                     <label style={{fontSize: '14px', marginTop: '10px'}}>(Maks. 5 MB, Format JPG/PNG)</label>
                                     <div className="mt-2 mb-3">
-                                        <input type="file" className="btn btn-login" id="fileInput" accept="image/*"/>
+                                        <input type="file" className="btn btn-login" id="fileInput" accept="image/*" />
                                         
                                     </div>
                                     <div className="row">

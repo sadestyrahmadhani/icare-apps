@@ -8,11 +8,25 @@ export default class extends Component {
         this.state = {
             checkBoxCheckCount:0
         }
+        this.checkCheckBox = this.checkCheckBox.bind(this)
     }
 
     checkCheckBox() {
-        var checkbox = document.querySelector('.problem-checkbox:checked')
+        var checkbox = document.querySelectorAll('.problem-checkbox:checked')
         this.setState({checkBoxCheckCount:checkbox.length})
+    }
+
+    previewImage(e) {
+        const file = e.target
+        if(file.files[0]) {
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                document.getElementById('preview-image').src = e.target.result
+            }
+            reader.readAsDataURL(file.files[0])
+        }
+        document.getElementById('display-image').classList.remove('d-none')
+        document.getElementById('display-image').classList.add('d-block')
     }
 
     render() {
@@ -102,8 +116,12 @@ export default class extends Component {
                             <input type="text" className="py-2 mb-5" />
                             <div className="text-center">
                                 <p className="text-danger text-decoration-underline fst-italic text-center mt-3" style={{fontSize:'10px'}}>Please upload photo meter information/photo machine</p>
-                                <div className="file-icon mb-3">
+                                <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
+                                <label className="file-icon mb-3 d-block" htmlFor="input-file">
                                     <i className="fa fa-file-image-o fs-4 rounded-circle p-2" style={{backgroundColor:"#014C90", color:'#fff'}} />
+                                </label>
+                                <div className="d-none col-md-6 col-sm-8 mx-auto my-5" id="display-image">
+                                    <img className="w-100" src="#" alt="" id="preview-image" />
                                 </div>
                                 <button className="btn btn-login py-2 px-5" style={{fontSize:'12px'}}>Submit</button>
                             </div>

@@ -139,19 +139,19 @@ const Navbar = (props) => {
                                     <img src="/images/iCareLogo.png" alt="logo" height="40"/>
                                     <ul className="navbar-nav">
                                         <li className="nav-item">
-                                            <Link className="nav-link text-link fw-semibold" to="/"> Beranda </Link>
+                                            <a className="nav-link text-link fw-semibold" href="#beranda"> Beranda </a>
                                         </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link text-link fw-semibold" to=""> Tentang </Link>
+                                            <a className="nav-link text-link fw-semibold" href="#about"> Tentang </a>
                                         </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link text-link fw-semibold" to=""> Fitur </Link>
+                                            <a className="nav-link text-link fw-semibold" href="#fitur"> Fitur </a>
                                         </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link text-link fw-semibold" to=""> Keuntungan </Link>
+                                            <a className="nav-link text-link fw-semibold" href="#benefit"> Keuntungan </a>
                                         </li>
                                         <li className="nav-item">
-                                            <Link className="nav-link text-link fw-semibold" to=""> Testimoni </Link>
+                                            <a className="nav-link text-link fw-semibold" href="#testimonial"> Testimoni </a>
                                         </li>
                                     </ul>
                                 </div>

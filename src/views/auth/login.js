@@ -12,7 +12,7 @@ export default class extends Component {
         return(
             <>
             {/* main-background */}
-                <div className="main-background">
+                <div className="main-background" id="beranda">
                     <img src="/images/Vector1.png" alt="background" width="100%"/>
                 </div>
 
@@ -54,7 +54,7 @@ export default class extends Component {
 
 
             {/* about section */}
-                    <section className="section-about">
+                    <section className="section-about" id="about">
                         <div className="card-about mb-5">
                             <div className="row g-0 mx-auto">
                                 <div className="col-md-6">
@@ -72,7 +72,7 @@ export default class extends Component {
 
 
             {/* fitur section */}
-                <section className="section-fitur">
+                <section className="section-fitur" id="fitur">
                     <div className="container mb-5">
                         <h4 className="title-icare text-center fw-bold mb-3"> Fitur iCare</h4>
                         <div className="row">
@@ -159,7 +159,7 @@ export default class extends Component {
 
 
             {/* profit-section */}
-                <section className="profit-section">
+                <section className="benefit-section" id="benefit">
                     <div className="container mb-5">
                         <h4 className="title-icare text-center fw-bold mb-3">Keuntungan</h4>
                         <div className="row">
@@ -213,7 +213,7 @@ export default class extends Component {
 
 
             {/* testimonials-section */}
-                <section className="testimonials-section">
+                <section className="testimonials-section" id="testimonial">
                     <div className="container mb-5">
                         <h4 className="title-icare text-center fw-bold">Testimonials</h4>
                         <Carousel />
