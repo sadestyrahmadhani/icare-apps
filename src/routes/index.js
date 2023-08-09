@@ -59,6 +59,11 @@ export default [
                 component: import('./../views/menu/breakfix')
             },
             {
+                title:'Supplies',
+                path:'supplies',
+                component: import('./../views/menu/supplies')
+            },
+            {
                 title:'Install',
                 path:'install',
                 component: import('../views/menu/install'),

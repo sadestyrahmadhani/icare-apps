@@ -11,12 +11,12 @@ export default class extends Component {
                     <h4 style={{color:'#014C90', borderBottom:'4px solid #014C90', width:'10%'}}>Data Diri</h4>
                 </div>
                 <div className="container pt-4">
-                    <div className="card border-0" style={{boxShadow:'5px 5px 20px 20px rgba(0, 0, 0, 0.1)'}}>
+                    <div className="card px-3 shadow border-0">
                         <div className="card-body">
                             <div className="row">
                                 <div className="col">
                                     <div className="card" style={{borderRadius:'0px', border:'1px solid'}}>
-                                        <div className="card-header bg-primary" style={{borderRadius:'0px'}}>
+                                        <div className="card-header" style={{borderRadius:'0px', backgroundColor:'#014C90'}}>
                                             <h6 style={{color:'white'}}>Nama</h6>
                                         </div>
                                         <div className="card-body">
@@ -39,7 +39,7 @@ export default class extends Component {
                             <div className="row pt-4">
                                 <div className="col">
                                     <div className="card" style={{borderRadius:'0px', border:'1px solid'}}>
-                                        <div className="card-header bg-primary" style={{borderRadius:'0px'}}>
+                                        <div className="card-header" style={{borderRadius:'0px', backgroundColor:'#014C90'}}>
                                             <h6 style={{color:'white'}}>Email</h6>
                                         </div>
                                         <div className="card-body">
@@ -51,7 +51,7 @@ export default class extends Component {
                             <div className="row pt-4">
                                 <div className="col">
                                     <div className="card" style={{borderRadius:'0px', border:'1px solid'}}>
-                                        <div className="card-header bg-primary" style={{borderRadius:'0px'}}>
+                                        <div className="card-header" style={{borderRadius:'0px', backgroundColor:'#014C90'}}>
                                             <h6 style={{color:'white'}}>No Telepon</h6>
                                         </div>
                                         <div className="card-body">
@@ -74,7 +74,7 @@ export default class extends Component {
                             <div className="row pt-4">
                                 <div className="col">
                                     <div className="card" style={{borderRadius:'0px', border:'1px solid'}}>
-                                        <div className="card-header bg-primary" style={{borderRadius:'0px'}}>
+                                        <div className="card-header" style={{borderRadius:'0px', backgroundColor:'#014C90'}}>
                                             <h6 style={{color:'white'}}>Nama Perusahaan / Instansi</h6>
                                         </div>
                                         <div className="card-body">
@@ -84,7 +84,7 @@ export default class extends Component {
                                 </div>
                             </div>
                             <div className="button-data-diri">
-                                <button type="button" className="btn btn-primary" style={{width:'20%', padding:'9px', marginLeft:'40%', marginTop:'3%', marginBottom:'1%'}}>Submit</button>
+                                <button type="button" className="btn btn-login" style={{width:'20%', padding:'9px', marginLeft:'40%', marginTop:'3%', marginBottom:'1%'}}>Submit</button>
                             </div>
                         </div>
                     </div>
