@@ -202,15 +202,16 @@ td {
     background-color: #014C90;
     color: #fff;
 }
-/* #fileInput::before {
+
+#fileInput::before {
     content: 'Foto KTP';
     padding: 5px 10px;
     display: inline-block;
-} */
+}
 
-/* #fileInput-webkit-file-upload-button {
+#fileInput-webkit-file-upload-button {
     visibility: hidden;
-} */
+}
 
 /* #fileInput {
     opacity: 0;

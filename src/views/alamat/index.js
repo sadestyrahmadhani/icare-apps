@@ -15,7 +15,7 @@ export default class extends Component{
                             <div className="col-7">
                                 <form className="d-flex">
                                     <span className="my-auto" style={{color: '#014C90'}}><i className="fa fa-search fa-fw fa-lg"></i></span>
-                                    <input type="search" className="form-control me-3 border-0 border-bottom" />
+                                    <input type="search" className="form-control me-3 border-0 border-only-bottom" style={{fontSize: '16px'}}/>
                                 </form>
                             </div>
                             <div className="col-5">
