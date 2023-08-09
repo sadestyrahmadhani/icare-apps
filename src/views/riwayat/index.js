@@ -14,19 +14,19 @@ export default class extends Component {
                         <div className="navbar navbar-exspand-lg mb-4">
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <Link className="btn-proses py-3 px-5 text-center rounded-4 fw-medium">Semua</Link>
+                                    <Link className="btn-proses py-3 px-4 text-center rounded-4 fw-medium">Semua</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="btn-proses py-3 px-5 text-center rounded-4 fw-medium">Menunggu Konfirmasi</Link>
+                                    <Link className="btn-proses py-3 px-4 text-center rounded-4 fw-medium">Menunggu Konfirmasi</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="btn-proses py-3 px-5 text-center rounded-4 fw-medium">Permintaan Diproses</Link>
+                                    <Link className="btn-proses py-3 px-4 text-center rounded-4 fw-medium">Permintaan Diproses</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="btn-proses py-3 px-5 text-center rounded-4 fw-medium">Permintaan Ditolak</Link>
+                                    <Link className="btn-proses py-3 px-4 text-center rounded-4 fw-medium">Permintaan Ditolak</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="btn-proses py-3 px-5 text-center rounded-4 fw-medium">Permintaan Selesai</Link>
+                                    <Link className="btn-proses py-3 px-4 text-center rounded-4 fw-medium">Permintaan Selesai</Link>
                                 </li>
                             </ul>
                         </div>

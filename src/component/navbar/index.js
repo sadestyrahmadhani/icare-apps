@@ -73,7 +73,7 @@ const Navbar = (props) => {
                                             </Link>
                                         </li>
                                         <li className="nav-item mx-3">
-                                            <Link className="nav-link" onClick={() => setOpenDropdown((prev) => (prev))}>
+                                            <Link className="nav-link" onClick={() => setOpenDropdown(!openDropdown)}>
                                                 <i className="fa fa-gear me-2" style={{fontSize:'14px', color:'grey'}}></i>
                                                 <span className="nav-dash">PENGATURAN</span>
                                                 { openDropdown && (
@@ -81,7 +81,7 @@ const Navbar = (props) => {
                                                         <ul style={{listStyle:'none'}}>
                                                             <li className="item-drop py-2 d-flex align-items-center">
                                                                 <div className="col-10">
-                                                                    <Link className="text-decoration-none" style={{color:'#000'}}>Data Diri</Link>
+                                                                    <Link className="text-decoration-none" style={{color:'#000'}} to="/data-diri">Data Diri</Link>
                                                                 </div>
                                                                 <div className="col-2">
                                                                     <i className="fa fa-chevron-right chevron-drop"></i>
@@ -89,7 +89,7 @@ const Navbar = (props) => {
                                                             </li>
                                                             <li className="item-drop  py-2 d-flex align-items-center">
                                                                 <div className="col-10">
-                                                                    <Link className="text-decoration-none" style={{color:'#000'}}>Daftar Alamat</Link>
+                                                                    <Link className="text-decoration-none" style={{color:'#000'}} to="/address">Daftar Alamat</Link>
                                                                 </div>
                                                                 <div className="col-2">
                                                                     <i className="fa fa-chevron-right chevron-drop"></i>
@@ -97,7 +97,7 @@ const Navbar = (props) => {
                                                             </li>
                                                             <li className="item-drop  py-2 d-flex align-items-center">
                                                                 <div className="col-10">
-                                                                    <Link className="text-decoration-none" style={{color:'#000'}}>Daftar EQ</Link>
+                                                                    <Link className="text-decoration-none" style={{color:'#000'}} to="/daftar-eq">Daftar EQ</Link>
                                                                 </div>
                                                                 <div className="col-2">
                                                                     <i className="fa fa-chevron-right chevron-drop"></i>
@@ -105,7 +105,7 @@ const Navbar = (props) => {
                                                             </li>
                                                             <li className="item-drop py-2 d-flex align-items-center">
                                                                 <div className="col-10">
-                                                                    <Link className="text-decoration-none" style={{color:'#000'}}>Kata Sandi</Link>
+                                                                    <Link className="text-decoration-none" style={{color:'#000'}} to="/change-password">Kata Sandi</Link>
                                                                 </div>
                                                                 <div className="col-2">
                                                                     <i className="fa fa-chevron-right chevron-drop"></i>
