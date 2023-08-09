@@ -9,9 +9,8 @@ export default class extends Component {
         return (
             <>
             <div className="container pt-5">
-                <div className="container pt-5">
-                    <h4 style={{color:'darkblue'}}>Informasi</h4>
-                    <hr style={{width:'10%', border:'1px solid', color:'darkblue'}}/>
+                <div className="container d-flex align-items-center mb-5">
+                    <span className="title-icare fw-medium py-1 mx-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Informasi</span>
                 </div>
                 <div className="container">
                     <div className="card border-0" style={{boxShadow:'5px 5px 20px 20px rgba(0, 0, 0, 0.1)'}}>

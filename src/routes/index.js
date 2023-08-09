@@ -18,9 +18,21 @@ export default [
                 component: import('./../views/dashboard')
             },
             {
-                title:'Riwayat',
-                path:'riwayat',
-                component: import('./../views/riwayat')
+                path:'',
+                component:'',
+                children: [
+
+                    {
+                        title:'Riwayat',
+                        path:'riwayat',
+                        component: import('./../views/riwayat')
+                    },
+                    {
+                        title:'Detail Permintaan',
+                        path:'detail-permintaan',
+                        component: import('./../views/riwayat/detail-permintaan')
+                    },
+                ]
             },
             {
                 title:'Breakfix',
