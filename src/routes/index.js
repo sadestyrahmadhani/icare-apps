@@ -18,11 +18,24 @@ export default [
                 component: import('./../views/dashboard')
             },
             {
-                title:'Riwayat',
-                path:'riwayat',
-                component: import('./../views/riwayat')
+                path:'',
+                component:'',
+                children: [
+
+                    {
+                        title:'Riwayat',
+                        path:'riwayat',
+                        component: import('./../views/riwayat')
+                    },
+                    {
+                        title:'Detail Permintaan',
+                        path:'detail-permintaan',
+                        component: import('./../views/riwayat/detail-permintaan')
+                    },
+                ]
             },
             {
+                      
                 title:'Informasi',
                 path:'informasi',
                 component: import('./../views/informasi')
@@ -68,7 +81,21 @@ export default [
                 path:'install',
                 component: import('../views/menu/install'),
             },
-            
+            {
+                title: 'Upgarde Account',
+                path: 'upgarde-account',
+                component: import('../views/upgrade-akun/upgrade')
+            },
+            {
+                title: 'Form Upgrade Account',
+                path: 'form-upgrade-account',
+                component: import('../views/upgrade-akun/form')
+            },
+            {
+                title: 'Waiting Upgrade Account',
+                path: 'waiting-upgrade-account',
+                component: import('../views/upgrade-akun/waiting')
+            }
             
         ]
     },

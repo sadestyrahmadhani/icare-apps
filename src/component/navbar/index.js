@@ -22,6 +22,8 @@ const Navbar = (props) => {
         }
     }, []) 
 
+    const [openDropdown, setOpenDropdown] = useState(false)
+
     return(
         <>
             {
@@ -71,38 +73,60 @@ const Navbar = (props) => {
                                             </Link>
                                         </li>
                                         <li className="nav-item mx-3">
-                                            <div className="dropdown">
-                                                <Link className="dropdown-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-aria-expanded="false">
-                                                    <i className="fa fa-gear me-2" style={{fontSize:'14px', color:'grey'}}></i>
-                                                    <span className="nav-dash">PENGATURAN</span>
-                                                </Link>
-                                                <ul className="dropdown-menu">
-                                                    <li className="dropdown-item">
-                                                        <Link className="dropdown-link">Data Diri</Link>
-                                                        <i className="fa fa-chevron-right"></i>
-                                                    </li>
-                                                    <li className="dropdown-item">
-                                                        <Link className="dropdown-link">Daftar Alamat</Link>
-                                                        <i className="fa fa-chevron-right"></i>
-                                                    </li>
-                                                    <li className="dropdown-item">
-                                                        <Link className="dropdown-link">Daftar EQ</Link>
-                                                        <i className="fa fa-chevron-right"></i>
-                                                    </li>
-                                                    <li className="dropdown-item">
-                                                        <Link className="dropdown-link">Kata Sandi</Link>
-                                                        <i className="fa fa-chevron-right"></i>
-                                                    </li>
-                                                    <li className="dropdown-item">
-                                                        <Link className="dropdown-link">Keluar</Link>
-                                                        <i className="fa fa-chevron-right"></i>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <Link className="nav-link" onClick={() => setOpenDropdown(!openDropdown)}>
+                                                <i className="fa fa-gear me-2" style={{fontSize:'14px', color:'grey'}}></i>
+                                                <span className="nav-dash">PENGATURAN</span>
+                                                { openDropdown && (
+                                                    <div className="dropdown bg-white shadow-lg px-2 py-3" style={{width:'300px'}}>
+                                                        <ul style={{listStyle:'none'}}>
+                                                            <li className="item-drop py-2 d-flex align-items-center">
+                                                                <div className="col-10">
+                                                                    <Link className="text-decoration-none" style={{color:'#000'}} to="/data-diri">Data Diri</Link>
+                                                                </div>
+                                                                <div className="col-2">
+                                                                    <i className="fa fa-chevron-right chevron-drop"></i>
+                                                                </div>
+                                                            </li>
+                                                            <li className="item-drop  py-2 d-flex align-items-center">
+                                                                <div className="col-10">
+                                                                    <Link className="text-decoration-none" style={{color:'#000'}} to="/address">Daftar Alamat</Link>
+                                                                </div>
+                                                                <div className="col-2">
+                                                                    <i className="fa fa-chevron-right chevron-drop"></i>
+                                                                </div>
+                                                            </li>
+                                                            <li className="item-drop  py-2 d-flex align-items-center">
+                                                                <div className="col-10">
+                                                                    <Link className="text-decoration-none" style={{color:'#000'}} to="/daftar-eq">Daftar EQ</Link>
+                                                                </div>
+                                                                <div className="col-2">
+                                                                    <i className="fa fa-chevron-right chevron-drop"></i>
+                                                                </div>
+                                                            </li>
+                                                            <li className="item-drop py-2 d-flex align-items-center">
+                                                                <div className="col-10">
+                                                                    <Link className="text-decoration-none" style={{color:'#000'}} to="/change-password">Kata Sandi</Link>
+                                                                </div>
+                                                                <div className="col-2">
+                                                                    <i className="fa fa-chevron-right chevron-drop"></i>
+                                                                </div>
+                                                            </li>
+                                                            <li className="item-drop  py-2 d-flex align-items-center">
+                                                                <div className="col-10">
+                                                                    <Link className="text-decoration-none" style={{color:'#000'}}>Keluar</Link>
+                                                                </div>
+                                                                <div className="col-2">
+                                                                    <i className="fa fa-chevron-right chevron-drop"></i>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                )}
+                                            </Link>
                                         </li>
                                     </ul>
                                     <div className="account">
-                                        <h6 style={{fontSize:'12px', color:'#014C90' }}>Welcome, Indri</h6>
+                                        <h6 style={{fontSize:'14px', color:'#014C90' }}>Welcome, Indri</h6>
                                     </div>
                                 </div>
                             </nav> 
@@ -140,15 +164,6 @@ const Navbar = (props) => {
     )
 }
 
-// Dropdown() {
-//     const [selectorOption, setSelectorOption] = useState('Option 1')
-//     const option = ['Option 1','Option 2','Option 3','Option 4','Option 5']
-    
-    
-//     const handleOptionChange = (event) => {
-//         setSelectorOption(event.target.value)
-//     }
-// }
 
 export default Navbar
 
