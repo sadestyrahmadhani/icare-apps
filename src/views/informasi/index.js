@@ -9,182 +9,196 @@ export default class extends Component {
         return (
             <>
             <div className="container pt-5">
-                <div className="container d-flex align-items-center mb-5">
-                    <span className="title-icare fw-medium py-1 mx-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Informasi</span>
+                <div className="container pt-5">
+                    <h4 style={{color:'darkblue'}}>Informasi</h4>
+                    <hr style={{width:'10%', border:'1px solid', color:'darkblue'}}/>
                 </div>
                 <div className="container">
-                    <div className="card border-0" style={{boxShadow:'5px 5px 20px 20px rgba(0, 0, 0, 0.1)'}}>
+                    <h4 className="title-icare" style={{borderBottom:'4px solid #014C90', width:'10%'}}>Informasi</h4>
+                </div>
+                <div className="container pt-4">
+                    <div className="card border-0 shadow-lg">
                         <div className="card-body">
-                            <div className="row">
-                                <div className="col">
-                                    <div className="card border-0">
-                                        <div className="card-body">
-                                            <h7 className="card-subtitle">
-                                                <i className="fa fa-info-circle" style={{marginRight:'10px'}}></i>
-                                                info
-                                            </h7> <h7 className="card-subtile">
-                                                <i className="fa fa-circle"></i>
-                                                2023-04-12
-                                            </h7>
-                                            <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
-                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="card border-0">
+                                            <div className="card-body">
+                                                <h7 className="card-subtitle d-flex align-items-center">
+                                                    <i className="fa fa-info-circle" style={{marginRight:'10px', fontSize:'18px'}}></i>
+                                                    info 
+                                                    <i className="fa fa-circle me-1 ms-2" style={{fontSize:'10px'}}></i>
+                                                    2023-04-12
+                                                </h7> 
+                                                <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
+                                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row pt-1">
-                                <div className="col">
-                                    <div className="card border-0">
-                                        <div className="card-body">
-                                            <h7 className="card-subtitle">
-                                                <i className="fa fa-info-circle" style={{marginRight:'10px'}}></i>
-                                                info
-                                            </h7> <h7 className="card-subtile">
-                                                <i className="fa fa-circle"></i>
-                                                2023-04-12
-                                            </h7>
-                                            <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
-                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </Link>
+                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="card border-0">
+                                            <div className="card-body">
+                                                <h7 className="card-subtitle d-flex align-items-center">
+                                                    <i className="fa fa-info-circle" style={{marginRight:'10px', fontSize:'18px'}}></i>
+                                                    info 
+                                                    <i className="fa fa-circle me-1 ms-2" style={{fontSize:'10px'}}></i>
+                                                    2023-04-12
+                                                </h7> 
+                                                <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
+                                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row pt-1">
-                                <div className="col">
-                                    <div className="card border-0">
-                                        <div className="card-body">
-                                            <h7 className="card-subtitle">
-                                                <i className="fa fa-info-circle" style={{marginRight:'10px'}}></i>
-                                                info
-                                            </h7> <h7 className="card-subtile">
-                                                <i className="fa fa-circle"></i>
-                                                2023-04-12
-                                            </h7>
-                                            <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
-                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </Link>
+                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="card border-0">
+                                            <div className="card-body">
+                                                <h7 className="card-subtitle d-flex align-items-center">
+                                                    <i className="fa fa-info-circle" style={{marginRight:'10px', fontSize:'18px'}}></i>
+                                                    info 
+                                                    <i className="fa fa-circle me-1 ms-2" style={{fontSize:'10px'}}></i>
+                                                    2023-04-12
+                                                </h7> 
+                                                <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
+                                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row pt-1">
-                                <div className="col">
-                                    <div className="card border-0">
-                                        <div className="card-body">
-                                            <h7 className="card-subtitle">
-                                                <i className="fa fa-info-circle" style={{marginRight:'10px'}}></i>
-                                                info
-                                            </h7> <h7 className="card-subtile">
-                                                <i className="fa fa-circle"></i>
-                                                2023-04-12
-                                            </h7>
-                                            <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
-                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </Link>
+                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="card border-0">
+                                            <div className="card-body">
+                                                <h7 className="card-subtitle d-flex align-items-center">
+                                                    <i className="fa fa-info-circle" style={{marginRight:'10px', fontSize:'18px'}}></i>
+                                                    info 
+                                                    <i className="fa fa-circle me-1 ms-2" style={{fontSize:'10px'}}></i>
+                                                    2023-04-12
+                                                </h7> 
+                                                <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
+                                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row pt-1">
-                                <div className="col">
-                                    <div className="card border-0">
-                                        <div className="card-body">
-                                            <h7 className="card-subtitle">
-                                                <i className="fa fa-info-circle" style={{marginRight:'10px'}}></i>
-                                                info
-                                            </h7> <h7 className="card-subtile">
-                                                <i className="fa fa-circle"></i>
-                                                2023-04-12
-                                            </h7>
-                                            <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
-                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </Link>
+                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="card border-0">
+                                            <div className="card-body">
+                                                <h7 className="card-subtitle d-flex align-items-center">
+                                                    <i className="fa fa-info-circle" style={{marginRight:'10px', fontSize:'18px'}}></i>
+                                                    info 
+                                                    <i className="fa fa-circle me-1 ms-2" style={{fontSize:'10px'}}></i>
+                                                    2023-04-12
+                                                </h7> 
+                                                <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
+                                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row pt-1">
-                                <div className="col">
-                                    <div className="card border-0">
-                                        <div className="card-body">
-                                            <h7 className="card-subtitle">
-                                                <i className="fa fa-info-circle" style={{marginRight:'10px'}}></i>
-                                                info
-                                            </h7> <h7 className="card-subtile">
-                                                <i className="fa fa-circle"></i>
-                                                2023-04-12
-                                            </h7>
-                                            <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
-                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </Link>
+                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="card border-0">
+                                            <div className="card-body">
+                                                <h7 className="card-subtitle d-flex align-items-center">
+                                                    <i className="fa fa-info-circle" style={{marginRight:'10px', fontSize:'18px'}}></i>
+                                                    info 
+                                                    <i className="fa fa-circle me-1 ms-2" style={{fontSize:'10px'}}></i>
+                                                    2023-04-12
+                                                </h7> 
+                                                <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
+                                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row pt-1">
-                                <div className="col">
-                                    <div className="card border-0">
-                                        <div className="card-body">
-                                            <h7 className="card-subtitle">
-                                                <i className="fa fa-info-circle" style={{marginRight:'10px'}}></i>
-                                                info
-                                            </h7> <h7 className="card-subtile">
-                                                <i className="fa fa-circle"></i>
-                                                2023-04-12
-                                            </h7>
-                                            <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
-                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </Link>
+                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="card border-0">
+                                            <div className="card-body">
+                                                <h7 className="card-subtitle d-flex align-items-center">
+                                                    <i className="fa fa-info-circle" style={{marginRight:'10px', fontSize:'18px'}}></i>
+                                                    info 
+                                                    <i className="fa fa-circle me-1 ms-2" style={{fontSize:'10px'}}></i>
+                                                    2023-04-12
+                                                </h7> 
+                                                <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
+                                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row pt-1">
-                                <div className="col">
-                                    <div className="card text-bg-primary border-0">
-                                        <div className="card-body" style={{color:'black'}}>
-                                            <h7 className="card-subtitle">
-                                                <i className="fa fa-info-circle" style={{marginRight:'10px'}}></i>
-                                                info
-                                            </h7> <h7 className="card-subtile">
-                                                <i className="fa fa-circle"></i>
-                                                2023-04-12
-                                            </h7>
-                                            <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
-                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </Link>
+                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="card bg-primary border-0 mb-3">
+                                            <div className="card-body">
+                                                <h7 className="card-subtitle d-flex align-items-center">
+                                                    <i className="fa fa-info-circle" style={{marginRight:'10px', fontSize:'18px'}}></i>
+                                                    info 
+                                                    <i className="fa fa-circle me-1 ms-2" style={{fontSize:'10px'}}></i>
+                                                    2023-04-12
+                                                </h7> 
+                                                <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
+                                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row pt-1">
-                                <div className="col">
-                                    <div className="card text-bg-primary border-0">
-                                        <div className="card-body" style={{color:'black'}}>
-                                            <h7 className="card-subtitle">
-                                                <i className="fa fa-info-circle" style={{marginRight:'10px'}}></i>
-                                                info
-                                            </h7> <h7 className="card-subtile">
-                                                <i className="fa fa-circle"></i>
-                                                2023-04-12
-                                            </h7>
-                                            <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
-                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </Link>
+                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="card bg-primary border-0 mb-3">
+                                            <div className="card-body">
+                                                <h7 className="card-subtitle d-flex align-items-center">
+                                                    <i className="fa fa-info-circle" style={{marginRight:'10px', fontSize:'18px'}}></i>
+                                                    info 
+                                                    <i className="fa fa-circle me-1 ms-2" style={{fontSize:'10px'}}></i>
+                                                    2023-04-12
+                                                </h7> 
+                                                <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
+                                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row pt-1">
-                                <div className="col">
-                                    <div className="card text-bg-primary border-0">
-                                        <div className="card-body" style={{color:'black'}}>
-                                            <h7 className="card-subtitle">
-                                                <i className="fa fa-info-circle" style={{marginRight:'10px'}}></i>
-                                                info
-                                            </h7> <h7 className="card-subtile">
-                                                <i className="fa fa-circle"></i>
-                                                2023-04-12
-                                            </h7>
-                                            <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
-                                            <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            </Link>
+                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="card bg-primary border-0">
+                                            <div className="card-body">
+                                                <h7 className="card-subtitle d-flex align-items-center">
+                                                    <i className="fa fa-info-circle" style={{marginRight:'10px', fontSize:'18px'}}></i>
+                                                    info 
+                                                    <i className="fa fa-circle me-1 ms-2" style={{fontSize:'10px'}}></i>
+                                                    2023-04-12
+                                                </h7> 
+                                                <h6 className="card-title">Maaf, permintaan Anda dibatalkan!</h6>
+                                                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                             <div className="button-informasi pt-4">
                                 <button type="button" className="btn btn-primary" style={{width:'100%', height:'60px', backgroundColor:'#014C90', borderRadius:'15px'}}>Lihat lebih banyak ...</button>
                             </div>

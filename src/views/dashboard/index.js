@@ -1,5 +1,6 @@
 import { Component } from "react";
 import footer from "../../component/footer";
+import { Link } from "react-router-dom";
 
 export default class extends Component {
     render() {
@@ -19,44 +20,56 @@ export default class extends Component {
                                 <div className="container">
                                     <div className="row pt-5">
                                         <div className="col">
-                                            <div className="img">
-                                                <img src="images/breakfix.png" alt="Logo Breakfix" height={100}></img>
-                                            </div>
-                                            <h6 className="pt-2">Breakfix</h6>
+                                            <Link className="list-items" to="../breakfix" style={{textDecoration:'none'}}>
+                                                <div className="img">
+                                                    <img src="images/breakfix.png" alt="Logo Breakfix" height={100}></img>
+                                                </div>
+                                                <h6 className="pt-2">Breakfix</h6>
+                                            </Link>
                                         </div>
                                         <div className="col">
-                                            <div className="img">
-                                                <img src="images/supplies.png" alt="Logo Supplies" height={100}></img>
-                                            </div>
-                                            <h6 className="pt-2">Supplies</h6>
+                                            <Link className="list-items" to="../supplies" style={{textDecoration:'none'}}>
+                                                <div className="img">
+                                                    <img src="images/supplies.png" alt="Logo Supplies" height={100}></img>
+                                                </div>
+                                                <h6 className="pt-2">Supplies</h6>
+                                            </Link>
                                         </div>
                                         <div className="col">
-                                            <div className="img">
-                                                <img src="images/install.png" alt="Logo Install" height={100}></img>
-                                            </div>
-                                            <h6 className="pt-2">Install</h6>
+                                            <Link className="list-items" to="../install" style={{textDecoration:'none'}}>
+                                                <div className="img">
+                                                    <img src="images/install.png" alt="Logo Install" height={100}></img>
+                                                </div>
+                                                <h6 className="pt-2">Install</h6>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="container">
                                     <div className="row pt-5">
                                         <div className="col">
-                                            <div className="img">
-                                                <img src="images/collectMeter.png" alt="Logo Collect Meter" height={100}></img>
-                                            </div>
-                                            <h6 className="pt-2">Collect Meter</h6>
+                                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                                <div className="img">
+                                                    <img src="images/collectMeter.png" alt="Logo Collect Meter" height={100}></img>
+                                                </div>
+                                                <h6 className="pt-2">Collect Meter</h6>
+                                            </Link>
                                         </div>
                                         <div className="col">
-                                            <div className="img">
-                                                <img src="images/callCenter.png" alt="Logo Call Center" height={100}></img>
-                                            </div>
-                                            <h6 className="pt-2">Call Center</h6>
+                                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                                <div className="img">
+                                                    <img src="images/callCenter.png" alt="Logo Call Center" height={100}></img>
+                                                </div>
+                                                <h6 className="pt-2">Call Center</h6>
+                                            </Link>
                                         </div>
                                         <div className="col">
-                                            <div className="img">
-                                                <img src="images/informasiTagihan.png" alt="Logo Informasi Tagihan" height={100}></img>
-                                            </div>
-                                            <h6 className="pt-2">Informasi Tagihan</h6>
+                                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                                <div className="img">
+                                                    <img src="images/informasiTagihan.png" alt="Logo Informasi Tagihan" height={100}></img>
+                                                </div>
+                                                <h6 className="pt-2">Informasi Tagihan</h6>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -66,12 +79,12 @@ export default class extends Component {
                     <div className="container pt-5 pb-5">
                         <div className="news pt-5">
                             <div className="d-flex align-items-center w-100 pt-5">
-                                <hr className="w-100" style={{color:'blue'}}/>
-                                <div className="d-block px-4" style={{whiteSpace:'nowrap', fontSize:'30px', color:'darkblue'}}>Astragraphia News</div>
-                                <hr className="w-100" style={{color:'blue'}}/>
+                                <hr className="w-100" style={{color:'#014C90', border:'1px solid'}}/>
+                                <div className="title-icare d-block px-4" style={{whiteSpace:'nowrap', fontSize:'30px'}}>Astragraphia News</div>
+                                <hr className="w-100" style={{color:'#014C90', border:'1px solid'}}/>
                             </div>
                             <div className="container pt-5">
-                                <div className="card text-bg-dark">
+                                <div className="card text-bg-dark border-0">
                                     <img src="images/astragraphiaNews.png" class="card-img" alt="Astragraphia News"></img>
                                     <div className="card-img-overlay">
                                         <p className="card-text">2023-07-21 19:00:00</p>
@@ -87,7 +100,7 @@ export default class extends Component {
                             <div className="container pt-5">
                                 <div className="row row-cols-1 row-cols-md-3 g-4">
                                     <div className="col">
-                                        <div className="card h-100">
+                                        <div className="card h-100 border-0" style={{backgroundColor:'#EBEBEB'}}>
                                             <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
                                             <div className="card-body">
                                                 <p className="card-text">2023-06-28 10:00:00</p>
@@ -96,7 +109,7 @@ export default class extends Component {
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <div className="card h-100">
+                                        <div className="card h-100 border-0" style={{backgroundColor:'#EBEBEB'}}>
                                             <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
                                             <div className="card-body">
                                                 <p className="card-text">2023-06-28 10:00:00</p>
@@ -105,7 +118,7 @@ export default class extends Component {
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <div className="card h-100">
+                                        <div className="card h-100 border-0" style={{backgroundColor:'#EBEBEB'}}>
                                             <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
                                             <div className="card-body">
                                                 <p className="card-text">2023-06-28 10:00:00</p>
@@ -114,7 +127,7 @@ export default class extends Component {
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <div className="card h-100">
+                                        <div className="card h-100 border-0" style={{backgroundColor:'#EBEBEB'}}>
                                             <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
                                             <div className="card-body">
                                                 <p className="card-text">2023-06-28 10:00:00</p>
@@ -123,7 +136,7 @@ export default class extends Component {
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <div className="card h-100">
+                                        <div className="card h-100 border-0" style={{backgroundColor:'#EBEBEB'}}>
                                             <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
                                             <div className="card-body">
                                                 <p className="card-text">2023-06-28 10:00:00</p>
@@ -132,7 +145,7 @@ export default class extends Component {
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <div className="card h-100">
+                                        <div className="card h-100 border-0" style={{backgroundColor:'#EBEBEB'}}>
                                             <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
                                             <div className="card-body">
                                                 <p className="card-text">2023-06-28 10:00:00</p>
@@ -141,7 +154,7 @@ export default class extends Component {
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <div className="card h-100">
+                                        <div className="card h-100 border-0" style={{backgroundColor:'#EBEBEB'}}>
                                             <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
                                             <div className="card-body">
                                                 <p className="card-text">2023-06-28 10:00:00</p>
@@ -150,7 +163,7 @@ export default class extends Component {
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <div className="card h-100">
+                                        <div className="card h-100 border-0" style={{backgroundColor:'#EBEBEB'}}>
                                             <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
                                             <div className="card-body">
                                                 <p className="card-text">2023-06-28 10:00:00</p>
@@ -159,7 +172,7 @@ export default class extends Component {
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <div className="card h-100">
+                                        <div className="card h-100 border-0" style={{backgroundColor:'#EBEBEB'}}>
                                             <img src="images/astragraphiaNews.png" className="card-img-top" alt="Astragraphia News"></img>
                                             <div className="card-body">
                                                 <p className="card-text">2023-06-28 10:00:00</p>

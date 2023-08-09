@@ -187,24 +187,3 @@
 td {
     font-size: 14px;
 }
-
-.btn-proses {
-    border: 2px solid #014C90;
-    text-decoration: none;
-    color: #014C90;
-    font-size: 14px;
-}
-
-.btn-proses:hover {
-    background-color: #ecf8ff;
-}
-
-.btn-proses:focus {
-    background-color: #014C90;
-    color: #fff;
-}
-
-
-
-
-
