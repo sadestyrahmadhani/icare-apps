@@ -48,7 +48,7 @@ export default class extends Component {
                                 <div className="container">
                                     <div className="row pt-5">
                                         <div className="col">
-                                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                            <Link className="list-items" to="../collect-meter" style={{textDecoration:'none'}}>
                                                 <div className="img">
                                                     <img src="images/collectMeter.png" alt="Logo Collect Meter" height={100}></img>
                                                 </div>
