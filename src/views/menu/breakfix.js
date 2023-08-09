@@ -20,7 +20,7 @@ export default class extends Component {
             <>
             <div className="container-fluid py-3">
                 <div className="d-flex align-items-center mb-4">
-                    <Link className="list-items" to="">
+                    <Link className="list-items" to="../dashboard">
                         <i className="fa fa-arrow-left me-3" style={{fontSize:'16px', color:'#014C90'}}></i>
                     </Link>
                         <span className="title-icare fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'16px'}}>Breakfix Request</span>

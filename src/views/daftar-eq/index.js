@@ -14,7 +14,7 @@ export default class extends Component {
                         <div className="col-md-auto">
                             <form className="search">
                                 <i className="fa fa-search"></i>
-                                <input type="text" placeholder="" name="search"></input>
+                                <input className="border-only-bottom" type="search" placeholder="" name="search"></input>
                                 <i className="fa fa-close"></i>
                             </form>
                         </div>

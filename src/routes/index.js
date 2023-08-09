@@ -23,11 +23,6 @@ export default [
                 component: import('./../views/riwayat')
             },
             {
-                title:'Breakfix',
-                path:'breakfix',
-                component: import('./../views/menu/breakfix')
-            },
-            {
                 title:'Informasi',
                 path:'informasi',
                 component: import('./../views/informasi')
@@ -36,11 +31,6 @@ export default [
                 path:'',
                 component:'',
                 children: [
-                    {
-                        title:'Daftar-EQ',
-                        path:'daftar-eq',
-                        component: import('./../views/daftar-eq')
-                    },
                     {
                         title:'Data-Diri',
                         path:'data-diri',
@@ -52,11 +42,21 @@ export default [
                         component: import('../views/alamat')
                     },
                     {
+                        title:'Daftar-EQ',
+                        path:'daftar-eq',
+                        component: import('./../views/daftar-eq')
+                    },
+                    {
                         title: "Change Password",
                         path: 'change-password',
                         component: import('../views/ubah-password')
                     }      
                 ]
+            },
+            {
+                title:'Breakfix',
+                path:'breakfix',
+                component: import('./../views/menu/breakfix')
             },
             {
                 title:'Install',
