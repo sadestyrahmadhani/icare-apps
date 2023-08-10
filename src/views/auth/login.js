@@ -12,43 +12,43 @@ export default class extends Component {
         return(
             <>
             {/* main-background */}
-                <div className="main-background" id="beranda">
+                <div className="main-background">
                     <img src="/images/Vector1.png" alt="background" width="100%"/>
                 </div>
 
             {/* beranda/login */}
-                <div className="row row-height my-5 pt-5">
-                    <div className="col-9">
+                <div className="row row-height pt-5">
+                    <div className="col-8" style={{paddingRight:'50px'}}>
                         <div className="col-sm-10 col-12 my-5">
-                            <div className="card shadow-sm rounded">
-                                <div className="card-body px-4">
-                                    <div className="col-12 text-center pt-3">
-                                        <img src="/images/iCareLogo.png" alt="Logo iCare" height="50" />
+                            <div className="card shadow-sm rounded p-4" style={{border:'1px solid #a2d2ff'}}>
+                                <div className="card-body px-2">
+                                    <div className="col-12 text-center mb-3">
+                                        <img src="/images/iCareLogo.png" alt="Logo iCare" className="h-50"/>
                                     </div>
                                     <form onSubmit={ this.submit }>
                                         <div className="mb-3">
-                                            <label className="size-10px fw-medium">EMAIL</label>
+                                            <label className="size-13px fw-medium">EMAIL</label>
                                             <input type="text" className="form-control border-only-bottom"/>
                                         </div>
                                         <div className="mb-4">
-                                            <label className="size-10px fw-medium">PASSWORD</label>
+                                            <label className="size-13px fw-medium">PASSWORD</label>
                                             <input type="password" className="form-control border-only-bottom" />
                                         </div>
                                         <div className="mb-2 mx-auto text-center">
-                                            <button className="btn btn-login px-5 py-1 my-1">LOGIN</button>
+                                            <button className="btn btn-login my-1" style={{paddingLeft:'70px', paddingRight:'70px', paddingBottom:'10px', paddingTop:'10px'}}>LOGIN</button>
                                         </div>
                                         <div className="text-center">
-                                            <Link className="nav-link size-10px fw-medium my-2" to="kebijakan-privasi/register">Belum Punya akun ?</Link>
-                                            <Link className="nav-link size-10px fw-medium my-2"  to="/lupa-password">Lupa Password ?</Link>
+                                            <Link className="nav-link size-13px fw-medium my-2" to="kebijakan-privasi/register">Belum Punya akun ?</Link>
+                                            <Link className="nav-link size-13px fw-medium my-2"  to="/lupa-password">Lupa Password ?</Link>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="background col-3">
-                        <img src="/images/Cahyo_MFD.png" alt="images 1" width="90%" />
-                        <h3 className="title-icare text-center fw-bold">Solusi untuk eskalasi problem dan permintaan layanan.</h3>
+                    <div className="background col-4">
+                        <img src="/images/Cahyo_MFD.png" alt="images 1" width="85%" className="mb-3" style={{marginLeft:'70px'}}/>
+                        <h2 className="title-icare text-center fw-medium" style={{marginLeft:'70px', fontSize:'35px'}}>Solusi untuk eskalasi problem dan permintaan layanan.</h2>
                     </div>
                 </div>
 

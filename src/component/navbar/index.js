@@ -57,26 +57,26 @@ const Navbar = (props) => {
                                     </div>
                                     <ul className="navbar-nav mx-auto"> 
                                         <li className="nav-item mx-3">
-                                            <Link className="nav-link" to="dashboard">
+                                            <Link className="nav-link nav-app" to="dashboard">
                                                 <i className="fa fa-home me-2"></i>
                                                 <span className="nav-dash">BERANDA</span>
                                             </Link>
                                         </li> 
                                         <li className="nav-item mx-3">
-                                            <Link className="nav-link" to="riwayat"> 
+                                            <Link className="nav-link nav-app" to="riwayat"> 
                                                 <i className="fa fa-clipboard me-2"></i>
                                                 <span className="nav-dash">RIWAYAT</span>
                                             </Link>
                                         </li>
                                         <li className="nav-item mx-3">
-                                            <Link className="nav-link" to="informasi">
+                                            <Link className="nav-link nav-app" to="informasi">
                                                 <i className="fa fa-bell me-2"></i>
                                                 <span className="nav-dash">INFORMASI</span>
                                             </Link>
                                         </li>
                                         <li className="nav-item mx-3">
-                                            <a className="nav-link" href="#" onClick={() => setOpenDropdown(!openDropdown)}>
-                                                <i className="fa fa-gear me-2" style={{fontSize:'14px', color:'grey'}}></i>
+                                            <a className="nav-link nav-app" href="#" onClick={() => setOpenDropdown(!openDropdown)}>
+                                                <i className="fa fa-gear me-2 nav-app" style={{fontSize:'14px', color:'grey'}}></i>
                                                 <span className="nav-dash">PENGATURAN</span>
                                                 { openDropdown && (
                                                     <div className="dropdown bg-white shadow-lg px-2 py-3" style={{width:'300px'}}>
@@ -141,7 +141,7 @@ const Navbar = (props) => {
                                     <img src="/images/iCareLogo.png" alt="logo" height="40"/>
                                     <ul className="navbar-nav">
                                         <li className="nav-item">
-                                            <a className="nav-link text-link fw-semibold" href="#beranda"> Beranda </a>
+                                            <a className="nav-link text-link fw-semibold" href="/"> Beranda </a>
                                         </li>
                                         <li className="nav-item">
                                             <a className="nav-link text-link fw-semibold" href="#about"> Tentang </a>

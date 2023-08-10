@@ -33,6 +33,10 @@
     color: #014C90;
 }
 
+.nav-app:focus {
+    color: #014C90;
+}
+
 .dropdown {
     position: absolute;
 }
@@ -86,8 +90,8 @@
     color: #fff;
 }
 
-.size-10px {
-    font-size: 10px;
+.size-13px {
+    font-size: 13px;
     color: #014C90;
 }
 

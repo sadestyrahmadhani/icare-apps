@@ -71,12 +71,12 @@ export default class extends Component {
                                     
                                 </div>
                                 <div className="col-md-3 col-sm-5 col-12 p-4">
-                                    <button className="btn-view shadow rounded-2 d-flex align-items-center p-0 mx-auto mb-3" style={{width:'70%', border:'none',backgroundColor:'#014C90'}}>
+                                    <button className="btn-view shadow rounded-2 d-flex align-items-center p-0 mx-auto mb-3" style={{width:'70%', border:'none',backgroundColor:'#01c9d4'}}>
                                         <div className="col-9 p-2 text-center" style={{color:'#fff', fontSize:'12px'}}>
-                                            PESANAN DITERIMA
+                                            BERIKAN NILAI
                                         </div>
                                         <div className="col-3 text-center bg-white text-danger p-2 rounded-end">
-                                            <i className="fa fa-chevron-right ms-2" style={{backgroundColor:'#fff'}}></i>
+                                            <i className="fa fa-external-link-square ms-2" style={{backgroundColor:'#fff', color:'#01c9d4'}}></i>
                                         </div>
                                     </button>
                                     <button className="btn-view shadow rounded-2 d-flex align-items-center p-0 mx-auto" style={{width:'70%', border:'none',backgroundColor:'#014C90'}}>
