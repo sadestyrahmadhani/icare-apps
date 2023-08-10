@@ -62,7 +62,7 @@ export default class extends Component {
                                             </Link>
                                         </div>
                                         <div className="col">
-                                            <Link className="list-items" to="" style={{textDecoration:'none'}}>
+                                            <Link className="list-items" to="https://ebillingportal.documentsolution.com/#/invoice-customer" style={{textDecoration:'none'}}>
                                                 <div className="img">
                                                     <img src="images/informasiTagihan.png" alt="Logo Informasi Tagihan" height={100}></img>
                                                 </div>

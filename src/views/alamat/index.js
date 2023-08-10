@@ -19,7 +19,9 @@ export default class extends Component{
                                 </form>
                             </div>
                             <div className="col-5">
-                                <button className="btn btn-login"><i className="fa fa-plus"></i> Tambah Alamat</button>
+                                <Link to="/form-address">
+                                    <button className="btn btn-login"><i className="fa fa-plus"></i> Tambah Alamat</button>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -65,7 +67,7 @@ export default class extends Component{
                                                 <Link className="nav-link">Utamakan</Link>
                                             </li> */}
                                             <li className="nav-item">
-                                                <Link className="nav-link">Ubah</Link>
+                                                <Link className="nav-link" to="/form-address">Ubah</Link>
                                             </li>
                                             <li className="nav-item">
                                                 <Link className="nav-link">Hapus</Link>
