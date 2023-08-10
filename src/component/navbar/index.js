@@ -78,53 +78,53 @@ const Navbar = (props) => {
                                             <a className="nav-link nav-app" href="#" onClick={() => setOpenDropdown(!openDropdown)}>
                                                 <i className="fa fa-gear me-2 nav-app" style={{fontSize:'14px', color:'grey'}}></i>
                                                 <span className="nav-dash">PENGATURAN</span>
-                                                { openDropdown && (
-                                                    <div className="dropdown bg-white shadow-lg px-2 py-3" style={{width:'300px'}}>
-                                                        <ul style={{listStyle:'none'}}>
-                                                            <li className="item-drop py-2 d-flex align-items-center">
-                                                                <div className="col-10">
-                                                                    <Link className="text-decoration-none" style={{color:'#000'}} to="/data-diri">Data Diri</Link>
-                                                                </div>
-                                                                <div className="col-2">
-                                                                    <i className="fa fa-chevron-right chevron-drop"></i>
-                                                                </div>
-                                                            </li>
-                                                            <li className="item-drop  py-2 d-flex align-items-center">
-                                                                <div className="col-10">
-                                                                    <Link className="text-decoration-none" style={{color:'#000'}} to="/address">Daftar Alamat</Link>
-                                                                </div>
-                                                                <div className="col-2">
-                                                                    <i className="fa fa-chevron-right chevron-drop"></i>
-                                                                </div>
-                                                            </li>
-                                                            <li className="item-drop  py-2 d-flex align-items-center">
-                                                                <div className="col-10">
-                                                                    <Link className="text-decoration-none" style={{color:'#000'}} to="/daftar-eq">Daftar EQ</Link>
-                                                                </div>
-                                                                <div className="col-2">
-                                                                    <i className="fa fa-chevron-right chevron-drop"></i>
-                                                                </div>
-                                                            </li>
-                                                            <li className="item-drop py-2 d-flex align-items-center">
-                                                                <div className="col-10">
-                                                                    <Link className="text-decoration-none" style={{color:'#000'}} to="/change-password">Kata Sandi</Link>
-                                                                </div>
-                                                                <div className="col-2">
-                                                                    <i className="fa fa-chevron-right chevron-drop"></i>
-                                                                </div>
-                                                            </li>
-                                                            <li className="item-drop  py-2 d-flex align-items-center">
-                                                                <div className="col-10">
-                                                                    <Link className="text-decoration-none" style={{color:'#000'}}>Keluar</Link>
-                                                                </div>
-                                                                <div className="col-2">
-                                                                    <i className="fa fa-chevron-right chevron-drop"></i>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                )}
                                             </a>
+                                            { openDropdown && (
+                                                <div className="dropdown bg-white shadow-lg px-2 py-3" style={{width:'300px'}}>
+                                                    <ul style={{listStyle:'none'}}>
+                                                        <li className="item-drop py-2 d-flex align-items-center">
+                                                            <div className="col-10">
+                                                                <Link className="text-decoration-none" style={{color:'#000'}} to="/data-diri">Data Diri</Link>
+                                                            </div>
+                                                            <div className="col-2">
+                                                                <i className="fa fa-chevron-right chevron-drop"></i>
+                                                            </div>
+                                                        </li>
+                                                        <li className="item-drop  py-2 d-flex align-items-center">
+                                                            <div className="col-10">
+                                                                <Link className="text-decoration-none" style={{color:'#000'}} to="/address">Daftar Alamat</Link>
+                                                            </div>
+                                                            <div className="col-2">
+                                                                <i className="fa fa-chevron-right chevron-drop"></i>
+                                                            </div>
+                                                        </li>
+                                                        <li className="item-drop  py-2 d-flex align-items-center">
+                                                            <div className="col-10">
+                                                                <Link className="text-decoration-none" style={{color:'#000'}} to="/daftar-eq">Daftar EQ</Link>
+                                                            </div>
+                                                            <div className="col-2">
+                                                                <i className="fa fa-chevron-right chevron-drop"></i>
+                                                            </div>
+                                                        </li>
+                                                        <li className="item-drop py-2 d-flex align-items-center">
+                                                            <div className="col-10">
+                                                                <Link className="text-decoration-none" style={{color:'#000'}} to="/change-password">Kata Sandi</Link>
+                                                            </div>
+                                                            <div className="col-2">
+                                                                <i className="fa fa-chevron-right chevron-drop"></i>
+                                                            </div>
+                                                        </li>
+                                                        <li className="item-drop  py-2 d-flex align-items-center">
+                                                            <div className="col-10">
+                                                                <Link className="text-decoration-none" style={{color:'#000'}}>Keluar</Link>
+                                                            </div>
+                                                            <div className="col-2">
+                                                                <i className="fa fa-chevron-right chevron-drop"></i>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            )}
                                         </li>
                                     </ul>
                                     <div className="account">
@@ -141,7 +141,7 @@ const Navbar = (props) => {
                                     <img src="/images/iCareLogo.png" alt="logo" height="40"/>
                                     <ul className="navbar-nav">
                                         <li className="nav-item">
-                                            <a className="nav-link text-link fw-semibold" href="/"> Beranda </a>
+                                            <a className="nav-link text-link fw-semibold" href="#beranda"> Beranda </a>
                                         </li>
                                         <li className="nav-item">
                                             <a className="nav-link text-link fw-semibold" href="#about"> Tentang </a>

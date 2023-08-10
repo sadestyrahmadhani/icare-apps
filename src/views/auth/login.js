@@ -12,7 +12,7 @@ export default class extends Component {
         return(
             <>
             {/* main-background */}
-                <div className="main-background">
+                <div className="main-background" id="beranda">
                     <img src="/images/Vector1.png" alt="background" width="100%"/>
                 </div>
 
