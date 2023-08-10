@@ -57,7 +57,7 @@
 }
 
 .text-link:focus {
-    color: #4154F1;
+    color: #4154F1 !important;
 }
 
 .row-height {
