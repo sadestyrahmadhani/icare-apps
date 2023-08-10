@@ -18,7 +18,9 @@ const Navbar = (props) => {
         
 
         window.addEventListener('scroll', handleScroll)
-        document.getElementById('layout').addEventListener('click', () => setOpenDropdown(false))
+        if(document.querySelectorAll('#layout').length > 0) {
+            document.getElementById('layout').addEventListener('click', () => setOpenDropdown(false))
+        }
         
         return () => {
             window.removeEventListener('scroll', handleScroll)
