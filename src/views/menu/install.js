@@ -3,6 +3,20 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 
 export default class extends Component {
+
+    previewImage(e) {
+        const file = e.target
+        if(file.files[0]) {
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                document.getElementById('preview-image').src = e.target.result
+            }
+            reader.readAsDataURL(file.files[0])
+        }
+        document.getElementById('display-image').classList.remove('d-none')
+        document.getElementById('display-image').classList.add('d-block')
+    }
+
     render () {
         return (
             <>
@@ -118,8 +132,12 @@ export default class extends Component {
                                 <input className="py-2 mb-5" type="text" style={{width:'100%'}}></input>
                                 <div className="text-center">
                                     <p style={{color:'pink', fontStyle:'italic', fontSize:'13px', fontWeight:'bold'}}><u>Please upload photo meter infromation / photo machine.</u></p>
-                                    <div className="file-icon mb-4">
+                                    <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
+                                    <div className="file-icon mb-4 d-bloc" htmlFor="input-file">
                                         <i className="fa fa-file-image-o fs-4 rounded-circle p-3" style={{backgroundColor:"#014C90", color:'#fff'}} />
+                                    </div>
+                                    <div className="d-none col-md-6 col-sm-8 mx-auto my-5" id="display-image">
+                                        <img className="w-100" src="#" alt="" id="preview-image" />
                                     </div>
                                     <button className="btn btn-login py-2 px-5 mb-5" style={{fontSize:'14px', width:'20%', height:'23%'}}>Submit</button>
                                 </div>

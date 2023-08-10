@@ -10,9 +10,24 @@ export default class extends Component {
         }
     }
 
-    checkCheckBox() {
-        var checkbox = document.querySelector('.consumable-checkbox:checked')
-        this.setState({checkBoxCheckCount:checkbox.length})
+    handleCheckboxChange = (event) => {
+        const isChecked = event.target.checked;
+        this.setState((prevState) => ({
+          checkBoxCheckCount: isChecked ? prevState.checkBoxCheckCount + 1 : prevState.checkBoxCheckCount - 1,
+        }));
+    };
+
+    previewImage(e) {
+        const file = e.target
+        if(file.files[0]) {
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                document.getElementById('preview-image').src = e.target.result
+            }
+            reader.readAsDataURL(file.files[0])
+        }
+        document.getElementById('display-image').classList.remove('d-none')
+        document.getElementById('display-image').classList.add('d-block')
     }
 
     render () {
@@ -43,11 +58,11 @@ export default class extends Component {
                             </div>
                             <div className="col-3">
                                 <div className="check-item d-flex align-items-center mb-3" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.checkCheckBox}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.handleCheckboxChange}></input>
                                     <label style={{fontSize:'12px'}}>Toner Black</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-3" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.checkCheckBox}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.handleCheckboxChange}></input>
                                     <label style={{fontSize:'12px'}}>Toner Cyan</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-3" style={{height:'10%'}}>
@@ -156,8 +171,12 @@ export default class extends Component {
                                     <label className="fw-medium" style={{fontSize:'12px', color:'white'}}>Photo Meter</label>
                                 </div>
                                 <p style={{color:'pink', fontStyle:'italic', fontSize:'13px', fontWeight:'bold'}}><u>Please upload photo meter infromation / photo machine.</u></p>
-                                <div className="file-icon mb-4">
+                                <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
+                                <div className="file-icon mb-4 d-block" htmlFor="input-file">
                                     <i className="fa fa-file-image-o fs-4 rounded-circle p-3" style={{backgroundColor:"#014C90", color:'#fff'}} />
+                                </div>
+                                <div className="d-none col-md-6 col-sm-8 mx-auto my-5" id="display-image">
+                                    <img className="w-100" src="#" alt="" id="preview-image" />
                                 </div>
                             </div>
 
@@ -166,8 +185,12 @@ export default class extends Component {
                                     <label className="fw-medium" style={{fontSize:'12px', color:'white'}}>Photo Status Consumable</label>
                                 </div>
                                 <p style={{color:'pink', fontStyle:'italic', fontSize:'13px', fontWeight:'bold'}}><u>Please upload photo meter infromation / photo machine.</u></p>
-                                <div className="file-icon mb-4">
+                                <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
+                                <div className="file-icon mb-4 d-bock" htmlFor="input-file">
                                     <i className="fa fa-file-image-o fs-4 rounded-circle p-3" style={{backgroundColor:"#014C90", color:'#fff'}} />
+                                </div>
+                                <div className="d-none col-md-6 col-sm-8 mx-auto my-5" id="display-image">
+                                    <img className="w-100" src="#" alt="" id="preview-image" />
                                 </div>
                             </div>
                             <div className="text-center">
