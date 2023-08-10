@@ -83,7 +83,7 @@ export default class extends Component {
                             </div>
                             <div className="container pt-5">
                                 <div className="card text-bg-dark border-0">
-                                    <img src="images/astragraphiaNews.png" class="card-img" alt="Astragraphia News"></img>
+                                    <img src="images/astragraphiaNews.png" className="card-img" alt="Astragraphia News"></img>
                                     <div className="card-img-overlay">
                                         <p className="card-text">2023-07-21 19:00:00</p>
                                         <h5 className="card-title">Astragraphia Customer Gathering 2023: Sebuah Sinergi Untuk Bertumbuh Berkelanjutan dan Terus Berkembang Bersama</h5>
