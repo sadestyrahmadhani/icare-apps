@@ -6,14 +6,12 @@ export default class extends Component {
     render() {
         return(
             <>
-                <div className="container pt-5">
-                    <div className="container">
-                        <div className="row justify-content-md-center pt-4">
+                <div className="container">
+                        <div className="row justify-content-md-center">
                             <div className="col-8">
                                 <img src="images/beranda.png" className="img-fluid" alt="Beranda"></img>
                             </div>
                         </div>
-                    </div>
                     <div className="container text-center">
                         <div className="row justify-content-md-center">
                             <div className="col-6">
