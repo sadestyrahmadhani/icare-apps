@@ -8,7 +8,7 @@ export default class extends Component {
         return(
             <>                  
                 <Navbar />
-                <div className="container">
+                <div className="container" id="layout">
                     <Outlet />
                 </div>
                 <Footer />

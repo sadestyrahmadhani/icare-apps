@@ -5,6 +5,7 @@ import { Dropdown } from "bootstrap";
 
 const Navbar = (props) => {
     const [ scrolling, setScrolling ] = useState(false)
+    const [openDropdown, setOpenDropdown] = useState(false)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -14,15 +15,16 @@ const Navbar = (props) => {
                 setScrolling(false)
             }
         }
+        
 
         window.addEventListener('scroll', handleScroll)
+        document.getElementById('layout').addEventListener('click', () => setOpenDropdown(false))
         
         return () => {
             window.removeEventListener('scroll', handleScroll)
         }
     }, []) 
 
-    const [openDropdown, setOpenDropdown] = useState(false)
 
     return(
         <>
@@ -73,7 +75,7 @@ const Navbar = (props) => {
                                             </Link>
                                         </li>
                                         <li className="nav-item mx-3">
-                                            <Link className="nav-link" onClick={() => setOpenDropdown(!openDropdown)}>
+                                            <a className="nav-link" href="#" onClick={() => setOpenDropdown(!openDropdown)}>
                                                 <i className="fa fa-gear me-2" style={{fontSize:'14px', color:'grey'}}></i>
                                                 <span className="nav-dash">PENGATURAN</span>
                                                 { openDropdown && (
@@ -122,7 +124,7 @@ const Navbar = (props) => {
                                                         </ul>
                                                     </div>
                                                 )}
-                                            </Link>
+                                            </a>
                                         </li>
                                     </ul>
                                     <div className="account">
