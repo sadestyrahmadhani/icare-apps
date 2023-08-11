@@ -7,7 +7,7 @@ export default class extends Component{
         return (
             <>
                 <div className="header">
-                    <div className="container mb-5 d-flex">
+                    <div className="container mb-5 d-flex mt-2">
                         <div className="col-6" >
                             <h4 className="title-icare fw-bold" style={{borderBottom: '4px solid #014C90', width: '235px'}}>Pengaturan Alamat</h4>
                         </div>

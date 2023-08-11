@@ -1,5 +1,6 @@
 import React from "react";
 import { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class extends Component {
     render () {
@@ -9,7 +10,7 @@ export default class extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col">
-                            <h4 style={{color:'#014C90', borderBottom:'4px solid #014C90', width:'21%'}}>Daftar EQ</h4>
+                            <h4 style={{color:'#014C90', borderBottom:'4px solid #014C90', width:'14%', fontWeight: 'bold'}}>Daftar EQ</h4>
                         </div>
                         <div className="col-md-auto">
                             <form className="search">
@@ -19,10 +20,11 @@ export default class extends Component {
                             </form>
                         </div>
                         <div className="col-md-auto">
-                        <button className="btn btn-primary">
+                            <Link className="btn btn-login" style={{padding: '6px 12px', fontSize: '16px'}}><i className="fa fa-plus" style={{marginRight: '10px'}}></i>Tambah EQ</Link>
+                        {/* <button className="btn btn-primary">
                             <i className="fa fa-plus" style={{marginRight:'10px'}}></i>
                             Tambah EQ
-                        </button>
+                        </button> */}
                         </div>
                     </div>
                 </div>
@@ -42,13 +44,13 @@ export default class extends Component {
                                                 </div>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                    <h6 className="text title-icare" style={{marginTop:'50px'}}>Ubah</h6>
+                                                    <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6>
                                                 </div>
                                                 <div className="col-md-auto">
                                                     <img src="images/approved.png" style={{height:'70px'}}></img>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                <h6 className="text title-icare" style={{marginTop:'50px'}}>Hapus</h6>
+                                                <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Hapus</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -68,13 +70,13 @@ export default class extends Component {
                                                 </div>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                    <h6 className="text title-icare" style={{marginTop:'50px'}}>Ubah</h6>
+                                                    <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6>
                                                 </div>
                                                 <div className="col-md-auto">
                                                 <img src="images/approved.png" style={{height:'70px'}}></img>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                <h6 className="text title-icare" style={{marginTop:'50px'}}>Hapus</h6>
+                                                <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Hapus</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,13 +96,13 @@ export default class extends Component {
                                                 </div>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                    <h6 className="text title-icare" style={{marginTop:'50px'}}>Ubah</h6>
+                                                    <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6>
                                                 </div>
                                                 <div className="col-md-auto" style={{marginRight:'70px'}}>
                                                     {/* <img src="images/approved.png"></img> */}
                                                 </div>
                                                 <div className="col-md-auto">
-                                                <h6 className="text title-icare" style={{marginTop:'50px'}}>Hapus</h6>
+                                                <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Hapus</h6>
                                                 </div>
                                             </div>
                                         </div>

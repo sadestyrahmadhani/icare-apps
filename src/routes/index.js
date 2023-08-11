@@ -65,6 +65,11 @@ export default [
                         component: import('./../views/daftar-eq')
                     },
                     {
+                        title: 'Form EQ',
+                        path: 'form-eq',
+                        component: import('../views/daftar-eq')
+                    },
+                    {
                         title: "Change Password",
                         path: 'change-password',
                         component: import('../views/ubah-password')
