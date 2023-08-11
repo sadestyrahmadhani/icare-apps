@@ -10,7 +10,7 @@ export default class extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col">
-                            <h4 style={{color:'#014C90', borderBottom:'4px solid #014C90', width:'14%', fontWeight: 'bold'}}>Daftar EQ</h4>
+                            <h4 style={{color:'#014C90', borderBottom:'4px solid #014C90', width:'16%', fontWeight: 'bold'}}>Daftar EQ</h4>
                         </div>
                         <div className="col-md-auto">
                             <form className="search">
@@ -20,7 +20,9 @@ export default class extends Component {
                             </form>
                         </div>
                         <div className="col-md-auto">
-                            <Link className="btn btn-login" style={{padding: '6px 12px', fontSize: '16px'}}><i className="fa fa-plus" style={{marginRight: '10px'}}></i>Tambah EQ</Link>
+                            <Link to="">
+                                <button className="btn btn-login" style={{padding: '8px 23px', fontSize: '16px'}}><i className="fa fa-plus" style={{marginRight: '5px'}}></i> Tambah EQ</button>
+                            </Link>
                         {/* <button className="btn btn-primary">
                             <i className="fa fa-plus" style={{marginRight:'10px'}}></i>
                             Tambah EQ
