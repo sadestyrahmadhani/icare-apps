@@ -47,7 +47,7 @@
 
 .text-link {
     padding: 10px 15px;
-    font-size: 12px;
+    font-size: 16px;
     color: #014C90;
     padding: 0;
 }
@@ -66,12 +66,12 @@
 
 .border-only-bottom {
     border: none;
-    border-bottom: 1px solid #000 !important;
+    border-bottom: 2px solid #cccccc !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     outline: none !important;
     padding: 5px 0;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .border-only-bottom:focus {
@@ -170,12 +170,12 @@
   } */
   
 .slide-card {
-    transform: scale(.7);
+    transform: scale(.9);
     transition: .5s;
 }
 
 .slide-card.active {
-    transform: scale(.9);
+    transform: scale(1.05); 
 }
 
 .slick-list {
@@ -222,3 +222,4 @@ td {
     position: relative;
     z-index: 2;
 } */
+

@@ -35,9 +35,9 @@ const Navbar = (props) => {
                 (
                     <div className="bg-white shadow-sm" style={{position:'sticky', top:0, zIndex:'999'}} >
                         <hr className="m-0 p-0 hr-custom" />
-                        <nav className={`navbar navbar-exspand-lg p-0 py-2`} >
+                        <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
                             <div className="container">
-                                <img src="/images/iCareLogo.png" alt="logo" height="40"/>
+                                <img src="/images/iCareLogo.png" alt="logo" height="50"/>
                                 <ul className="navbar-nav">
                                     <li className="nav-item">
                                         <Link className="nav-link text-link fw-semibold" to="/"> Beranda </Link>
@@ -52,10 +52,10 @@ const Navbar = (props) => {
                     (
                         <div className="bg-white shadow-sm" style={{position:'sticky', top:0, zIndex:'999'}} >
                             <hr className="m-0 p-0 hr-custom" />
-                            <nav className={`navbar navbar-exspand-lg p-0 px-1`} >
+                            <nav className={`navbar navbar-exspand-lg py-2 px-1`} >
                                 <div className="container-fluid">
                                     <div className="img"> 
-                                        <img src="/images/iCareLogo.png" alt="logo" height="40"/>
+                                        <img src="/images/iCareLogo.png" alt="logo" height="50"/>
                                     </div>
                                     <ul className="navbar-nav mx-auto"> 
                                         <li className="nav-item mx-3">
@@ -138,24 +138,24 @@ const Navbar = (props) => {
                     ) : (
                         <div className={scrolling ? 'bg-white shadow':''} style={{position:'sticky', top:0, zIndex:'999'}} >
                             <hr className="m-0 p-0 hr-custom" />
-                            <nav className={`navbar navbar-exspand-lg p-0 py-2`} >
+                            <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
                                 <div className="container">
-                                    <img src="/images/iCareLogo.png" alt="logo" height="40"/>
+                                    <img src="/images/iCareLogo.png" alt="logo" height="55"/>
                                     <ul className="navbar-nav">
                                         <li className="nav-item">
-                                            <a className="nav-link text-link fw-semibold" href="#beranda"> Beranda </a>
+                                            <a className="nav-link text-link fw-semibold" href="#beranda" onClick={(e) => onClickToScroll(e, '#beranda')}> Beranda </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link text-link fw-semibold" href="#about"> Tentang </a>
+                                            <a className="nav-link text-link fw-semibold" href="#about" onClick={(e) => onClickToScroll(e, '#about')}> Tentang </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link text-link fw-semibold" href="#fitur"> Fitur </a>
+                                            <a className="nav-link text-link fw-semibold" href="#fitur" onClick={(e) => onClickToScroll(e, '#fitur')}> Fitur </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link text-link fw-semibold" href="#benefit"> Keuntungan </a>
+                                            <a className="nav-link text-link fw-semibold" href="#benefit" onClick={(e) => onClickToScroll(e, '#benefit')}> Keuntungan </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link text-link fw-semibold" href="#testimonial"> Testimoni </a>
+                                            <a className="nav-link text-link fw-semibold" href="#testimonial" onClick={(e) => onClickToScroll(e, '#testimonial')}> Testimoni </a>
                                         </li>
                                     </ul>
                                 </div>
@@ -166,6 +166,34 @@ const Navbar = (props) => {
             } 
         </>
     )
+}
+
+
+const onClickToScroll = (e, id) => {
+    e.preventDefault()
+
+    var offSetScroll = document.querySelector(id)
+    smoothScroll(offSetScroll, 100)
+}
+
+function smoothScroll(targetElement, duration) {
+    const targetPosition = targetElement.getBoundingClientRect().top-150
+    const startPosition = window.pageYOffset
+    const startTime = performance.now()
+  
+    function scrollAnimation(currentTime) {
+      const elapsedTime = currentTime - startTime
+      const progress = Math.min(elapsedTime / duration, 1)
+      const easeInOutCubic = progress * (2 - progress)
+  
+      window.scrollTo(0, startPosition + targetPosition * easeInOutCubic)
+  
+      if (elapsedTime < duration) {
+        requestAnimationFrame(scrollAnimation)
+      }
+    }
+  
+    requestAnimationFrame(scrollAnimation)
 }
 
 

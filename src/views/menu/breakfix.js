@@ -45,11 +45,11 @@ export default class extends Component {
                             <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                 <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Equipment Number</label>
                             </div>
-                            <input type="text" className="py-2 mb-4" />
+                            <Link className="py-4 mb-4" style={{border:'1px solid #000'}} to="/daftar-eq"></Link>
                             <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                 <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Alamat/Lokasi Mesin</label>
                             </div>
-                            <input type="text" className="py-2 mb-4" />
+                            <Link className="py-4 mb-4" style={{border:'1px solid #000'}} ></Link>
                             <div className="card-lable py-1 mb-4" style={{backgroundColor:'#014C90'}}>
                                 <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Problem&#40;Please Select&#41;</label>
                             </div>
@@ -108,20 +108,20 @@ export default class extends Component {
                                 </div>
                             </div>
                             <div className="col-md-4 col-sm-6 col-12 mb-4">
-                                <input type="text" className="py-2 w-100" disabled={this.state.checkBoxCheckCount == 0} />
+                                <input type="text" className="py-2 w-100" style={{backgroundColor:'#bfbfbf'}} disabled={this.state.checkBoxCheckCount == 0} />
                             </div>
                             <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                 <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Tambah Deskripsi</label>
                             </div>
                             <input type="text" className="py-2 mb-5" />
                             <div className="text-center">
-                                <p className="text-danger text-decoration-underline fst-italic text-center mt-3" style={{fontSize:'10px'}}>Please upload photo meter information/photo machine</p>
+                                <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'12px', color:'pink'}}>Please upload photo meter information/photo machine</p>
                                 <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
                                 <label className="file-icon mb-3 d-block" htmlFor="input-file">
                                     <i className="fa fa-file-image-o fs-4 rounded-circle p-2" style={{backgroundColor:"#014C90", color:'#fff'}} />
                                 </label>
                                 <div className="d-none col-md-6 col-sm-8 mx-auto my-5" id="display-image">
-                                    <img className="w-100" src="#" alt="" id="preview-image" />
+                                    <img className="w-50" src="#" alt="" id="preview-image" />
                                 </div>
                                 <button className="btn btn-login py-2 px-5" style={{fontSize:'12px'}}>Submit</button>
                             </div>
