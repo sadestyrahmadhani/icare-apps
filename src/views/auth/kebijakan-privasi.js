@@ -11,7 +11,7 @@ function ConditionFooter() {
                 <div className="container mb-5">
                     <div className="text-center pt-4">
                         <div className="card-title mx-auto my-3" style={{borderBottom:'3px solid #014C90', width:'155px'}}>
-                            <h3 className="title-icare" style={{fontSize:'20px'}}>Kebijakan Privasi</h3>
+                            <h5 className="title-icare fw-bold">Kebijakan Privasi</h5>
                         </div>
                         <div className="card text-center p-2 mx-auto mb-2" style={{border:'1px solid', borderRadius:'30px', width:'70%'}}>
                             <p className="lh-sm" style={{fontSize:'13px'}}>
@@ -19,7 +19,7 @@ function ConditionFooter() {
                                 Dengan mendaftar dan menggunakan Aplikasi, Pelanggan menyatakan bahwa setiap data dan informasi yang diberikan adalah benar dan sah serta memberikan persetujuan kepada Astragraphia untuk memperoleh, mengumpulkan, menyimpan, mengelola dan mempergunakan data dan informasi tersebut sesuai dengan Ketentuan dan Kebijakan Privasi ini.
                             </p>
                         </div>
-                        <p className="text-danger" style={{fontSize:'10.5px'}}><u>&#42;Mohon baca sepenuhnya kebijakan ini</u></p>
+                        <p className="text-danger" style={{fontSize:'12px'}}><u>&#42;Mohon baca sepenuhnya kebijakan ini</u></p>
                         {   
                             Params?.type == 'register' ? <ConditionRegister /> : ""
                         }                        
@@ -35,8 +35,8 @@ function ConditionRegister(props) {
     return(
         <div className="text">
             <input type="checkbox" id="checklist" onChange={ () => setIsCheck(!isCheck) } /> 
-            <label className="mb-4" style={{fontSize:'10px'}} htmlFor="checklist" >Saya setuju dengan kebijakan ini</label> <br/>
-            <Link className={ `btn btn-login px-5 py-2 fw-medium ${ isCheck ? 'disabled' :'' }` } style={{fontSize:'11px'}} to="/register" >SUBMIT</Link>
+            <label className="mb-4" style={{fontSize:'12px'}} htmlFor="checklist" >Saya setuju dengan kebijakan ini</label> <br/>
+            <Link className={ `btn btn-login fw-medium rounded-3 ${ isCheck ? 'disabled' :'' }` } style={{fontSize:'14px', paddingLeft:'70px', paddingRight:'70px', paddingTop:'15px', paddingBottom:'15px'}} to="/register" >SUBMIT</Link>
         </div>
     )
 } 

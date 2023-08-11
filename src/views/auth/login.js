@@ -27,11 +27,11 @@ export default class extends Component {
                                     </div>
                                     <form onSubmit={ this.submit }>
                                         <div className="mb-3">
-                                            <label className="size-13px fw-medium">EMAIL</label>
+                                            <label className="size-13px fw-bold">EMAIL</label>
                                             <input type="text" className="form-control border-only-bottom"/>
                                         </div>
                                         <div className="mb-4">
-                                            <label className="size-13px fw-medium">PASSWORD</label>
+                                            <label className="size-13px fw-bold">PASSWORD</label>
                                             <input type="password" className="form-control border-only-bottom" />
                                         </div>
                                         <div className="mb-2 mx-auto text-center">
@@ -48,7 +48,7 @@ export default class extends Component {
                     </div>
                     <div className="background col-4">
                         <img src="/images/Cahyo_MFD.png" alt="images 1" width="85%" className="mb-3" style={{marginLeft:'70px'}}/>
-                        <h2 className="title-icare text-center fw-medium" style={{marginLeft:'70px', fontSize:'35px'}}>Solusi untuk eskalasi problem dan permintaan layanan.</h2>
+                        <h2 className="title-icare text-center fw-bold" style={{marginLeft:'70px', fontSize:'35px'}}>Solusi untuk eskalasi problem dan permintaan layanan.</h2>
                     </div>
                 </div>
 

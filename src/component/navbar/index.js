@@ -143,19 +143,19 @@ const Navbar = (props) => {
                                     <img src="/images/iCareLogo.png" alt="logo" height="55"/>
                                     <ul className="navbar-nav">
                                         <li className="nav-item">
-                                            <a className="nav-link text-link fw-semibold" href="#beranda" onClick={(e) => onClickToScroll(e, '#beranda')}> Beranda </a>
+                                            <a className="nav-link text-link mx-3 fw-semibold" href="#beranda" onClick={(e) => onClickToScroll(e, '#beranda')}> Beranda </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link text-link fw-semibold" href="#about" onClick={(e) => onClickToScroll(e, '#about')}> Tentang </a>
+                                            <a className="nav-link text-link mx-2 fw-semibold" href="#about" onClick={(e) => onClickToScroll(e, '#about')}> Tentang </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link text-link fw-semibold" href="#fitur" onClick={(e) => onClickToScroll(e, '#fitur')}> Fitur </a>
+                                            <a className="nav-link text-link mx-2 fw-semibold" href="#fitur" onClick={(e) => onClickToScroll(e, '#fitur')}> Fitur </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link text-link fw-semibold" href="#benefit" onClick={(e) => onClickToScroll(e, '#benefit')}> Keuntungan </a>
+                                            <a className="nav-link text-link mx-2 fw-semibold" href="#benefit" onClick={(e) => onClickToScroll(e, '#benefit')}> Keuntungan </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className="nav-link text-link fw-semibold" href="#testimonial" onClick={(e) => onClickToScroll(e, '#testimonial')}> Testimoni </a>
+                                            <a className="nav-link text-link mx-2 fw-semibold" href="#testimonial" onClick={(e) => onClickToScroll(e, '#testimonial')}> Testimoni </a>
                                         </li>
                                     </ul>
                                 </div>
