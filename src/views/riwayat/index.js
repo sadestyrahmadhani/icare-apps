@@ -92,7 +92,33 @@ export default class extends Component {
                         </div>
                         <div className="card border-0 shadow mb-3">
                             <div className="selesai-title rounded-top py-3 text-center" style={{backgroundColor:'#ff8000', fontWeight:'500', color:'#fff'}}>
-                                <label>Permintaan diproses</label>
+                                <label>Menunggu Konfirmasi</label>
+                            </div>
+                            <div className="row">
+                                <div className="border-end col-md-2 col-sm-4 col-12">
+                                    <p className="px-3 py-2">lorem</p>
+                                </div>
+                                <div className="border-end col-md-2 col-sm-4 col-12">
+                                    <p className="px-3 py-2">lorem</p>
+                                </div>
+                                <div className="border-end col-md-5 col-sm-7 col-12">
+                                    
+                                </div>
+                                <div className="col-md-3 col-sm-5 col-12 p-4">
+                                    <button className="btn-view shadow rounded-2 d-flex align-items-center p-0 mx-auto" style={{width:'70%', border:'none',backgroundColor:'#014C90'}}>
+                                        <div className="col-9 p-2 text-center" style={{color:'#fff', fontSize:'12px'}}>
+                                            VIEW DETAIL
+                                        </div>
+                                        <div className="col-3 text-center bg-white text-danger p-2 rounded-end">
+                                            <i className="fa fa-chevron-right ms-2" style={{backgroundColor:'#fff'}}></i>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card border-0 shadow mb-3">
+                            <div className="selesai-title rounded-top py-3 text-center" style={{backgroundColor:'#1eb716', fontWeight:'500', color:'#fff'}}>
+                                <label>Permintaan Diproses</label>
                             </div>
                             <div className="row">
                                 <div className="border-end col-md-2 col-sm-4 col-12">
