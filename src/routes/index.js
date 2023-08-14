@@ -92,6 +92,11 @@ export default [
                 component: import('./../views/menu/supplies')
             },
             {
+                title: 'Collect Meter',
+                path: 'collect-meter',
+                component: import('./../views/menu/collect-meter')
+            },
+            {
                 path: '',
                 component: '',
                 children: [
