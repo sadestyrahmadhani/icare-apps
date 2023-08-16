@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default class extends Component {
     render() {
         return (
-            <div className="card border-0 mb-3" style={{ boxShadow: '0 0 1.5rem rgba(0, 0, 0, .2' }} key={ this.props.key }>
+            <div className="card border-0 mb-3" style={{ boxShadow: '0 0 1.5rem rgba(0, 0, 0, .2' }}>
                 <div className="reject-title rounded-top py-3 text-center" style={{backgroundColor: this.props.cardBg[this.props.tabActive - 1].background, fontWeight:'500', color:'#fff'}}>
                     <label>{ this.props.cardBg[this.props.tabActive - 1].title }</label>
                 </div>

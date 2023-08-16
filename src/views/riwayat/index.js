@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import AlertConfirm from './../../component/alert/confirmAlert.js'
+import AlertConfirm from './../../component/alert/confirmAlert.js';
+import TabelComponent from "./component/tabel.js";
 
 export default class extends Component {
     constructor(props) {
@@ -78,24 +79,6 @@ export default class extends Component {
                         items: 'Toner Cyan, Drum Cyan',
                         description: 'Test12345678'
                     }
-                ],
-                [
-                    {
-                        code: 'CR-2310784',
-                        requestType: 'Consumable Request',
-                        date: '4/12/2023 12:41:01 PM',
-                        EQCode: '300822',
-                        items: 'Toner Cyan, Drum Cyan',
-                        description: 'Test12345678'
-                    },
-                    {
-                        code: 'CR-2310784',
-                        requestType: 'Consumable Request',
-                        date: '4/12/2023 12:41:01 PM',
-                        EQCode: '300822',
-                        items: 'Toner Cyan, Drum Cyan',
-                        description: 'Test12345678'
-                    },
                 ],
                 [],
                 []
