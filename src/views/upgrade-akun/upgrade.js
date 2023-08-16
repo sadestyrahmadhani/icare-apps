@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class extends Component {
     render(){
@@ -19,7 +20,8 @@ export default class extends Component {
                             </div>
                         </div>
                         <div className="text-center mb-5 mx-auto">
-                            <button className="btn btn-login px-5 py-3">Upgrade Sekarang</button>
+                            {/* <button className="btn btn-login px-5 py-3">Upgrade Sekarang</button> */}
+                            <Link className="btn btn-login px-5 py-3" to="/form-upgrade-account">Upgrade Sekarang</Link>
                         </div>
                     </div>
                 </div>

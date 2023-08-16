@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700&display=swap');
+
+body {
+    font-family: 'Lato', sans-serif;
+}
+
 .main-background {
     position: absolute;
     top: 0;
@@ -36,6 +42,10 @@
     color: #014C90;
 }
 
+.nav-app:focus {
+    color: #014C90;
+}
+
 .dropdown {
     position: absolute;
 }
@@ -45,8 +55,7 @@
 }
 
 .text-link {
-    padding: 10px 15px;
-    font-size: 12px;
+    font-size: 14px;
     color: #014C90;
     padding: 0;
 }
@@ -56,7 +65,7 @@
 }
 
 .text-link:focus {
-    color: #4154F1;
+    color: #4154F1 !important;
 }
 
 .row-height {
@@ -65,12 +74,12 @@
 
 .border-only-bottom {
     border: none;
-    border-bottom: 1px solid #000 !important;
+    border-bottom: 2px solid #cccccc !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     outline: none !important;
     padding: 5px 0;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .border-only-bottom:focus {
@@ -89,8 +98,8 @@
     color: #fff;
 }
 
-.size-10px {
-    font-size: 10px;
+.size-13px {
+    font-size: 13px;
     color: #014C90;
 }
 
@@ -169,12 +178,12 @@
   } */
   
 .slide-card {
-    transform: scale(.7);
+    transform: scale(.9);
     transition: .5s;
 }
 
 .slide-card.active {
-    transform: scale(.9);
+    transform: scale(1.05); 
 }
 
 .slick-list {
@@ -192,16 +201,17 @@ td {
 }
 
 .btn-proses {
-    border: 2px solid #014C90;
+    border: 1px solid #014C90;
     text-decoration: none;
     color: #014C90;
+    background-color: #ffffff;
 }
 
 .btn-proses:hover {
     background-color: #f6f5ff;
 }
 
-.btn-proses:focus {
+.btn-proses:focus, .btn-proses.active {
     background-color: #014C90;
     color: #fff;
 }
@@ -221,3 +231,14 @@ td {
     position: relative;
     z-index: 2;
 } */
+
+
+input:disabled {
+    background-color: #bfbfbf;
+}
+
+.input-error:focus {
+    border-color:#00c8ff;
+    outline: none;
+
+}

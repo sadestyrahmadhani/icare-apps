@@ -1,6 +1,7 @@
 import { Routes, Route, useLocation, useNavigate, useParams } from 'react-router-dom';
 import React from 'react';
 import ObjectRoute from './../routes';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 
 const CreateRouteComponent = (props) => {
     const location = useLocation()
@@ -8,7 +9,16 @@ const CreateRouteComponent = (props) => {
     const params = useParams()
     const Component = props.component
 
-    return <Component router={{ location, navigate, params }} />
+    return (
+        <>
+            <HelmetProvider>
+                <Helmet>
+                    <title>{ props.data.title } - iCare</title>
+                </Helmet>
+            </HelmetProvider>
+            <Component router={{ location, navigate, params }} />
+        </>
+    )
 }
 
 const mappingRoutes = (routes) => {
@@ -53,7 +63,7 @@ const mappingRoutes = (routes) => {
                             <React.Suspense
                                 fallback="Loading..."
                         >
-                                <CreateRouteComponent component={Component} />
+                                <CreateRouteComponent component={Component} data={ value } />
                             </React.Suspense>
                         }
                     />
@@ -65,7 +75,7 @@ const mappingRoutes = (routes) => {
                     <Route
                         path={ value.path }
                         key={ key }
-                        element={ <CreateRouteComponent component={Component} /> }
+                        element={ <CreateRouteComponent component={Component} data={ value } /> }
                     />
                 )
             }

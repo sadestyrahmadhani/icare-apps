@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class extends Component {
     render(){
@@ -28,8 +29,8 @@ export default class extends Component {
                                     </div>
                                     <label style={{fontSize: '14px', marginTop: '10px'}}>(Maks. 5 MB, Format JPG/PNG)</label>
                                     <div className="mt-2 mb-3">
-                                        <input type="file" className="btn btn-login" id="fileInput" accept="image/*" />
-                                        
+                                        <input type="file" className="d-none" id="input-file" accept="image/*" />
+                                        <label className="mb-3 btn btn-login" htmlFor="input-file" style={{padding: '10px 40px'}}>Foto KTP</label>
                                     </div>
                                     <div className="row">
                                         <div className="card-label py-2 border border-dark" style={{backgroundColor: '#014C90'}}>
@@ -47,12 +48,14 @@ export default class extends Component {
                                     </div>
                                     <label style={{fontSize: '14px', marginTop: '10px'}}>(Maks. 5 MB, Format JPG/PNG)</label>
                                     <div className="mt-2 mb-3">
-                                        <input type="file" className="btn btn-login" id="fileInput" accept="image/*"/>
+                                    <input type="file" className="d-none" id="input-file" accept="image/*" />
+                                        <label className="btn btn-login" htmlFor="input-file" style={{padding: '10px 40px'}}>Selfie dengan KTP</label>
                                     </div>
                                 </div>  
                             </div>
                             <div className="text-center">
-                                <button type="submit" className="btn btn-login" style={{padding: '15px 50px 15px 50px '}}>SUBMIT</button>
+                                {/* <button type="submit" className="btn btn-login" style={{padding: '15px 50px 15px 50px '}}>SUBMIT</button> */}
+                                <Link className="btn btn-login" style={{padding: '15px 50px 15px 50px'}} to="/waiting-upgrade-account">SUBMIT</Link>
                             </div>
                         </form>
                     </div>

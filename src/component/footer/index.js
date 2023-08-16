@@ -13,33 +13,33 @@ export default class extends Component {
                             <div className="col-lg-3 col-md-3 col-12 mx-auto">
                                 <ol style={{listStyle:'none'}}>
                                         <li>
-                                            <Link className="list-items" style={{textDecoration:'none', fontSize:'12px'}} to="https://drive.google.com/drive/u/0/folders/1_aazXBeGBe_hl_U9p5XLXP4UCbjaw9x-" target="_blank" rel="noopener noreferrer">Bantuan dan Panduan</Link>
+                                            <Link className="list-items" style={{textDecoration:'none', fontSize:'14px'}} to="https://drive.google.com/drive/u/0/folders/1_aazXBeGBe_hl_U9p5XLXP4UCbjaw9x-" target="_blank" rel="noopener noreferrer">Bantuan dan Panduan</Link>
                                         </li>
                                         <li>
-                                            <Link className="list-items" style={{textDecoration:'none', fontSize:'12px'}} to="kebijakan-privasi">Kebijakan Privasi</Link>
+                                            <Link className="list-items" style={{textDecoration:'none', fontSize:'14px'}} to="kebijakan-privasi">Kebijakan Privasi</Link>
                                         </li>
                                         <li>
-                                            <Link className="list-items" style={{textDecoration:'none', fontSize:'12px'}} to="https://documentsolution.com/id/konten/dukungan-konsumen/icare" target="_blank" rel="noopener noreferrer">Tentang iCare</Link>
+                                            <Link className="list-items" style={{textDecoration:'none', fontSize:'14px'}} to="https://documentsolution.com/id/konten/dukungan-konsumen/icare" target="_blank" rel="noopener noreferrer">Tentang iCare</Link>
                                         </li>
                                         <li className="mt-2">
-                                            <Link className="list-items" style={{textDecoration:'none', fontSize:'12px'}}>
-                                                <img src="/images/halo23.png" alt="astragraphia" width="130" />
+                                            <Link className="list-items" style={{textDecoration:'none', fontSize:'14px'}}>
+                                                <img src="/images/halo23.png" alt="astragraphia" width="160" />
                                             </Link>
                                         </li>
                                 </ol>
                             </div>
                             <div className="col-lg-3 col-md-3 col-12 mx-auto">
-                                <p className="mb-2" style={{fontSize:'12px'}}>Follow Us</p>
+                                <p className="mb-2" style={{fontSize:'14px'}}>Follow Us</p>
                                 <div className="d-flex align-items-center mb-2">
                                     <Link className="list-items" to="https://www.youtube.com/user/Astragraphia" target="_blank" rel="noopener noreferrer">
                                         <i className="fa fa-youtube-play me-2" style={{fontSize:'22px'}}></i>
-                                        <span style={{fontSize:'12px',}}>Astragraphia Document Solution</span>
+                                        <span style={{fontSize:'14px',}}>Astragraphia Document Solution</span>
                                     </Link>
                                 </div>
                                 <div className="d-flex align-items-center mb-2">
                                     <Link className="list-items" to="https://www.instagram.com/astragraphiadocsol/" target="_blank" rel="noopener noreferrer">
                                         <i className="fa fa-instagram me-2" style={{fontSize:'22px'}}></i>
-                                        <span style={{fontSize:'12px'}}>astragraphiadocsol</span>
+                                        <span style={{fontSize:'14px'}}>astragraphiadocsol</span>
                                     </Link>
                                 </div>
                             </div>
@@ -47,7 +47,7 @@ export default class extends Component {
                     </div>
                     <div className="d-flex align-items-center w-100">
                         <hr className="w-100"/>
-                        <div className="d-block px-4" style={{whiteSpace:'nowrap', fontSize:'12px'}}>Powered by Astragraphia</div>
+                        <div className="d-block px-4" style={{whiteSpace:'nowrap', fontSize:'14px'}}>Powered by Astragraphia</div>
                         <hr className="w-100"/>
                     </div>
                 </footer>

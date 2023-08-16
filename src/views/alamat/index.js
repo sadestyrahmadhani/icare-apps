@@ -7,9 +7,9 @@ export default class extends Component{
         return (
             <>
                 <div className="header">
-                    <div className="container mb-5 d-flex">
+                    <div className="container mb-5 d-flex mt-2">
                         <div className="col-6" >
-                            <h4 className="title-icare fw-bold" style={{borderBottom: '4px solid #014C90', width: '235px'}}>Pengaturan Alamat</h4>
+                            <h4 className="title-icare fw-bold" style={{borderBottom: '4px solid #014C90', width: '210px'}}>Pengaturan Alamat</h4>
                         </div>
                         <div className="col-6 row text-end">
                             <div className="col-7">
@@ -19,7 +19,9 @@ export default class extends Component{
                                 </form>
                             </div>
                             <div className="col-5">
-                                <button className="btn btn-login"><i className="fa fa-plus"></i> Tambah Alamat</button>
+                                <Link to="/form-address">
+                                    <button className="btn btn-login" style={{padding: '8px 23px', fontSize: '16px'}}><i className="fa fa-plus" style={{marginRight: '5px'}}></i> Tambah Alamat</button>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -52,7 +54,7 @@ export default class extends Component{
                                                     <td>082111999765</td>
                                                 </tr>  
                                             </tbody>
-                                            <i className="fa fa-map-marker fa-lg"></i> <span className="title-icare fs-6"> Sudah Pinpoint</span>
+                                            <i className="fa fa-map-marker fa-lg" style={{marginRight: '5px'}}></i> <span className="title-icare fs-6"> Sudah Pinpoint</span>
                                         </thead>
                                     </table>
                                 </div>
@@ -65,7 +67,7 @@ export default class extends Component{
                                                 <Link className="nav-link">Utamakan</Link>
                                             </li> */}
                                             <li className="nav-item">
-                                                <Link className="nav-link">Ubah</Link>
+                                                <Link className="nav-link" to="/form-address">Ubah</Link>
                                             </li>
                                             <li className="nav-item">
                                                 <Link className="nav-link">Hapus</Link>

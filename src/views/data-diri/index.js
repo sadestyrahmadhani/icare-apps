@@ -8,7 +8,7 @@ export default class extends Component {
             <>
             <div className="container pt-2 pb-5">
                 <div className="container">
-                    <h4 style={{color:'#014C90', borderBottom:'4px solid #014C90', width:'10%'}}>Data Diri</h4>
+                    <h4 style={{color:'#014C90', borderBottom:'4px solid #014C90', width:'10%', fontWeight: 'bold'}}>Data Diri</h4>
                 </div>
                 <div className="container pt-4">
                     <div className="card px-3 shadow border-0">

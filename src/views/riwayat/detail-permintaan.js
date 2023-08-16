@@ -25,10 +25,9 @@ export default class extends Component {
                                 <b className="fw-medium" style={{fontSize:'14px'}}>Daftar Penerima</b>
                                 <div className="card shadow-sm p-3 my-2 rounded-4">
                                     <div className="row">
-                                        <div className="col-2">
+                                        <div className="col-3">
                                             <p className="lh-lg" style={{fontSize:'14px'}}>Nama Perusahaan <br/> Nama Penerima <br/> No Telepon <br/> Lokasi Penerima</p>
                                         </div>
-                                        <div className="col-1 lh-lg" style={{fontSize:'14px'}}>: <br/> : <br/> : <br/> :</div>
                                         <div className="col-3">
                                             <p className="lh-lg" style={{fontSize:'14px'}}>Kantor pusat <br/> ima <br/> 081234567890 <br/> Nama Jalan: unknow 000 city <br/> No Gedung: 30 <br/> Nama Gedung: Gedung1</p>
                                         </div>

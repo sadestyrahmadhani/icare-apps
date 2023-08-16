@@ -55,9 +55,19 @@ export default [
                         component: import('../views/alamat')
                     },
                     {
+                        title: 'Form Address',
+                        path: 'form-address',
+                        component: import('../views/alamat/form')
+                    },
+                    {
                         title:'Daftar-EQ',
                         path:'daftar-eq',
                         component: import('./../views/daftar-eq')
+                    },
+                    {
+                        title: 'Form EQ',
+                        path: 'form-eq',
+                        component: import('../views/daftar-eq')
                     },
                     {
                         title: "Change Password",
@@ -72,30 +82,41 @@ export default [
                 component: import('./../views/menu/breakfix')
             },
             {
-                title:'Supplies',
-                path:'supplies',
-                component: import('./../views/menu/supplies')
-            },
-            {
                 title:'Install',
                 path:'install',
                 component: import('../views/menu/install'),
             },
             {
-                title: 'Upgarde Account',
-                path: 'upgarde-account',
-                component: import('../views/upgrade-akun/upgrade')
+                title:'Supplies',
+                path:'supplies',
+                component: import('./../views/menu/supplies')
             },
             {
-                title: 'Form Upgrade Account',
-                path: 'form-upgrade-account',
-                component: import('../views/upgrade-akun/form')
+                title: 'Collect Meter',
+                path: 'collect-meter',
+                component: import('./../views/menu/collect-meter')
             },
             {
-                title: 'Waiting Upgrade Account',
-                path: 'waiting-upgrade-account',
-                component: import('../views/upgrade-akun/waiting')
-            }
+                path: '',
+                component: '',
+                children: [
+                    {
+                        title: 'Upgarde Account',
+                        path: 'upgarde-account',
+                        component: import('../views/upgrade-akun/upgrade')
+                    },
+                    {
+                        title: 'Form Upgrade Account',
+                        path: 'form-upgrade-account',
+                        component: import('../views/upgrade-akun/form')
+                    },
+                    {
+                        title: 'Waiting Upgrade Account',
+                        path: 'waiting-upgrade-account',
+                        component: import('../views/upgrade-akun/waiting')
+                    }
+                ]
+            },
             
         ]
     },
