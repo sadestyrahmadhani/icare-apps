@@ -32,6 +32,9 @@
 .nav-dash:focus {
     color: #014C90;
 }
+.nav-link:focus {
+    color: #014C90;
+}
 
 .dropdown {
     position: absolute;

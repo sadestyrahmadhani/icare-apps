@@ -14,31 +14,31 @@ export default class extends Component {
                         </div>
                     <div className="container text-center">
                         <div className="row justify-content-md-center">
-                            <div className="col-6">
+                            <div className="col-8">
                                 <div className="container">
-                                    <div className="row pt-5">
+                                    <div className="row mt-5">
                                         <div className="col">
                                             <Link className="list-items" to="../breakfix" style={{textDecoration:'none'}}>
                                                 <div className="img">
-                                                    <img src="images/breakfix.png" alt="Logo Breakfix" height={100}></img>
+                                                    <img src="images/breakfix.png" alt="Logo Breakfix" height={110}></img>
                                                 </div>
-                                                <h6 className="pt-2">Breakfix</h6>
+                                                <h6 className="mt-2">Breakfix</h6>
                                             </Link>
                                         </div>
                                         <div className="col">
                                             <Link className="list-items" to="../supplies" style={{textDecoration:'none'}}>
                                                 <div className="img">
-                                                    <img src="images/supplies.png" alt="Logo Supplies" height={100}></img>
+                                                    <img src="images/supplies.png" alt="Logo Supplies" height={110}></img>
                                                 </div>
-                                                <h6 className="pt-2">Supplies</h6>
+                                                <h6 className="mt-2">Supplies</h6>
                                             </Link>
                                         </div>
                                         <div className="col">
                                             <Link className="list-items" to="../install" style={{textDecoration:'none'}}>
                                                 <div className="img">
-                                                    <img src="images/install.png" alt="Logo Install" height={100}></img>
+                                                    <img src="images/install.png" alt="Logo Install" height={110}></img>
                                                 </div>
-                                                <h6 className="pt-2">Install</h6>
+                                                <h6 className="mt-2">Install</h6>
                                             </Link>
                                         </div>
                                     </div>
@@ -48,25 +48,25 @@ export default class extends Component {
                                         <div className="col">
                                             <Link className="list-items" to="../collect-meter" style={{textDecoration:'none'}}>
                                                 <div className="img">
-                                                    <img src="images/collectMeter.png" alt="Logo Collect Meter" height={100}></img>
+                                                    <img src="images/collectMeter.png" alt="Logo Collect Meter" height={110}></img>
                                                 </div>
-                                                <h6 className="pt-2">Collect Meter</h6>
+                                                <h6 className="mt-2">Collect Meter</h6>
                                             </Link>
                                         </div>
                                         <div className="col">
                                             <Link className="list-items" to="" style={{textDecoration:'none'}}>
                                                 <div className="img">
-                                                    <img src="images/callCenter.png" alt="Logo Call Center" height={100}></img>
+                                                    <img src="images/callCenter.png" alt="Logo Call Center" height={110}></img>
                                                 </div>
-                                                <h6 className="pt-2">Call Center</h6>
+                                                <h6 className="mt-2">Call Center</h6>
                                             </Link>
                                         </div>
                                         <div className="col">
                                             <Link className="list-items" to="" style={{textDecoration:'none'}}>
                                                 <div className="img">
-                                                    <img src="images/informasiTagihan.png" alt="Logo Informasi Tagihan" height={100}></img>
+                                                    <img src="images/informasiTagihan.png" alt="Logo Informasi Tagihan" height={110}></img>
                                                 </div>
-                                                <h6 className="pt-2">Informasi Tagihan</h6>
+                                                <h6 className="mt-2">Informasi Tagihan</h6>
                                             </Link>
                                         </div>
                                     </div>
