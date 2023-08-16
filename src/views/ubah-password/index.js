@@ -2,18 +2,20 @@ import { Component } from "react";
 
 
 export default class extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
-            typeInput:'password',
-            // iconClass: 'fa fa-eye'
+            typeInput: [
+                'password',
+                'password',
+                'password',
+            ],
+            iconClass: [
+                'fa-eye',
+                'fa-eye',
+                'fa-eye',
+            ]
         }
-        this.checkInput = this.checkInput.bind(this)
-    }
-
-    checkInput(){
-        this.setState({typeInput:'text'})
-        // this.setState({iconClass:'fa fa-eye-slash'})
     }
 
     render(){
@@ -30,25 +32,64 @@ export default class extends Component {
                                     <div className="mb-3">
                                         <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Lama</label>
                                         <div className="d-flex border border-dark">
-                                            <input type={this.state.typeInput} className="form-control" style={{boxShadow: 'none', textDecoration: 'none', border: 'hidden'}}/>
-                                            {/* <span onClick={ this.setState({ typeInput: this.state.typeInput === 'password' ? 'text' : 'password', iconClass: this.state.typeInput === 'password' ? 'fa fa-eye-slash' : 'fa fa-eye' }) }>
-                                                <i className={this.state.iconClass}></i>
-                                            </span> */}
+                                            <input type={ this.state.typeInput[0] } className="form-control" style={{boxShadow: 'none', textDecoration: 'none'}}/>
+                                            <i 
+                                                className={ `fa ${ this.state.iconClass[0] } fa-lg my-auto me-2` } 
+                                                onClick={ () => this.setState({
+                                                    typeInput: [
+                                                        this.state.typeInput[0] == 'password' ? 'text' : 'password',
+                                                        this.state.typeInput[1],
+                                                        this.state.typeInput[2],
+                                                    ],
+                                                    iconClass: [
+                                                        this.state.typeInput[0] == 'password' ? 'fa-eye-slash' : 'fa-eye',
+                                                        this.state.iconClass[1],
+                                                        this.state.iconClass[2]
+                                                    ]
+                                                }) }
+                                            ></i>
                                         </div>  
                                     </div>
                                     <div className="mb-3">
                                         <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Baru</label>
                                         <div className="border border-dark d-flex">
-                                            <input type={this.state.typeInput} className="form-control" style={{boxShadow: 'none', textDecoration: 'none', border: 'hidden'}}/>
-                                            <i className="fa fa-eye fa-lg my-auto me-2"></i>
+                                            <input type={ this.state.typeInput[1] } className="form-control" style={{boxShadow: 'none', textDecoration: 'none'}}/>
+                                            <i 
+                                                className={ `fa ${ this.state.iconClass[1] } fa-lg my-auto me-2` } 
+                                                onClick={ () => this.setState({
+                                                    typeInput: [
+                                                        this.state.typeInput[0],
+                                                        this.state.typeInput[1] == 'password' ? 'text' : 'password',
+                                                        this.state.typeInput[2],
+                                                    ],
+                                                    iconClass: [
+                                                        this.state.iconClass[0],
+                                                        this.state.typeInput[1] == 'password' ? 'fa-eye-slash' : 'fa-eye',
+                                                        this.state.iconClass[2]
+                                                    ]
+                                                }) }
+                                            ></i>
                                         </div>
                                     </div>
                                     <div className="mb-4">
                                         <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Ulangi Kata Sandi Baru</label>
                                         <div className="d-flex border border-dark">
-                                            <input type={this.state.typeInput} className="form-control" style={{boxShadow: 'none', textDecoration: 'none', border: 'hidden'}}/>
-                                            <i className="fa fa-eye fa-lg my-auto me-2"></i>
-
+                                            <input type={ this.state.typeInput[2] } className="form-control" style={{boxShadow: 'none', textDecoration: 'none'}}/>
+                                            <i 
+                                                className={ `fa ${ this.state.iconClass[2] } fa-lg my-auto me-2` } 
+                                                onClick={ () => this.setState({
+                                                    typeInput: [
+                                                        this.state.typeInput[0],
+                                                        this.state.typeInput[1],
+                                                        this.state.typeInput[2] == 'password' ? 'text' : 'password'
+                                                    ],
+                                                    iconClass: [
+                                                        this.state.iconClass[0],
+                                                        this.state.iconClass[1],
+                                                        this.state.typeInput[2] == 'password' ? 'fa-eye-slash' : 'fa-eye'
+                                                    ]
+                                                }) }
+                                            ></i>
                                         </div>
                                     </div>
                                     <div className="text-center">
