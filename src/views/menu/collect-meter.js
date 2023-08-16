@@ -16,7 +16,7 @@ export default class extends Component {
         document.getElementById('display-image').classList.add('d-block')
     }
 
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             checkBoxCheckCount:0
@@ -24,8 +24,8 @@ export default class extends Component {
         this.checkCheckBox = this.checkCheckBox.bind(this)
     }
 
-    checkCheckBox(){
-        var checkbox = document.querySelectorAll('.problem-checkbox:check')
+    checkCheckBox() {
+        var checkbox = document.querySelectorAll('.problem-checkbox:checked')
         this.setState({checkBoxCheckCount:checkbox.length})
     }
     render () {
@@ -70,12 +70,12 @@ export default class extends Component {
                                     <img src="#" alt="" className="w-50" id="preview-image"/>
                                 </div>
                             </div>
-                            <div className="text-center">
+                            <div className="text-center" style={{fontSize: '12px'}}>
                                 <span className="me-2">Apakah anda bersedia input meter manual? </span>
                                 <input type="checkbox" className="problem-checkbox" onChange={this.checkCheckBox}/>
                             </div>
-                            <div>
-                                
+                            <div className="col-md-4 col-sm-6 col-12 mb-4">
+                                <input type="text" className="input-error py-2 w-100" disabled={this.state.checkBoxCheckCount == 0}/>
                             </div>
                         </div>
                     </div>

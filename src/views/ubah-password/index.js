@@ -1,21 +1,20 @@
 import { Component } from "react";
 
+
 export default class extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            typeInput:'password',
+            // iconClass: 'fa fa-eye'
+        }
+        this.checkInput = this.checkInput.bind(this)
+    }
 
-    // const [password, setPasswordValue] = React.useState("password");
-    // const [passwordInput, setPasswordInput] = React.useState("");
-
-    // const onPasswordChange = (e) => {
-    //     setPasswordInput(e.target.value)
-    // };
-
-    // const toggle = () => {
-    //     if(password == "password") {
-    //         setPasswordValue("text");
-    //         return;
-    //     }
-    //     setPasswordValue("password");
-    // }
+    checkInput(){
+        this.setState({typeInput:'text'})
+        // this.setState({iconClass:'fa fa-eye-slash'})
+    }
 
     render(){
         return(
@@ -31,21 +30,23 @@ export default class extends Component {
                                     <div className="mb-3">
                                         <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Lama</label>
                                         <div className="d-flex border border-dark">
-                                            <input type="password" className="form-control" style={{boxShadow: 'none', textDecoration: 'none'}}/>
-                                            <i className="fa fa-eye fa-lg my-auto me-2"></i>
+                                            <input type={this.state.typeInput} className="form-control" style={{boxShadow: 'none', textDecoration: 'none', border: 'hidden'}}/>
+                                            {/* <span onClick={ this.setState({ typeInput: this.state.typeInput === 'password' ? 'text' : 'password', iconClass: this.state.typeInput === 'password' ? 'fa fa-eye-slash' : 'fa fa-eye' }) }>
+                                                <i className={this.state.iconClass}></i>
+                                            </span> */}
                                         </div>  
                                     </div>
                                     <div className="mb-3">
                                         <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Baru</label>
                                         <div className="border border-dark d-flex">
-                                            <input type="password" className="form-control" style={{boxShadow: 'none', textDecoration: 'none'}}/>
+                                            <input type={this.state.typeInput} className="form-control" style={{boxShadow: 'none', textDecoration: 'none', border: 'hidden'}}/>
                                             <i className="fa fa-eye fa-lg my-auto me-2"></i>
                                         </div>
                                     </div>
                                     <div className="mb-4">
                                         <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Ulangi Kata Sandi Baru</label>
                                         <div className="d-flex border border-dark">
-                                            <input type="password" className="form-control" style={{boxShadow: 'none', textDecoration: 'none'}}/>
+                                            <input type={this.state.typeInput} className="form-control" style={{boxShadow: 'none', textDecoration: 'none', border: 'hidden'}}/>
                                             <i className="fa fa-eye fa-lg my-auto me-2"></i>
 
                                         </div>
