@@ -201,13 +201,14 @@ td {
     border: 1px solid #014C90;
     text-decoration: none;
     color: #014C90;
+    background-color: #ffffff;
 }
 
 .btn-proses:hover {
     background-color: #f6f5ff;
 }
 
-.btn-proses:focus {
+.btn-proses:focus, .btn-proses.active {
     background-color: #014C90;
     color: #fff;
 }
