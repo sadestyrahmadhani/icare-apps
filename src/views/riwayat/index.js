@@ -1,6 +1,6 @@
 import { Component } from "react";
-import { Link } from "react-router-dom";
-import AlertConfirm from './../../component/alert/confirmAlert.js'
+import AlertConfirm from './../../component/alert/confirmAlert'
+import TabelComponent from './component/tabel'
 
 export default class extends Component {
     constructor(props) {
