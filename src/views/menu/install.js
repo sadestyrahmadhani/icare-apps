@@ -34,96 +34,71 @@ export default class extends Component {
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Equipment Number</label>
                                 </div>
-                                <input className="py-2 mb-4" type="text" style={{width:'100%'}}></input>
+                                <Link className="py-4 mb-4" style={{border:'1px solid #000'}} to="/daftar-eq"></Link>
                                 
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Alamat/Lokasi Mesin</label>
                                 </div>
-                                <input className="py-2 mb-4" type="text" style={{width:'100%'}}></input>
+                                <Link className="py-4 mb-4" style={{border:'1px solid #000'}} ></Link>
                                 
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Problem (Please Select)</label>
                                 </div>
-                                <div className="card-text mb-4">
-                                    <div className="row">
-                                        <div className="col">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-                                                <label className="form-check-label" for="flexCheckDefault">
-                                                    Install driver printer
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-                                                <label className="form-check-label" for="flexCheckDefault">
-                                                    Setting printer
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-                                                <label className="form-check-label" for="flexCheckDefault">
-                                                    Setting address book
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-                                                <label className="form-check-label" for="flexCheckDefault">
-                                                    Setting Kalibrasi
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-                                                <label className="form-check-label" for="flexCheckDefault">
-                                                    Install resite
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-                                                <label className="form-check-label" for="flexCheckDefault">
-                                                    Setting scan
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-                                                <label className="form-check-label" for="flexCheckDefault">
-                                                    Install New Machine
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-                                                <label className="form-check-label" for="flexCheckDefault">
-                                                    Setting Warna
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-                                                <label className="form-check-label" for="flexCheckDefault">
-                                                    Install accessories
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-                                                <label className="form-check-label" for="flexCheckDefault">
-                                                    Setting Authentication / Auditron
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-                                                <label className="form-check-label" for="flexCheckDefault">
-                                                    Setting IP Address
-                                                </label>
-                                            </div>
-                                            <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"></input>
-                                                <label className="form-check-label" for="flexCheckDefault">
-                                                    Setting Fax
-                                                </label>
-                                            </div>
-                                        </div>
+
+                                <div className="col-md-4 col-sm-6 col-12 mt-3">
+                                    <div className="check-item d-flex align-items-center mb-4">
+                                        <input type="checkbox" className="me-2"/> 
+                                        <label style={{fontSize:'12px'}}>Install driver printer</label>
+                                    </div>
+                                    <div className="check-item d-flex align-items-center mb-4">
+                                        <input type="checkbox" className="me-2"/>
+                                        <label style={{fontSize:'12px'}}>Setting printer</label>
+                                    </div>
+                                    <div className="check-item d-flex align-items-center mb-4">
+                                        <input type="checkbox" className="me-2"/>
+                                        <label style={{fontSize:'12px'}}>Setting address book</label>
+                                    </div>
+                                    <div className="check-item d-flex align-items-center mb-4">
+                                        <input type="checkbox" className="me-2"/>
+                                        <label style={{fontSize:'12px'}}>Setting Kalibrasi</label>
+                                    </div>
+                                </div>
+
+                                <div className="col-md-4 col-sm-6 col-12 mt-3">
+                                    <div className="check-item d-flex align-items-center mb-4">
+                                        <input type="checkbox" className="me-2"/> 
+                                        <label style={{fontSize:'12px'}}>Install resite</label>
+                                    </div>
+                                    <div className="check-item d-flex align-items-center mb-4">
+                                        <input type="checkbox" className="me-2"/>
+                                        <label style={{fontSize:'12px'}}>Setting scan</label>
+                                    </div>
+                                    <div className="check-item d-flex align-items-center mb-4">
+                                        <input type="checkbox" className="me-2"/>
+                                        <label style={{fontSize:'12px'}}>Install New Machine</label>
+                                    </div>
+                                    <div className="check-item d-flex align-items-center mb-4">
+                                        <input type="checkbox" className="me-2"/>
+                                        <label style={{fontSize:'12px'}}>Setting Warna</label>
+                                    </div>
+                                </div>
+
+                                <div className="col-md-4 col-sm-6 col-12 mt-3">
+                                    <div className="check-item d-flex align-items-center mb-4">
+                                        <input type="checkbox" className="me-2"/> 
+                                        <label style={{fontSize:'12px'}}>Install accessories</label>
+                                    </div>
+                                    <div className="check-item d-flex align-items-center mb-4">
+                                        <input type="checkbox" className="me-2"/>
+                                        <label style={{fontSize:'12px'}}>Setting Authentication / Auditron</label>
+                                    </div>
+                                    <div className="check-item d-flex align-items-center mb-4">
+                                        <input type="checkbox" className="me-2"/>
+                                        <label style={{fontSize:'12px'}}>Setting IP Address</label>
+                                    </div>
+                                    <div className="check-item d-flex align-items-center mb-4">
+                                        <input type="checkbox" className="me-2"/>
+                                        <label style={{fontSize:'12px'}}>Setting Fax</label>
                                     </div>
                                 </div>
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
@@ -131,15 +106,15 @@ export default class extends Component {
                                 </div>
                                 <input className="py-2 mb-5" type="text" style={{width:'100%'}}></input>
                                 <div className="text-center">
-                                    <p style={{color:'pink', fontStyle:'italic', fontSize:'13px', fontWeight:'bold'}}><u>Please upload photo meter infromation / photo machine.</u></p>
+                                    <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'12px', color:'pink'}}>Please upload photo meter information/photo machine</p>
                                     <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
-                                    <div className="file-icon mb-4 d-bloc" htmlFor="input-file">
-                                        <i className="fa fa-file-image-o fs-4 rounded-circle p-3" style={{backgroundColor:"#014C90", color:'#fff'}} />
-                                    </div>
+                                    <label className="file-icon mb-3 d-block" htmlFor="input-file">
+                                        <i className="fa fa-file-image-o fs-4 rounded-circle p-2" style={{backgroundColor:"#014C90", color:'#fff'}} />
+                                    </label>
                                     <div className="d-none col-md-6 col-sm-8 mx-auto my-5" id="display-image">
-                                        <img className="w-100" src="#" alt="" id="preview-image" />
+                                        <img className="w-50" src="#" alt="" id="preview-image" />
                                     </div>
-                                    <button className="btn btn-login py-2 px-5 mb-5" style={{fontSize:'14px', width:'20%', height:'23%'}}>Submit</button>
+                                    <button className="btn btn-login py-2 px-5" style={{fontSize:'12px'}}>Submit</button>
                                 </div>
                             </div>
                         </div>

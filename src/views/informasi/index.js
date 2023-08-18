@@ -8,8 +8,8 @@ export default class extends Component {
     render () {
         return (
             <>
-            <div className="container-fluid py-4">
-                <div className="title d-flex align-items-center mb-5">
+            <div className="container-fluid">
+                <div className="title d-flex align-items-center mb-4">
                     <span className="title-icare fw-medium py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Informasi</span>
                 </div>
                 <div className="card border-0 shadow-lg">
