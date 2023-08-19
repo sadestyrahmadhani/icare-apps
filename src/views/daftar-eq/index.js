@@ -6,36 +6,31 @@ export default class extends Component {
     render () {
         return (
             <>
-            <div className="container pt-3 pb-5">
-                <div className="container">
-                    <div className="row">
-                        <div className="col">
-                            <h4 style={{color:'#014C90', borderBottom:'4px solid #014C90', width:'16%', fontWeight: 'bold'}}>Daftar EQ</h4>
+            <div className="container">
+                <div className="container d-flex">
+                        <div className="col-6" >
+                            <span className="title-icare fw-bold" style={{borderBottom: '3px solid #014C90', width: '110px', fontSize:'20px'}}>Daftar EQ</span>
                         </div>
-                        <div className="col-md-auto">
-                            <form className="search">
-                                <i className="fa fa-search"></i>
-                                <input className="border-only-bottom" type="search" placeholder="" name="search"></input>
-                                <i className="fa fa-close"></i>
-                            </form>
-                        </div>
-                        <div className="col-md-auto">
-                            <Link to="">
-                                <button className="btn btn-login" style={{padding: '8px 23px', fontSize: '16px'}}><i className="fa fa-plus" style={{marginRight: '5px'}}></i> Tambah EQ</button>
-                            </Link>
-                        {/* <button className="btn btn-primary">
-                            <i className="fa fa-plus" style={{marginRight:'10px'}}></i>
-                            Tambah EQ
-                        </button> */}
+                        <div className="col-6 row text-end">
+                            <div className="col-7">
+                                <form className="d-flex" style={{width:'120%'}}>
+                                    <span className="my-auto" style={{color: '#014C90'}}><i className="fa fa-search fa-fw fa-lg"></i></span>
+                                    <input type="search" className="form-control me-3 border-0 border-only-bottom" style={{fontSize: '16px'}}/>
+                                </form>
+                            </div>
+                            <div className="col-5">
+                                <Link to="/form-eq">
+                                    <button className="btn btn-login" style={{padding: '8px 23px', fontSize: '16px'}}><i className="fa fa-plus" style={{marginRight: '5px'}}></i> Tambah EQ</button>
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <div className="container pt-4">
-                    <div className="card border-0" style={{boxShadow:'5px 5px 20px 20px rgba(0, 0, 0, 0.1)', padding:'30px'}}>
+                    <div className="card shadow border-0" style={{borderRadius:'20px'}}>
                         <div className="card-body">
-                            <div className="row">
+                            <div className="row p-3">
                                 <div className="col">
-                                    <div className="card border-0" style={{boxShadow:'1px 1px 10px 10px rgba(0, 0, 0, 0.1)'}}>
+                                    <div className="card shadow-sm border-0" style={{borderRadius:'10px'}}>
                                         <div className="card-body">
                                             <div className="row">
                                                 <div className="col">
@@ -45,8 +40,9 @@ export default class extends Component {
                                                     <h6>CobaInsert</h6>
                                                 </div>
                                                 </div>
+
                                                 <div className="col-md-auto">
-                                                    <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6>
+                                                    <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6></Link>
                                                 </div>
                                                 <div className="col-md-auto">
                                                     <img src="images/approved.png" style={{height:'70px'}}></img>
@@ -59,9 +55,9 @@ export default class extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row pt-5">
+                            <div className="row p-3">
                                 <div className="col">
-                                    <div className="card border-0" style={{boxShadow:'1px 1px 10px 10px rgba(0, 0, 0, 0.1)'}}>
+                                    <div className="card shadow-sm border-0 mt-2" style={{borderRadius:'10px'}}>
                                         <div className="card-body">
                                             <div className="row">
                                                 <div className="col">
@@ -72,7 +68,7 @@ export default class extends Component {
                                                 </div>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                    <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6>
+                                                <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6></Link>
                                                 </div>
                                                 <div className="col-md-auto">
                                                 <img src="images/approved.png" style={{height:'70px'}}></img>
@@ -85,9 +81,9 @@ export default class extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="row pt-5">
+                            <div className="row p-3">
                                 <div className="col">
-                                    <div className="card border-0" style={{boxShadow:'1px 1px 10px 10px rgba(0, 0, 0, 0.1)'}}>
+                                    <div className="card shadow-sm border-0 mt-2 mb-3" style={{borderRadius:'10px'}}>
                                         <div className="card-body">
                                             <div className="row">
                                                 <div className="col">
@@ -98,7 +94,7 @@ export default class extends Component {
                                                 </div>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                    <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6>
+                                                <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6></Link>
                                                 </div>
                                                 <div className="col-md-auto" style={{marginRight:'70px'}}>
                                                     {/* <img src="images/approved.png"></img> */}

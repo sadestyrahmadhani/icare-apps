@@ -6,12 +6,12 @@ export default class extends Component {
     render () {
         return (
             <>
-            <div className="container pt-2 pb-5">
-                <div className="container">
-                    <h4 style={{color:'#014C90', borderBottom:'4px solid #014C90', width:'10%', fontWeight: 'bold'}}>Data Diri</h4>
+            <div className="container">
+                <div className="title d-flex align-items-center">
+                    <span className="title-icare fw-medium py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Data Diri</span>
                 </div>
                 <div className="container pt-4">
-                    <div className="card px-3 shadow border-0">
+                    <div className="card px-3 shadow border-0" style={{borderRadius:'20px'}}>
                         <div className="card-body">
                             <div className="row">
                                 <div className="col">
