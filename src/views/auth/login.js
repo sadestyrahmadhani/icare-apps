@@ -2,11 +2,98 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import Carousel from "../../component/carousel";
 import { setToken } from "../../core/local-storage";
+import FiturCard from "./component/fitur-card";
 
 export default class extends Component {
     constructor(props) {
         super(props)
         this.submit = this.submit.bind(this)
+
+        this.state = {
+            fiturData: [
+                {
+                    lg: 3,
+                    md: 3,
+                    sm: 6,
+                    xs: 12,
+                    imgHeight: 140,
+                    borderColor: '#2DB5F9',
+                    img: '/images/breakfix-fitur.png',
+                    title: 'Breakfix',
+                    description: 'Sebagai layanan customer untuk permintaan perbaikan pada mesin.'
+                },
+                {
+                    lg: 3,
+                    md: 3,
+                    sm: 6,
+                    xs: 12,
+                    imgHeight: 140,
+                    borderColor: '#F58B09',
+                    img: '/images/supplies-fitur.png',
+                    title: 'Supplies',
+                    description: 'Sebagai layanan customer untuk permintaan consumable dan sparepart.'
+                },
+                {
+                    lg: 3,
+                    md: 3,
+                    sm: 6,
+                    xs: 12,
+                    imgHeight: 140,
+                    borderColor: '#0EDA52',
+                    img: '/images/collect-meter-install.png',
+                    title: 'Install',
+                    description: 'Sebagai layanan customer untuk permintaan setting konfigurasi mesin.'
+                },
+                {
+                    lg: 3,
+                    md: 3,
+                    sm: 6,
+                    xs: 12,
+                    imgHeight: 140,
+                    borderColor: '#B40EDE',
+                    img: '/images/collect-meter-install.png',
+                    title: 'Collect Meter',
+                    description: 'Sebagai layanan customer untuk permintaan informasi billing meter yang ada pada mesin printer Astragraphia.'
+                },
+                {
+                    lg: 4,
+                    md: 4,
+                    sm: 6,
+                    xs: 12,
+                    imgHeight: 70,
+                    style: {marginBottom:'1.5rem', marginTop:'2rem'},
+                    borderColor: '#E23845',
+                    img: '/images/riwayat.png',
+                    title: 'Riwayat',
+                    description: 'Untuk melihat histori permintaan layanan sebelumnya.'
+                },
+                {
+                    lg: 4,
+                    md: 4,
+                    sm: 6,
+                    xs: 12,
+                    imgHeight: 70,
+                    style: {marginBottom:'1.5rem', marginTop:'2rem'},
+                    borderColor: '#B629DD',
+                    img: '/images/informasi.png',
+                    title: 'Informasi',
+                    description: 'Untuk melihat status notifikasi dari permintaan layanan yang dibuat.'
+                },
+                {
+                    lg: 4,
+                    md: 4,
+                    sm: 6,
+                    xs: 12,
+                    imgHeight: 70,
+                    style: {marginBottom:'1.5rem', marginTop:'2rem'},
+                    borderColor: '#EE31A3',
+                    img: '/images/setting.png',
+                    title: 'Setting',
+                    description: 'Untuk melihat konfigurasi pada aplikasi iCare seperti perubahan Data Diri, Alamat, EQ, dll.'
+                },
+
+            ]
+        }
     }
     render() {
         return(
@@ -75,85 +162,7 @@ export default class extends Component {
                 <section className="section-fitur" id="fitur">
                     <div className="container mb-5">
                         <h3 className="title-icare text-center fw-bold mb-5"> Fitur iCare</h3>
-                        <div className="row">
-                            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
-                                <div className="card custom-height shadow-lg mb-5 " style={{borderBottom:"4px solid #2DB5F9"}}>
-                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 3rem"}}>
-                                        <div className="text-center">
-                                            <img src="/images/breakfix-fitur.png" alt="breakfix" width="80"/>
-                                            <h5 className="card-title"> Breakfix </h5>
-                                            <p className="card-text lh-sm" style={{fontSize:"14px"}}>Sebagai layanan customer untuk permintaan perbaikan pada mesin.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
-                                <div className="card custom-height shadow-lg mb-5" style={{borderBottom:"4px solid #F58B09"}}>
-                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 3rem"}}>
-                                        <div className="text-center">
-                                            <img src="/images/supplies-fitur.png" alt="supplies" width="90" />
-                                            <h5 className="card-title"> Supplies </h5>
-                                            <p className="card-text" style={{fontSize:"14px"}}>Sebagai layanan customer untuk permintaan consumable dan sparepart.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
-                                <div className="card custom-height shadow-lg mb-5" style={{borderBottom:"4px solid #0EDA52"}}>
-                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 3rem"}}>
-                                        <div className="text-center">
-                                            <img src="/images/collect-meter-install.png" alt="install" width="80"/>
-                                            <h5 className="card-title"> Install </h5>
-                                            <p className="card-text" style={{fontSize:"14px"}}>Sebagai layanan customer untuk permintaan setting konfigurasi mesin.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-3 col-sm-6 col-12">
-                                <div className="card custom-height shadow-lg mb-5" style={{borderBottom:"4px solid #B40EDE"}}>
-                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 3rem"}}>
-                                        <div className="text-center">
-                                            <img src="/images/collect-meter-install.png" alt="collect meter" width="80"/>
-                                            <h5 className="card-title"> Collect Meter </h5>
-                                            <p className="card-text" style={{fontSize:"14px"}}>Sebagai layanan customer untuk permintaan informasi billing meter yang ada pada mesin printer Astragraphia.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                                <div className="card custom-height shadow-lg mb-5" style={{borderBottom:"4px solid #E23845"}}>
-                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 3rem"}}>
-                                        <div className="text-center">
-                                            <img src="/images/riwayat.png" alt="riwayat" width="80"/>
-                                            <h5 className="card-title mt-3"> Riwayat </h5>
-                                            <p className="card-text" style={{fontSize:"14px"}}>Untuk melihat histori permintaan layanan sebelumnya.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                                <div className="card custom-height shadow-lg mb-5" style={{borderBottom:"4px solid #B629DD"}}>
-                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 3rem"}}>
-                                        <div className="text-center">
-                                            <img src="/images/informasi.png" alt="informasi" width="70"/>
-                                            <h5 className="card-title mt-3"> Informasi </h5>
-                                            <p className="card-text" style={{fontSize:"14px"}}>Untuk melihat status notifikasi dari permintaan layanan yang dibuat.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-4 col-md-4 col-sm-6 col-12">
-                                <div className="card custom-height shadow-lg mb-5" style={{borderBottom:"4px solid #EE31A3"}}>
-                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:" 3rem 3rem"}}>
-                                        <div className="text-center">
-                                            <img src="/images/setting.png" alt="setting" width="70"/>
-                                            <h5 className="card-title mt-3"> Setting </h5>
-                                            <p className="card-text" style={{fontSize:"14px"}}>Untuk melihat konfigurasi pada aplikasi iCare seperti perubahan Data Diri, Alamat, EQ, dll.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <FiturCard data={this.state.fiturData} />
                     </div>
                 </section>
 
@@ -165,10 +174,10 @@ export default class extends Component {
                         <div className="row">
                             <div className="col-lg-3 col-md-3 col-sm-6 col-12">
                                 <div className="card custom-height shadow-lg mb-5">
-                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'3rem 3rem'}}>
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'5rem 3rem'}}>
                                         <div className="text-center">
                                             <img src="/images/easy.png" alt="riwayat" width="50" />
-                                            <h5 className="card-title mt-3"> Riwayat </h5>
+                                            <h5 className="card-title mt-3 fw-bold"> Riwayat </h5>
                                             <p className="card-text" style={{fontSize:'14px'}}>Memudahkan customer pada saat permintaan layanan.</p>
                                         </div>
                                     </div>
@@ -176,10 +185,10 @@ export default class extends Component {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-6 col-12">
                                 <div className="card custom-height shadow-lg mb-5">
-                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'3rem 3rem'}}>
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'5rem 3rem'}}>
                                         <div className="text-center">
                                             <img src="/images/monitoring.png" alt="monitoring" width="50" />
-                                            <h5 className="card-title mt-3"> Monitoring </h5>
+                                            <h5 className="card-title mt-3 fw-bold"> Monitoring </h5>
                                             <p className="card-text" style={{fontSize:'14px'}}>Customer dapat memonitor status permintaan layanan.</p>
                                         </div>
                                     </div>
@@ -187,10 +196,10 @@ export default class extends Component {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-6 col-12">
                                 <div className="card custom-height shadow-lg mb-5">
-                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'3rem 3rem'}}>
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'5rem 3rem'}}>
                                         <div className="text-center">
                                             <img src="/images/quality.png" alt="setting" width="50" />
-                                            <h5 className="card-title mt-3"> Settings </h5>
+                                            <h5 className="card-title mt-3 fw-bold"> Settings </h5>
                                             <p className="card-text" style={{fontSize:'14px'}}>Meningkatkan kualitas layanan Astragraphia.</p>
                                         </div>
                                     </div>
@@ -198,10 +207,10 @@ export default class extends Component {
                             </div>
                             <div className="col-lg-3 col-md-3 col-sm-6 col-12">
                                 <div className="card custom-height shadow-lg mb-5">
-                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'3rem 3rem'}}>
+                                    <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'5rem 3rem'}}>
                                         <div className="text-center">
                                             <img src="/images/satisfaction.png" alt="satisfaction" width="50" />
-                                            <h5 className="card-title mt-3 "> Satisfaction </h5>
+                                            <h5 className="card-title mt-3 fw-bold "> Satisfaction </h5>
                                             <p className="card-text" style={{fontSize:'14px'}}>Meningkatkan kepuasan pelanggan.</p>
                                         </div>
                                     </div>

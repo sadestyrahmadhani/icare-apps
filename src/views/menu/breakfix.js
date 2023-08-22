@@ -55,8 +55,8 @@ export default class extends Component {
                             </div>
                             <div className="col-md-4 col-sm-6 col-12">
                                 <div className="check-item d-flex align-items-center mb-4">
-                                    <input type="checkbox" className="me-2"/> 
-                                    <label style={{fontSize:'12px'}}>Paper Jam</label>
+                                    <input type="checkbox" style={{ borderRadius: 0, padding: 10 }} className="me-2" id="PaperJam" /> 
+                                    <label style={{fontSize:'12px'}} htmlFor="PaperJam">Paper Jam</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" className="me-2"/>

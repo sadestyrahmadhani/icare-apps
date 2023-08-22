@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link } from "react-router-dom";
+import TabelComponent from './component/tabel'
 import AlertConfirm from './../../component/alert/confirmAlert.js'
 
 export default class extends Component {
@@ -43,6 +43,7 @@ export default class extends Component {
                         description: 'Test12345678'
                     },
                 ],
+                [],
                 [
                     {
                         code: 'CR-2310784',
@@ -79,8 +80,6 @@ export default class extends Component {
                         description: 'Test12345678'
                     }
                 ],
-                [],
-                []
             ]
         }
     }
@@ -101,7 +100,7 @@ export default class extends Component {
                             {
                                 this.state.tabItems.map((val, key) => (
                                     <div className="mx-2 d-inline" key={ key }>
-                                        <button className={ `btn-proses px-5 rounded-4 py-3 small fw-medium ${ key == this.state.tabActivated ? 'active' : '' }` } onClick={ () => {
+                                        <button className={ `btn-proses px-5 rounded-4 py-3 small fw-medium ${ key === this.state.tabActivated ? 'active' : '' }` } onClick={ () => {
                                             this.setTabActive(key)
                                         } }>{ val }</button>
                                     </div>
@@ -110,7 +109,7 @@ export default class extends Component {
                         </div>
 
                         {
-                            this.state.tabActivated == 0 ? (
+                            this.state.tabActivated === 0 ? (
                                 this.state.tabData.map((value, tabKey) => (
                                     this.state.tabData[tabKey].map((val, key) => (
                                         <TabelComponent tabActive={ tabKey + 1 } key={ key } data={ val } cardBg={ this.state.cardBg } />
@@ -130,6 +129,6 @@ export default class extends Component {
     }
 
     setTabActive(key) {
-        this.setState({ tabActivated: key, alertVisible: key == 0 ? (this.state.tabData[0].length == 0 && this.state.tabData[1].length == 0 && this.state.tabData[2].length == 0 && this.state.tabData[3].length == 0) : this.state.tabData[key - 1].length == 0})
+        this.setState({ tabActivated: key, alertVisible: key === 0 ? (this.state.tabData[0].length === 0 && this.state.tabData[1].length === 0 && this.state.tabData[2].length === 0 && this.state.tabData[3].length === 0) : this.state.tabData[key - 1].length === 0})
     }
 }

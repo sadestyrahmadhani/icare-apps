@@ -79,16 +79,25 @@ body {
     box-shadow: none !important;
     outline: none !important;
     padding: 5px 0;
-    font-size: 12px;
+    font-size: 14px;
+    background: transparent;
 }
 
 .border-only-bottom:focus {
-    color: #4154F1;
-    border-bottom: 2px solid #4154F1 !important;
+    border-bottom: 2px solid #41abf1 !important;
+    background: transparent;
+}
+
+.border-only-bottom.invalid{
+    border-bottom: 1px solid #bc4a4a !important;
+}
+
+.border-only-bottom.invalid:focus{
+    border-bottom: 2px solid #c00000 !important;
 }
 
 .btn-login {
-    background-color: #014C90;
+    background-color: #015990;
     color: #fff;
     font-size: 14px;
 }
@@ -120,7 +129,7 @@ body {
 }
 
 .custom-height {
-    height: calc(100% - 1rem) !important;
+    height: calc(100% - 3rem) !important;
 } 
 
 .list-items {

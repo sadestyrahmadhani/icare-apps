@@ -21,6 +21,9 @@ const Navbar = (props) => {
         if(document.querySelectorAll('#layout').length > 0) {
             document.getElementById('layout').addEventListener('click', () => setOpenDropdown(false))
         }
+        document.querySelectorAll('.nav-app').forEach(val => {
+            val.addEventListener('click', () => setOpenDropdown(false))
+        })
         
         return () => {
             window.removeEventListener('scroll', handleScroll)
@@ -86,7 +89,7 @@ const Navbar = (props) => {
                                                     <ul style={{listStyle:'none'}}>
                                                         <li className="item-drop py-2 d-flex align-items-center">
                                                             <div className="col-10">
-                                                                <Link className="text-decoration-none" style={{color:'#000'}} to="/data-diri">Data Diri</Link>
+                                                                <Link className="text-decoration-none nav-app" style={{color:'#000'}} to="/data-diri">Data Diri</Link>
                                                             </div>
                                                             <div className="col-2">
                                                                 <i className="fa fa-chevron-right chevron-drop"></i>
@@ -94,7 +97,7 @@ const Navbar = (props) => {
                                                         </li>
                                                         <li className="item-drop  py-2 d-flex align-items-center">
                                                             <div className="col-10">
-                                                                <Link className="text-decoration-none" style={{color:'#000'}} to="/address">Daftar Alamat</Link>
+                                                                <Link className="text-decoration-none nav-app" style={{color:'#000'}} to="/address">Daftar Alamat</Link>
                                                             </div>
                                                             <div className="col-2">
                                                                 <i className="fa fa-chevron-right chevron-drop"></i>
@@ -102,7 +105,7 @@ const Navbar = (props) => {
                                                         </li>
                                                         <li className="item-drop  py-2 d-flex align-items-center">
                                                             <div className="col-10">
-                                                                <Link className="text-decoration-none" style={{color:'#000'}} to="/daftar-eq">Daftar EQ</Link>
+                                                                <Link className="text-decoration-none nav-app" style={{color:'#000'}} to="/daftar-eq">Daftar EQ</Link>
                                                             </div>
                                                             <div className="col-2">
                                                                 <i className="fa fa-chevron-right chevron-drop"></i>
@@ -110,7 +113,7 @@ const Navbar = (props) => {
                                                         </li>
                                                         <li className="item-drop py-2 d-flex align-items-center">
                                                             <div className="col-10">
-                                                                <Link className="text-decoration-none" style={{color:'#000'}} to="/change-password">Kata Sandi</Link>
+                                                                <Link className="text-decoration-none nav-app" style={{color:'#000'}} to="/change-password">Kata Sandi</Link>
                                                             </div>
                                                             <div className="col-2">
                                                                 <i className="fa fa-chevron-right chevron-drop"></i>
@@ -118,7 +121,7 @@ const Navbar = (props) => {
                                                         </li>
                                                         <li className="item-drop  py-2 d-flex align-items-center">
                                                             <div className="col-10">
-                                                                <Link className="text-decoration-none" style={{color:'#000'}}>Keluar</Link>
+                                                                <Link className="text-decoration-none nav-app" style={{color:'#000'}}>Keluar</Link>
                                                             </div>
                                                             <div className="col-2">
                                                                 <i className="fa fa-chevron-right chevron-drop"></i>
