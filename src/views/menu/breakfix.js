@@ -9,13 +9,22 @@ export default class extends Component {
         this.state = {
             checkBoxCheckCount:0,
             checkBoxCheckCountPage:0,
+            errorMessageEquipmentNumber: '',
+            errorAddressOrMachineLocation: '',
+            errorDescription: ''
         }
         this.checkCheckBox = this.checkCheckBox.bind(this)
         this.checkCheckBoxPage = this.checkCheckBoxPage.bind(this)
+        this.submit = this.submit.bind(this)
     }
 
     submit(e) {
         e.preventDefault()
+        this.setState({
+            errorMessageEquipmentNumber: 'Silahkan isi equipment number',
+            errorAddressOrMachineLocation: 'Silahkan isi alamat/lokasi mesin',
+            errorDescription: 'Silahkan isi deskripsi'
+        })
         Swal.fire({
             text:'Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min.1',
             confirmButtonColor:'#0099ff'
@@ -62,11 +71,17 @@ export default class extends Component {
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Equipment Number</label>
                                 </div>
-                                <Link className="py-4 mb-4" style={{border:'1px solid #000'}} to="/daftar-eq"></Link>
+                                <div className="mb-4 p-0">
+                                    <Link className="py-4 w-100 d-block" style={{border:'1px solid #000'}} to="/daftar-eq"></Link>
+                                    <i className={`text-danger small mx-2 ${ this.state.errorMessageEquipmentNumber !== '' ? '' : 'd-none' }`}>{ this.state.errorMessageEquipmentNumber }</i>
+                                </div>
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Alamat/Lokasi Mesin</label>
                                 </div>
-                                <Link className="py-4 mb-4" style={{border:'1px solid #000'}} ></Link>
+                                <div className="mb-4 p-0">
+                                    <Link className="py-4 w-100 d-block" style={{border:'1px solid #000'}} ></Link>
+                                    <i className={`text-danger mx-2 small ${ this.state.errorAddressOrMachineLocation !== '' ? '' : 'd-none' }`}>{ this.state.errorAddressOrMachineLocation }</i>
+                                </div>
                                 <div className="card-lable py-1 mb-4" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Problem&#40;Please Select&#41;</label>
                                 </div>
@@ -81,11 +96,11 @@ export default class extends Component {
                                     </div>
                                     <div className="check-item d-flex align-items-center mb-4 form-check">
                                         <input type="checkbox" style={{borderRadius: 0, padding:'1px'}}  className="me-3 mt-0 form-check-input" id="HasilBergaris"/>
-                                        <label className="form-check-label" style={{fontSize:'14px'}} htmlFor=""HasilBergaris >Hasil Bergaris</label>
+                                        <label className="form-check-label" style={{fontSize:'14px'}} htmlFor="HasilBergaris" >Hasil Bergaris</label>
                                     </div>
                                     <div className="check-item d-flex align-items-center mb-4 form-check">
                                         <input type="checkbox" style={{borderRadius: 0, padding:'1px'}}  className="me-3 mt-0 form-check-input" id="TonerTidakDetect"/>
-                                        <label className="form-check-label" style={{fontSize:'14px'}} htmlFor=""TonerTidakDetect >Toner Tidak Detect</label>
+                                        <label className="form-check-label" style={{fontSize:'14px'}} htmlFor="TonerTidakDetect" >Toner Tidak Detect</label>
                                     </div>
                                     <div className="check-item d-flex align-items-center mb-4">
                                         <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="problem-checkbox me-3 mt-0 form-check-input" id="ErrorCode" onChange={this.checkCheckBox} />
@@ -130,13 +145,18 @@ export default class extends Component {
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Tambah Deskripsi</label>
                                 </div>
-                                <input type="text" className="py-2 mb-4" />
+                                <div className="mb-4 p-0">
+                                    <input type="text" className={ `py-3 w-100 ${ this.state.errorDescription !== '' ? 'border-danger border' : '' }` } />
+                                    <i className={`text-danger small mx-2 ${ this.state.errorDescription !== '' ? '' : 'd-none' }`}>{ this.state.errorDescription }</i>
+                                </div>
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Page</label>
                                 </div>
-                                <div className="check-item d-flex align-items-center py-2 mb-5 form-check">
-                                    <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="page-checkbox me-3 mt-0 form-check-input" id="PageToWC" onChange={this.checkCheckBoxPage} />
-                                    <label className="form-check-label" style={{fontSize:'14px'}} htmlFor="PageToWC">Page to WC</label>
+                                <div className="d-flex align-items-center py-2 mb-5">
+                                    <div className="form-check">
+                                        <input type="checkbox" style={{ borderRadius: 0, padding: '1px' }} className="form-check-input" id="pageToWC" />
+                                        <label htmlFor="pageToWC" className="form-check-label">Page to WC</label>
+                                    </div>
                                     <input type="text" className="ms-2 py-2 input-page" style={{width:'100px'}} disabled={this.state.checkBoxCheckCountPage == 0} />
                                 </div>
                                 <div className="text-center">
