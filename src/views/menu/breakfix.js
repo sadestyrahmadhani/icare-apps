@@ -11,7 +11,8 @@ export default class extends Component {
             checkBoxCheckCountPage:0,
             errorMessageEquipmentNumber: '',
             errorAddressOrMachineLocation: '',
-            errorDescription: ''
+            errorDescription: '',
+            errorPageToWC: ''
         }
         this.checkCheckBox = this.checkCheckBox.bind(this)
         this.checkCheckBoxPage = this.checkCheckBoxPage.bind(this)
@@ -20,10 +21,12 @@ export default class extends Component {
 
     submit(e) {
         e.preventDefault()
+        var checkboxPage = document.querySelectorAll('.page-checkbox:checked')
         this.setState({
             errorMessageEquipmentNumber: 'Silahkan isi equipment number',
             errorAddressOrMachineLocation: 'Silahkan isi alamat/lokasi mesin',
-            errorDescription: 'Silahkan isi deskripsi'
+            errorDescription: 'Silahkan isi deskripsi',
+            errorPageToWC: checkboxPage.length > 0 ? 'Silahakn isi page' : ''
         })
         Swal.fire({
             text:'Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min.1',
@@ -152,12 +155,15 @@ export default class extends Component {
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Page</label>
                                 </div>
-                                <div className="d-flex align-items-center py-2 mb-5">
-                                    <div className="form-check">
-                                        <input type="checkbox" style={{ borderRadius: 0, padding: '1px' }} className="form-check-input" id="pageToWC" />
+                                <div className="d-flex py-2 mb-5">
+                                    <div className="form-check py-2">
+                                        <input type="checkbox" style={{ borderRadius: 0, padding: '1px' }} className="form-check-input page-checkbox" id="pageToWC" onChange={ this.checkCheckBoxPage } />
                                         <label htmlFor="pageToWC" className="form-check-label">Page to WC</label>
                                     </div>
-                                    <input type="text" className="ms-2 py-2 input-page" style={{width:'100px'}} disabled={this.state.checkBoxCheckCountPage == 0} />
+                                    <div className="ms-2" style={{ width: '100px' }}>
+                                        <input type="text" className={`ms-2 py-2 input-page w-100 ${ this.state.errorPageToWC !== '' ? 'border-danger border' : '' }`} disabled={this.state.checkBoxCheckCountPage == 0} />
+                                        <i className={ `text-danger small mx-1 ${ this.state.errorPageToWC !== '' ? '' : 'd-none' }` }>{ this.state.errorPageToWC }</i>
+                                    </div>
                                 </div>
                                 <div className="text-center">
                                     <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'14px', color:'pink'}}>Please upload photo meter information/photo machine</p>
