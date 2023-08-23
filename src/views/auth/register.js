@@ -2,6 +2,7 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../component/navbar";
 import Footer from "./../../component/footer";
+import Swal from "sweetalert2";
 
 export default class extends Component {
     constructor(props) {
@@ -95,6 +96,11 @@ export default class extends Component {
     submit(e) {
         e.preventDefault()
         this.setState({ showError: true })
+        Swal.fire({
+            title: 'Error',
+            text: 'Please fill empty field',
+            confirmButtonColor: '#0099ff'
+        })
     }
 }
 
