@@ -135,7 +135,7 @@ export default class extends Component {
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Page</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center py-2 mb-5 form-check">
-                                    <input type="checkbox" className="page-checkbox me-3 mt-0 form-check-input" id="PageToWC" onChange={this.checkCheckBoxPage} />
+                                    <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="page-checkbox me-3 mt-0 form-check-input" id="PageToWC" onChange={this.checkCheckBoxPage} />
                                     <label className="form-check-label" style={{fontSize:'14px'}} htmlFor="PageToWC">Page to WC</label>
                                     <input type="text" className="ms-2 py-2 input-page" style={{width:'100px'}} disabled={this.state.checkBoxCheckCountPage == 0} />
                                 </div>

@@ -48,7 +48,7 @@ export default class extends Component {
                                     <button className="btn btn-login fw-medium rounded-3 " type="submit" style={{fontSize:'14px', paddingLeft:'60px', paddingRight:'60px', paddingTop:'12px', paddingBottom:'12px'}}>SUBMIT</button>
                                 </form>
                                 <p className="mb-2" style={{fontSize:'14px'}}>Belum terima SMS kode OTP ?</p>
-                                <button className={`fw-medium ${this.state.resendCodeDisabled ? 'disabled' : ''}`} onClick={this.resetIteration} type="button" style={{textDecoration:'none', color:'#5289bd', fontSize:'14px', border:'none', background:'transparent'}}>Kirim Ulang</button>
+                                <button className={`${this.state.resendCodeDisabled ? 'disabled' : 'fw-bold text-primary'}`} onClick={this.resetIteration} type="button" style={{textDecoration:'none', color:'#5289bd', fontSize:'14px', border:'none', background:'transparent'}}>Kirim Ulang</button>
                                 <p className="mt-2" style={{fontSize:'14px'}}>Harap Tunggu {this.state.iteration} detik sebelum kirim ulang otp</p>
                             </div>
                         </div>
@@ -62,9 +62,11 @@ export default class extends Component {
     componentDidMount() {
         setInterval(() => {
             this.setState({iteration:this.state.iteration === 0 ? 0 : this.state.iteration - 1})
-            // if(this.state.iteration === 0) {
-            //     this.setState({resendCodeDisabled:false})
-            // }
+            if(this.state.iteration === 0) {
+                this.setState({resendCodeDisabled:false})
+            } else {
+                this.setState({resendCodeDisabled:true})
+            }
         }, 1000)
 
         

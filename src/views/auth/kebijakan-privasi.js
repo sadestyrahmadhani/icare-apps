@@ -36,7 +36,7 @@ function ConditionRegister(props) {
         <div className="text">
             <input className="me-2" type="checkbox" id="checklist" onChange={ () => setIsCheck(!isCheck) } /> 
             <label className="mb-4" style={{fontSize:'12px'}} htmlFor="checklist" >Saya setuju dengan kebijakan ini</label> <br/>
-            <button className={ `btn btn-login fw-medium rounded-3 ${ isCheck ? 'disabled' :'' }` } type="submit" style={{fontSize:'14px', paddingLeft:'60px', paddingRight:'60px', paddingTop:'12px', paddingBottom:'12px'}} to="/register" >SUBMIT</button>
+            <Link className={ `btn btn-login fw-medium rounded-3 ${ isCheck ? 'disabled' :'' }` } type="submit" style={{fontSize:'14px', paddingLeft:'60px', paddingRight:'60px', paddingTop:'12px', paddingBottom:'12px'}} to="/register" >SUBMIT</Link>
         </div>
     )
 } 
