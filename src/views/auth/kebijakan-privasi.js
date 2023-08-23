@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../component/navbar";
 import Footer from "../../component/footer";
+import Swal from "sweetalert2";
 
 function ConditionFooter() {
     const Params = useParams() 
@@ -32,11 +33,22 @@ function ConditionFooter() {
 
 function ConditionRegister(props) {
     const [isCheck, setIsCheck] = useState(true)
+    const navigate = useNavigate()
     return(
         <div className="text">
             <input className="me-2" type="checkbox" id="checklist" onChange={ () => setIsCheck(!isCheck) } /> 
             <label className="mb-4" style={{fontSize:'12px'}} htmlFor="checklist" >Saya setuju dengan kebijakan ini</label> <br/>
-            <Link className={ `btn btn-login fw-medium rounded-3 ${ isCheck ? 'disabled' :'' }` } type="submit" style={{fontSize:'14px', paddingLeft:'60px', paddingRight:'60px', paddingTop:'12px', paddingBottom:'12px'}} to="/register" >SUBMIT</Link>
+            <button className={ `btn fw-medium rounded-3 ${ isCheck ? 'btn-secondary-custom' :'btn-login' }` } type="submit" style={{fontSize:'14px', paddingLeft:'60px', paddingRight:'60px', paddingTop:'12px', paddingBottom:'12px'}} onClick={ () => {
+                if(isCheck) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Wajib dicentang untuk melanjutkan registrasi anda',
+                        confirmButtonColor: '#0099ff'
+                    })
+                } else {
+                    navigate('/register')
+                }
+            } }>SUBMIT</button>
         </div>
     )
 } 

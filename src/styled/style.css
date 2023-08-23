@@ -88,11 +88,11 @@ body {
     background: transparent;
 }
 
-.border-only-bottom.invalid{
+.border-only-bottom.invalid, .border-only-bottom.is-invalid{
     border-bottom: 1px solid #bc4a4a !important;
 }
 
-.border-only-bottom.invalid:focus{
+.border-only-bottom.invalid:focus, .border-only-bottom.is-invalid:focus{
     border-bottom: 2px solid #c00000 !important;
 }
 
@@ -199,8 +199,14 @@ body {
     padding: 30px !important;
 }
 
-.btn.disabled {
+.btn.disabled, .btn-secondary-custom {
     background-color: #9c9c9c;
+    border: none;
+    color: #fff;
+}
+
+.btn-secondary-custom:hover, .btn-secondary-custom:focus {
+    background-color: #838383;
     border: none;
     color: #fff;
 }
@@ -276,3 +282,7 @@ td {
 .form-check-input:focus {
     box-shadow: none;
 }
+
+#inputFiles::file-selector-button {
+    display: none;
+  }
