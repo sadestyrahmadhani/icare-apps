@@ -6,14 +6,27 @@ export default class extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            checkBoxCheckCount:0
+            checkBoxCheckCount:0,
+            checkBoxCheckCountPage:0,
+            errorInput:''
         }
         this.checkCheckBox = this.checkCheckBox.bind(this)
+        this.checkCheckBoxPage = this.checkCheckBoxPage.bind(this)
+    }
+
+    submit(e) {
+        e.preventDefault()
+        if(this.state.errorInput === "") this.setState({errorInput:"Silahkan isi page"})
     }
 
     checkCheckBox() {
         var checkbox = document.querySelectorAll('.problem-checkbox:checked')
         this.setState({checkBoxCheckCount:checkbox.length})
+    }
+
+    checkCheckBoxPage() {
+        var checkboxPage = document.querySelectorAll('.page-checkbox:checked')
+        this.setState({checkBoxCheckCountPage:checkboxPage.length})
     }
 
     previewImage(e) {
@@ -43,79 +56,87 @@ export default class extends Component {
                     <div className="card-body">
                         <div className="row">
                             <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
-                                <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Equipment Number</label>
+                                <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Equipment Number</label>
                             </div>
                             <Link className="py-4 mb-4" style={{border:'1px solid #000'}} to="/daftar-eq"></Link>
                             <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
-                                <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Alamat/Lokasi Mesin</label>
+                                <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Alamat/Lokasi Mesin</label>
                             </div>
                             <Link className="py-4 mb-4" style={{border:'1px solid #000'}} ></Link>
                             <div className="card-lable py-1 mb-4" style={{backgroundColor:'#014C90'}}>
-                                <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Problem&#40;Please Select&#41;</label>
+                                <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Problem&#40;Please Select&#41;</label>
                             </div>
                             <div className="col-md-4 col-sm-6 col-12">
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" style={{ borderRadius: 0, padding: 10 }} className="me-2" id="PaperJam" /> 
-                                    <label style={{fontSize:'12px'}} htmlFor="PaperJam">Paper Jam</label>
+                                    <label style={{fontSize:'14px'}} htmlFor="PaperJam">Paper Jam</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" className="me-2"/>
-                                    <label style={{fontSize:'12px'}}>Hasil Kotor</label>
+                                    <label style={{fontSize:'14px'}}>Hasil Kotor</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" className="me-2"/>
-                                    <label style={{fontSize:'12px'}}>Hasil Bergaris</label>
+                                    <label style={{fontSize:'14px'}}>Hasil Bergaris</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" className="me-2"/>
-                                    <label style={{fontSize:'12px'}}>Toner Tidak Detect</label>
+                                    <label style={{fontSize:'14px'}}>Toner Tidak Detect</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" className="problem-checkbox me-2" onChange={this.checkCheckBox} />
-                                    <label style={{fontSize:'12px'}}>Error Code</label>
+                                    <label style={{fontSize:'14px'}}>Error Code</label>
                                 </div>
                             </div>
                             <div className="col-md-4 col-sm-6 col-12">
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" className="me-2"/>
-                                    <label style={{fontSize:'12px'}}>Layar Blank</label>
+                                    <label style={{fontSize:'14px'}}>Layar Blank</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" className="me-2"/>
-                                    <label style={{fontSize:'12px'}}>Hasil Pudar</label>
+                                    <label style={{fontSize:'14px'}}>Hasil Pudar</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" className="me-2"/>
-                                    <label style={{fontSize:'12px'}}>Hasil Tidak Menempel</label>
+                                    <label style={{fontSize:'14px'}}>Hasil Tidak Menempel</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" className="me-2"/>
-                                    <label style={{fontSize:'12px'}}>Server FFPS/Fiery/GX/Revoria</label>
+                                    <label style={{fontSize:'14px'}}>Server FFPS/Fiery/GX/Revoria</label>
                                 </div>
                             </div>
                             <div className="col-md-4 col-sm-6 col-12">
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" className="me-2"/>
-                                    <label style={{fontSize:'12px'}}>Hasil Cetak Tidak Optimal</label>
+                                    <label style={{fontSize:'14px'}}>Hasil Cetak Tidak Optimal</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" className="me-2"/>
-                                    <label style={{fontSize:'12px'}}>Hasil Berbayang</label>
+                                    <label style={{fontSize:'14px'}}>Hasil Berbayang</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-4">
                                     <input type="checkbox" className="me-2"/>
-                                    <label style={{fontSize:'12px'}}>Mesin Berisik</label>
+                                    <label style={{fontSize:'14px'}}>Mesin Berisik</label>
                                 </div>
                             </div>
                             <div className="col-md-4 col-sm-6 col-12 mb-4">
                                 <input type="text" className="input-error py-2 w-100" disabled={this.state.checkBoxCheckCount == 0} />
                             </div>
                             <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
-                                <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Tambah Deskripsi</label>
+                                <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Tambah Deskripsi</label>
                             </div>
-                            <input type="text" className="py-2 mb-5" />
+                            <input type="text" className="py-2 mb-4" />
+                            <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
+                                <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Page</label>
+                            </div>
+                            <div className="check-item d-flex align-items-center py-2 mb-5">
+                                <input type="checkbox" className="page-checkbox me-2" onChange={this.checkCheckBoxPage} />
+                                <label style={{fontSize:'14px'}}>Page to WC</label>
+                                <input type="text" className="ms-2 py-2 input-page" style={{width:'100px'}} disabled={this.state.checkBoxCheckCountPage == 0} />
+                            </div>
                             <div className="text-center">
-                                <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'12px', color:'pink'}}>Please upload photo meter information/photo machine</p>
+                                <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'14px', color:'pink'}}>Please upload photo meter information/photo machine</p>
                                 <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
                                 <label className="file-icon mb-3 d-block" htmlFor="input-file">
                                     <i className="fa fa-file-image-o fs-4 rounded-circle p-2" style={{backgroundColor:"#014C90", color:'#fff'}} />
@@ -123,7 +144,7 @@ export default class extends Component {
                                 <div className="d-none col-md-6 col-sm-8 mx-auto my-5" id="display-image">
                                     <img className="w-50" src="#" alt="" id="preview-image" />
                                 </div>
-                                <button className="btn btn-login py-2 px-5" style={{fontSize:'12px'}}>Submit</button>
+                                <button className="btn btn-login py-2 px-5" style={{fontSize:'14px'}}>Submit</button>
                             </div>
                         </div>
                     </div>

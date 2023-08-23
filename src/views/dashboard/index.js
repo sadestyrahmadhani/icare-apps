@@ -16,57 +16,63 @@ export default class extends Component {
                         <div className="row justify-content-md-center">
                             <div className="col-8">
                                 <div className="container">
-                                    <div className="row mt-5">
+                                    <div className="row mt-3">
                                         <div className="col">
                                             <Link className="list-items" to="../breakfix" style={{textDecoration:'none'}}>
                                                 <div className="img">
-                                                    <img src="images/breakfix.png" alt="Logo Breakfix" height={110}></img>
+                                                    <img src="images/breakfix.png" alt="Logo Breakfix" height={103}></img>
                                                 </div>
-                                                <h6 className="mt-2">Breakfix</h6>
+                                                <h6 className="mt-2" style={{fontSize:'14px'}}>Breakfix</h6>
                                             </Link>
                                         </div>
                                         <div className="col">
-                                            <Link className="list-items" to="../supplies" style={{textDecoration:'none'}}>
+                                            <Link className="list-items" to="../upgrade-account" style={{textDecoration:'none'}}>
+                                                <div className="img">
+                                                    <img src="images/supplies.png" alt="Logo Supplies" height={103}></img>
+                                                </div>
+                                                <h6 className="mt-2" style={{fontSize:'14px'}}>Supplies</h6>
+                                            </Link>
+                                            {/* <Link className="list-items" to="../supplies" style={{textDecoration:'none'}}>
                                                 <div className="img">
                                                     <img src="images/supplies.png" alt="Logo Supplies" height={110}></img>
                                                 </div>
                                                 <h6 className="mt-2">Supplies</h6>
-                                            </Link>
+                                            </Link> */}
                                         </div>
                                         <div className="col">
                                             <Link className="list-items" to="../install" style={{textDecoration:'none'}}>
                                                 <div className="img">
-                                                    <img src="images/install.png" alt="Logo Install" height={110}></img>
+                                                    <img src="images/install.png" alt="Logo Install" height={103}></img>
                                                 </div>
-                                                <h6 className="mt-2">Install</h6>
+                                                <h6 className="mt-2" style={{fontSize:'14px'}}>Install</h6>
                                             </Link>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="container">
-                                    <div className="row pt-5">
+                                    <div className="row mt-3">
                                         <div className="col">
                                             <Link className="list-items" to="../collect-meter" style={{textDecoration:'none'}}>
                                                 <div className="img">
-                                                    <img src="images/collectMeter.png" alt="Logo Collect Meter" height={110}></img>
+                                                    <img src="images/collectMeter.png" alt="Logo Collect Meter" height={103}></img>
                                                 </div>
-                                                <h6 className="mt-2">Collect Meter</h6>
+                                                <h6 className="mt-2" style={{fontSize:'14px'}}>Collect Meter</h6>
                                             </Link>
                                         </div>
                                         <div className="col">
                                             <Link className="list-items" to="" style={{textDecoration:'none'}}>
                                                 <div className="img">
-                                                    <img src="images/callCenter.png" alt="Logo Call Center" height={110}></img>
+                                                    <img src="images/callCenter.png" alt="Logo Call Center" height={103}></img>
                                                 </div>
-                                                <h6 className="mt-2">Call Center</h6>
+                                                <h6 className="mt-2" style={{fontSize:'14px'}}>Call Center</h6>
                                             </Link>
                                         </div>
                                         <div className="col">
                                             <Link className="list-items" to="https://ebillingportal.documentsolution.com/#/invoice-customer" style={{textDecoration:'none'}}>
                                                 <div className="img">
-                                                    <img src="images/informasiTagihan.png" alt="Logo Informasi Tagihan" height={110}></img>
+                                                    <img src="images/informasiTagihan.png" alt="Logo Informasi Tagihan" height={103}></img>
                                                 </div>
-                                                <h6 className="mt-2">Informasi Tagihan</h6>
+                                                <h6 className="mt-2" style={{fontSize:'14px'}}>Informasi Tagihan</h6>
                                             </Link>
                                         </div>
                                     </div>

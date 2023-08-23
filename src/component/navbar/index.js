@@ -58,7 +58,7 @@ const Navbar = (props) => {
                             <nav className={`navbar navbar-exspand-lg py-2 px-1`} >
                                 <div className="container-fluid">
                                     <div className="img"> 
-                                        <img src="/images/iCareLogo.png" alt="logo" height="50"/>
+                                        <img src="/images/iCareLogo.png" alt="logo" height="40"/>
                                     </div>
                                     <ul className="navbar-nav mx-auto"> 
                                         <li className="nav-item mx-3">
@@ -97,7 +97,7 @@ const Navbar = (props) => {
                                                         </li>
                                                         <li className="item-drop  py-2 d-flex align-items-center">
                                                             <div className="col-10">
-                                                                <Link className="text-decoration-none nav-app" style={{color:'#000'}} to="/address">Daftar Alamat</Link>
+                                                                <Link className="text-decoration-none" style={{color:'#000'}} to="/daftar_alamat">Daftar Alamat</Link>
                                                             </div>
                                                             <div className="col-2">
                                                                 <i className="fa fa-chevron-right chevron-drop"></i>

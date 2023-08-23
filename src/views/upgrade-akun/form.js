@@ -6,10 +6,10 @@ export default class extends Component {
         return(
             <>
                 <div className="container">
-                    <div className="card-title text-center mx-auto my-3 mb-3" style={{borderBottom: '3px solid #014C90', width: '220px'}}>
-                        <h4 className="title-icare fw-bold" style={{fontSize: '22px'}}>Upgrade Akun iCare</h4>
+                    <div className="card-title text-center mx-auto my-3 mb-3" style={{borderBottom: '3px solid #014C90', width: '165px'}}>
+                        <h4 className="title-icare fw-bold" style={{fontSize: '18px'}}>Upgrade Akun iCare</h4>
                     </div>
-                    <div className="col-md-8 col-sm-4 col-12 mx-auto">
+                    <div clsName="col-md-8 col-sm-4 col-12 mx-auto">
                         <form>
                             <div className="card mb-4 border border-dark" style={{borderRadius: '20px'}}>
                                 <div className="card-body p-5">

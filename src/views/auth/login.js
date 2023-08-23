@@ -1,15 +1,24 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import Carousel from "../../component/carousel";
+import { authUser } from "../../services/API"
 import { setToken } from "../../core/local-storage";
+import Cookies from 'universal-cookie'
 import FiturCard from "./component/fitur-card";
+const cookies = new Cookies();
+
 
 export default class extends Component {
     constructor(props) {
         super(props)
         this.submit = this.submit.bind(this)
-
         this.state = {
+	  username: "",
+          password: "",
+          loading: false,
+          error: false,
+          errMsg: "",
+          login: false,
             fiturData: [
                 {
                     lg: 3,
@@ -95,6 +104,9 @@ export default class extends Component {
             ]
         }
     }
+    inputChange = (event) => {
+        this.setState({ [event.target.name] : event.target.value });
+      }
     render() {
         return(
             <>
@@ -104,38 +116,40 @@ export default class extends Component {
                 </div>
 
             {/* beranda/login */}
-                <div className="row row-height pt-5 mb-5">
-                    <div className="col-8" style={{paddingRight:'50px'}}>
-                        <div className="col-sm-10 col-12 my-5">
-                            <div className="card shadow-sm rounded p-4" style={{border:'1px solid #a2d2ff'}}>
-                                <div className="card-body px-2">
-                                    <div className="col-12 text-center mb-3">
-                                        <img src="/images/iCareLogo.png" alt="Logo iCare" className="h-50"/>
+                <div className="container">
+                    <div className="row row-height mb-5">
+                        <div className="col-8" style={{paddingRight:'50px'}}>
+                            <div className="col-sm-10 col-12 my-5">
+                                <div className="card shadow-sm rounded p-4" style={{border:'1px solid #a2d2ff'}}>
+                                    <div className="card-body px-2">
+                                        <div className="col-12 text-center mb-3">
+                                            <img src="/images/iCareLogo.png" alt="Logo iCare" className="h-50"/>
+                                        </div>
+                                        <form onSubmit={ this.submit }>
+                                            <div className="mb-3">
+                                                <label className="size-13px fw-bold">EMAIL</label>
+                                                <input type="text"  name="username"  onChange={this.inputChange} className="form-control border-only-bottom"/>
+                                            </div>
+                                            <div className="mb-4">
+                                                <label className="size-13px fw-bold">PASSWORD</label>
+                                                <input type="password"  name="password" onChange={this.inputChange} className="form-control border-only-bottom" />
+                                            </div>
+                                            <div className="mb-2 mx-auto text-center">
+                                                <button className="btn btn-login my-1" style={{paddingLeft:'70px', paddingRight:'70px', paddingBottom:'10px', paddingTop:'10px'}}>LOGIN</button>
+                                            </div>
+                                            <div className="text-center">
+                                                <Link className="nav-link size-13px fw-medium my-2" to="kebijakan-privasi/register">Belum Punya akun ?</Link>
+                                                <Link className="nav-link size-13px fw-medium my-2"  to="/lupa-password">Lupa Password ?</Link>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <form onSubmit={ this.submit }>
-                                        <div className="mb-3">
-                                            <label className="size-13px fw-bold">EMAIL</label>
-                                            <input type="text" className="form-control border-only-bottom"/>
-                                        </div>
-                                        <div className="mb-4">
-                                            <label className="size-13px fw-bold">PASSWORD</label>
-                                            <input type="password" className="form-control border-only-bottom" />
-                                        </div>
-                                        <div className="mb-2 mx-auto text-center">
-                                            <button className="btn btn-login my-1" style={{paddingLeft:'70px', paddingRight:'70px', paddingBottom:'10px', paddingTop:'10px'}}>LOGIN</button>
-                                        </div>
-                                        <div className="text-center">
-                                            <Link className="nav-link size-13px fw-medium my-2" to="kebijakan-privasi/register">Belum Punya akun ?</Link>
-                                            <Link className="nav-link size-13px fw-medium my-2"  to="/lupa-password">Lupa Password ?</Link>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="background col-4">
-                        <img src="/images/Cahyo_MFD.png" alt="images 1" width="85%" className="mb-3" style={{marginLeft:'70px'}}/>
-                        <h2 className="title-icare text-center fw-bold" style={{marginLeft:'70px', fontSize:'35px'}}>Solusi untuk eskalasi problem dan permintaan layanan.</h2>
+                        <div className="background col-4">
+                            <img src="/images/Cahyo_MFD.png" alt="images 1" width="80%" className="mb-3" style={{marginLeft:'70px'}}/>
+                            <h2 className="title-icare text-center fw-bold" style={{marginLeft:'70px', fontSize:'35px'}}>Solusi untuk eskalasi problem dan permintaan layanan.</h2>
+                        </div>
                     </div>
                 </div>
 
@@ -247,10 +261,24 @@ export default class extends Component {
         )
     }
 
-    submit(e) {
+    async submit(e) {
         e.preventDefault() 
-        setToken("78ghjkl") 
-        this.props.router.navigate("/dashboard")
+        const {username, password} = this.state
+        this.setState({loading:true, error: false})
+        const response = await authUser({
+            username: username, password: password, type:"normal"
+          });
+        if (response != null) {
+        console.log('response', response)
+        
+            
+            cookies.set('iCare_user', JSON.stringify(response), { path: '/' });
+            // console.log('iCare_user', cookies.get('iCare_user')); // Pacman
+            // this.setState({loading:false, error: false, login: true})
+            // window.location.reload(false);
+            this.props.router.navigate("/dashboard")
+        }
+        
     }
 }
 

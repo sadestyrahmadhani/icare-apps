@@ -8,14 +8,20 @@ export default class extends Component {
             <>
             <div className="container">
                 <div className="title d-flex align-items-center">
-                    <span className="title-icare fw-medium py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Data Diri</span>
+                    <strong className="title-icare py-2" style={{ fontSize: 20, borderBottom: '3px solid #014C90' }} > Data Diri </strong>
                 </div>
                 <div className="container pt-4">
                     <div className="card px-3 shadow border-0" style={{borderRadius:'20px'}}>
                         <div className="card-body">
                             <div className="row">
+                            <div className="card-lable py-1" style={{backgroundColor:'#014C90'}}>
+                                <label className="fw-medium" style={{fontSize:'12px', color:'white'}}>Nama</label>
+                            </div>
+                            <div className="col">
+                                <input type="text" className="text-data-diri" placeholder="Indri"></input>
+                            </div>
                                 <div className="col">
-                                    <div className="card" style={{borderRadius:'0px', border:'1px solid'}}>
+                                    <div className="card" style={{borderRadius:'0px', border:'1px solid', height:'90px'}}>
                                         <div className="card-header" style={{borderRadius:'0px', backgroundColor:'#014C90'}}>
                                             <h6 style={{color:'white'}}>Nama</h6>
                                         </div>
@@ -23,13 +29,12 @@ export default class extends Component {
                                             <div className="row">
                                                 <div className="col">
                                                     <div className="card-tex">
-                                                        <h6>Indri</h6>
+                                                        <span className="text">Indri</span>
                                                     </div>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                    <div className="card-text">
-                                                        <Link className="nav-link" to="">Ubah</Link>
-                                                    </div>
+                                                    <button type="button" className="btn btn-primary">Ubah</button>
+                                                    {/* <Link className="nav-link" to="">Ubah</Link> */}
                                                 </div>
                                             </div>
                                         </div>
@@ -38,7 +43,7 @@ export default class extends Component {
                             </div>
                             <div className="row pt-4">
                                 <div className="col">
-                                    <div className="card" style={{borderRadius:'0px', border:'1px solid'}}>
+                                    <div className="card" style={{borderRadius:'0px', border:'1px solid', height:'90px'}}>
                                         <div className="card-header" style={{borderRadius:'0px', backgroundColor:'#014C90'}}>
                                             <h6 style={{color:'white'}}>Email</h6>
                                         </div>
@@ -50,7 +55,7 @@ export default class extends Component {
                             </div>
                             <div className="row pt-4">
                                 <div className="col">
-                                    <div className="card" style={{borderRadius:'0px', border:'1px solid'}}>
+                                    <div className="card" style={{borderRadius:'0px', border:'1px solid', height:'90px'}}>
                                         <div className="card-header" style={{borderRadius:'0px', backgroundColor:'#014C90'}}>
                                             <h6 style={{color:'white'}}>No Telepon</h6>
                                         </div>
@@ -73,7 +78,7 @@ export default class extends Component {
                             </div>
                             <div className="row pt-4">
                                 <div className="col">
-                                    <div className="card" style={{borderRadius:'0px', border:'1px solid'}}>
+                                    <div className="card" style={{borderRadius:'0px', border:'1px solid', height:'90px'}}>
                                         <div className="card-header" style={{borderRadius:'0px', backgroundColor:'#014C90'}}>
                                             <h6 style={{color:'white'}}>Nama Perusahaan / Instansi</h6>
                                         </div>

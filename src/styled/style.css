@@ -26,7 +26,7 @@ body {
 .nav-item {
     display: inline-block;
     list-style: none;
-    padding: 15px;
+    padding: 5px;
 }
 
 .nav-dash {
@@ -242,7 +242,7 @@ td {
 } */
 
 
-input:disabled {
+.input-error:disabled {
     background-color: #bfbfbf;
 }
 
@@ -250,4 +250,17 @@ input:disabled {
     border-color:#00c8ff;
     outline: none;
 
+}
+
+.input-page {
+    border: 1.5px solid;
+}
+
+.input-page:disabled {
+    background-color: #fff;
+}
+
+.input-page:focus {
+    border: 2px solid #00c8ff;
+    outline: none;
 }

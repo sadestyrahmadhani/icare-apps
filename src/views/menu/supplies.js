@@ -166,7 +166,9 @@ export default class extends Component {
                                     <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'12px', color:'pink'}}>Please upload photo meter information/photo machine</p>
                                     <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
                                     <label className="file-icon mb-3 d-block" htmlFor="input-file">
-                                        <i className="fa fa-file-image-o fs-4 rounded-circle p-2" style={{backgroundColor:"#014C90", color:'#fff'}} />
+                                        <div className="rounded-circle p-2" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px', marginLeft:'45%'}}>
+                                            <img className="mt-1" src="images/upload.png" style={{width:'22px'}}></img>
+                                        </div>
                                     </label>
                                     <div className="d-none col-md-6 col-sm-8 mx-auto my-5" id="display-image">
                                         <img className="w-50" src="#" alt="" id="preview-image" />
@@ -179,8 +181,10 @@ export default class extends Component {
                                     </div>
                                     <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'12px', color:'pink'}}>Please upload photo meter information/photo machine</p>
                                     <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
-                                    <label className="file-icon mb-3 d-block" htmlFor="input-file">
-                                        <i className="fa fa-file-image-o fs-4 rounded-circle p-2" style={{backgroundColor:"#014C90", color:'#fff'}} />
+                                    <label className="file-icon mb-3 d-block text-center" htmlFor="input-file">
+                                        <div className="text-center rounded-circle p-2" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px', marginLeft:'45%'}}>
+                                            <img className="mt-1" src="images/upload.png" style={{width:'22px'}}></img>
+                                        </div>
                                     </label>
                                     <div className="d-none col-md-6 col-sm-8 mx-auto my-5" id="display-image">
                                         <img className="w-50" src="#" alt="" id="preview-image" />

@@ -50,14 +50,14 @@ export default [
                         component: import('./../views/data-diri')
                     },
                     {
-                        title: 'Address',
-                        path:'address',
-                        component: import('../views/alamat')
+                        title: 'Daftar Alamat',
+                        path:'daftar_alamat',
+                        component: import('../views/daftar-alamat')
                     },
                     {
                         title: 'Form Address',
                         path: 'form-address',
-                        component: import('../views/alamat/form')
+                        component: import('../views/daftar-alamat/form')
                     },
                     {
                         title:'Daftar-EQ',
@@ -101,8 +101,8 @@ export default [
                 component: '',
                 children: [
                     {
-                        title: 'Upgarde Account',
-                        path: 'upgarde-account',
+                        title: 'Upgrade Account',
+                        path: 'upgrade-account',
                         component: import('../views/upgrade-akun/upgrade')
                     },
                     {

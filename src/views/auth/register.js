@@ -61,7 +61,7 @@ export default class extends Component {
                                     </div>
                                 </div>
                                 <div className="col-12 text-center">
-                                    <Link className="btn btn-login rounded-3 fw-medium" style={{fontSize:'14px', paddingLeft:'70px', paddingRight:'70px', paddingTop:'15px', paddingBottom:'15px'}} to="/kode-otp">SUBMIT</Link>
+                                    <Link className="btn btn-login rounded-3 fw-medium" style={{fontSize:'14px', paddingLeft:'60px', paddingRight:'60px', paddingTop:'12px', paddingBottom:'12px'}} to="/kode-otp">SUBMIT</Link>
                                 </div>
                             </div>
                         </div>

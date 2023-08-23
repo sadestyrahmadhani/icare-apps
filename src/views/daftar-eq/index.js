@@ -13,9 +13,11 @@ export default class extends Component {
                         </div>
                         <div className="col-6 row text-end">
                             <div className="col-7">
-                                <form className="d-flex" style={{width:'120%'}}>
-                                    <span className="my-auto" style={{color: '#014C90'}}><i className="fa fa-search fa-fw fa-lg"></i></span>
-                                    <input type="search" className="form-control me-3 border-0 border-only-bottom" style={{fontSize: '16px'}}/>
+                                <form class="d-flex" style={{width:'120%'}}>
+                                    <span> <i class="fa fa-search fa-fw fa-lg" aria-hidden="true"></i> </span>
+                                    <input class="form-control form-control-sm ml-3 w-100 border-only-bottom" type="text" aria-label="Search" style={{fontSize: '16px', color:'black'}}></input>
+                                    <button type="reset" className="btn border-0" style={{background:'none'}}><i className="fa fa-close fa-fw fa-lg" style={{cursor:'pointer'}}></i></button>
+                                    {/* <input type="reset" class="btn btn-success" value="Reset Button"></input> */}
                                 </form>
                             </div>
                             <div className="col-5">
@@ -25,27 +27,33 @@ export default class extends Component {
                             </div>
                         </div>
                     </div>
-                <div className="container pt-4">
+                <div className="container">
                     <div className="card shadow border-0" style={{borderRadius:'20px'}}>
                         <div className="card-body">
                             <div className="row p-3">
                                 <div className="col">
-                                    <div className="card shadow-sm border-0" style={{borderRadius:'10px'}}>
+                                    <div className="card border-0" style={{borderRadius:'10px', boxShadow:'1px 1px 3px 3px #bfbfbf'}}>
                                         <div className="card-body">
                                             <div className="row">
                                                 <div className="col">
-                                                    <div className="card-text">
-                                                    <h6>71221</h6>
-                                                    <h6 className="text" style={{color:'blue'}}>CobaInsert</h6>
-                                                    <h6>CobaInsert</h6>
-                                                </div>
+                                                    <div className="row">
+                                                        <div className="col-12">
+                                                            <span className="text" style={{fontSize:'13px', fontWeight:'bold'}}>71221</span>
+                                                        </div>
+                                                        <div className="col-12">
+                                                            <span className="text" style={{color:'blue', fontSize:'15px', fontWeight:'bold'}}>CobaInsert</span>
+                                                        </div>
+                                                        <div className="col-12">
+                                                            <span className="text" style={{fontSize:'13px', fontWeight:'bold'}}>CobaInsert</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                                 <div className="col-md-auto">
                                                     <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6></Link>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                    <img src="images/approved.png" style={{height:'70px'}}></img>
+                                                    <img src="images/verified.png" style={{height:'70px'}}></img>
                                                 </div>
                                                 <div className="col-md-auto">
                                                 <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Hapus</h6>
@@ -57,21 +65,27 @@ export default class extends Component {
                             </div>
                             <div className="row p-3">
                                 <div className="col">
-                                    <div className="card shadow-sm border-0 mt-2" style={{borderRadius:'10px'}}>
+                                    <div className="card border-0 mt-2" style={{borderRadius:'10px', boxShadow:'1px 1px 3px 3px #bfbfbf'}}>
                                         <div className="card-body">
                                             <div className="row">
                                                 <div className="col">
-                                                    <div className="card-text">
-                                                    <h6>300822</h6>
-                                                    <h6 className="text" style={{color:'blue'}}>model1</h6>
-                                                    <h6>tes aja</h6>
-                                                </div>
+                                                    <div className="row">
+                                                        <div className="col-12">
+                                                            <span className="text" style={{fontSize:'13px', fontWeight:'bold'}}>300822</span>
+                                                        </div>
+                                                        <div className="col-12">
+                                                            <span className="text" style={{color:'blue', fontSize:'15px', fontWeight:'bold'}}>model1</span>
+                                                        </div>
+                                                        <div className="col-12">
+                                                            <span className="text" style={{fontSize:'13px', fontWeight:'bold'}}>tes aja</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div className="col-md-auto">
                                                 <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6></Link>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                <img src="images/approved.png" style={{height:'70px'}}></img>
+                                                <img src="images/verified.png" style={{height:'70px'}}></img>
                                                 </div>
                                                 <div className="col-md-auto">
                                                 <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Hapus</h6>
@@ -83,15 +97,21 @@ export default class extends Component {
                             </div>
                             <div className="row p-3">
                                 <div className="col">
-                                    <div className="card shadow-sm border-0 mt-2 mb-3" style={{borderRadius:'10px'}}>
+                                    <div className="card border-0 mt-2 mb-3" style={{borderRadius:'10px', boxShadow:'1px 1px 3px 3px #bfbfbf'}}>
                                         <div className="card-body">
                                             <div className="row">
                                                 <div className="col">
-                                                    <div className="card-text">
-                                                    <h6>798689</h6>
-                                                    <h6 className="text" style={{color:'blue'}}>ApeosPort C2060</h6>
-                                                    <h6>test</h6>
-                                                </div>
+                                                    <div className="row">
+                                                        <div className="col-12">
+                                                            <span className="text" style={{fontSize:'13px', fontWeight:'bold'}}>798689</span>
+                                                        </div>
+                                                        <div className="col-12">
+                                                            <span className="text" style={{color:'blue', fontSize:'15px', fontWeight:'bold'}}>ApeosPort C2060</span>
+                                                        </div>
+                                                        <div className="col-12">
+                                                            <span className="text" style={{fontSize:'13px', fontWeight:'bold'}}>test</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div className="col-md-auto">
                                                 <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6></Link>

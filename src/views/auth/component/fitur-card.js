@@ -7,7 +7,7 @@ export default class extends Component {
             <>
                 <Row>
                     {this.props.data.map((value, key) => (
-                        <Col lg={value.lg} md={value.md} sm={value.sm} xs={value.xs}>
+                        <Col lg={value.lg} md={value.md} sm={value.sm} xs={value.xs} key={key}>
                             <Card className="custom-height shadow-lg mb-5" style={{borderBottom:`4px solid ${value.borderColor}`}}>
                                 <Card.Body style={{padding:"5rem 3rem"}}>
                                     <div className="text-center">
