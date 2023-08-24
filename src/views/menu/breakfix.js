@@ -9,30 +9,86 @@ export default class extends Component {
         this.state = {
             checkBoxCheckCount:0,
             checkBoxCheckCountPage:0,
+            equipment:'',
+            machineLocation:'',
+            description:'',
+            pageToWC:'',
+            errorDescription: '',
+            errorPageToWC: '',
             errorMessageEquipmentNumber: '',
             errorAddressOrMachineLocation: '',
-            errorDescription: '',
-            errorPageToWC: ''
         }
         this.checkCheckBox = this.checkCheckBox.bind(this)
         this.checkCheckBoxPage = this.checkCheckBoxPage.bind(this)
         this.submit = this.submit.bind(this)
+        this.validationEquipment = this.validationEquipment.bind(this)
+        this.validationMachineLocation = this.validationMachineLocation.bind(this)
+        this.validationDescription = this.validationDescription.bind(this)
+        this.validationPageToWC = this.validationPageToWC.bind(this)
     }
 
     submit(e) {
         e.preventDefault()
         var checkboxPage = document.querySelectorAll('.page-checkbox:checked')
-        this.setState({
-            errorMessageEquipmentNumber: 'Silahkan isi equipment number',
-            errorAddressOrMachineLocation: 'Silahkan isi alamat/lokasi mesin',
-            errorDescription: 'Silahkan isi deskripsi',
-            errorPageToWC: checkboxPage.length > 0 ? 'Silahakn isi page' : ''
-        })
+        if(this.state.equipment === "") this.setState({errorMessageEquipmentNumber:'Silahkan isi quipment number'})
+        if(this.state.machineLocation === "") this.setState({errorAddressOrMachineLocation:'Silahkan isi alamat/lokasi mesin'})
+        if(this.state.description === "") this.setState({errorDescription:'Silahkan isi deskripsi'})
+        if(this.state.pageToWC === "") this.setState({errorPageToWC: checkboxPage.length > 0 ? 'Silahkan isi page' : ''})
+
+
+        // this.setState({
+        //     errorMessageEquipmentNumber: 'Silahkan isi equipment number',
+        //     errorAddressOrMachineLocation: 'Silahkan isi alamat/lokasi mesin',
+        //     errorDescription: 'Silahkan isi deskripsi',
+        //     errorPageToWC: checkboxPage.length > 0 ? 'Silahakn isi page' : ''
+        // })
+
+
         Swal.fire({
             text:'Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min.1',
             confirmButtonColor:'#0099ff'
         })
     }
+
+    validationEquipment(e) {
+        preventDefault()
+        this.setState({equipment: e.target.value})
+        if(this.state.equipment !== "") {
+            this.setState({errorMessageEquipmentNumber:''})
+        }
+    }
+
+    validationMachineLocation(e) {
+        preventDefault()
+        this.setState({machineLocation: e.target.value})
+        if(this.state.machineLocation !== "") {
+            this.setState({errorAddressOrMachineLocation:''})
+        }
+    }
+
+    validationDescription(e) {
+        e.preventDefault()
+        this.setState({description: e.target.value})
+        if(this.state.description !== "") {
+            this.setState({errorDescription:''})
+        }
+    }
+
+    validationPageToWC(e) {
+        e.preventDefault()
+        this.setState({pageToWC: e.target.value})
+        if(this.state.checkBoxCheckCountPage > 0 && this.state.pageToWC === "") {
+            this.setState.pageToWC({errorPageToWC:'Silahkan isi page'})
+        } else {
+            this.setState({errorPageToWC:''})
+        }
+        if(e.target.value.length > 3) {
+            this.setState({errorPageToWC:'Page to tidak boleh lebih dari 3 karakter'})
+        } else {
+            this.setState({errorPageToWC:''})
+        }
+    }
+    
 
     checkCheckBox() {
         var checkbox = document.querySelectorAll('.problem-checkbox:checked')
@@ -75,15 +131,15 @@ export default class extends Component {
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Equipment Number</label>
                                 </div>
                                 <div className="mb-4 p-0">
-                                    <Link className={`py-4 w-100 d-block ${this.state.errorDescription !== "" ? "border-danger": ""}`} style={{border:'1px solid #000'}} to="/daftar-eq"></Link>
-                                    <span className={`text-danger small mx-2 ${ this.state.errorMessageEquipmentNumber !== '' ? '' : 'd-none' }`}>{ this.state.errorMessageEquipmentNumber }</span>
+                                    <Link className="py-4 w-100 d-block" style={{border:'1px solid #797979'}} to="/daftar-eq"></Link>
+                                    <span className={`text-danger small mx-2 ${ this.state.errorMessageEquipmentNumber !== '' ? '' : 'd-none' }`} style={{fontSize:'12px'}} >{ this.state.errorMessageEquipmentNumber }</span>
                                 </div>
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Alamat/Lokasi Mesin</label>
                                 </div>
                                 <div className="mb-4 p-0">
-                                    <Link className={`py-4 w-100 d-block ${this.state.errorDescription !== "" ? "border-danger": ""}`} style={{border:'1px solid #000'}} ></Link>
-                                    <span className={`text-danger mx-2 small ${ this.state.errorAddressOrMachineLocation !== '' ? '' : 'd-none' }`}>{ this.state.errorAddressOrMachineLocation }</span>
+                                    <Link className="py-4 w-100 d-block" style={{border:'1px solid #797979'}} ></Link>
+                                    <span className={`text-danger mx-2 small ${ this.state.errorAddressOrMachineLocation !== '' ? '' : 'd-none' }`} style={{fontSize:'12px'}} >{ this.state.errorAddressOrMachineLocation }</span>
                                 </div>
                                 <div className="card-lable py-1 mb-4" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Problem&#40;Please Select&#41;</label>
@@ -149,8 +205,8 @@ export default class extends Component {
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Tambah Deskripsi</label>
                                 </div>
                                 <div className="mb-4 p-0">
-                                    <input type="text" className={ `py-3 w-100 ${ this.state.errorDescription !== '' ? 'border-danger border' : '' }` } />
-                                    <span className={`text-danger small mx-2 ${ this.state.errorDescription !== '' ? '' : 'd-none' }`}>{ this.state.errorDescription }</span>
+                                    <input type="text" className={ `input-page py-3 w-100 ${ this.state.errorDescription !== '' ? 'border-danger border' : '' }` } onChange={this.validationDescription} />
+                                    <span className={`text-danger small mx-2 ${ this.state.errorDescription !== '' ? '' : 'd-none' }`} style={{fontSize:'12px'}} >{ this.state.errorDescription }</span>
                                 </div>
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Page</label>
@@ -160,9 +216,9 @@ export default class extends Component {
                                         <input type="checkbox" style={{ borderRadius: 0, padding: '1px' }} className="form-check-input page-checkbox" id="pageToWC" onChange={ this.checkCheckBoxPage } />
                                         <label htmlFor="pageToWC" className="form-check-label">Page to WC</label>
                                     </div>
-                                    <div className="ms-2" style={{ width: '100px' }}>
-                                        <input type="text" className={`ms-2 py-2 input-page w-100 ${ this.state.errorPageToWC !== '' ? 'border-danger border' : '' }`} disabled={this.state.checkBoxCheckCountPage == 0} />
-                                        <span className={ `text-danger small mx-1 ${ this.state.errorPageToWC !== '' ? '' : 'd-none' }` }>{ this.state.errorPageToWC }</span>
+                                    <div className="ms-2" style={{ width: '110px' }}>
+                                        <input type="text" className={`ms-2 py-2 input-page w-100 ${ this.state.errorPageToWC !== '' ? 'border-danger border' : '' }`} disabled={this.state.checkBoxCheckCountPage == 0}  />
+                                        <span className={ `text-danger small mx-2 ${ this.state.errorPageToWC !== '' ? '' : 'd-none' }` } style={{fontSize:'12px'}} >{ this.state.errorPageToWC }</span>
                                     </div>
                                 </div>
                                 <div className="text-center">

@@ -63,12 +63,12 @@ export default class extends Component {
                                     <div className="mb-3">
                                         <label className="size-13px fw-bold">Email Address</label>
                                         <input type="email"  className={`form-control border-only-bottom ${this.state.errorEmail === "" ? "": "invalid"}`} onChange={this.validationEmail}/>
-                                        <span className={`${this.state.errorEmail === "" ? "d-none": ""} text-danger small`} style={{fontSize:'12px'}}> {this.state.errorEmail} </span>
+                                        <span className={`${this.state.errorEmail === "" ? "d-none": ""} text-danger`} style={{fontSize:'12px'}}> {this.state.errorEmail} </span>
                                     </div>
                                     <div className="mb-5">
                                         <label className="size-13px fw-bold">Number Phone</label>
                                         <input type="text"  className={`form-control border-only-bottom ${this.state.errorPhone === "" ? "": "invalid"}`} onChange={this.validationPhone}/>
-                                        <span className={`${this.state.errorPhone === "" ? "d-none": ""} text-danger small`} style={{fontSize:'12px'}}> {this.state.errorPhone} </span>
+                                        <span className={`${this.state.errorPhone === "" ? "d-none": ""} text-danger`} style={{fontSize:'12px'}}> {this.state.errorPhone} </span>
                                     </div>
                                     <div className="text-center pt-4">
                                         <button className="btn btn-login fw-medium rounded-3" type="submit" style={{fontSize:'14px', paddingLeft:'60px', paddingRight:'60px', paddingTop:'12px', paddingBottom:'12px'}}>SUBMIT</button>

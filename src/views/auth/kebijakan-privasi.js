@@ -36,8 +36,10 @@ function ConditionRegister(props) {
     const navigate = useNavigate()
     return(
         <div className="text">
-            <input className="me-2" type="checkbox" id="checklist" onChange={ () => setIsCheck(!isCheck) } /> 
-            <label className="mb-4" style={{fontSize:'12px'}} htmlFor="checklist" >Saya setuju dengan kebijakan ini</label> <br/>
+            <div className="mb-3 d-flex align-items-center justify-content-center">
+                <input className="me-2 mt-0 form-check-input" style={{borderRadius: 0, padding:'1px'}} type="checkbox" id="agree-check" onChange={ () => setIsCheck(!isCheck) } /> 
+                <label className="form-check-label" style={{fontSize:'12px'}} htmlFor="agree-check" >Saya setuju dengan kebijakan ini</label> <br/>
+            </div>
             <button className={ `btn fw-medium rounded-3 ${ isCheck ? 'btn-secondary-custom' :'btn-login' }` } type="submit" style={{fontSize:'14px', paddingLeft:'60px', paddingRight:'60px', paddingTop:'12px', paddingBottom:'12px'}} onClick={ () => {
                 if(isCheck) {
                     Swal.fire({

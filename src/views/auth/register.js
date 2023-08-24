@@ -32,22 +32,22 @@ export default class extends Component {
                                                 <div className="mb-3">
                                                     <label className="size-13px fw-bold">Email Address</label>
                                                     <input type="email" className={ `form-control  border-only-bottom ${ this.state.showError ? 'is-invalid' : '' }` } />
-                                                    <i className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan isi email</i>
+                                                    <span className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan isi email</span>
                                                 </div>
                                                 <div className="mb-3">
                                                     <label className="size-13px fw-bold">Mobile Phone Number</label>
                                                     <input type="text" className={ `form-control border-only-bottom ${ this.state.showError ? 'is-invalid' : '' }` } />
-                                                    <i className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan isi nomor telepon</i>
+                                                    <span className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan isi nomor telepon</span>
                                                 </div>
                                                 <div className="mb-3">
                                                     <label className="size-13px fw-bold">Password</label>
                                                     <input type="password" className={ `form-control border-only-bottom ${ this.state.showError ? 'is-invalid' : '' }` } />
-                                                    <i className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan isi password</i>
+                                                    <span className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan isi password</span>
                                                 </div>
                                                 <div className="mb-3">
                                                     <label className="size-13px fw-bold">Re-enter Password</label>
                                                     <input type="password" className={ `form-control border-only-bottom ${ this.state.showError ? 'is-invalid' : '' }` } />
-                                                    <i className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan ulangi isi password</i>
+                                                    <span className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan ulangi isi password</span>
                                                 </div>
                                             </form>
                                         </div>
@@ -56,17 +56,17 @@ export default class extends Component {
                                                 <div className="mb-3">
                                                     <label className="size-13px fw-bold">Nama Lengkap</label>
                                                     <input type="text" className={ `form-control border-only-bottom ${ this.state.showError ? 'is-invalid' : '' }` } />
-                                                    <i className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan isi nama lengkap</i>
+                                                    <span className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan isi nama lengkap</span>
                                                 </div>
                                                 <div className="mb-3">
                                                     <label className="size-13px fw-bold">Nama Perusahaan / Instansi</label>
                                                     <input type="text" className={ `form-control border-only-bottom ${ this.state.showError ? 'is-invalid' : '' }` } />
-                                                    <i className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan isi nama perusahaan / instansi</i>
+                                                    <span className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan isi nama perusahaan / instansi</span>
                                                 </div>
                                                 <div className="mb-3">
                                                     <label className="size-13px fw-bold">Nomor Equipment</label>
                                                     <input type="password" className={ `form-control border-only-bottom ${ this.state.showError ? 'is-invalid' : '' }` } />
-                                                    <i className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan isi nomor equipment</i>
+                                                    <span className="invalid-feedback" style={{ fontSize: 12 }}>Silahkan isi nomor equipment</span>
                                                 </div>
                                                 <div className="mb-3" style={{ position: 'relative' }}>
                                                     <label className="size-13px fw-bold">Foto Sticker Equipment</label>
