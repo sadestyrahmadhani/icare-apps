@@ -75,15 +75,15 @@ export default class extends Component {
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Equipment Number</label>
                                 </div>
                                 <div className="mb-4 p-0">
-                                    <Link className="py-4 w-100 d-block" style={{border:'1px solid #000'}} to="/daftar-eq"></Link>
-                                    <i className={`text-danger small mx-2 ${ this.state.errorMessageEquipmentNumber !== '' ? '' : 'd-none' }`}>{ this.state.errorMessageEquipmentNumber }</i>
+                                    <Link className={`py-4 w-100 d-block ${this.state.errorDescription !== "" ? "border-danger": ""}`} style={{border:'1px solid #000'}} to="/daftar-eq"></Link>
+                                    <span className={`text-danger small mx-2 ${ this.state.errorMessageEquipmentNumber !== '' ? '' : 'd-none' }`}>{ this.state.errorMessageEquipmentNumber }</span>
                                 </div>
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Alamat/Lokasi Mesin</label>
                                 </div>
                                 <div className="mb-4 p-0">
-                                    <Link className="py-4 w-100 d-block" style={{border:'1px solid #000'}} ></Link>
-                                    <i className={`text-danger mx-2 small ${ this.state.errorAddressOrMachineLocation !== '' ? '' : 'd-none' }`}>{ this.state.errorAddressOrMachineLocation }</i>
+                                    <Link className={`py-4 w-100 d-block ${this.state.errorDescription !== "" ? "border-danger": ""}`} style={{border:'1px solid #000'}} ></Link>
+                                    <span className={`text-danger mx-2 small ${ this.state.errorAddressOrMachineLocation !== '' ? '' : 'd-none' }`}>{ this.state.errorAddressOrMachineLocation }</span>
                                 </div>
                                 <div className="card-lable py-1 mb-4" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Problem&#40;Please Select&#41;</label>
@@ -150,7 +150,7 @@ export default class extends Component {
                                 </div>
                                 <div className="mb-4 p-0">
                                     <input type="text" className={ `py-3 w-100 ${ this.state.errorDescription !== '' ? 'border-danger border' : '' }` } />
-                                    <i className={`text-danger small mx-2 ${ this.state.errorDescription !== '' ? '' : 'd-none' }`}>{ this.state.errorDescription }</i>
+                                    <span className={`text-danger small mx-2 ${ this.state.errorDescription !== '' ? '' : 'd-none' }`}>{ this.state.errorDescription }</span>
                                 </div>
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Page</label>
@@ -162,7 +162,7 @@ export default class extends Component {
                                     </div>
                                     <div className="ms-2" style={{ width: '100px' }}>
                                         <input type="text" className={`ms-2 py-2 input-page w-100 ${ this.state.errorPageToWC !== '' ? 'border-danger border' : '' }`} disabled={this.state.checkBoxCheckCountPage == 0} />
-                                        <i className={ `text-danger small mx-1 ${ this.state.errorPageToWC !== '' ? '' : 'd-none' }` }>{ this.state.errorPageToWC }</i>
+                                        <span className={ `text-danger small mx-1 ${ this.state.errorPageToWC !== '' ? '' : 'd-none' }` }>{ this.state.errorPageToWC }</span>
                                     </div>
                                 </div>
                                 <div className="text-center">
