@@ -44,7 +44,7 @@ export default class extends Component {
                                     <div className="mb-3">
                                         <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Lama</label>
                                         <div className="d-flex border border-dark">
-                                            <input type={ this.state.typeInput[0] } className="form-control" style={{boxShadow: 'none', textDecoration: 'none'}}/>
+                                            <input type={ this.state.typeInput[0] } className="form-control" style={{boxShadow: 'none', textDecoration: 'none', border: 'hidden'}}/>
                                             <i 
                                                 className={ `fa ${ this.state.iconClass[0] } fa-lg my-auto me-2` } 
                                                 onClick={ () => this.setState({
@@ -65,7 +65,7 @@ export default class extends Component {
                                     <div className="mb-3">
                                         <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Baru</label>
                                         <div className="border border-dark d-flex">
-                                            <input type={ this.state.typeInput[1] } className="form-control" style={{boxShadow: 'none', textDecoration: 'none'}}/>
+                                            <input type={ this.state.typeInput[1] } className="form-control" style={{boxShadow: 'none', textDecoration: 'none', border: 'hidden'}}/>
                                             <i 
                                                 className={ `fa ${ this.state.iconClass[1] } fa-lg my-auto me-2` } 
                                                 onClick={ () => this.setState({
@@ -86,7 +86,7 @@ export default class extends Component {
                                     <div className="mb-4">
                                         <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Ulangi Kata Sandi Baru</label>
                                         <div className="d-flex border border-dark">
-                                            <input type={ this.state.typeInput[2] } className="form-control" style={{boxShadow: 'none', textDecoration: 'none'}}/>
+                                            <input type={ this.state.typeInput[2] } className="form-control" style={{boxShadow: 'none', textDecoration: 'none', border: 'hidden'}}/>
                                             <i 
                                                 className={ `fa ${ this.state.iconClass[2] } fa-lg my-auto me-2` } 
                                                 onClick={ () => this.setState({
