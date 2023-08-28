@@ -6,15 +6,37 @@ export default class extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            checkBoxCheckCount:0
+            checkBoxCheckCount:0,
+            inputsEnabled: [false, false, false, false, false, false, false, false, false, false, false, false],
         }
     }
 
-    handleCheckboxChange = (event) => {
+    handleInputChange = (event, index) => {
+        const newValue = event.target.value;
+        if(/^[1-9]$/.test(newValue)) {
+            const newInputsEnabled = [...this.state.inputsEnabled];
+            newInputsEnabled[index] = true;
+
+            this.setState({
+                inputsEnabled: newInputsEnabled,
+            });
+        }
+    }
+
+    handleCheckboxChange = (event, index) => {
         const isChecked = event.target.checked;
-        this.setState((prevState) => ({
-          checkBoxCheckCount: isChecked ? prevState.checkBoxCheckCount + 1 : prevState.checkBoxCheckCount - 1,
-        }));
+        this.setState((prevState) => {
+            const newInputsEnabled = [...prevState.inputsEnabled];
+            newInputsEnabled[index] = isChecked;
+
+            return{
+                checkBoxCheckCount: isChecked 
+                ? prevState.checkBoxCheckCount + 1
+                : prevState.checkBoxCheckCount - 1,
+
+                inputsEnabled: newInputsEnabled,
+            };
+        });
     };
 
     previewImage(e) {
@@ -58,94 +80,94 @@ export default class extends Component {
                             </div>
                             <div className="col-3" style={{width:'145px'}}>
                                 <div className="check-item d-flex align-items-center mt-1" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.handleCheckboxChange}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={(event) => this.handleCheckboxChange(event, 0)}></input>
                                     <label style={{fontSize:'12px'}}>Toner Black</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mt-4" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.handleCheckboxChange}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={(event) => this.handleCheckboxChange(event, 1)}></input>
                                     <label style={{fontSize:'12px'}}>Toner Cyan</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mt-4" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.checkCheckBox}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={(event) => this.handleCheckboxChange(event, 2)}></input>
                                     <label style={{fontSize:'12px'}}>Toner Magenta</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mt-4" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.checkCheckBox}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={(event) => this.handleCheckboxChange(event, 3)}></input>
                                     <label style={{fontSize:'12px'}}>Toner Yellow</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mt-4" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.checkCheckBox}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={(event) => this.handleCheckboxChange(event, 4)}></input>
                                     <label style={{fontSize:'12px'}}>Waste Bottle</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mt-4" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumabke-checkbox me-2" onChange={this.checkCheckBox}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={(event) => this.handleCheckboxChange(event, 5)}></input>
                                     <label style={{fontSize:'12px'}}>Cleaning Cartridge</label>
                                 </div>
                             </div>
                             <div className="col-3">
                                 <div className="check-item d-flex align-items-center mb-3">
-                                    <input type="text" className="py-2" disabled={this.state.checkBoxCheckCount == 0} style={{width:'20%', height:'45px'}}></input>
+                                    <input type="text" className="py-2" maxLength="1" disabled={!this.state.inputsEnabled[0]} onChange={(event) => this.handleInputChange(event, 0)} style={{width:'20%', height:'45px'}}></input>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-3">
-                                    <input type="text" className="py-2" disabled={this.state.checkBoxCheckCount == 0} style={{width:'20%', height:'45px'}}></input>
+                                    <input type="text" className="py-2" maxLength="1" disabled={!this.state.inputsEnabled[1]} onChange={(event) => this.handleInputChange(event, 1)} style={{width:'20%', height:'45px'}}></input>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-3">
-                                    <input type="text" className="py-2" disabled={this.state.checkBoxCheckCount == 0} style={{width:'20%', height:'45px'}}></input>
+                                    <input type="text" className="py-2" maxLength="1" disabled={!this.state.inputsEnabled[2]} onChange={(event) => this.handleInputChange(event, 2)} style={{width:'20%', height:'45px'}}></input>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-3">
-                                    <input type="text" className="py-2" disabled={this.state.checkBoxCheckCount == 0} style={{width:'20%', height:'45px'}}></input>
+                                    <input type="text" className="py-2" maxLength="1" disabled={!this.state.inputsEnabled[3]} onChange={(event) => this.handleInputChange(event, 3)} style={{width:'20%', height:'45px'}}></input>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-3">
-                                    <input type="text" className="py-2" disabled={this.state.checkBoxCheckCount == 0} style={{width:'20%', height:'45px'}}></input>
+                                    <input type="text" className="py-2" maxLength="1" disabled={!this.state.inputsEnabled[4]} onChange={(event) => this.handleInputChange(event, 4)} style={{width:'20%', height:'45px'}}></input>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-3">
-                                    <input type="text" className="py-2" disabled={this.state.checkBoxCheckCount == 0} style={{width:'20%', height:'45px'}}></input>
+                                    <input type="text" className="py-2" maxLength="1" disabled={!this.state.inputsEnabled[5]} onChange={(event) => this.handleInputChange(event, 5)} style={{width:'20%', height:'45px'}}></input>
                                 </div>
                             </div>
                             <div className="col-3" style={{width:'125px', marginLeft:'100px'}}>
                                 <div className="check-item d-flex align-items-center mt-1" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.checkCheckBox}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={(event) => this.handleCheckboxChange(event, 6)}></input>
                                     <label style={{fontSize:'12px'}}>Drum Black</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mt-4" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.checkCheckBox}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={(event) => this.handleCheckboxChange(event, 7)}></input>
                                     <label style={{fontSize:'12px'}}>Drum Cyan</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mt-4" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.checkCheckBox}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={(event) => this.handleCheckboxChange(event, 8)}></input>
                                     <label style={{fontSize:'12px'}}>Drum Magenta</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mt-4" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.checkCheckBox}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={(event) => this.handleCheckboxChange(event, 9)}></input>
                                     <label style={{fontSize:'12px'}}>Drum Yellow</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mt-4" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.checkCheckBox}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={(event) => this.handleCheckboxChange(event, 10)}></input>
                                     <label style={{fontSize:'12px'}}>Fuser Web</label>
                                 </div>
                                 <div className="check-item d-flex align-items-center mt-4" style={{height:'10%'}}>
-                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={this.checkCheckBox}></input>
+                                    <input type="checkbox" className="consumable-checkbox me-2" onChange={(event) => this.handleCheckboxChange(event, 11)}></input>
                                     <label style={{fontSize:'12px'}}>Corotron</label>
                                 </div>
                             </div>
                             <div className="col-3">
                                 <div className="check-item d-flex align-items-center mb-3">
-                                    <input type="text" className="py-2" disabled={this.state.checkBoxCheckCount == 0} style={{width:'20%', height:'45px'}}></input>
+                                    <input type="text" className="py-2" maxLength="1" disabled={!this.state.inputsEnabled[6]} onChange={(event) => this.handleInputChange(event, 6)} style={{width:'20%', height:'45px'}}></input>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-3">
-                                    <input type="text" className="py-2" disabled={this.state.checkBoxCheckCount == 0} style={{width:'20%', height:'45px'}}></input>
+                                    <input type="text" className="py-2" maxLength="1" disabled={!this.state.inputsEnabled[7]} onChange={(event) => this.handleInputChange(event, 7)} style={{width:'20%', height:'45px'}}></input>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-3">
-                                    <input type="text" className="py-2" disabled={this.state.checkBoxCheckCount == 0} style={{width:'20%', height:'45px'}}></input>
+                                    <input type="text" className="py-2" maxLength="1" disabled={!this.state.inputsEnabled[8]} onChange={(event) => this.handleInputChange(event, 8)} style={{width:'20%', height:'45px'}}></input>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-3">
-                                    <input type="text" className="py-2" disabled={this.state.checkBoxCheckCount == 0} style={{width:'20%', height:'45px'}}></input>
+                                    <input type="text" className="py-2" maxLength="1" disabled={!this.state.inputsEnabled[9]} onChange={(event) => this.handleInputChange(event, 9)} style={{width:'20%', height:'45px'}}></input>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-3">
-                                    <input type="text" className="py-2" disabled={this.state.checkBoxCheckCount == 0} style={{width:'20%', height:'45px'}}></input>
+                                    <input type="text" className="py-2" maxLength="1" disabled={!this.state.inputsEnabled[10]} onChange={(event) => this.handleInputChange(event, 10)} style={{width:'20%', height:'45px'}}></input>
                                 </div>
                                 <div className="check-item d-flex align-items-center mb-3">
-                                    <input type="text" className="py-2" disabled={this.state.checkBoxCheckCount == 0} style={{width:'20%', height:'45px'}}></input>
+                                    <input type="text" className="py-2" maxLength="1" disabled={!this.state.inputsEnabled[11]} onChange={(event) => this.handleInputChange(event, 11)} style={{width:'20%', height:'45px'}}></input>
                                 </div>
                             </div>
                             <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>

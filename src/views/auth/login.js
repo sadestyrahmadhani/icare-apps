@@ -5,13 +5,17 @@ import { authUser } from "../../services/API"
 import { setToken } from "../../core/local-storage";
 import Cookies from 'universal-cookie'
 import FiturCard from "./component/fitur-card";
+import ConfirmAlert from "../../component/alert/confirmAlert";
 const cookies = new Cookies();
+
 
 
 export default class extends Component {
     constructor(props) {
         super(props)
         this.submit = this.submit.bind(this)
+        this.handlePopup = this.handlePopup.bind(this)
+        this.inputChange = this.inputChange.bind(this)
         this.state = {
 	  username: "",
           password: "",
@@ -19,6 +23,11 @@ export default class extends Component {
           error: false,
           errMsg: "",
           login: false,
+          showPopup: false,
+          email:'',
+          password:'',
+          errorEmail:'',
+          errorPassword:'',
             fiturData: [
                 {
                     lg: 3,
@@ -104,9 +113,18 @@ export default class extends Component {
             ]
         }
     }
+
     inputChange = (event) => {
-        this.setState({ [event.target.name] : event.target.value });
+        event.preventDefault()
+        this.setState({ [event.target.name] : event.target.value })
+        this.setState({email: event.target.value})
+        if(event.target.value === "") {
+            this.setState({errorEmail :"Silahkan isi email"})
+        } else {
+            this.setState({errorEmail:""})
+        }
       }
+
     render() {
         return(
             <>
@@ -128,7 +146,8 @@ export default class extends Component {
                                         <form onSubmit={ this.submit }>
                                             <div className="mb-3">
                                                 <label className="size-13px fw-bold">EMAIL</label>
-                                                <input type="text"  name="username"  onChange={this.inputChange} className="form-control border-only-bottom"/>
+                                                <input type="text"  name="username"  onChange={this.inputChange} className={`form-control border-only-bottom ${ this.state.errorEmail === "" ? "invalid" : ""}`}/>
+                                                <span className={`invalid-feedback ${this.state.errorEmail === "" ? "d-none": ""}`} style={{ fontSize: 12 }}>{this.state.errorEmail}</span>
                                             </div>
                                             <div className="mb-4">
                                                 <label className="size-13px fw-bold">PASSWORD</label>
@@ -139,9 +158,11 @@ export default class extends Component {
                                             </div>
                                             <div className="text-center">
                                                 <Link className="nav-link size-13px fw-medium my-2" to="kebijakan-privasi/register">Belum Punya akun ?</Link>
-                                                <Link className="nav-link size-13px fw-medium my-2"  to="/lupa-password">Lupa Password ?</Link>
+                                                <Link className="nav-link size-13px fw-medium my-2 mb-3"  to="/lupa-password">Lupa Password ?</Link>
+                                                <button className="btn btn-google shadow-sm me-2 fw-medium px-5 text-muted py-1" >Sign in with Google</button>
                                             </div>
                                         </form>
+                                        <ConfirmAlert visible={this.state.showPopup} titleMessage="Error" message="Form not valid" onClick={this.handlePopup} customClass="col-md-2 col-sm-6 col-12" />
                                     </div>
                                 </div>
                             </div>
@@ -261,8 +282,16 @@ export default class extends Component {
         )
     }
 
+    handlePopup() {
+        this.setState({showPopup: false})
+    }
+
     async submit(e) {
         e.preventDefault() 
+        this.setState({showPopup: true})
+        if(this.state.email === "") this.setState({errorEmail:"Silahkan isi email"})
+        if(this.state.password === "") this.setState({errorPassword:"Silahkan isi password"})
+        
         const {username, password} = this.state
         this.setState({loading:true, error: false})
         const response = await authUser({
@@ -274,11 +303,14 @@ export default class extends Component {
             
             cookies.set('iCare_user', JSON.stringify(response), { path: '/' });
             // console.log('iCare_user', cookies.get('iCare_user')); // Pacman
-            // this.setState({loading:false, error: false, login: true})
+                // this.setState({loading:false, error: false, login: true})
             // window.location.reload(false);
             this.props.router.navigate("/dashboard")
         }
         
     }
+
+    
+    
 }
 

@@ -34,33 +34,9 @@ export default class extends Component {
                         items: 'Toner Cyan, Drum Cyan',
                         description: 'Test12345678'
                     },
-                    {
-                        code: 'CR-2310784',
-                        requestType: 'Consumable Request',
-                        date: '4/12/2023 12:41:01 PM',
-                        EQCode: '300822',
-                        items: 'Toner Cyan, Drum Cyan',
-                        description: 'Test12345678'
-                    },
                 ],
                 [],
                 [
-                    {
-                        code: 'CR-2310784',
-                        requestType: 'Consumable Request',
-                        date: '4/12/2023 12:41:01 PM',
-                        EQCode: '300822',
-                        items: 'Toner Cyan, Drum Cyan',
-                        description: 'Test12345678'
-                    },
-                    {
-                        code: 'CR-2310784',
-                        requestType: 'Consumable Request',
-                        date: '4/12/2023 12:41:01 PM',
-                        EQCode: '300822',
-                        items: 'Toner Cyan, Drum Cyan',
-                        description: 'Test12345678'
-                    },
                     {
                         code: 'CR-2310784',
                         requestType: 'Consumable Request',
@@ -123,7 +99,7 @@ export default class extends Component {
                         }
                     </div>
                 </div>
-                <AlertConfirm visible={ this.state.alertVisible } onClick={ () => this.setState({ alertVisible: 0 }) } message="Belum pernah melakukan permintaan" />
+                <AlertConfirm visible={ this.state.alertVisible } onClick={ () => this.setState({ alertVisible: 0 }) } message="Belum pernah melakukan permintaan"/>
             </>
         )
     }

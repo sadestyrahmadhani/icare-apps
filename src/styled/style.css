@@ -27,6 +27,7 @@ body {
     display: inline-block;
     list-style: none;
     padding: 5px;
+    font-size: 15px;
 }
 
 .nav-dash {
@@ -285,4 +286,28 @@ td {
 
 #inputFiles::file-selector-button {
     display: none;
-  }
+}
+
+.btn-alert:hover {
+    background: #005cdc !important;
+}
+
+.custom-input-number::-webkit-outer-spin-button, .custom-input-number::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.btn-google {
+    border-radius: 0;
+    font-size: 14px;
+    color: #9c9b9b !important;
+}
+
+.btn-google:hover {
+    background: #edecec;
+    box-shadow: 10 #000;
+}
+
+.btn-google:focus {
+    border: none;
+}

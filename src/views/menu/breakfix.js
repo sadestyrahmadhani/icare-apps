@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import ConfirmAlert from "../../component/alert/confirmAlert";
+// import Swal from "sweetalert2";
 
 
 export default class extends Component {
@@ -17,6 +18,7 @@ export default class extends Component {
             errorPageToWC: '',
             errorMessageEquipmentNumber: '',
             errorAddressOrMachineLocation: '',
+            showPopup: false,
         }
         this.checkCheckBox = this.checkCheckBox.bind(this)
         this.checkCheckBoxPage = this.checkCheckBoxPage.bind(this)
@@ -25,6 +27,11 @@ export default class extends Component {
         this.validationMachineLocation = this.validationMachineLocation.bind(this)
         this.validationDescription = this.validationDescription.bind(this)
         this.validationPageToWC = this.validationPageToWC.bind(this)
+        this.handlePopup = this.handlePopup.bind(this)
+    }
+
+    handlePopup() {
+        this.setState({showPopup:false})
     }
 
     submit(e) {
@@ -35,6 +42,8 @@ export default class extends Component {
         if(this.state.description === "") this.setState({errorDescription:'Silahkan isi deskripsi'})
         if(this.state.pageToWC === "") this.setState({errorPageToWC: checkboxPage.length > 0 ? 'Silahkan isi page' : ''})
 
+        this.setState({showPopup: true})
+
 
         // this.setState({
         //     errorMessageEquipmentNumber: 'Silahkan isi equipment number',
@@ -44,14 +53,15 @@ export default class extends Component {
         // })
 
 
-        Swal.fire({
-            text:'Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min.1',
-            confirmButtonColor:'#0099ff'
-        })
+        // Swal.fire({
+        //     text:'Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min.1',
+        //     confirmButtonColor:'#0099ff'
+        // })
     }
 
+
     validationEquipment(e) {
-        preventDefault()
+        e.preventDefault()
         this.setState({equipment: e.target.value})
         if(this.state.equipment !== "") {
             this.setState({errorMessageEquipmentNumber:''})
@@ -59,7 +69,7 @@ export default class extends Component {
     }
 
     validationMachineLocation(e) {
-        preventDefault()
+        e.preventDefault()
         this.setState({machineLocation: e.target.value})
         if(this.state.machineLocation !== "") {
             this.setState({errorAddressOrMachineLocation:''})
@@ -69,7 +79,7 @@ export default class extends Component {
     validationDescription(e) {
         e.preventDefault()
         this.setState({description: e.target.value})
-        if(this.state.description !== "") {
+        if(e.target.value !== "") {
             this.setState({errorDescription:''})
         }
     }
@@ -77,18 +87,18 @@ export default class extends Component {
     validationPageToWC(e) {
         e.preventDefault()
         this.setState({pageToWC: e.target.value})
-        if(this.state.checkBoxCheckCountPage > 0 && this.state.pageToWC === "") {
-            this.setState.pageToWC({errorPageToWC:'Silahkan isi page'})
+        if(this.state.checkBoxCheckCountPage > 0 && e.target.value === "") {
+            this.setState({errorPageToWC:'Silahkan isi page'})
         } else {
-            this.setState({errorPageToWC:''})
+            if(e.target.value.length > 3) {
+                this.setState({errorPageToWC:'Page to tidak boleh lebih dari 3 karakter'})
+            } else {
+                this.setState({errorPageToWC:''})
+            }
         }
-        if(e.target.value.length > 3) {
-            this.setState({errorPageToWC:'Page to tidak boleh lebih dari 3 karakter'})
-        } else {
-            this.setState({errorPageToWC:''})
-        }
+        
     }
-    
+
 
     checkCheckBox() {
         var checkbox = document.querySelectorAll('.problem-checkbox:checked')
@@ -131,14 +141,14 @@ export default class extends Component {
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Equipment Number</label>
                                 </div>
                                 <div className="mb-4 p-0">
-                                    <Link className="py-4 w-100 d-block" style={{border:'1px solid #797979'}} to="/daftar-eq"></Link>
+                                    <Link className="py-4 w-100 d-block" style={{border:'1px solid #797979'}} onChange={this.validationEquipment} to="/daftar-eq"></Link>
                                     <span className={`text-danger small mx-2 ${ this.state.errorMessageEquipmentNumber !== '' ? '' : 'd-none' }`} style={{fontSize:'12px'}} >{ this.state.errorMessageEquipmentNumber }</span>
                                 </div>
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Alamat/Lokasi Mesin</label>
                                 </div>
                                 <div className="mb-4 p-0">
-                                    <Link className="py-4 w-100 d-block" style={{border:'1px solid #797979'}} ></Link>
+                                    <Link className="py-4 w-100 d-block" style={{border:'1px solid #797979'}} onChange={this.validationMachineLocation} to="/data-diri" ></Link>
                                     <span className={`text-danger mx-2 small ${ this.state.errorAddressOrMachineLocation !== '' ? '' : 'd-none' }`} style={{fontSize:'12px'}} >{ this.state.errorAddressOrMachineLocation }</span>
                                 </div>
                                 <div className="card-lable py-1 mb-4" style={{backgroundColor:'#014C90'}}>
@@ -199,13 +209,13 @@ export default class extends Component {
                                     </div>
                                 </div>
                                 <div className="col-md-4 col-sm-6 col-12 mb-4">
-                                    <input type="text" className="input-error py-2 w-100" disabled={this.state.checkBoxCheckCount == 0} />
+                                    <input type="text" className="input-error py-2 w-100" style={{paddingLeft:'10px', paddingRight:'10px'}} disabled={this.state.checkBoxCheckCount == 0} />
                                 </div>
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Tambah Deskripsi</label>
                                 </div>
                                 <div className="mb-4 p-0">
-                                    <input type="text" className={ `input-page py-3 w-100 ${ this.state.errorDescription !== '' ? 'border-danger border' : '' }` } onChange={this.validationDescription} />
+                                    <input type="text" className={ `input-page py-3 w-100 ${ this.state.errorDescription !== '' ? 'border-danger border' : '' }` } style={{paddingLeft:'10px', paddingRight:'10px'}} onChange={this.validationDescription} />
                                     <span className={`text-danger small mx-2 ${ this.state.errorDescription !== '' ? '' : 'd-none' }`} style={{fontSize:'12px'}} >{ this.state.errorDescription }</span>
                                 </div>
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
@@ -217,15 +227,17 @@ export default class extends Component {
                                         <label htmlFor="pageToWC" className="form-check-label">Page to WC</label>
                                     </div>
                                     <div className="ms-2" style={{ width: '110px' }}>
-                                        <input type="text" className={`ms-2 py-2 input-page w-100 ${ this.state.errorPageToWC !== '' ? 'border-danger border' : '' }`} disabled={this.state.checkBoxCheckCountPage == 0}  />
-                                        <span className={ `text-danger small mx-2 ${ this.state.errorPageToWC !== '' ? '' : 'd-none' }` } style={{fontSize:'12px'}} >{ this.state.errorPageToWC }</span>
+                                        <input type="text" className={`ms-2 py-2 input-page w-100 ${ this.state.errorPageToWC !== '' ? 'border-danger border' : '' }`} style={{paddingLeft:'10px', paddingRight:'10px'}} onChange={this.validationPageToWC} disabled={this.state.checkBoxCheckCountPage == 0}  />
+                                        <span className={ `text-danger px-2  ${ this.state.errorPageToWC !== '' ? '' : 'd-none' }` } style={{fontSize:'12px'}} >{ this.state.errorPageToWC }</span>
                                     </div>
                                 </div>
                                 <div className="text-center">
                                     <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'14px', color:'pink'}}>Please upload photo meter information/photo machine</p>
                                     <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
                                     <label className="file-icon mb-3 d-block" htmlFor="input-file">
-                                        <i className="fa fa-file-image-o fs-4 rounded-circle p-2" style={{backgroundColor:"#014C90", color:'#fff'}} />
+                                        <div className="text-center rounded-circle p-2" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px', marginLeft:'48%'}}>
+                                            <img className="mt-1" src="images/upload.png" style={{width:'22px'}}></img>
+                                        </div>
                                     </label>
                                     <div className="d-none col-md-6 col-sm-8 mx-auto my-5" id="display-image">
                                         <img className="w-50" src="#" alt="" id="preview-image" />
@@ -234,6 +246,7 @@ export default class extends Component {
                                 </div>
                             </div>
                         </form>
+                        <ConfirmAlert visible={this.state.showPopup} message="Mohon isi field yang kosong dengan foto meter. Untuk field problem isi min.1" customClass="col-md-5 col-sm-8 col-12" onClick={this.handlePopup} />
                     </div>
                 </div>
             </div>
@@ -241,5 +254,4 @@ export default class extends Component {
         )
     }
 }
-
 

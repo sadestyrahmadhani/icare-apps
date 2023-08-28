@@ -1,21 +1,18 @@
-// Modal.js
-
-import React from 'react';
-import '../../styled/style.css'; // Import your CSS file for styling
-
-const Modal = ({ isOpen, onClose, children }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <button className="close-button" onClick={onClose}>Close
-        &times;
-        </button>
-        {children}
-      </div>
-    </div>
-  );
-};
-
-export default Modal;
+export const Informasi = [
+  {
+    images: "/images/detail-informasi.png",
+    info: "INFO",
+    tanggal: "2023-04-12",
+    judul: "Maaf, permintaan Anda dibatalkan!",
+    subjudul: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus sem ac libero molestie, quis condimentum quam ullamcorper. Etiam ac libero accumsan, blandit purus ut, aliquet dolor.",
+    detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus sem ac libero molestie, quis condimentum quam ullamcorper. Etiam ac libero accumsan, blandit purus ut, aliquet dolor."
+  },
+  {
+    images: "/images/detail-informasi.png",
+    info: "INFO",
+    tanggal: "2023-04-12",
+    judul: "Maaf, permintaan Anda dibatalkan!",
+    subjudul: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus sem ac libero molestie, quis condimentum quam ullamcorper. Etiam ac libero accumsan, blandit purus ut, aliquet dolor.",
+    detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dapibus sem ac libero molestie, quis condimentum quam ullamcorper. Etiam ac libero accumsan, blandit purus ut, aliquet dolor."
+  }
+]

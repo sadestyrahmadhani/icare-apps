@@ -16,7 +16,7 @@ export default class extends Component {
                         <div className="row justify-content-md-center">
                             <div className="col-8">
                                 <div className="container">
-                                    <div className="row mt-3">
+                                    <div className="row mt-4">
                                         <div className="col">
                                             <Link className="list-items" to="../breakfix" style={{textDecoration:'none'}}>
                                                 <div className="img">
@@ -50,7 +50,7 @@ export default class extends Component {
                                     </div>
                                 </div>
                                 <div className="container">
-                                    <div className="row mt-3">
+                                    <div className="row mt-4">
                                         <div className="col">
                                             <Link className="list-items" to="../collect-meter" style={{textDecoration:'none'}}>
                                                 <div className="img">

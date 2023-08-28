@@ -14,12 +14,6 @@ export default class extends Component {
                     <div className="card px-3 shadow border-0" style={{borderRadius:'20px'}}>
                         <div className="card-body">
                             <div className="row">
-                            <div className="card-lable py-1" style={{backgroundColor:'#014C90'}}>
-                                <label className="fw-medium" style={{fontSize:'12px', color:'white'}}>Nama</label>
-                            </div>
-                            <div className="col">
-                                <input type="text" className="text-data-diri" placeholder="Indri"></input>
-                            </div>
                                 <div className="col">
                                     <div className="card" style={{borderRadius:'0px', border:'1px solid', height:'90px'}}>
                                         <div className="card-header" style={{borderRadius:'0px', backgroundColor:'#014C90'}}>
@@ -33,8 +27,7 @@ export default class extends Component {
                                                     </div>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                    <button type="button" className="btn btn-primary">Ubah</button>
-                                                    {/* <Link className="nav-link" to="">Ubah</Link> */}
+                                                    <Link className="nav-link" to="">Ubah</Link>
                                                 </div>
                                             </div>
                                         </div>

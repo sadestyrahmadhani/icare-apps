@@ -55,8 +55,8 @@ export default [
                         component: import('../views/daftar-alamat')
                     },
                     {
-                        title: 'Form Address',
-                        path: 'form-address',
+                        title: 'Tambah Alamat',
+                        path: 'tambah_alamat',
                         component: import('../views/daftar-alamat/form')
                     },
                     {
@@ -70,8 +70,8 @@ export default [
                         component: import('../views/daftar-eq/form')
                     },
                     {
-                        title: "Change Password",
-                        path: 'change-password',
+                        title: "Ubah Kata Sandi",
+                        path: 'ubah_kata_sandi',
                         component: import('../views/ubah-password')
                     }      
                 ]

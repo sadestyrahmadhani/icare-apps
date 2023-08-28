@@ -1,9 +1,11 @@
 import { Component } from "react";
+import Swal from "sweetalert2";
 
 
 export default class extends Component {
     constructor(props) {
         super(props)
+        this.submit = this.submit.bind(this)
         this.state = {
             typeInput: [
                 'password',
@@ -18,6 +20,16 @@ export default class extends Component {
         }
     }
 
+    submit(e){
+        e.preventDefault()
+        Swal.fire({
+            title: 'Error',
+            text: 'Harap isi seluruh data',
+            confirmButtonColor: '#0099ff'
+        })
+        
+    }
+
     render(){
         return(
             <>
@@ -28,7 +40,7 @@ export default class extends Component {
                     <div className="col-md-7 col-sm-5 col-12 mx-auto">
                         <div className="card mb-5">
                             <div className="card-body p-5">
-                                <form>
+                                <form onSubmit={this.submit}>
                                     <div className="mb-3">
                                         <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Lama</label>
                                         <div className="d-flex border border-dark">
@@ -93,7 +105,7 @@ export default class extends Component {
                                         </div>
                                     </div>
                                     <div className="text-center">
-                                        <button className="btn btn-login px-5 py-2 fw-medium">Submit</button>
+                                        <button className="btn btn-login px-5 py-2 fw-medium" type="submit">Submit</button>
                                     </div>
                                 </form>
                             </div>

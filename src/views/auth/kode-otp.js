@@ -1,27 +1,36 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../component/navbar";
-import Footer from "../../component/footer"
-import Swal from "sweetalert2";
+import Footer from "../../component/footer";
+import ConfirmAlert from "../../component/alert/confirmAlert";
+// import Swal from "sweetalert2";
 
 export default class extends Component {
     constructor(props) {
         super(props)
         this.submit = this.submit.bind(this)
+        this.handlePopup = this.handlePopup.bind(this)
         this.resetIteration = this.resetIteration.bind(this)
         this.state = {
             iteration: 60,
             resendCodeDisabled:true,
+            showPopup: false,
         }
+    }
+
+    handlePopup(){
+        this.setState({showPopup:false})
     }
 
     submit(e) {
         e.preventDefault()
-        Swal.fire({
-            title:'Error',
-            text:'OTP not match',
-            confirmButtonColor: '#0099ff'
-        })
+        this.setState({showPopup:true})
+
+        // Swal.fire({
+        //     title:'Error',
+        //     text:'OTP not match',
+        //     confirmButtonColor: '#0099ff'
+        // })
     }
 
     resetIteration(e) {
@@ -47,6 +56,7 @@ export default class extends Component {
                                     <input type="text" className="form-control border-only-bottom text-center mb-4" placeholder="Masukkan Kode OTP" style={{fontSize:'14px'}} />
                                     <button className="btn btn-login fw-medium rounded-3 " type="submit" style={{fontSize:'14px', paddingLeft:'60px', paddingRight:'60px', paddingTop:'12px', paddingBottom:'12px'}}>SUBMIT</button>
                                 </form>
+                                <ConfirmAlert visible={this.state.showPopup} message="OTP not match" onClick={this.handlePopup} customClass="col-md-2 col-sm-6 col-12" />
                                 <p className="mb-2" style={{fontSize:'14px'}}>Belum terima SMS kode OTP ?</p>
                                 <button className={`${this.state.resendCodeDisabled ? 'disabled' : 'fw-bold text-primary'}`} onClick={this.resetIteration} type="button" style={{textDecoration:'none', color:'#5289bd', fontSize:'14px', border:'none', background:'transparent'}}>Kirim Ulang</button>
                                 <p className="mt-2" style={{fontSize:'14px'}}>Harap Tunggu {this.state.iteration} detik sebelum kirim ulang otp</p>
@@ -68,7 +78,6 @@ export default class extends Component {
                 this.setState({resendCodeDisabled:true})
             }
         }, 1000)
-
-        
     }
 }
+

@@ -24,7 +24,7 @@ export default class extends Component{
                                 </form>
                             </div>
                             <div className="col-4">
-                                <Link to="/form-address">
+                                <Link to="/tambah_alamat">
                                     <button className="btn btn-login" style={{padding: '8px 20px', fontSize: '14px'}}><i className="fa fa-plus" style={{marginRight: '5px'}}></i> Tambah Alamat</button>
                                 </Link>
                             </div>
@@ -74,7 +74,7 @@ export default class extends Component{
                                                 <Link className="nav-link">Utamakan</Link>
                                             </li> */}
                                             <li className="nav-item" style={{marginRight: '30px'}}>
-                                                <Link className="nav-link" to="/form-address">Ubah</Link>
+                                                <Link className="nav-link" to="/tambah_alamat">Ubah</Link>
                                             </li>
                                             <li className="nav-item">
                                                 <Link className="nav-link">Hapus</Link>
@@ -129,7 +129,7 @@ export default class extends Component{
                                                 <Link className="nav-link">Utamakan</Link>
                                             </li>
                                             <li className="nav-item" style={{marginRight: '30px'}}>
-                                                <Link className="nav-link">Ubah</Link>
+                                                <Link className="nav-link" to="/tambah_alamat">Ubah</Link>
                                             </li>
                                             <li className="nav-item">
                                                 <Link className="nav-link">Hapus</Link>

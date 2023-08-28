@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../../component/navbar";
 import Footer from "../../component/footer";
-import Swal from "sweetalert2";
+import ConfirmAlert from "../../component/alert/confirmAlert";
+// import Swal from "sweetalert2";
 
 function ConditionFooter() {
     const Params = useParams() 
@@ -33,6 +34,7 @@ function ConditionFooter() {
 
 function ConditionRegister(props) {
     const [isCheck, setIsCheck] = useState(true)
+    const [popup, setPopup] = useState(false)
     const navigate = useNavigate()
     return(
         <div className="text">
@@ -42,15 +44,18 @@ function ConditionRegister(props) {
             </div>
             <button className={ `btn fw-medium rounded-3 ${ isCheck ? 'btn-secondary-custom' :'btn-login' }` } type="submit" style={{fontSize:'14px', paddingLeft:'60px', paddingRight:'60px', paddingTop:'12px', paddingBottom:'12px'}} onClick={ () => {
                 if(isCheck) {
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Wajib dicentang untuk melanjutkan registrasi anda',
-                        confirmButtonColor: '#0099ff'
-                    })
+                    setPopup(true)
+                    
+                    // Swal.fire({
+                    //     title: 'Error',
+                    //     text: 'Wajib dicentang untuk melanjutkan registrasi anda',
+                    //     confirmButtonColor: '#0099ff'
+                    // })
                 } else {
                     navigate('/register')
                 }
             } }>SUBMIT</button>
+            <ConfirmAlert visible={popup} titleMessage="Error" message="Wajib centang untuk melanjutkan registrasi anda" customClass="col-md-3 col-sm-8 col-12" onClick={() => setPopup(false)} />
         </div>
     )
 } 

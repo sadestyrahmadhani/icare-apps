@@ -53,7 +53,7 @@ export default class extends Component {
                                                     <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6></Link>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                    <img src="images/verified.png" style={{height:'70px'}}></img>
+                                                    <img src="images/Verified.png" style={{height:'70px'}}></img>
                                                 </div>
                                                 <div className="col-md-auto">
                                                 <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Hapus</h6>
@@ -85,7 +85,7 @@ export default class extends Component {
                                                 <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6></Link>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                <img src="images/verified.png" style={{height:'70px'}}></img>
+                                                <img src="images/Verified.png" style={{height:'70px'}}></img>
                                                 </div>
                                                 <div className="col-md-auto">
                                                 <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Hapus</h6>
