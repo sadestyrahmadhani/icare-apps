@@ -8,25 +8,25 @@ export default class extends Component {
             <>
             <div className="container">
                 <div className="container d-flex">
-                        <div className="col-6" >
-                            <span className="title-icare fw-bold" style={{borderBottom: '3px solid #014C90', width: '110px', fontSize:'20px'}}>Daftar EQ</span>
+                    <div className="col-6" >
+                        <span className="title-icare fw-bold" style={{borderBottom: '3px solid #014C90', width: '110px', fontSize:'20px'}}>Daftar EQ</span>
+                    </div>
+                    <div className="col-6 row text-end">
+                        <div className="col-7">
+                            <form class="d-flex" style={{width:'120%'}}>
+                                <span> <i class="fa fa-search fa-fw fa-lg" aria-hidden="true"></i> </span>
+                                <input class="form-control form-control-sm ml-3 w-100 border-only-bottom" type="text" aria-label="Search" style={{fontSize: '16px', color:'black'}}></input>
+                                <button type="reset" className="btn border-0" style={{background:'none'}}><i className="fa fa-close fa-fw fa-lg" style={{cursor:'pointer'}}></i></button>
+                                {/* <input type="reset" class="btn btn-success" value="Reset Button"></input> */}
+                            </form>
                         </div>
-                        <div className="col-6 row text-end">
-                            <div className="col-7">
-                                <form class="d-flex" style={{width:'120%'}}>
-                                    <span> <i class="fa fa-search fa-fw fa-lg" aria-hidden="true"></i> </span>
-                                    <input class="form-control form-control-sm ml-3 w-100 border-only-bottom" type="text" aria-label="Search" style={{fontSize: '16px', color:'black'}}></input>
-                                    <button type="reset" className="btn border-0" style={{background:'none'}}><i className="fa fa-close fa-fw fa-lg" style={{cursor:'pointer'}}></i></button>
-                                    {/* <input type="reset" class="btn btn-success" value="Reset Button"></input> */}
-                                </form>
-                            </div>
-                            <div className="col-5">
-                                <Link to="/form-eq">
-                                    <button className="btn btn-login" style={{padding: '8px 23px', fontSize: '16px'}}><i className="fa fa-plus" style={{marginRight: '5px'}}></i> Tambah EQ</button>
-                                </Link>
-                            </div>
+                        <div className="col-5">
+                            <Link to="/form_eq">
+                                <button className="btn btn-login" style={{padding: '8px 23px', fontSize: '16px'}}><i className="fa fa-plus" style={{marginRight: '5px'}}></i> Tambah EQ</button>
+                            </Link>
                         </div>
                     </div>
+                </div>
                 <div className="container">
                     <div className="card shadow border-0" style={{borderRadius:'20px'}}>
                         <div className="card-body">

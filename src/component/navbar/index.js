@@ -36,7 +36,7 @@ const Navbar = (props) => {
             {
                 props?.versi == "2" ?
                 (
-                    <div className="bg-white shadow-sm" style={{position:'sticky', top:0, zIndex:'999'}}>
+                    <div className="bg-white d-md-block d-none shadow-sm" style={{position:'sticky', top:0, zIndex:'999'}}>
                         <hr className="m-0 p-0 hr-custom" />
                         <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
                             <div className="container">
@@ -53,7 +53,7 @@ const Navbar = (props) => {
                 : (
                     getToken() != null && typeof getToken()  != "undefined" ?
                     (
-                        <div className="bg-white" style={{position:'sticky', top:0, zIndex:'999', height:'65px'}} >
+                        <div className="bg-white d-md-block d-none" style={{position:'sticky', top:0, zIndex:'999', height:'65px'}} >
                             <hr className="m-0 p-0 hr-custom" />
                             <nav className={`navbar navbar-exspand-lg py-1 px-1`} >
                                 <div className="container-fluid">
@@ -139,7 +139,7 @@ const Navbar = (props) => {
                             </nav> 
                         </div>
                     ) : (
-                        <div className={scrolling ? 'bg-white shadow':''} style={{position:'sticky', top:0, zIndex:'999'}} >
+                        <div className={scrolling ? 'bg-white d-md-block d-none shadow':'d-md-block d-none'} style={{position:'sticky', top:0, zIndex:'999'}} >
                             <hr className="m-0 p-0 hr-custom" />
                             <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
                                 <div className="container">

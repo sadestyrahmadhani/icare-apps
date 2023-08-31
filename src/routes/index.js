@@ -45,8 +45,8 @@ export default [
                 component:'',
                 children: [
                     {
-                        title:'Data-Diri',
-                        path:'data-diri',
+                        title:'Data Diri',
+                        path:'data_diri',
                         component: import('./../views/data-diri')
                     },
                     {
@@ -60,13 +60,13 @@ export default [
                         component: import('../views/daftar-alamat/form')
                     },
                     {
-                        title:'Daftar-EQ',
-                        path:'daftar-eq',
+                        title:'Daftar EQ',
+                        path:'daftar_eq',
                         component: import('./../views/daftar-eq')
                     },
                     {
                         title: 'Form EQ',
-                        path: 'form-eq',
+                        path: 'form_eq',
                         component: import('../views/daftar-eq/form')
                     },
                     {
@@ -78,41 +78,54 @@ export default [
             },
             {
                 title:'Breakfix',
-                path:'breakfix',
+                path:'breakfix-request',
                 component: import('./../views/menu/breakfix')
             },
             {
                 title:'Install',
-                path:'install',
+                path:'install_request',
                 component: import('../views/menu/install'),
             },
             {
                 title:'Supplies',
-                path:'supplies',
+                path:'supplies_request',
                 component: import('./../views/menu/supplies')
-            },
-            {
-                title: 'Collect Meter',
-                path: 'collect-meter',
-                component: import('./../views/menu/collect-meter')
             },
             {
                 path: '',
                 component: '',
                 children: [
                     {
-                        title: 'Upgrade Account',
-                        path: 'upgrade-account',
+                        title: 'Collect Meter',
+                        path: 'collect-meter',
+                        component: import('./../views/menu/collect-meter')
+    
+                    },
+                    
+                    {
+                        title: 'Riwayat Meter',
+                        path: 'riwayat-meter',
+                        component: import('./../views/riwayat-meter')
+
+                    }
+                ]            },
+            {
+                path: '',
+                component: '',
+                children: [
+                    {
+                        title: 'Upgrade Akun iCare',
+                        path: 'upgrade_step1',
                         component: import('../views/upgrade-akun/upgrade')
                     },
                     {
-                        title: 'Form Upgrade Account',
-                        path: 'form-upgrade-account',
+                        title: 'Upgrade Akun iCare',
+                        path: 'upgrade_step2',
                         component: import('../views/upgrade-akun/form')
                     },
                     {
-                        title: 'Waiting Upgrade Account',
-                        path: 'waiting-upgrade-account',
+                        title: 'Menunggu Upgrade Akun iCare',
+                        path: 'upgrade_step3',
                         component: import('../views/upgrade-akun/waiting')
                     }
                 ]

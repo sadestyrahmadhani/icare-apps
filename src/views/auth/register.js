@@ -54,17 +54,18 @@ export default class extends Component {
         e.preventDefault()
         if(this.state.countFileInput > 0) {
             this.setState({  showPopup: true, alertOption: {title: 'Error', message: 'Please fill empty field'} })
-        } else {
+            if(!this.state.email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) this.setState({errorEmail:"Silahkan isi email"})
+            if(this.state.phone === "") this.setState({errorPhone:"Silahkan isi nomor telepon"})
+            if(this.state.pass === "") this.setState({errorPass:"Silahkan isi password"})
+            if(this.state.rePass === "") this.setState({errorRePass:"Silahkan ulangi isi password"})
+            if(this.state.name === "") this.setState({errorName:"silahkan isi nama lengkap"})
+            if(this.state.nameCompany === "") this.setState({errorNameCompany:"silahkan isi nama perusahaan/instansi"})
+            if(this.state.equipment === "") this.setState({errorEQ:"silahkan isi nomor equipment"})
+        } else { 
             this.setState({showPopup: true, alertOption: {title: 'Error', message: 'Belum ada foto'}})
-        }
-        if(!this.state.email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) return
-        if(this.state.phone === "") this.setState({errorPhone:"Silahkan isi nomor telepon"})
-        if(this.state.pass === "") this.setState({errorPass:"Silahkan isi password"})
-        if(this.state.rePass === "") this.setState({errorRePass:"Silahkan ulangi isi password"})
-        if(this.state.name === "") this.setState({errorName:"silahkan isi nama lengkap"})
-        if(this.state.nameCompany === "") this.setState({errorNameCompany:"silahkan isi nama perusahaan/instansi"})
-        if(this.state.equipment === "") this.setState({errorEQ:"silahkan isi nomor equipment"})
-
+        } 
+        
+        
         
         // Swal.fire({
         //     title: 'Error',

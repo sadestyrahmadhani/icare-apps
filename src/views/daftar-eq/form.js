@@ -108,8 +108,8 @@ export default class extends Component {
                             </div>
                             </Link>
                         </div>
-                        <div className="col text-center mt-4 mb-4">
-                            <button name="submit" className="btn btn-login py-2 px-5" style={{fontSize:'14px', width:'18%', height:'43px'}}>SIMPAN</button>
+                        <div className="col-md-12 mt-4 mb-4 text-center d-flex justify-content-center">
+                            <button name="submit" className="btn btn-login py-2 px-5" style={{fontSize:'14px', maxWidth:'200px', height:'43px'}}>SIMPAN</button>
                         </div>
                     </form>
                 </div>

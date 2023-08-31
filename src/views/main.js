@@ -8,7 +8,7 @@ export default class extends Component {
         return(
             <>                  
                 <Navbar />
-                <div className="container-fluid px-5 py-4" id="layout">
+                <div className="container py-4 py-xs-0" id="layout">
                     <Outlet />
                 </div>
                 <Footer />

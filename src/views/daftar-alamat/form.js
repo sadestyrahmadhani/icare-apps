@@ -1,10 +1,14 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
+import confirmAlert from "../../component/alert/confirmAlert";
+import ConfirmAlert from "../../component/alert/confirmAlert";
 
 export default class extends Component {
     constructor(props){
         super(props)
         this.sumbit  = this.sumbit.bind(this)
+        this.validationPhonrNumber = this.validationPhonrNumber.bind(this)
+        this.validationPostalCode = this.validationPostalCode.bind(this)
         this.state = {
             addressLabel: '',
             recipientName: '',
@@ -23,8 +27,14 @@ export default class extends Component {
             errorCity: '',
             errorPostalCode: '',
             errorPhoneNumber: '',
-            errorDeliveryLocation: ''
+            errorDeliveryLocation: '',
+
+            showPopup: false
         }
+    }
+
+    handlePopup(){
+        this.setState({showPopup: false})
     }
 
     sumbit(e){
@@ -36,14 +46,34 @@ export default class extends Component {
         if (this.state.buildingName === "") this.setState({errorBuildingName: "Silahkan isi nama gedung/kantor"})
         if (this.state.city === "") this.setState({errorCity: "Silahkan isi kota"})
         if (this.state.deliveryLocation === "") this.setState({errorDeliveryLocation: "Silahkan isi lokasi pengiriman"})
-        if(this.state.postalCode !== Number) {
-            this.setState({errorPostalCode: "Kode pos harus berupa angka"})
-            if (this.state.postalCode === "")this.setState({errorPostalCode: "Silahkan isi kode pos"})
+
+        if(this.state.postalCode === "") this.setState({errorPostalCode: "Silahkan isi kode pos"})
+        if(this.state.phoneNumber === "") this.setState({errorPhoneNumber: 'Silahkan isi nomor penerima'})
+        
+        if(!this.state.phoneNumber.match("^[0-9]*$") || this.state.phoneNumber.length < 9 || this.state.phoneNumber.length > 14) return
+        if(!this.state.postalCode.match("^[0-9]*$") || this.state.postalCode.length < 6) return
+        
+        this.setState({showPopup:true})
+    }
+
+    validationPhonrNumber(e){
+        e.preventDefault()
+        this.setState({phoneNumber: e.target.value})
+        if(!e.target.value.match("^[0-9]*$") || e.target.value.length < 9 || e.target.value.length > 14) {
+            this.setState({errorPhoneNumber: 'Nomor tidak valid'})
+            return
         }
-        if(this.state.phoneNumber !== Number) {
-            this.setState({errorPhoneNumber: "Nomor tidak valid"})
-            if (this.state.phoneNumber === "") this.setState({errorPhoneNumber: "Silahkan isi nomor telepon penerima"})
+        this.setState({errorPhoneNumber: ''})
+    }
+
+    validationPostalCode(e){
+        e.preventDefault()
+        this.setState({postalCode: e.target.value})
+        if(!e.target.value.match("^[0-9]*$") || e.target.value.length < 4 || e.target.value.length > 6){
+            this.setState({errorPostalCode: 'Kode pos harus berupa angka'})
+            return
         }
+        this.setState({errorPostalCode: ''})
     }
         
     render(){
@@ -99,7 +129,7 @@ export default class extends Component {
                                         <div className="card-label py-1 mt-3">
                                             <label style={{}}>Kode Pos (Contoh: 10450)</label>
                                         </div>
-                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorPostalCode === "" ? "" : "invalid"}`} onChange={(e) => this.setState({postalCode:e.target.value})} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
+                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorPostalCode === "" ? "" : "invalid"}`} onChange={this.validationPostalCode} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
                                         <span className={`${this.state.errorPostalCode === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {this.state.errorPostalCode} </span>
                                     </div>
                                 </div>
@@ -108,7 +138,7 @@ export default class extends Component {
                                         <div className="card-label py-1">
                                             <label style={{fontWeight: 'bold'}}>No Telepon Penerima</label>
                                         </div>
-                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorPhoneNumber === "" ? "" : "invalid"}`} onChange={(e) => this.setState({phoneNumber:e.target.value})} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
+                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorPhoneNumber === "" ? "" : "invalid"}`} onChange={this.validationPhonrNumber} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
                                         <span className={`${this.state.errorPhoneNumber === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {this.state.errorPhoneNumber} </span>
                                     </div>
                                 </div>
@@ -133,6 +163,7 @@ export default class extends Component {
                                     <button className="btn btn-login fw-bold" type="submit" style={{padding: '10px 50px'}}>SIMPAN</button>
                                 </div>
                             </form>
+                            <ConfirmAlert visible={this.state.showPopup} message="Error 404" onClick={this.handlePopup} customClass="col-md-2 col-sm-6 col-12" />
                         </div>
                     </div>
                 </div>
