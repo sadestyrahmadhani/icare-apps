@@ -3,6 +3,7 @@ import { Link, useResolvedPath } from "react-router-dom";
 import Navbar from "../../component/navbar";
 import Footer from "./../../component/footer";
 import ConfirmAlert from "../../component/alert/confirmAlert";
+import { Col, Row } from "react-bootstrap";
 
 // import Swal from "sweetalert2";
 
@@ -19,6 +20,8 @@ export default class extends Component {
         this.validationName = this.validationName.bind(this)
         this.validationNameCompany = this.validationNameCompany.bind(this)
         this.validationEquipment = this.validationEquipment.bind(this)
+        this.handleFileInput = this.handleFileInput.bind(this)
+        this.removeFileInput = this.removeFileInput.bind(this)
         this.state = {
             // showError: false,
             showPopup: false,
@@ -158,16 +161,23 @@ export default class extends Component {
         return(
             <div className="bg-light">
                 <Navbar versi="2" />
-                <div className="container">
-                    <div className="card-title text-center mx-auto my-3 mb-5" style={{borderBottom:'3px solid #014C90', width:'88px'}}>
-                        <h5 className="title-icare fw-bold">Registrasi</h5>
+                    <div className="responsive-bar">
+                        <div className="mx-md-auto my-md-3 my-0 my-md-3 pb-2" style={{borderBottom:'3px solid #014C90', width:'87px'}}>
+                            <h5 className="title-icare title-fitur fw-bold m-0 p-0">
+                                <Link to="/" className="nav-link d-md-none d-inline me-3">
+                                    <i className="fa fa-arrow-left"></i>
+                                </Link>
+                                <span className="d-md-none d-inline">Registrasi User</span>
+                                <span className="fw-bold d-md-inline d-none">Registrasi</span>
+                            </h5>
+                        </div>
                     </div>
-                    <div className="col-md-8 col-sm-10 col-12 mx-auto">
+                    <div className="col-md-7 col-12 mx-auto responsive-register">
                         <form onSubmit={ this.submit }>
                             <div className="card mb-5 bg-light">
-                                <div className="card-body p-5">
+                                <div className="card-body p-lg-5 px-0 mx-lg-0 mx-2">
                                     <div className="row justify-content-center">
-                                        <div className="col-lg-6 col-md-6 col-12">
+                                        <div className="col-lg-6 col-md-6 col-12 input-mobile">
                                             <div className="mb-3">
                                                 <label className="size-13px fw-bold">Email Address</label>
                                                 <input type="email" className={ `form-control  border-only-bottom ${ this.state.errorEmail === "" ? "": "is-invalid"}` } onChange={this.validationEmail} />
@@ -189,7 +199,7 @@ export default class extends Component {
                                                 <span className={`invalid-feedback ${this.state.errorRePass === "" ? "d-none": ""}`} style={{ fontSize: 12 }}>{this.state.errorRePass}</span>
                                             </div>
                                         </div>
-                                        <div className="col-lg-6 col-md-6 col-12 ">
+                                        <div className="col-lg-6 col-md-6 col-12 input-mobile">
                                             <div className="mb-3">
                                                 <label className="size-13px fw-bold">Nama Lengkap</label>
                                                 <input type="text" className={ `form-control border-only-bottom ${ this.state.errorName === "" ? "" : "is-invalid" }` } onChange={this.validationName} />
@@ -205,29 +215,78 @@ export default class extends Component {
                                                 <input type="number" onKeyUp={this.validationEquipment} className={ `form-control custom-input-number border-only-bottom ${ this.state.errorEQ === "" ? "" : "is-invalid" }` } onChange={this.validationEquipment} />
                                                 <span className={`invalid-feedback ${this.state.errorEQ === "" ? "d-none": ""}`} style={{ fontSize: 12 }}>{this.state.errorEQ}</span>
                                             </div>
-                                            <div className="mb-3" style={{ position: 'relative' }}>
-                                                <label className="size-13px fw-bold">Foto Sticker Equipment</label>
-                                                <input type="file" className={ `form-control border-only-bottom` } id="inputFiles" onChange={(e) => this.setState({countFileInput: e.target.files.length})} accept="image/*" />
-                                                <label htmlFor="inputFiles" className="bg-light" style={{ position: 'absolute', fontSize: 12, padding: '7px 13px', border: '1px solid #999', borderRadius: 8, right: 0, marginTop: -35 }}><i className="fa fa-folder me-2 text-warning"></i> Choose File</label>
+                                            <div className="mb-2" style={{ position: 'relative' }}>
+                                                <label className="size-13px fw-bold">Foto <span className="d-md-inline d-none">Sticker</span> Equipment</label>
+                                                <input type="file" className={ `form-control border-only-bottom d-none` } id="inputFiles" onChange={ this.handleFileInput } accept="image/*" />
+                                                <label htmlFor="inputFiles" className="form-control border-only-bottom d-none d-md-block inputFiles-display" style={{ minHeight: 33 }}></label>
+                                                <label htmlFor="inputFiles" className="bg-light d-md-block d-none" style={{ position: 'absolute', fontSize: 12, padding: '7px 13px', border: '1px solid #999', borderRadius: 8, right: 0, marginTop: -35, cursor: 'pointer' }}><i className="fa fa-folder me-2 text-warning"></i> Choose File</label>
+                                                <div className="form-control py-2 d-flex align-items-center d-md-none">
+                                                    <img src="/images/foto-sticker.png" width="70" className="mx-5 ms-4 my-1" />
+                                                    <div>
+                                                        <p className="fw-bold mb-1" style={{fontSize:'12px'}}>Panduan Foto Equipment</p>
+                                                        <p className="mb-0" style={{fontSize:'12px'}}>Pastikan seluruh bagian sticker equipment pada mesin berada dalam bingkai foto </p>
+                                                    </div>
+                                                </div>
+                                                <p className="mx-2 mb-0 d-md-none d-block" style={{ fontSize: 12 }}>&#40;Maks.5MB.Format JPG&#47;PNG&#41;</p>
                                             </div>
-                                            <div className="mb-5">
-                                                <p className="text-danger fw-bold" style={{fontSize:'12px'}}>&#42;Panduan foto sticker equipment <br/> Pastikan seluruh bagian sticker equipment pada mesin berada dalam bingkai foto <br/> &#40;Maks.5MB.Format jpg&#47;&#41; </p>
+                                            <div className="mb-5 d-md-block d-none">
+                                                <p className="text-danger fw-bold" style={{fontSize:'12px'}}>&#42;Panduan foto <span className="d-md-inline d-none">sticker</span> equipment <br/> Pastikan seluruh bagian sticker equipment pada mesin berada dalam bingkai foto <br/> &#40;Maks.5MB.Format jpg&#47;&#41; </p>
+                                            </div>
+                                            <div className="mb-5 d-block d-md-none">
+                                                <Row className="align-items-center">
+                                                    <Col xs="4" md="2">
+                                                        <label htmlFor="inputFiles" className={ `btn btn-login px-3 rounded-4 ${ this.state.countFileInput > 0 ? 'd-none' : '' }` }>Foto <br /> Equipment</label>
+                                                        <button onClick={ this.removeFileInput } type="button" className={ `btn btn-outline-danger btn-sm text-primary rounded-4 ${ this.state.countFileInput > 0 ? '' : 'd-none' }`}>Hapus Foto Equipment</button>
+                                                    </Col>
+                                                    <Col xs="8" className="inputFiles-display"></Col>
+                                                </Row>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-12 text-center">
-                                    <button className="btn btn-google shadow-sm me-3 fw-medium px-5 text-muted py-2">Sign up with Google</button>
-                                        <button className="btn btn-login rounded-3 fw-medium" type="submit" style={{fontSize:'14px', paddingLeft:'60px', paddingRight:'60px', paddingTop:'12px', paddingBottom:'12px'}} >SUBMIT</button>
+                                    <div className="col-12 text-center ">
+                                        <button type="button" className="btn btn-google shadow-sm fw-medium px-3 mx-lg-2 text-muted py-2 mb-3 d-lg-inline-block d-none">
+                                            <img src="/images/google-icons.png" alt="google-icons" height="20" className="me-3" />
+                                            Sign up with Google
+                                        </button>
+                                        <button className="btn btn-login rounded-3 fw-medium mb-3 mx-auto mx-lg-2 d-sm-block d-lg-inline-block" type="submit" style={{fontSize:'14px', paddingLeft:'60px', paddingRight:'60px', paddingTop:'12px', paddingBottom:'12px'}} >SUBMIT</button>
+                                        <button type="button" className="btn btn-google shadow-sm fw-medium px-3 text-muted py-2 mb-3 mx-auto d-md-inline-block d-lg-none d-block">
+                                            <img src="/images/google-icons.png" alt="google-icons" height="20" className="me-3" />
+                                            Sign up with Google
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        <ConfirmAlert visible={this.state.showPopup} titleMessage={this.state.alertOption.title} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-2 col-sm-6 col-12" />
+                        <ConfirmAlert visible={this.state.showPopup} titleMessage={this.state.alertOption.title} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-2 col-sm-6 col-9" />
                     </div>
-                </div>
                 <Footer />
-            </div>
-        )
+            </div> 
+        )  
+    }
+
+    handleFileInput(e) {
+        this.setState({countFileInput: e.target.files.length})
+        document.querySelectorAll('.inputFiles-display').forEach((val, key) => {
+            if(e.target.files.length > 0) {
+                val.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <div class="w-100">${ e.target.files[0].name }</div>
+                        <i class="fa fa-check text-success d-block d-md-none"></i>
+                    </div>
+                `
+            } else {
+                val.innerHTML = ""
+            }
+        })
+    }
+
+    removeFileInput(e) {
+        e.preventDefault()
+        this.setState({countFileInput: 0})
+        document.querySelector('#inputFiles').value = ""
+        document.querySelectorAll('.inputFiles-display').forEach((val, key) => {
+            val.innerHTML = ``
+        })
     }
 
 }

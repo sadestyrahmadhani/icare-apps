@@ -1,4 +1,3 @@
-import daftarEq from "../views/daftar-eq";
 import Layout from "./../views/main";
 
 
@@ -108,7 +107,8 @@ export default [
                         component: import('./../views/riwayat-meter')
 
                     }
-                ]            },
+                ]            
+            },
             {
                 path: '',
                 component: '',
@@ -132,6 +132,11 @@ export default [
             },
             
         ]
+    },
+    {
+        title: 'Setting',
+        path: 'settings',
+        component: import('../views/setting')
     },
     {
         title:'Kebijakan-Privasi',

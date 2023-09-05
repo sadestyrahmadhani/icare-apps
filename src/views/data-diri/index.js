@@ -82,22 +82,22 @@ export default class extends Component {
         return (
             <>
             <div className="container">
-                <div className="title d-flex align-items-center">
-                    <strong className="title-icare py-2" style={{ fontSize: 20, borderBottom: '3px solid #014C90' }} > Data Diri </strong>
+                <div className="responsive-bar">
+                    <div className="card-title mb-md-4 m-0 p-0">
+                        <strong className="title-icare" style={{ fontSize: 20, borderBottom: '3px solid #014C90' }} > Data Diri </strong>
+                    </div>
                 </div>
-                <div className="card px-3 mt-4 shadow border-0" style={{borderRadius:'20px'}}>
-                    <div className="card-body">
-                        <div className="row">
-
-                            
-                                <div className="card-lable p-2" style={{backgroundColor:'#014C90'}}>
-                                    <label className="fw-medium" style={{fontSize:'14px', color:'white'}}>Nama</label>
+                <div className="responsive-data-diri">
+                    <div className="card px-3 mt-4 shadow border-0" style={{borderRadius:'20px'}}>
+                        <div className="card-body">
+                            <div className="row">
+                                <div className="card-lable p-md-2 py-0" style={{backgroundColor:'#014C90'}}>
+                                    <label className="fw-medium" style={{fontSize:'13px', color:'white'}}>Nama</label>
                                 </div>
-                                
                                 <div className="card-body d-flex align-items-center mb-4 custom-width" style={{border: '1px solid black', height: '45px', position:'relative'}}>
                                     {this.state.isEditName ? (
                                         <div className="card-text flex-grow-1">
-                                            <input type="text" className={ `form-control input-data py-2 w-100 no-hover ${ this.state.errorDataName !== '' ? 'border-danger border' : '' }` } value={this.state.name} onChange={this.handleChangeName} />
+                                            <input type="text" className={`form-control w-100 no-hover ${ this.state.errorDataName !== '' ? 'border-danger border' : '' }` } value={this.state.name} onChange={this.handleChangeName} />
                                             <span className={`text-danger small ${ this.state.errorDataName !== '' ? '' : 'd-none' }`} style={{fontSize:'12px', position:'absolute'}} >{ this.state.errorDataName }</span>
                                         </div>
                                     ) : (
@@ -105,7 +105,6 @@ export default class extends Component {
                                             <h6>{this.state.name}</h6>
                                         </div>
                                     )}
-                                
                                     <div className="col-md-auto">
                                         {this.state.isEditName ? (
                                             <button
@@ -124,18 +123,15 @@ export default class extends Component {
                                         )}
                                     </div>
                                 </div>
-
                                 <div className="card-lable p-2" style={{backgroundColor:'#014C90'}}>
-                                    <label className="fw-medium" style={{fontSize:'14px', color:'white'}}>Email</label>
+                                    <label className="fw-medium" style={{fontSize:'13px', color:'white'}}>Email</label>
                                 </div>
                                 <div className="mb-4 p-2" style={{border: '1px solid black'}}>
                                     <h6>{this.state.email}</h6>
                                 </div>
-
                                 <div className="card-lable p-2" style={{backgroundColor:'#014C90'}}>
-                                    <label className="fw-medium" style={{fontSize:'14px', color:'white'}}>No Telepon</label>
+                                    <label className="fw-medium" style={{fontSize:'13px', color:'white'}}>No Telepon</label>
                                 </div>
-                                
                                 <div className="card-body d-flex align-items-center mb-4 custom-width" style={{border: '1px solid black', height: '45px', position:'relative'}}>
                                     {this.state.isEditPhone ? (
                                         <div className="card-text flex-grow-1">
@@ -147,38 +143,34 @@ export default class extends Component {
                                             <h6>{this.state.phone}</h6>
                                         </div>
                                     )}
-                                
-                                <div className="col-md-auto">
-                                    {this.state.isEditPhone ? (
-                                        <button
-                                            className="btn data-diri w-100"
-                                            onClick={this.handleSubmitPhone}
-                                        >
-                                            Submit
-                                        </button>
-                                    ) : (
-                                        <button
-                                            className="btn data-diri w-100"
-                                            onClick={this.handleEditPhone}
-                                        >
-                                            Edit
-                                        </button>
-                                    )}
+                                    <div className="col-md-auto">
+                                        {this.state.isEditPhone ? (
+                                            <button
+                                                className="btn data-diri w-100"
+                                                onClick={this.handleSubmitPhone}
+                                            >
+                                                Submit
+                                            </button>
+                                        ) : (
+                                            <button
+                                                className="btn data-diri w-100"
+                                                onClick={this.handleEditPhone}
+                                            >
+                                                Edit
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
-                                </div>
-
                                 <div className="card-lable p-2" style={{backgroundColor:'#014C90'}}>
-                                    <label className="fw-medium" style={{fontSize:'14px', color:'white'}}>Nama Perusahaan/Instansi</label>
+                                    <label className="fw-medium" style={{fontSize:'13px', color:'white'}}>Nama Perusahaan/Instansi</label>
                                 </div>
                                 <div className="mb-4 p-2" style={{border: '1px solid black'}}>
                                     <h6>{this.state.instansi}</h6>
                                 </div>
-
                                 <div className="col-md-12 text-center d-flex justify-content-center">
-                                    <button className="btn btn-login py-2 px-5" style={{fontSize:'14px', maxWidth:'200px'}} onClick={this.submit}>Submit</button>
+                                    <button className="btn btn-login py-2 px-5" style={{fontSize:'12px', maxWidth:'200px'}} onClick={this.submit}>SUBMIT</button>
                                 </div>
-                            
-
+                            </div>
                         </div>
                     </div>
                 </div>

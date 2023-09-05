@@ -18,12 +18,32 @@ export default class extends Component {
 
     handleNoEqChange = (e) => {
         const value = e.target.value;
-        if (/^\d*$/.test(value)) {
-            this.setState({noEq: value, errorNoEq: ' '});
+        if (value === "") {
+            this.setState({ noEq: value, errorNoEq: "Silahkan isi nomor equipment" });
+        } else if (/^\d*$/.test(value)) {
+            this.setState({ noEq: value, errorNoEq: "" }); // Menghapus pesan kesalahan saat input valid
         } else {
-            this.setState({errorNoEq: "Nomor equipment harus berupa angka"});
+            this.setState({ errorNoEq: "Nomor equipment harus berupa angka" });
         }
     };
+
+    handleModelChange = (e) => {
+        const value = e.target.value;
+        if (value === "") {
+            this.setState({ model: value, errorModel: "Silahkan isi nama model" });
+        } else {
+            this.setState({ model: value, errorModel: "" }); // Menghapus pesan kesalahan saat input valid
+        }
+    };
+    
+    handleKeteranganChange = (e) => {
+        const value = e.target.value;
+        if (value === "") {
+            this.setState({ keterangan: value, errorKeterangan: "Silahkan isi keterangan" });
+        } else {
+            this.setState({ keterangan: value, errorKeterangan: "" }); // Menghapus pesan kesalahan saat input valid
+        }
+    };           
 
     submit(e) {
         e.preventDefault()
@@ -41,14 +61,10 @@ export default class extends Component {
 
         if(this.state.model === "") {
             this.setState({errorModel:"Silahkan isi nama model"});
-        } else {
-            this.setState({errorModel:""});
         }
 
         if(this.state.keterangan === "") {
             this.setState({errorKeterangan:"Silahkan isi keterangan"});
-        } else {
-            this.setState({errorKeterangan:""});
         }
 
         Swal.fire({
@@ -62,10 +78,10 @@ export default class extends Component {
         return (
             <>
             <div className="container">
-                <div className="d-flex align-items-center mb-4">
-                    <Link className="list-items" to="../daftar-eq">
+                <div className="d-flex" style={{alignItems:'baseline', height:'55px'}}>
+                    <Link className="list-items" to="../daftar_eq">
                         <i className="fa fa-arrow-left me-3" style={{fontSize:'16px', color:'#014C90'}}></i>
-                        <span className="title-icare fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'16px'}}>Tambah EQ</span>
+                        <span className="title-icare fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Tambah EQ</span>
                     </Link>
                 </div>
                 <div className="card shadow border-0" style={{borderRadius:'20px'}}>
@@ -85,7 +101,7 @@ export default class extends Component {
                                     <div className="card-label">
                                         <label style={{fontWeight: 'bold'}}>Nama Model</label>
                                     </div>
-                                    <input type="text" className={`form-control border-only-bottom ${this.state.errorModel === "" ? "": "invalid"}`} onChange={(e) => this.setState({model:e.target.value})}/>
+                                    <input type="text" className={`form-control border-only-bottom ${this.state.errorModel === "" ? "": "invalid"}`} onChange={this.handleModelChange} value={this.state.model}/>
                                     <span className={`text-danger small ${this.state.errorModel === "" ? "d-none": ""}`} style={{fontSize:'12px'}}> {this.state.errorModel} </span>
                                 </div>
                             </div>
@@ -94,7 +110,7 @@ export default class extends Component {
                                     <div className="card-label">
                                         <label style={{fontWeight: 'bold'}}>Keterangan</label>
                                     </div>
-                                    <input type="text" className={`form-control border-only-bottom ${this.state.errorKeterangan === "" ? "": "invalid"}`} onChange={(e) => this.setState({keterangan:e.target.value})}/>
+                                    <input type="text" className={`form-control border-only-bottom ${this.state.errorKeterangan === "" ? "": "invalid"}`} onChange={this.handleKeteranganChange} value={this.state.keterangan}/>
                                     <span className={`text-danger small ${this.state.errorKeterangan === "" ? "d-none": ""}`} style={{fontSize:'12px'}}> {this.state.errorKeterangan} </span>
                                 </div>
                             </div>

@@ -33,14 +33,14 @@ export default class extends Component {
 
         return (
             <>
-            <div className="container-fluid">
-                <div className="title d-flex align-items-center mb-4">
-                    <span className="title-icare fw-medium py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Informasi</span>
+            <div className="container">
+                <div className="card-title mb-md-4 m-0 p-0">
+                    <span className="title-icare fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}> Informasi </span>
                 </div>
                 <div className="card border-0 shadow-lg">
                     <div className="card-body">
                         <Link className="list-items" to="" style={{textDecoration:'none'}}>
-                            <div className="row">
+                            
                                 {data.map((item, index) => (
                                     <div key={index} className="col">
                                         <div className="card border-0">
@@ -59,10 +59,10 @@ export default class extends Component {
                                         </div>
                                     </div>
                                 ))}
-                            </div>
+                            
                         </Link>
                         {this.state.activeCard !== null && (
-                            <div className="row">
+                            
                                 <ReactModal isOpen={this.state.isModalOpen} onRequestClose={this.closeModal} contentLabel="Informasi">
                                     <div className="col">
                                         <button onClick={this.closeModal}><i className="fa fa-close"></i></button>
@@ -73,11 +73,11 @@ export default class extends Component {
                                         <p style={{fontSize:'14px'}}>{data[this.state.activeCard].description}</p>
                                     </div>
                                 </ReactModal>
-                            </div>
+                            
                         )}
                         
                         <Link className="list-items" to="" style={{textDecoration:'none'}}>
-                            <div className="row">
+                            
                                 <div className="col">
                                     <div className="card border-0">
                                         <div className="card-body">
@@ -94,10 +94,10 @@ export default class extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                         </Link>
                         <Link className="list-items" to="" style={{textDecoration:'none'}}>
-                            <div className="row">
+                            
                                 <div className="col">
                                     <div className="card border-0">
                                         <div className="card-body">
@@ -114,10 +114,10 @@ export default class extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                         </Link>
                         <Link className="list-items" to="" style={{textDecoration:'none'}}>
-                            <div className="row">
+                            
                                 <div className="col">
                                     <div className="card border-0">
                                         <div className="card-body">
@@ -134,10 +134,10 @@ export default class extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                         </Link>
                         <Link className="list-items" to="" style={{textDecoration:'none'}}>
-                            <div className="row">
+                            
                                 <div className="col">
                                     <div className="card border-0">
                                         <div className="card-body">
@@ -154,10 +154,10 @@ export default class extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                         </Link>
                         <Link className="list-items" to="" style={{textDecoration:'none'}}>
-                            <div className="row">
+                            
                                 <div className="col">
                                     <div className="card border-0">
                                         <div className="card-body">
@@ -174,10 +174,10 @@ export default class extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                         </Link>
                         <Link className="list-items" to="" style={{textDecoration:'none'}}>
-                            <div className="row">
+                            
                                 <div className="col">
                                     <div className="card border-0">
                                         <div className="card-body">
@@ -194,10 +194,10 @@ export default class extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                         </Link>
                         <Link className="list-items" to="" style={{textDecoration:'none'}}>
-                            <div className="row">
+                            
                                 <div className="col">
                                     <div className="card bg-primary border-0 mb-3">
                                         <div className="card-body">
@@ -214,10 +214,10 @@ export default class extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                         </Link>
                         <Link className="list-items" to="" style={{textDecoration:'none'}}>
-                            <div className="row">
+                            
                                 <div className="col">
                                     <div className="card bg-primary border-0 mb-3">
                                         <div className="card-body">
@@ -234,10 +234,10 @@ export default class extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                         </Link>
                         <Link className="list-items" to="" style={{textDecoration:'none'}}>
-                            <div className="row">
+                            
                                 <div className="col">
                                     <div className="card bg-primary border-0">
                                         <div className="card-body">
@@ -254,7 +254,7 @@ export default class extends Component {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                         </Link>
                         <div className="button-informasi pt-4">
                             <button type="button" className="btn btn-primary" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}}>Lihat lebih banyak ...</button>

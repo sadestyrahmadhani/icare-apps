@@ -1,8 +1,8 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import Carousel from "../../component/carousel";
 import { authUser } from "../../services/API"
 import { setToken } from "../../core/local-storage";
+import Carousel from "../../component/carousel";
 import Cookies from 'universal-cookie'
 import FiturCard from "./component/fitur-card";
 import ConfirmAlert from "../../component/alert/confirmAlert";
@@ -132,17 +132,14 @@ export default class extends Component {
 
     render() {
         return(
-            <>
-            {/* main-background */}
-                <div className="main-background" id="beranda">
-                    <img src="/images/Vector1.png" alt="background" width="100%"/>
-                </div>
+            <div className="intro-y">
+                {/* Beranda */}
+                <div className="d-lg-block d-none" style={{ background: 'url(/images/Vector1.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100vh', position: 'absolute', top: 0, left: 0, right: 0, zIndex: -1 }} id="beranda"></div>
 
-            {/* beranda/login */}
-                <div className="row row-height mb-5">
-                    <div className="col-md-6 col-sm-12 col-12">
-                        <div className="card shadow-sm rounded p-4" style={{border:'1px solid #a2d2ff'}}>
-                            <div className="card-body px-2">
+                <div className="d-flex align-items-center row-height" style={{ height: '85vh' }}>
+                    <div className="col-lg-6 col-md-8 col-sm-10 col-12 mx-lg-0 mx-auto">
+                        <div className="card shadow-sm" style={{border:'1px solid #a2d2ff'}}>
+                            <div className="card-body px-4 py-5">
                                 <div className="col-12 text-center mb-3">
                                     <img src="/images/iCareLogo.png" alt="Logo iCare" className="h-50 login-image"/>
                                 </div>
@@ -163,7 +160,10 @@ export default class extends Component {
                                     <div className="text-center">
                                         <Link className="nav-link size-13px fw-medium my-2" to="kebijakan-privasi/register">Belum Punya akun ?</Link>
                                         <Link className="nav-link size-13px fw-medium my-2 mb-3"  to="/lupa-password">Lupa Password ?</Link>
-                                        <button className="btn btn-google shadow-sm me-2 fw-medium px-5 text-muted py-1" >Sign in with Google</button>
+                                        <button type="button" className="btn btn-google shadow-sm me-2 fw-medium px-3 text-muted py-1" >
+                                            <img src="/images/google-icons.png" alt="google-icons" height="20" className="me-3" />
+                                            Sign in with Google
+                                        </button>
                                     </div>
                                 </form>
                                 <ConfirmAlert visible={this.state.showPopup} titleMessage={this.state.alertOption.title} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-2 col-sm-4 col-8" />
@@ -171,42 +171,37 @@ export default class extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="background col-4 ms-auto">
+                    <div className="col-4 ms-auto d-lg-block d-none">
                         <img src="/images/Cahyo_MFD.png" alt="images 1" width="80%" className="mb-3" style={{marginLeft:'70px'}}/>
                         <h2 className="title-icare title-solusi text-center fw-bold" style={{marginLeft:'70px', fontSize:'35px'}}>Solusi untuk eskalasi problem dan permintaan layanan.</h2>
                     </div>
                 </div>
 
-
-            {/* about section */}
-                    <section className="section-about d-md-block d-none" style={{marginTop:'150px'}} id="about">
-                        <div className="card-about mb-5" height="250" style={{marginLeft:'80px', marginRight:'80px'}}>
-                            <div className="row g-0 mx-auto">
-                                <div className="col-md-6">
-                                    <div className="card-body py-5 px-3 mx-5">
-                                        <h3 className="title-icare text-center fw-bold mb-5">Mengapa iCare?</h3>
-                                        <p className="card-text description-icare lh-sm" style={{fontSize:'14px'}}>iCare adalah aplikasi mobile yang dapat digunakan untuk mempermudah <b>eskalasi problem</b> dan <b>permintaan layanan</b> yang dibutuhkan oleh pelanggan Astragraphia.</p>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <iframe width="100%" height="255" src="https://www.youtube-nocookie.com/embed/WthGEU-Rig4" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-                                </div>
+                {/* About */}
+                <section className="section-about py-5 my-5 d-lg-block d-none" id="about">
+                    <div className="row">
+                        <div className="card-about col-5 p-0 ms-auto">
+                            <div className="card-body py-5 px-3 mx-5">
+                                <h3 className="title-icare text-center fw-bold mb-5">Mengapa iCare?</h3>
+                                <p className="card-text description-icare lh-sm" style={{fontSize:'14px'}}>iCare adalah aplikasi mobile yang dapat digunakan untuk mempermudah <b>eskalasi problem</b> dan <b>permintaan layanan</b> yang dibutuhkan oleh pelanggan Astragraphia.</p>
                             </div>
                         </div>
-                    </section>
+                        <div className="col-6 p-0 me-auto">
+                            <iframe width="100%" height="255" src="https://www.youtube-nocookie.com/embed/WthGEU-Rig4" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
+                        </div>
+                    </div>
+                </section>
 
-
-            {/* fitur section */}
-                <section className="section-fitur d-md-block d-none" id="fitur">
+                {/* Features */}
+                <section className="section-fitur d-lg-block d-none" id="fitur">
                     <div className="container mb-5">
                         <h3 className="title-icare text-center fw-bold mb-5"> Fitur iCare</h3>
                         <FiturCard data={this.state.fiturData} />
                     </div>
                 </section>
 
-
-            {/* profit-section */}
-                <section className="benefit-section d-md-block d-none" id="benefit">
+                {/* Profit */}
+                <section className="benefit-section d-lg-block d-none" id="benefit">
                     <div className="container pt-5 mb-5">
                         <h3 className="title-icare text-center fw-bold mb-5">Keuntungan</h3>
                         <div className="row">
@@ -258,18 +253,16 @@ export default class extends Component {
                     </div>
                 </section>
 
-
-            {/* testimonials-section */}
-                <section className="testimonials-section d-md-block d-none" id="testimonial">
+                {/* Testimonial */}
+                <section className="testimonials-section d-lg-block d-none" id="testimonial">
                     <div className="container pt-5 mb-5">
                         <h3 className="title-icare text-center fw-bold">Testimonials</h3>
                         <Carousel />
                     </div>
                 </section>
 
-
-            {/* pakai iCare sekarang */}
-                <div className="row d-md-block d-none" style={{borderTop: '1px solid #d4d8ff'}}>
+                {/* Use iCare Now */}
+                <div className="row d-lg-flex d-none" style={{borderTop: '1px solid #d4d8ff', marginTop: '6rem'}}>
                     <div className="col-lg-5 col-md-5 col-12 py-5">
                         <img src="/images/iCareLogo.png" alt="Logo iCare" className="mb-2" width="150" />
                         <p className="mb-1" style={{fontSize:'28px'}}>Pakai iCare Sekarang!</p>
@@ -282,7 +275,7 @@ export default class extends Component {
                     </div>
                 </div>
                 <p className="cp-mobile text-center d-md-none d-block">iCare &copy; PT ASTRA GRAPHIA TBK</p>
-            </>
+            </div>
         )
     } 
     

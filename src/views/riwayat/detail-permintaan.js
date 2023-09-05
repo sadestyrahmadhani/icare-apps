@@ -6,11 +6,11 @@ export default class extends Component {
         return(
             <>
                 <div className="container-fluid py-4">
-                    <div className="d-flex align-items-center mb-4">
+                    <div className="d-flex align-items-center">
                         <Link className="list-items" to="/riwayat">
                             <i className="fa fa-arrow-left me-3" style={{fontSize:'18px', color:'#014C90'}}></i>
-                        </Link>
                             <span className="title-icare fw-medium py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Detail Permintaan</span>
+                        </Link>
                     </div>
                     <div className="card shadow p-3 border-0 ">
                         <div className="card-body">

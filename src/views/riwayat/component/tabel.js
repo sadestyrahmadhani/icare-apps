@@ -42,9 +42,9 @@ export default class extends Component {
                                     Selesai
                                 </div>
                             </div>
-                        ) : (
+                        ) : this.props.tabActive == 4 ? (
                             <div style={{ position: 'relative', width: '70%', marginLeft: 'auto', marginRight: 'auto' }}>
-                                <hr style={{ position: 'absolute', top: 0, left: 0, right: 0, border: '3px solid #23ad4c', opacity: 1 }} />
+                                <hr style={{ position: 'absolute', top: 0, left: 0, right: '30%', border: '3px solid #23ad4c', opacity: 1 }} />
                                 <div style={{ position: 'absolute', textAlign: 'center', left: -40 }}>
                                     <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
                                         <i className="fa fa-check"></i>
@@ -64,7 +64,63 @@ export default class extends Component {
                                     Selesai
                                 </div>
                                 <div style={{ position: 'absolute', right: -30, textAlign: 'center' }}>
+                                    <div className="mx-auto" style={{ padding: '4px', background: '#ccc', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
+                                        <i className="fa fa-check"></i>
+                                    </div>
+                                    Nilai
+                                </div>
+                            </div>
+                        ) : this.props.tabActive == 2 ? (
+                            <div style={{ position: 'relative', width: '70%', marginLeft: 'auto', marginRight: 'auto' }}>
+                                <hr style={{ position: 'absolute', top: 0, left: 0, right: '60%', border: '3px solid #23ad4c', opacity: 1 }} />
+                                <div style={{ position: 'absolute', textAlign: 'center', left: -40 }}>
                                     <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
+                                        <i className="fa fa-check"></i>
+                                    </div>
+                                    Menunggu
+                                </div>
+                                <div style={{ position: 'absolute', left: '35%', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
+                                    <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
+                                        <i className="fa fa-check"></i>
+                                    </div>
+                                    Diproses
+                                </div>
+                                <div style={{ position: 'absolute', left: '70%', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
+                                    <div className="mx-auto" style={{ padding: '4px', background: '#ccc', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
+                                        <i className="fa fa-check"></i>
+                                    </div>
+                                    Selesai
+                                </div>
+                                <div style={{ position: 'absolute', right: -30, textAlign: 'center' }}>
+                                    <div className="mx-auto" style={{ padding: '4px', background: '#ccc', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
+                                        <i className="fa fa-check"></i>
+                                    </div>
+                                    Nilai
+                                </div>
+                            </div>
+                        ) : (
+                            <div style={{ position: 'relative', width: '70%', marginLeft: 'auto', marginRight: 'auto' }}>
+                                {/* <hr style={{ position: 'absolute', top: 0, left: 0, right: 0, border: '3px solid #23ad4c', opacity: 1 }} /> */}
+                                <div style={{ position: 'absolute', textAlign: 'center', left: -40 }}>
+                                    <div className="mx-auto" style={{ padding: '4px', background: '#ff8000', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
+                                        <i className="fa fa-check"></i>
+                                    </div>
+                                    Menunggu
+                                </div>
+                                <div style={{ position: 'absolute', left: '35%', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
+                                    <div className="mx-auto" style={{ padding: '4px', background: '#d6d6d6', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
+                                        <i className="fa fa-check"></i>
+                                    </div>
+                                    Diproses
+                                </div>
+                                <div style={{ position: 'absolute', left: '70%', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
+                                    <div className="mx-auto" style={{ padding: '4px', background: '#d6d6d6', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
+                                        <i className="fa fa-check"></i>
+                                    </div>
+                                    Selesai
+                                </div>
+                                <div style={{ position: 'absolute', right: -30, textAlign: 'center' }}>
+                                    <div className="mx-auto" style={{ padding: '4px', background: '#d6d6d6', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
                                         <i className="fa fa-check"></i>
                                     </div>
                                     Nilai

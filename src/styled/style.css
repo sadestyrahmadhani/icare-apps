@@ -4,6 +4,20 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        margin-top: 15px;
+    } 100% {
+        opacity: 1;
+        margin-top: 0;
+    }
+}
+
+.intro-y {
+    animation: fadeIn .5s ease-in-out;
+}
+
 .main-background {
     position: absolute;
     top: 0;
@@ -47,13 +61,76 @@ body {
     color: #014C90;
 }
 
-.dropdown {
-    position: absolute;
+
+/* Dropdown */
+/* CSS Kustom untuk menghilangkan tanda panah di NavDropdown */
+.custom-dropdown .dropdown-toggle::after {
+    display: none; /* Menghilangkan tanda panah ke bawah */
 }
 
-.item-drop:hover {
-    background-color: #f1f1f1;
+.navdropdown {
+    position: absolute;
+    top: 15px;
 }
+
+.dropdown:hover {
+    background: none;
+    color: #000;
+}
+
+/* Style the Dropdown Toggle */
+.dropdown-toggle {
+    font-size: 12px; /* Sesuaikan dengan ukuran font yang Anda gunakan pada item navbar lainnya */
+    color: grey; /* Sesuaikan warna teks sesuai kebutuhan */
+    text-decoration: none; /* Hilangkan underline pada tautan dropdown */
+    background: none;
+    border: none;
+  }
+
+  .dropdown-toggle:hover {
+    background: none; 
+    color: #000;
+    text-decoration: none;
+  }
+  
+  /* Style the Dropdown Menu */
+  .dropdown-menu {
+    width: 250px;
+    background-color: #fff; /* Sesuaikan warna latar belakang sesuai kebutuhan */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Tambahkan bayangan sesuai kebutuhan */
+  }
+  
+  /* Style Dropdown Items */
+  .dropdown-item {
+    font-size: 14px; /* Sesuaikan dengan ukuran font yang Anda gunakan pada item navbar lainnya */
+    padding: 10px 20px; /* Sesuaikan padding sesuai kebutuhan */
+    color: #000; /* Sesuaikan warna teks sesuai kebutuhan */
+    text-decoration: none; /* Hilangkan underline pada tautan dropdown */
+  }
+  
+  /* Hover effect on Dropdown Items */
+  .dropdown-item:hover {
+    background-color: #f8f8f8; /* Sesuaikan warna latar belakang saat hover sesuai kebutuhan */
+  }
+  
+  /* Add responsiveness for smaller screens */
+  @media (max-width: 768px) {
+    /* Reset styles for Dropdown Toggle on smaller screens */
+    .dropdown-toggle {
+      font-size: 12px;
+      color: grey;
+      text-decoration: none;
+    }
+    /* Reset styles for Dropdown Items on smaller screens */
+    .dropdown-item {
+      padding: 10px 20px;
+    }
+  }
+    
+
+/* .item-drop:hover {
+    background-color: #f1f1f1;
+} */
 
 .text-link {
     font-size: 14px;
@@ -98,7 +175,7 @@ body {
 }
 
 .btn-login {
-    background-color: #015990;
+    background-color: #014C90;
     color: #fff;
     font-size: 14px;
 }
@@ -164,48 +241,44 @@ body {
     margin-right: 20px;
     color: #014C90;
 }
-
-/* Modal.css
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   
-  .modal {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .close-button {
-    background: none;
-    border: none;
-    color: #333;
-    font-size: 16px;
-    cursor: pointer;
-    float: right;
-  } */
-  
-.slide-card {
-    transform: scale(.9);
-    transition: .5s;
-}
-
-.slide-card.active {
-    transform: scale(1.05); 
-}
-
 .slick-list {
+    max-height: 60vh;
     padding: 30px !important;
+}
+  
+.slick-slide {
+    transform: scale(.9);
+    transition: 3s;
+}
+
+.slick-slide.slick-center {
+    transform: scale(1.05);
+    margin-left: 1rem;
+    margin-right: 1rem;
+    transition: 3s;
+}
+
+
+.slick-dots {
+    bottom: -50px!important;
+}
+
+.slick-dots li {
+    width: 10px!important;
+    height: 10px!important;
+    border: 1px solid #005cdc;
+    border-radius: 50%;
+    transition: .5s ease-in-out;
+}
+
+.slick-dots li.slick-active, .slick-dots li:hover {
+    background: #005cdc;
+    transition: .5s ease-in-out;
+}
+
+.slick-dots li button {
+    opacity: 0;
 }
 
 .btn.disabled, .btn-secondary-custom {
@@ -318,6 +391,10 @@ td {
     display: none;
 }
 
+#inputFilesSelfie::file-selector-button {
+    display: none;
+}
+
 .tab-collect {
     color: black !important;
 
@@ -408,9 +485,7 @@ td {
 
 /* Style untuk card yang aktif saat dihover */
 
-#inputFilesSelfie::file-selector-button {
-    display: none;
-}
+
 
 .btn-alert:hover {
     background: #005cdc !important;
@@ -429,7 +504,7 @@ td {
 
 .btn-google:hover {
     background: #edecec;
-    box-shadow: 10 #000;
+    box-shadow: rgba(20, 0, 10, 0) ;
 }
 
 .btn-google:focus {
@@ -441,9 +516,57 @@ td {
 }
 
 
-/* Media Query */
 
+/* Media Query */
 @media(max-width: 768px) {
+    
+    /* bottom-bar */
+    .content-menus {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+    }
+    .menu-items {
+        height: calc(100vh - 60px);
+        overflow-y: auto;
+        padding-bottom: 3rem;
+        position: relative;
+    }
+    .bottom-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #014C90;
+        color: #fff;
+        padding: 15px 10px;
+    }
+
+    .bottom-bar a {
+        color: #fefefe;
+        text-decoration: none;
+    }
+
+    .bottom-bar a i {
+        display: block;
+        padding: 0;
+        margin: 0;
+    }
+
+    .bottom-bar a span {
+        font-size: 12px;
+    }
+
+    .bottom-bar .bottom-bar-line {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 2px;
+        width: calc(100% / 3);
+        background: #fff;
+    }
+
     /* form login */
     .background, .main-background {
         display: none;
@@ -459,16 +582,15 @@ td {
     .py-xs-0 {
         padding: 0 !important;
     }
-    .row-height .card {
+    .row-height .card, .responsive-breakfix {
         box-shadow: none !important;
         border: none !important;
+        margin-top: 45px !important;
     }
     .login-image {
         width: 100px;
         margin-bottom: 5rem;
     }
-
-    /* dashboard */
     .cp-mobile {
         position: fixed;
         bottom: 0;
@@ -476,6 +598,8 @@ td {
         right: 0;
         font-size: 12px;
     }
+
+    /* dashboard */
     .list-items {
         margin-bottom: 4rem !important;
     }
@@ -498,11 +622,16 @@ td {
         flex-direction: row !important;
         overflow-x: scroll;
     }
-    .card-news >* {
+    .card-news > * {
         margin: 5px 0 !important;
     } 
     .menus {
         margin-bottom: 14rem !important;
+    }
+    .menus-title {
+        font-weight: normal !important;
+        font-size: 12px !important; 
+        white-space: nowrap !important; 
     }
 
     /* navbar mobile */
@@ -515,8 +644,15 @@ td {
         z-index: 11111;
         padding: 20px 15px; 
     }  
-    .responsive-bar ~ * {
+    .responsive-bar ~ *:nth-child(1) {
         margin-top: 45px !important;
+    }
+    .responsive-bar * {
+        color: #fff;
+    }
+    .responsive-bar > * {
+        width: 100%!important;
+        padding: 0!important;
     }
     .responsive-bar > a { 
         margin: 0 !important;
@@ -532,6 +668,16 @@ td {
     .responsive-bar .card-title > h5 , .responsive-bar .card-title > h5 {
         color: #fff !important;
     }
+    .responsive-bar strong { 
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .responsive-bar .card-title strong , .responsive-bar .card-title strong {
+        color: #fff !important;
+    }
+    .title-fitur {
+        font-weight: normal !important;
+    }
     
     /* kebijakan privasi */
     .custom-card {
@@ -539,12 +685,110 @@ td {
         border-radius: 5px !important;
         box-shadow: 0 1px 6px;
         margin-top: 50px !important;
-        padding-top: 15px !important;
+        padding-top: 10px !important;
         padding-left: 10px !important;
         padding-bottom: 20px !important;
         padding-right: 10px !important;
+        max-height: 45vh;
+        overflow-y: auto;
     }
     .custom-card > p {
         text-align: justify;
+        font-size: 16px !important;
+        line-height: 12px;
+    }
+
+    /* register */
+    .responsive-register .card {
+        box-shadow: none;
+        border: none;
+        margin-top: 65px !important;
+    }
+    .input-mobile .size-13px {
+        background: #014C90;
+        width: 100%;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 5px;
+    }
+    .input-mobile label  {
+        color: #fff !important;
+        font-weight: normal !important;
+    }
+    .input-mobile .form-control {
+        border: 1px solid #cccccc;
+        margin-top: 0 !important;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 5px;
+    }
+    .input-mobile .form-control:focus {
+        border: 2px solid #00c8ff;
+    }
+    .input-mobile .border-only-bottom.is-invalid, .border-only-bottom.invalid {
+        border: 1px solid #bc4a4a !important;
+    }
+    .input-mobile .border-only-bottom.is-invalid, .border-only-bottom.invalid:focus {
+        border: 2px solid #c00000 !important;
+    }
+
+    /* breakfix */
+    .input-check .check-item {
+        margin-bottom: 5px !important;
+    }
+    .input-check .check-item > label {
+        font-size: 11px !important;
+    }
+    .input-check .form-check > label {
+        font-size: 11px !important;
+    }
+
+    /* lupa-password */
+    .responsive-lupa-pass .card {
+        border: none !important;
+        box-shadow: none !important;
+        margin-top: 65px;
+    }
+
+    /* kode-OTP */
+    .bg-light {
+        background: white !important;
+    }
+    .responsive-otp {
+        display: flex;
+        height: 100vh;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    .responsive-otp .card {
+        border: none !important;
+        box-shadow: none !important;
+        margin-top: 65px;
+        background: white !important;
+    }
+    .text-otp {
+        text-align: center !important;
+    }
+    .responsive-otp .border-only-bottom {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* data-diri */
+    .responsive-data-diri .card {
+        border: none !important;
+        box-shadow: none !important;
+        margin-top: 65px !important;
+    }
+
+    /* supplies */
+    .responsive-supplies .card {
+        box-shadow: none !important;
+        margin-top: 65px !important;
+    }
+    .label-supplies {
+        font-size: 12px !important;
     }
 }
+

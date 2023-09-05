@@ -1,7 +1,8 @@
 import React from "react";
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import ConfirmAlert from "../../component/alert/confirmAlert";
+// import Swal from "sweetalert2";
 
 export default class extends Component {
     constructor(props) {
@@ -17,6 +18,7 @@ export default class extends Component {
             errorAddressOrMachineLocation:'',
             errorDescription:'',
             errorPageToWC:'',
+            showPopup: false,
         }
         this.submit = this.submit.bind(this)
         this.checkCheckBox = this.checkCheckBox.bind(this)
@@ -25,6 +27,7 @@ export default class extends Component {
         this.validationMachineLocation = this.validationMachineLocation.bind(this)
         this.validationDescription = this.validationDescription.bind(this)
         this.validationPageToWC = this.validationPageToWC.bind(this)
+        this.handlePopup = this.handlePopup.bind(this)
     }
 
     handleCheckboxChange = (event) => {
@@ -47,6 +50,10 @@ export default class extends Component {
         document.getElementById('display-image').classList.add('d-block')
     }
 
+    handlePopup() {
+        this.setState({showPopup:false})
+    }
+
     submit(e) {
         e.preventDefault()
 
@@ -56,10 +63,12 @@ export default class extends Component {
         if(this.state.description === "") this.setState({errorDescription:'Silahkan isi deskripsi'})
         if(this.state.pageToWC === "") this.setState({errorPageToWC: checkboxPage.length > 0 ? 'Silahkan isi page' : ''})
 
-        Swal.fire({
-            text:'Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min. 1',
-            confirmButtonColor:'#0099ff'
-        })
+        this.setState({showPopup: true})
+
+        // Swal.fire({
+        //     text:'Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min. 1',
+        //     confirmButtonColor:'#0099ff'
+        // })
     }
 
     validationEquipment(e) {
@@ -79,17 +88,29 @@ export default class extends Component {
     }
 
     validationDescription(e) {
-        e.preventDefault()
-        this.setState({description: e.target.value})
-        if(this.state.description !== "") {
-            this.setState({errorDescription:''})
+        e.preventDefault();
+        const description = e.target.value;
+        this.setState({ description }); // Perbarui state description
+    
+        if (description.trim() === "") {
+            this.setState({ errorDescription: 'Silahkan isi deskripsi' });
+        } else {
+            this.setState({ errorDescription: '' });
         }
     }
+
+    // validationDescription(e) {
+    //     e.preventDefault()
+    //     this.setState({description: e.target.value})
+    //     if(this.state.description !== "") {
+    //         this.setState({errorDescription:''})
+    //     }
+    // }
 
     validationPageToWC(e) {
         e.preventDefault()
         this.setState({pageToWC: e.target.value})
-        if(this.state.checkBoxCheckCountPage > 0 && this.state.pageToWC === "") {
+        if(this.state.checkBoxCheckCountPage > 0 && e.target.value === "") {
             this.setState({errorPageToWC:'Silahkan isi page'})
         } else {
             if(e.target.value.length > 3) {
@@ -114,12 +135,12 @@ export default class extends Component {
     render () {
         return (
             <>
-            <div className="container pt-3 pb-5">
-                <div className="d-flex align-items-center mb-4">
+            <div className="container">
+                <div className="d-flex" style={{alignItems:'baseline', height:'55px'}}>
                     <Link className="list-items" to="../dashboard">
                         <i className="fa fa-arrow-left me-3" style={{fontSize:'16px', color:'#014C90'}}></i>
+                        <span className="title-icare fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Install Request</span>
                     </Link>
-                    <span className="title-icare fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'16px'}}>Install Request</span>
                 </div>
                 <div className="container">
                     <div className="card px-3 shadow border-0">
@@ -144,57 +165,57 @@ export default class extends Component {
 
                                     <div className="col-md-4 col-sm-6 col-12 mt-3">
                                         <div className="check-item d-flex align-items-center mb-4">
-                                            <input type="checkbox" className="me-2"/> 
+                                            <input type="checkbox" className="install-checkbox me-2 form-check-input"/> 
                                             <label style={{fontSize:'14px'}}>Install driver printer</label>
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4">
-                                            <input type="checkbox" className="me-2"/>
+                                            <input type="checkbox" className="install-checkbox me-2 form-check-input"/>
                                             <label style={{fontSize:'14px'}}>Setting printer</label>
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4">
-                                            <input type="checkbox" className="me-2"/>
+                                            <input type="checkbox" className="install-checkbox me-2 form-check-input"/>
                                             <label style={{fontSize:'14px'}}>Setting address book</label>
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4">
-                                            <input type="checkbox" className="me-2"/>
+                                            <input type="checkbox" className="install-checkbox me-2 form-check-input"/>
                                             <label style={{fontSize:'14px'}}>Setting Kalibrasi</label>
                                         </div>
                                     </div>
 
                                     <div className="col-md-4 col-sm-6 col-12 mt-3">
                                         <div className="check-item d-flex align-items-center mb-4">
-                                            <input type="checkbox" className="me-2"/> 
+                                            <input type="checkbox" className="install-checkbox me-2 form-check-input"/> 
                                             <label style={{fontSize:'14px'}}>Install resite</label>
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4">
-                                            <input type="checkbox" className="me-2"/>
+                                            <input type="checkbox" className="install-checkbox me-2 form-check-input"/>
                                             <label style={{fontSize:'14px'}}>Setting scan</label>
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4">
-                                            <input type="checkbox" className="me-2"/>
+                                            <input type="checkbox" className="install-checkbox me-2 form-check-input"/>
                                             <label style={{fontSize:'14px'}}>Install New Machine</label>
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4">
-                                            <input type="checkbox" className="me-2"/>
+                                            <input type="checkbox" className="install-checkbox me-2 form-check-input"/>
                                             <label style={{fontSize:'14px'}}>Setting Warna</label>
                                         </div>
                                     </div>
 
                                     <div className="col-md-4 col-sm-6 col-12 mt-3">
                                         <div className="check-item d-flex align-items-center mb-4">
-                                            <input type="checkbox" className="me-2"/> 
+                                            <input type="checkbox" className="install-checkbox me-2 form-check-input"/> 
                                             <label style={{fontSize:'14px'}}>Install accessories</label>
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4">
-                                            <input type="checkbox" className="me-2"/>
+                                            <input type="checkbox" className="install-checkbox me-2 form-check-input"/>
                                             <label style={{fontSize:'14px'}}>Setting Authentication / Auditron</label>
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4">
-                                            <input type="checkbox" className="me-2"/>
+                                            <input type="checkbox" className="install-checkbox me-2 form-check-input"/>
                                             <label style={{fontSize:'14px'}}>Setting IP Address</label>
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4">
-                                            <input type="checkbox" className="me-2"/>
+                                            <input type="checkbox" className="install-checkbox me-2 form-check-input"/>
                                             <label style={{fontSize:'14px'}}>Setting Fax</label>
                                         </div>
                                     </div>
@@ -217,14 +238,14 @@ export default class extends Component {
                                             <input type="checkbox" style={{ borderRadius: 0, padding: '1px' }} className="form-check-input page-checkbox" id="pageToWC" onChange={ this.checkCheckBoxPage } />
                                             <label htmlFor="pageToWC" className="form-check-label">Page to WC</label>
                                         </div>
-                                        <div className="ms-2" style={{ width: '110px' }}>
-                                            <input type="text" className={`ms-2 py-2 input-page w-100 ${ this.state.errorPageToWC !== '' ? 'border-danger border' : '' }`} onChange={this.validationPageToWC} disabled={this.state.checkBoxCheckCountPage == 0}  />
-                                            <span className={ `text-danger px-2  ${ this.state.errorPageToWC !== '' ? '' : 'd-none' }` } style={{fontSize:'12px'}} >{ this.state.errorPageToWC }</span>
+                                        <div className="ms-2 d-flex flex-column" style={{ width: '110px' }}>
+                                            <input type="text" style={{paddingLeft:'10px'}} className={`ms-2 py-2 input-page w-100 ${ this.state.errorPageToWC !== '' ? 'border-danger border' : '' }`} onChange={this.validationPageToWC} disabled={this.state.checkBoxCheckCountPage == 0}  />
+                                            <span className={ `text-danger px-2  ${ this.state.errorPageToWC !== '' ? '' : 'd-none' }` } style={{fontSize:'12px', textAlign:'left'}} >{ this.state.errorPageToWC }</span>
                                         </div>
                                     </div>
                                         
                                     <div className="text-center">
-                                        <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'14px', color:'pink'}}>Please upload photo meter information/photo machine</p>
+                                        <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'14px', color:'red'}}>Please upload photo meter information/photo machine</p>
                                         <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
                                         <label className="file-icon mb-3 d-block" htmlFor="input-file">
                                             <div className="text-center rounded-circle p-2" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px', marginLeft:'48%'}}>
@@ -239,6 +260,7 @@ export default class extends Component {
                                 </div>
                             </div>
                         </form>
+                        <ConfirmAlert visible={this.state.showPopup} message="Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min. 1" customClass="col-md-5 col-sm-8 col-12" onClick={this.handlePopup} />
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ export default class extends Component {
             <>
             <div className="container">
                 <div className="container d-flex">
-                    <div className="col-6" >
+                    <div className="col-6 mb-5">
                         <span className="title-icare fw-bold" style={{borderBottom: '3px solid #014C90', width: '110px', fontSize:'20px'}}>Daftar EQ</span>
                     </div>
                     <div className="col-6 row text-end">
@@ -50,13 +50,13 @@ export default class extends Component {
                                                 </div>
 
                                                 <div className="col-md-auto">
-                                                    <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6></Link>
+                                                    <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'70px', fontWeight: 'bold'}}>Ubah</h6></Link>
                                                 </div>
                                                 <div className="col-md-auto">
                                                     <img src="images/Verified.png" style={{height:'70px'}}></img>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Hapus</h6>
+                                                <h6 className="text title-icare" style={{marginTop:'70px', fontWeight: 'bold'}}>Hapus</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -82,13 +82,13 @@ export default class extends Component {
                                                     </div>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6></Link>
+                                                <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'70px', fontWeight: 'bold'}}>Ubah</h6></Link>
                                                 </div>
                                                 <div className="col-md-auto">
                                                 <img src="images/Verified.png" style={{height:'70px'}}></img>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Hapus</h6>
+                                                <h6 className="text title-icare" style={{marginTop:'70px', fontWeight: 'bold'}}>Hapus</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -114,13 +114,13 @@ export default class extends Component {
                                                     </div>
                                                 </div>
                                                 <div className="col-md-auto">
-                                                <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Ubah</h6></Link>
+                                                <Link className="text-decoration-none" to="/form-eq"><h6 className="text title-icare" style={{marginTop:'70px', fontWeight: 'bold'}}>Ubah</h6></Link>
                                                 </div>
                                                 <div className="col-md-auto" style={{marginRight:'70px'}}>
                                                     {/* <img src="images/approved.png"></img> */}
                                                 </div>
                                                 <div className="col-md-auto">
-                                                <h6 className="text title-icare" style={{marginTop:'50px', fontWeight: 'bold'}}>Hapus</h6>
+                                                <h6 className="text title-icare" style={{marginTop:'70px', fontWeight: 'bold'}}>Hapus</h6>
                                                 </div>
                                             </div>
                                         </div>

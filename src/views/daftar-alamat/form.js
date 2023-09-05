@@ -29,7 +29,11 @@ export default class extends Component {
             errorPhoneNumber: '',
             errorDeliveryLocation: '',
 
-            showPopup: false
+            showPopup: false,
+            alertOption: {
+                title: '',
+                message: ''
+            }
         }
     }
 
@@ -53,7 +57,8 @@ export default class extends Component {
         if(!this.state.phoneNumber.match("^[0-9]*$") || this.state.phoneNumber.length < 9 || this.state.phoneNumber.length > 14) return
         if(!this.state.postalCode.match("^[0-9]*$") || this.state.postalCode.length < 6) return
         
-        this.setState({showPopup:true})
+        // this.setState({showPopup:true})
+        if(this.state.addressLabel !== "" && this.state.recipientName !== "" && this.state.streetName !== "" && this.state.buildingName !== "" && this.state.buildingNumber !== "" && this.state.city !== "" && this.state.deliveryLocation !== "" && this.state.postalCode !== "" && this.state.phoneNumber !== "") this.setState({showPopup: true, alertOption: {title: 'Info', message: 'Berhasil menambahkan alamat'}})
     }
 
     validationPhonrNumber(e){
@@ -163,7 +168,7 @@ export default class extends Component {
                                     <button className="btn btn-login fw-bold" type="submit" style={{padding: '10px 50px'}}>SIMPAN</button>
                                 </div>
                             </form>
-                            <ConfirmAlert visible={this.state.showPopup} message="Error 404" onClick={this.handlePopup} customClass="col-md-2 col-sm-6 col-12" />
+                            <ConfirmAlert visible={this.state.showPopup} titleMessage={this.state.alertOption.title} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-2 col-sm-6 col-12" />
                         </div>
                     </div>
                 </div>

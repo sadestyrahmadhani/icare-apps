@@ -10,11 +10,11 @@ const Carousel = () => {
     const setting = {
         dots: true,
         infinite: true,
-        speed: 5000,
+        speed: 3000,
         slidesToShow: 3,
         slidesToScroll:1,
         autoplay: true, 
-        autoplaySpeed: 1000,
+        autoplaySpeed: 1500,
         beforeChange : (current, next) => setSlideIndex(next),
         centerMode: true
         
@@ -57,7 +57,7 @@ const Carousel = () => {
         <Slider {...setting}>
             { carouselData.map((val, key) => {
                 return(
-                    <div className={ `card slide-card custom-height shadow-lg ${ slideIndex == key ? 'active' : ''}`} key={key}>
+                    <div className={ `card slide-card shadow-lg`} key={key}>
                         <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'1rem'}}>
                             <div className="text-center">
                                 <div className="col-12 text-center fs-5">

@@ -1,6 +1,7 @@
 import { Component } from "react";
 import Navbar from "../../component/navbar";
 import Footer from "../../component/footer";
+import { Link } from "react-router-dom";
 
 export default class extends Component {
     constructor(props) {
@@ -52,22 +53,28 @@ export default class extends Component {
         return(
             <div className="bg-light">
                 <Navbar versi="2" />
-                <div className="container">
-                    <div className="card-title text-center mx-auto my-3 mb-5 pt-3" style={{borderBottom:'3px solid #014C90', width:'135px'}}>
-                        <h5 className="title-icare fw-bold">Lupa Password</h5>
+                    <div className="responsive-bar">
+                        <div className="mx-md-auto my-md-3 my-0" style={{borderBottom:'3px solid #014C90', width:'135px'}}>
+                            <h5 className="title-icare title-fitur fw-bold m-0 p-0">
+                                <Link to="/" className="nav-link d-md-none d-inline me-3">
+                                    <i className="fa fa-arrow-left"></i>
+                                </Link>
+                                Lupa Password
+                            </h5>
+                        </div>
                     </div>
-                    <div className="col-md-6 col-sm-7 col-12 mx-auto">
-                        <div className="card mb-5 px-4 shadow-sm bg-light" style={{border:'1px solid'}}>
-                            <div className="card-body p-5">
+                    <div className="col-md-6 col-12 mx-auto responsive-lupa-pass">
+                        <div className="card mb-5 px-2 shadow-sm bg-light" style={{border:'1px solid'}}>
+                            <div className="card-body p-md-5 px-0 input-mobile">
                                 <form onSubmit={this.submit}>
                                     <div className="mb-3">
                                         <label className="size-13px fw-bold">Email Address</label>
                                         <input type="email"  className={`form-control border-only-bottom ${this.state.errorEmail === "" ? "": "invalid"}`} onChange={this.validationEmail}/>
                                         <span className={`${this.state.errorEmail === "" ? "d-none": ""} text-danger`} style={{fontSize:'12px'}}> {this.state.errorEmail} </span>
                                     </div>
-                                    <div className="mb-5">
+                                    <div className="mb-md-5 mb-2">
                                         <label className="size-13px fw-bold">Number Phone</label>
-                                        <input type="text"  className={`form-control border-only-bottom ${this.state.errorPhone === "" ? "": "invalid"}`} onChange={this.validationPhone}/>
+                                        <input type="number"  className={`form-control border-only-bottom ${this.state.errorPhone === "" ? "": "invalid"}`} onChange={this.validationPhone}/>
                                         <span className={`${this.state.errorPhone === "" ? "d-none": ""} text-danger`} style={{fontSize:'12px'}}> {this.state.errorPhone} </span>
                                     </div>
                                     <div className="text-center pt-4">
@@ -77,7 +84,6 @@ export default class extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
                 <Footer />
             </div>
         )

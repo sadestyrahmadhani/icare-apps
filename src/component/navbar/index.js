@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getToken } from "../../core/local-storage";
-import { Dropdown } from "bootstrap";
+// import { getToken } from "../../core/local-storage";
+// import { Dropdown } from "bootstrap";
+import Dropdown from "react-bootstrap/Dropdown";
+import { useLocation } from "react-router-dom";
+// import DropdownItem from "react-bootstrap/esm/DropdownItem";
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const Navbar = (props) => {
     const [ scrolling, setScrolling ] = useState(false)
     const [openDropdown, setOpenDropdown] = useState(false)
+
+    const location = useLocation();
+    const pathName = location.pathname;
 
     useEffect(() => {
         const handleScroll = () => {
@@ -36,7 +43,7 @@ const Navbar = (props) => {
             {
                 props?.versi == "2" ?
                 (
-                    <div className="bg-white d-md-block d-none shadow-sm" style={{position:'sticky', top:0, zIndex:'999'}}>
+                    <div className="bg-white shadow-sm d-lg-block d-none" style={{position:'sticky', top:0, zIndex:'999'}}>
                         <hr className="m-0 p-0 hr-custom" />
                         <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
                             <div className="container">
@@ -51,9 +58,9 @@ const Navbar = (props) => {
                     </div>
                 )
                 : (
-                    getToken() != null && typeof getToken()  != "undefined" ?
+                    pathName != "/" ?
                     (
-                        <div className="bg-white d-md-block d-none" style={{position:'sticky', top:0, zIndex:'999', height:'65px'}} >
+                        <div className="bg-white d-lg-block d-none" style={{position:'sticky', top:0, zIndex:'999', height:'65px'}} >
                             <hr className="m-0 p-0 hr-custom" />
                             <nav className={`navbar navbar-exspand-lg py-1 px-1`} >
                                 <div className="container-fluid">
@@ -80,7 +87,117 @@ const Navbar = (props) => {
                                             </Link>
                                         </li>
                                         <li className="nav-item mx-3">
-                                            <a className="nav-link nav-app" href="#" onClick={() => setOpenDropdown(!openDropdown)}>
+                                            <NavDropdown className="custom-dropdown" id="nav-dropdown" title={<span className="nav-dash" > <i className="fa fa-gear me-2 nav-app" style={{fontSize:'14px'}}></i> PENGATURAN</span>}>
+                                                <NavDropdown.Item href="/data_diri">
+                                                    <div className="item-drop d-flex align-items-center">
+                                                        <div className="col-11">
+                                                            <span className="text-decoration-none nav-app" style={{color:'#000'}} >Data Diri</span>
+                                                        </div>
+                                                        <div className="col-1">
+                                                            <i className="fa fa-chevron-right chevron-drop"></i>
+                                                        </div>
+                                                    </div>
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item href="/daftar_alamat">
+                                                    <div className="item-drop d-flex align-items-center">
+                                                        <div className="col-11">
+                                                            <span className="text-decoration-none nav-app" style={{color:'#000'}}>Daftar Alamat</span>
+                                                        </div>
+                                                        <div className="col-1">
+                                                            <i className="fa fa-chevron-right chevron-drop"></i>
+                                                        </div>
+                                                    </div>
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item href="/daftar_eq">
+                                                    <div className="item-drop d-flex align-items-center">
+                                                        <div className="col-11">
+                                                            <span className="text-decoration-none nav-app" style={{color:'#000'}}>Daftar EQ</span>
+                                                        </div>
+                                                        <div className="col-1">
+                                                            <i className="fa fa-chevron-right chevron-drop"></i>
+                                                        </div>
+                                                    </div>
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item href="/ubah_kata_sandi">
+                                                    <div className="item-drop d-flex align-items-center">
+                                                        <div className="col-11">
+                                                            <span className="text-decoration-none nav-app" style={{color:'#000'}}>Kata Sandi</span>
+                                                        </div>
+                                                        <div className="col-1">
+                                                            <i className="fa fa-chevron-right chevron-drop"></i>
+                                                        </div>
+                                                    </div>
+                                                </NavDropdown.Item>
+                                                <NavDropdown.Item href="#">
+                                                    <div className="item-drop d-flex align-items-center">
+                                                        <div className="col-11">
+                                                            <span className="text-decoration-none nav-app" style={{color:'#000'}}>Keluar</span>
+                                                        </div>
+                                                        <div className="col-1">
+                                                            <i className="fa fa-chevron-right chevron-drop"></i>
+                                                        </div>
+                                                    </div>
+                                                </NavDropdown.Item>
+                                            </NavDropdown>
+                                            {/* <Dropdown show={openDropdown} onToggle={(isOpen) => setOpenDropdown(isOpen)}>
+                                                <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                                                    <i className="fa fa-gear me-2 nav-app" style={{fontSize:'14px'}}></i>
+                                                    <span className="nav-dash">PENGATURAN</span>
+                                                </Dropdown.Toggle>
+                                                <Dropdown.Menu>
+                                                    <DropdownItem href="/data_diri">
+                                                        <div className="item-drop d-flex align-items-center">
+                                                            <div className="col-11">
+                                                                <span className="text-decoration-none nav-app" style={{color:'#000'}} >Data Diri</span>
+                                                            </div>
+                                                            <div className="col-1">
+                                                                <i className="fa fa-chevron-right chevron-drop"></i>
+                                                            </div>
+                                                        </div>
+                                                    </DropdownItem>
+                                                    <DropdownItem href="/daftar_alamat">
+                                                        <div className="item-drop d-flex align-items-center">
+                                                            <div className="col-11">
+                                                                <span className="text-decoration-none nav-app" style={{color:'#000'}}>Daftar Alamat</span>
+                                                            </div>
+                                                            <div className="col-1">
+                                                                <i className="fa fa-chevron-right chevron-drop"></i>
+                                                            </div>
+                                                        </div>
+                                                    </DropdownItem>
+                                                    <DropdownItem href="/daftar_eq">
+                                                        <div className="item-drop d-flex align-items-center">
+                                                            <div className="col-11">
+                                                                <span className="text-decoration-none nav-app" style={{color:'#000'}}>Daftar EQ</span>
+                                                            </div>
+                                                            <div className="col-1">
+                                                                <i className="fa fa-chevron-right chevron-drop"></i>
+                                                            </div>
+                                                        </div>
+                                                    </DropdownItem>
+                                                    <DropdownItem href="/change-password">
+                                                        <div className="item-drop d-flex align-items-center">
+                                                            <div className="col-11">
+                                                                <span className="text-decoration-none nav-app" style={{color:'#000'}}>Kata Sandi</span>
+                                                            </div>
+                                                            <div className="col-1">
+                                                                <i className="fa fa-chevron-right chevron-drop"></i>
+                                                            </div>
+                                                        </div>
+                                                    </DropdownItem>
+                                                    <DropdownItem href="#">
+                                                        <div className="item-drop d-flex align-items-center">
+                                                            <div className="col-11">
+                                                                <span className="text-decoration-none nav-app" style={{color:'#000'}}>Keluar</span>
+                                                            </div>
+                                                            <div className="col-1">
+                                                                <i className="fa fa-chevron-right chevron-drop"></i>
+                                                            </div>
+                                                        </div>
+                                                    </DropdownItem>
+                                                </Dropdown.Menu>
+                                            </Dropdown> */}
+                                            {/* <a className="nav-link nav-app" href="#" onClick={() => setOpenDropdown(!openDropdown)}>
                                                 <i className="fa fa-gear me-2 nav-app" style={{fontSize:'14px', color:'grey'}}></i>
                                                 <span className="nav-dash">PENGATURAN</span>
                                             </a>
@@ -89,7 +206,7 @@ const Navbar = (props) => {
                                                     <ul style={{listStyle:'none'}}>
                                                         <li className="item-drop py-2 d-flex align-items-center">
                                                             <div className="col-10">
-                                                                <Link className="text-decoration-none nav-app" style={{color:'#000'}} to="/data-diri">Data Diri</Link>
+                                                                <Link className="text-decoration-none nav-app" style={{color:'#000'}} to="/data_diri">Data Diri</Link>
                                                             </div>
                                                             <div className="col-2">
                                                                 <i className="fa fa-chevron-right chevron-drop"></i>
@@ -105,7 +222,7 @@ const Navbar = (props) => {
                                                         </li>
                                                         <li className="item-drop  py-2 d-flex align-items-center">
                                                             <div className="col-10">
-                                                                <Link className="text-decoration-none nav-app" style={{color:'#000'}} to="/daftar-eq">Daftar EQ</Link>
+                                                                <Link className="text-decoration-none nav-app" style={{color:'#000'}} to="/daftar_eq">Daftar EQ</Link>
                                                             </div>
                                                             <div className="col-2">
                                                                 <i className="fa fa-chevron-right chevron-drop"></i>
@@ -129,7 +246,7 @@ const Navbar = (props) => {
                                                         </li>
                                                     </ul>
                                                 </div>
-                                            )}
+                                            )} */}
                                         </li>
                                     </ul>
                                     <div className="account">
@@ -139,31 +256,46 @@ const Navbar = (props) => {
                             </nav> 
                         </div>
                     ) : (
-                        <div className={scrolling ? 'bg-white d-md-block d-none shadow':'d-md-block d-none'} style={{position:'sticky', top:0, zIndex:'999'}} >
-                            <hr className="m-0 p-0 hr-custom" />
-                            <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
-                                <div className="container">
-                                    <img src="/images/iCareLogo.png" alt="logo" height="55"/>
-                                    <ul className="navbar-nav">
-                                        <li className="nav-item">
-                                            <a className="nav-link text-link mx-3 fw-semibold" href="#beranda" onClick={(e) => onClickToScroll(e, '#beranda')}> Beranda </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link text-link mx-2 fw-semibold" href="#about" onClick={(e) => onClickToScroll(e, '#about')}> Tentang </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link text-link mx-2 fw-semibold" href="#fitur" onClick={(e) => onClickToScroll(e, '#fitur')}> Fitur </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link text-link mx-2 fw-semibold" href="#benefit" onClick={(e) => onClickToScroll(e, '#benefit')}> Keuntungan </a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link text-link mx-2 fw-semibold" href="#testimonial" onClick={(e) => onClickToScroll(e, '#testimonial')}> Testimoni </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
+                        <>
+                            <div className={scrolling ? 'bg-white d-lg-block d-none shadow' : 'd-lg-block d-none'} style={{position:'sticky', top:0, zIndex:'999'}} >
+                                <hr className="m-0 p-0 hr-custom" />
+                                <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
+                                    <div className="container">
+                                        <img src="/images/iCareLogo.png" alt="logo" height="55"/>
+                                        <ul className="navbar-nav">
+                                            <li className="nav-item">
+                                                <a className="nav-link text-link mx-3 fw-semibold" href="#beranda" onClick={(e) => onClickToScroll(e, '#beranda')}> Beranda </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link text-link mx-2 fw-semibold" href="#about" onClick={(e) => onClickToScroll(e, '#about')}> Tentang </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link text-link mx-2 fw-semibold" href="#fitur" onClick={(e) => onClickToScroll(e, '#fitur')}> Fitur </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link text-link mx-2 fw-semibold" href="#benefit" onClick={(e) => onClickToScroll(e, '#benefit')}> Keuntungan </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link text-link mx-2 fw-semibold" href="#testimonial" onClick={(e) => onClickToScroll(e, '#testimonial')}> Testimoni </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div className="bg-white d-lg-none d-none d-md-block shadow" style={{position:'sticky', top:0, zIndex:'999'}}>
+                                <hr className="m-0 p-0 hr-custom" />
+                                <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
+                                    <div className="container">
+                                        <img src="/images/iCareLogo.png" alt="logo" height="50"/>
+                                        <ul className="navbar-nav">
+                                            <li className="nav-item">
+                                                <Link className="nav-link text-link fw-semibold" to="/"> Beranda </Link>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                        </>
                     )
                 )
             } 
