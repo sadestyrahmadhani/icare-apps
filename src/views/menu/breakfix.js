@@ -1,8 +1,8 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import ConfirmAlert from "../../component/alert/confirmAlert";
-import { getMasterRequest } from "../../services/API"
-// import Swal from "sweetalert2";
+import { getMasterRequest } from "../../services/API";
+import { Html5QrcodeScanner } from "html5-qrcode";
 
 
 export default class extends Component {
@@ -22,6 +22,7 @@ export default class extends Component {
             errorAddressOrMachineLocation: '',
             errorInput:'',
             showPopup: false,
+            scanResult: null,
         }
         this.checkCheckBox = this.checkCheckBox.bind(this)
         this.checkCheckBoxPage = this.checkCheckBoxPage.bind(this)
@@ -64,6 +65,29 @@ export default class extends Component {
         //     text:'Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min.1',
         //     confirmButtonColor:'#0099ff'
         // })
+    }
+
+    componentDidMount() {
+        useEffect(() => {
+            const scanner = new Html5QrcodeScanner('reader', {
+                qrbox: {
+                    width: 250,
+                    height: 250
+                },
+                fps: 5
+            })
+
+            scanner.render(success, error)
+        
+            scanSuccess(result); {
+                scanner.clear()
+                this.setState({scanResult: result})
+            }
+        
+            ScanError(error); {
+                console.warn(error)
+            }
+        },[])
     }
 
 
@@ -156,11 +180,7 @@ export default class extends Component {
         }
     }
 
-    // checkCheckBoxPage() {
-    //     var checkboxPage = document.querySelectorAll('.page-checkbox:checked')
-    //     this.setState({checkBoxCheckCountPage:checkboxPage.length})
-    // }
-
+    
     previewImage(e) {
         const file = e.target
         if(file.files[0]) {
@@ -173,6 +193,8 @@ export default class extends Component {
         document.getElementById('display-image').classList.remove('d-none')
         document.getElementById('display-image').classList.add('d-block')
     }
+
+    
 
     render() {
         return(
@@ -195,7 +217,10 @@ export default class extends Component {
                                         <Link className="py-md-4 py-3 w-100 d-block mb-md-4 mb-3" style={{border:'1px solid #797979'}} onChange={this.validationEquipment} to="/daftar-eq"></Link>
                                     </div>
                                     <div className="col-1 d-block d-lg-none px-1">
-                                        <Link className="fa fa-qrcode ms-0" style={{fontSize:'30px', textDecoration:'none', color:'#000'}} />
+                                        { scanResult ? 
+                                            <a className="fa fa-qrcode ms-0" style={{fontSize:'30px', textDecoration:'none', color:'#000'}} href={"http://"+scanResult}>{scanResult}</a>
+                                            : <div id="reader"></div>
+                                        }
                                     </div>
                                 <span className={`text-danger small mx-2 ${ this.state.errorMessageEquipmentNumber !== '' ? '' : 'd-none' }`} style={{fontSize:'12px'}} >{ this.state.errorMessageEquipmentNumber }</span>
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
@@ -261,6 +286,7 @@ export default class extends Component {
                                     </div>
                                 </div>
 
+                                
 
                                 <div className="col-md-4 col-sm-6 col-6 input-check d-md-none d-block">
                                     <div className="check-item d-flex align-items-center mb-4 form-check">
@@ -348,7 +374,7 @@ export default class extends Component {
                                     <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'14px', color:'pink'}}>Please upload photo meter information/photo machine</p>
                                     <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
                                     <label className="file-icon mb-3 d-block" htmlFor="input-file">
-                                        <div className="text-center rounded-circle p-2" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px', marginLeft:'48%'}}>
+                                        <div className="text-center rounded-circle p-2 mx-auto" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px'}}>
                                             <div className="d-md-block d-none">
                                                 <img className="mt-1" src="images/upload.png" style={{width:'22px'}}></img>
                                             </div>
