@@ -1,14 +1,21 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import confirmAlert from "../../component/alert/confirmAlert";
 import ConfirmAlert from "../../component/alert/confirmAlert";
 
 export default class extends Component {
     constructor(props){
         super(props)
         this.sumbit  = this.sumbit.bind(this)
+        this.validationAddressLabel = this.validationAddressLabel.bind(this)
+        this.validationBuildingName = this.validationBuildingName.bind(this)
+        this.validationBuildingNumber = this.validationBuildingNumber.bind(this)
+        this.validationCity = this.validationCity.bind(this)
+        this.validationDeliveryLocation = this.validationDeliveryLocation.bind(this)
+        this.validationRecipientName = this.validationRecipientName.bind(this)
+        this.validationStreetName = this.validationStreetName.bind(this)
         this.validationPhonrNumber = this.validationPhonrNumber.bind(this)
         this.validationPostalCode = this.validationPostalCode.bind(this)
+        this.handlePopup = this.handlePopup.bind(this)
         this.state = {
             addressLabel: '',
             recipientName: '',
@@ -39,6 +46,7 @@ export default class extends Component {
 
     handlePopup(){
         this.setState({showPopup: false})
+        this.props.router.navigate("/daftar_alamat")
     }
 
     sumbit(e){
@@ -54,17 +62,82 @@ export default class extends Component {
         if(this.state.postalCode === "") this.setState({errorPostalCode: "Silahkan isi kode pos"})
         if(this.state.phoneNumber === "") this.setState({errorPhoneNumber: 'Silahkan isi nomor penerima'})
         
-        if(!this.state.phoneNumber.match("^[0-9]*$") || this.state.phoneNumber.length < 9 || this.state.phoneNumber.length > 14) return
-        if(!this.state.postalCode.match("^[0-9]*$") || this.state.postalCode.length < 6) return
-        
-        // this.setState({showPopup:true})
-        if(this.state.addressLabel !== "" && this.state.recipientName !== "" && this.state.streetName !== "" && this.state.buildingName !== "" && this.state.buildingNumber !== "" && this.state.city !== "" && this.state.deliveryLocation !== "" && this.state.postalCode !== "" && this.state.phoneNumber !== "") this.setState({showPopup: true, alertOption: {title: 'Info', message: 'Berhasil menambahkan alamat'}})
+        if(this.state.addressLabel !== "" && this.state.recipientName !== "" && this.state.streetName !== "" && this.state.buildingName !== "" && this.state.buildingNumber !== "" && this.state.city !== "" && this.state.deliveryLocation !== "" && this.state.postalCode !== "" && this.state.phoneNumber !== "") {
+            // this.props.router.navigate("/daftar_alamat")
+            this.setState({showPopup: true, alertOption: { title: 'Berhasil', message: 'Alamat berhasil ditambah'}})
+            return
+        }
+
+        // if(this.state.addressLabel === "" )
+    }
+
+    validationAddressLabel(e){
+        e.preventDefault()
+        this.setState({addressLabel: e.target.value})
+        if(e.target.value === ""){
+            this.setState({errorAddressLabel: "Silahkan isi simpan alamat sebagai"})
+        }
+        this.setState({errorAddressLabel: ""})
+    }
+
+    validationRecipientName(e){
+        e.preventDefault()
+        this.setState({recipientName: e.target.value})
+        if(e.target.value === ""){
+            this.setState({errorRecipientName: "Silahkan isi nama penerima"})
+        }
+        this.setState({errorRecipientName: ""})
+    }
+
+    validationStreetName(e){
+        e.preventDefault()
+        this.setState({streetName: e.target.value})
+        if(e.target.value === ""){
+            this.setState({errorStreetName: "Silahkan isi nama jalan"})
+        }
+        this.setState({errorStreetName: ""})
+    }
+
+    validationBuildingNumber(e){
+        e.preventDefault()
+        this.setState({buildingNumber: e.target.value})
+        if(e.target.value === ""){
+            this.setState({errorBuildingNumber: "Silahkan isi nomor gedung/kantor"})
+        }
+        this.setState({errorBuildingNumber: ""})
+    }
+
+    validationBuildingName(e){
+        e.preventDefault()
+        this.setState({buildingName: e.target.value})
+        if(e.target.value === ""){
+            this.setState({errorBuildingName: "Silahkan isi nama gedung/kantor"})
+        }
+        this.setState({errorBuildingName: ""})
+    }
+
+    validationCity(e){
+        e.preventDefault()
+        this.setState({city: e.target.value})
+        if(e.target.value === ""){
+            this.setState({errorCity: "Silahkan isi kota"})
+        }
+        this.setState({errorCity: ""})
+    }
+
+    validationDeliveryLocation(e){
+        e.preventDefault()
+        this.setState({deliveryLocation: e.target.value})
+        if(e.target.value === ""){
+            this.setState({errorDeliveryLocation: "Silahkan isi lokasi pengiriman"})
+        }
+        this.setState({errorDeliveryLocation: ""})
     }
 
     validationPhonrNumber(e){
         e.preventDefault()
         this.setState({phoneNumber: e.target.value})
-        if(!e.target.value.match("^[0-9]*$") || e.target.value.length < 9 || e.target.value.length > 14) {
+        if(!e.target.value.match("^[0-9]*$") || e.target.value.length < 9 || e.target.value.length > 16) {
             this.setState({errorPhoneNumber: 'Nomor tidak valid'})
             return
         }
@@ -74,18 +147,27 @@ export default class extends Component {
     validationPostalCode(e){
         e.preventDefault()
         this.setState({postalCode: e.target.value})
-        if(!e.target.value.match("^[0-9]*$") || e.target.value.length < 4 || e.target.value.length > 6){
-            this.setState({errorPostalCode: 'Kode pos harus berupa angka'})
-            return
+        if(e.target.value == ""){
+            this.setState({errorPostalCode: "Silahkan isi kode pos"})
+        } else {
+            if(!e.target.value.match("^[0-9]*$")){
+                this.setState({errorPostalCode: 'Kode pos harus berupa angka'})
+                return
+            } else {
+                if(e.target.value.length > 20){
+                    this.setState({errorPostalCode: "Kode pos tidak boleh lebih dari 20 karakter"})
+                    return
+                }
+            }
+            this.setState({errorPostalCode: ''})
         }
-        this.setState({errorPostalCode: ''})
     }
         
     render(){
         return(
             <>
                 <div className="container">
-                    <div className="d-flex align-items-center mb-4">
+                    <div className="d-flex mb-4" style={{alignItems: 'baseline', height: '40px'}}>
                         <Link className="list-items" to="/daftar_alamat">
                             <i className="fa fa-arrow-left me-3" style={{fontSize: '16px', color: '#014C90'}}></i>
                         </Link>
@@ -99,12 +181,12 @@ export default class extends Component {
                                         <div className="card-label py-1">
                                             <label style={{fontWeight: 'bold'}}>Simpan Alamat Sebagai (Contoh: Kantor Pusat PT Angin Ribut)</label>
                                         </div>
-                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorAddressLabel === "" ? "" : "invalid"}`} onChange={(e) => this.setState({addressLabel:e.target.value})} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
+                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorAddressLabel === "" ? "" : "invalid"}`} onChange={this.validationAddressLabel} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
                                         <span className={`${this.state.errorAddressLabel === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {this.state.errorAddressLabel} </span>
                                         <div className="card-label py-1 mt-3">
                                             <label style={{fontWeight: 'bold'}}>Nama Penerima</label>
                                         </div>
-                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorRecipientName === "" ? "" : "invalid"}`} onChange={(e) => this.setState({recipientName:e.target.value})} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
+                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorRecipientName === "" ? "" : "invalid"}`} onChange={this.validationRecipientName} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
                                         <span className={`${this.state.errorRecipientName === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {this.state.errorRecipientName} </span>
                                     </div>
                                 </div>
@@ -114,22 +196,22 @@ export default class extends Component {
                                         <div className="card-label py-1">
                                             <label style={{}}>Nama Jalan (Contoh: Jl. Keramat Raya)</label>
                                         </div>
-                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorStreetName === "" ? "" : "invalid"}`} onChange={(e) => this.setState({streetName:e.target.value})} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
+                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorStreetName === "" ? "" : "invalid"}`} onChange={this.validationStreetName} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
                                         <span className={`${this.state.errorStreetName === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {this.state.errorStreetName} </span>
                                         <div className="card-label py-1 mt-3">
                                             <label style={{}}>Nomor Gedung/Kantor (Contoh: No. 43 / Blok B2 / Kav II)</label>
                                         </div>
-                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorBuildingNumber === "" ? "" : "invalid"}`} onChange={(e) => this.setState({buildingNumber:e.target.value})} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
+                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorBuildingNumber === "" ? "" : "invalid"}`} onChange={this.validationBuildingNumber} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
                                         <span className={`${this.state.errorBuildingNumber === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {this.state.errorBuildingNumber} </span>
                                         <div className="card-label py-1 mt-3">
                                             <label style={{}}>Nama Gedung/Kantor (Contoh: Gedung Astagraphia, lantai 4 / Ruko Boulevard / Kios Cetak ABC)</label>
                                         </div>
-                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorBuildingName === "" ? "" : "invalid"}`} onChange={(e) => this.setState({buildingName:e.target.value})} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
+                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorBuildingName === "" ? "" : "invalid"}`} onChange={this.validationBuildingName} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
                                         <span className={`${this.state.errorBuildingName === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {this.state.errorBuildingName} </span>
                                         <div className="card-label py-1 mt-3">
                                             <label style={{}}>Kota (Contoh: Jakarta Pusat)</label>
                                         </div>
-                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorCity === "" ? "" : "invalid"}`} onChange={(e) => this.setState({city:e.target.value})} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
+                                        <input type="text" className={`py-1 border-only-bottom ${this.state.errorCity === "" ? "" : "invalid"}`} onChange={this.validationCity} style={{fontSize: '14px', width: '-webkit-fill-available'}}/>
                                         <span className={`${this.state.errorCity === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {this.state.errorCity} </span>
                                         <div className="card-label py-1 mt-3">
                                             <label style={{}}>Kode Pos (Contoh: 10450)</label>
@@ -157,7 +239,7 @@ export default class extends Component {
                                                 <img src="/images/map.png" alt="" style={{width: '50px'}}/>
                                             </div>
                                             <div className="col-11 mb-2">
-                                                <input type="text" className={`border-only-bottom ${this.state.errorDeliveryLocation === "" ? "" : "invalid"}`} onChange={(e) => this.setState({deliveryLocation:e.target.value})} style={{fontSize: '14px', width: '-webkit-fill-available', paddingTop: '20px'}}/>
+                                                <input type="text" className={`border-only-bottom ${this.state.errorDeliveryLocation === "" ? "" : "invalid"}`} onChange={this.validationDeliveryLocation} style={{fontSize: '14px', width: '-webkit-fill-available', paddingTop: '20px'}}/>
                                                 <span className={`${this.state.errorDeliveryLocation === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {this.state.errorDeliveryLocation} </span>
                                             </div>
                                             <span style={{fontWeight: 'bold'}}>Pastikan lokasi yang anda tandai di peta sesuai dengan alamat yang anda isi diatas</span>
@@ -168,7 +250,7 @@ export default class extends Component {
                                     <button className="btn btn-login fw-bold" type="submit" style={{padding: '10px 50px'}}>SIMPAN</button>
                                 </div>
                             </form>
-                            <ConfirmAlert visible={this.state.showPopup} titleMessage={this.state.alertOption.title} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-2 col-sm-6 col-12" />
+                            <ConfirmAlert visible={this.state.showPopup} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-3 col-sm-6 col-12" />
                         </div>
                     </div>
                 </div>

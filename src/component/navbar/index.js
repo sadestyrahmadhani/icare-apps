@@ -69,26 +69,26 @@ const Navbar = (props) => {
                                     </div>
                                     <ul className="navbar-nav mx-auto"> 
                                         <li className="nav-item mx-3">
-                                            <Link className="nav-link nav-app" to="dashboard">
+                                            <Link className="nav-link nav-app" to="/dashboard">
                                                 <i className="fa fa-home me-2"></i>
                                                 <span className="nav-dash">BERANDA</span>
                                             </Link>
                                         </li> 
                                         <li className="nav-item mx-3">
-                                            <Link className="nav-link nav-app" to="riwayat"> 
+                                            <Link className="nav-link nav-app" to="/riwayat"> 
                                                 <i className="fa fa-clipboard me-2"></i>
                                                 <span className="nav-dash">RIWAYAT</span>
                                             </Link>
                                         </li>
                                         <li className="nav-item mx-3">
-                                            <Link className="nav-link nav-app" to="informasi">
+                                            <Link className="nav-link nav-app" to="/informasi">
                                                 <i className="fa fa-bell me-2"></i>
                                                 <span className="nav-dash">INFORMASI</span>
                                             </Link>
                                         </li>
                                         <li className="nav-item mx-3">
                                             <NavDropdown className="custom-dropdown" id="nav-dropdown" title={<span className="nav-dash" > <i className="fa fa-gear me-2 nav-app" style={{fontSize:'14px'}}></i> PENGATURAN</span>}>
-                                                <NavDropdown.Item href="/data_diri">
+                                                <NavDropdown.Item href="/#/data_diri">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}} >Data Diri</span>
@@ -98,7 +98,7 @@ const Navbar = (props) => {
                                                         </div>
                                                     </div>
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/daftar_alamat">
+                                                <NavDropdown.Item href="/#/daftar_alamat">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}}>Daftar Alamat</span>
@@ -108,7 +108,7 @@ const Navbar = (props) => {
                                                         </div>
                                                     </div>
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/daftar_eq">
+                                                <NavDropdown.Item href="/#/daftar_eq">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}}>Daftar EQ</span>
@@ -118,7 +118,7 @@ const Navbar = (props) => {
                                                         </div>
                                                     </div>
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/ubah_kata_sandi">
+                                                <NavDropdown.Item href="/#/ubah_kata_sandi">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}}>Kata Sandi</span>
@@ -128,7 +128,7 @@ const Navbar = (props) => {
                                                         </div>
                                                     </div>
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="#">
+                                                <NavDropdown.Item href="/">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}}>Keluar</span>

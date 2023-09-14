@@ -5,158 +5,185 @@ export default [
     {
         path: '',
         component: Layout,
+        auth:false,
+        key:"1",
         children: [
             {
                 title:'Login',
                 path:'',
-                component: import('./../views/auth/login')
+                component: import('./../views/auth/login'),
+                auth:false,
+                key:"1.1"
             },
             {
                 title:'Dashboard',
                 path:'dashboard',
-                component: import('./../views/dashboard')
+                component: import('./../views/dashboard'),
+                auth:true,
+                key:"1.2"
+            },           
+
+            {
+                title:'Riwayat',
+                path:'riwayat',
+                component: import('./../views/riwayat'),
+                auth:true,
+                key:"1.3.1"
             },
             {
-                path:'',
-                component:'',
-                children: [
-
-                    {
-                        title:'Riwayat',
-                        path:'riwayat',
-                        component: import('./../views/riwayat')
-                    },
-                    {
-                        title:'Detail Permintaan',
-                        path:'detail-permintaan',
-                        component: import('./../views/riwayat/detail-permintaan')
-                    },
-                ]
+                title:'Detail Permintaan',
+                path:'detail-permintaan',
+                component: import('./../views/riwayat/detail-permintaan'),
+                auth:true,
+                key:"1.3.2"
             },
+            {
+                title:'Tulis Review',
+                path:'tulis_review',
+                component: import('./../views/riwayat/tulis-review')
+            },
+    
             {
                       
                 title:'Informasi',
                 path:'informasi',
-                component: import('./../views/informasi')
+                component: import('./../views/informasi'),
+                auth:true,
+                key:"1.4"
+            },
+            
+            {
+                title:'Data Diri',
+                path:'data_diri',
+                component: import('./../views/data-diri'),
+                auth:true,
+                key:"1.5.1"
             },
             {
-                path:'',
-                component:'',
-                children: [
-                    {
-                        title:'Data Diri',
-                        path:'data_diri',
-                        component: import('./../views/data-diri')
-                    },
-                    {
-                        title: 'Daftar Alamat',
-                        path:'daftar_alamat',
-                        component: import('../views/daftar-alamat')
-                    },
-                    {
-                        title: 'Tambah Alamat',
-                        path: 'tambah_alamat',
-                        component: import('../views/daftar-alamat/form')
-                    },
-                    {
-                        title:'Daftar EQ',
-                        path:'daftar_eq',
-                        component: import('./../views/daftar-eq')
-                    },
-                    {
-                        title: 'Form EQ',
-                        path: 'form_eq',
-                        component: import('../views/daftar-eq/form')
-                    },
-                    {
-                        title: "Ubah Kata Sandi",
-                        path: 'ubah_kata_sandi',
-                        component: import('../views/ubah-password')
-                    }      
-                ]
+                title: 'Daftar Alamat',
+                path:'daftar_alamat',
+                component: import('../views/daftar-alamat'),
+                auth:true,
+                key:"1.5.2"
             },
+            {
+                title: 'Tambah Alamat',
+                path: 'tambah_alamat',
+                component: import('../views/daftar-alamat/form'),
+                auth:true,
+                key:"1.5.3"
+            },
+            {
+                title:'Daftar EQ',
+                path:'daftar_eq',
+                component: import('./../views/daftar-eq'),
+                auth:true,
+                key:"1.5.4"
+            },
+            {
+                title: 'Form EQ',
+                path: 'form_eq',
+                component: import('../views/daftar-eq/form'),
+                auth:true,
+                key:"1.5.5"
+            },
+            {
+                title: "Ubah Kata Sandi",
+                path: 'ubah_kata_sandi',
+                component: import('../views/ubah-password'),
+                auth:true,
+                key:"1.5.6"
+            },      
+               
             {
                 title:'Breakfix',
-                path:'breakfix-request',
-                component: import('./../views/menu/breakfix')
+                path:'breakfix_request',
+                component: import('./../views/menu/breakfix'),
+                auth:true,
+                key:"1.6"
             },
             {
                 title:'Install',
                 path:'install_request',
                 component: import('../views/menu/install'),
+                auth:true,
+                key:"1.7"
             },
             {
                 title:'Supplies',
                 path:'supplies_request',
-                component: import('./../views/menu/supplies')
+                component: import('./../views/menu/supplies'),
+                auth:true,
+                key:"1.8"
+            },
+           
+            {
+                title: 'Collect Meter',
+                path: 'collect_meter',
+                component: import('./../views/menu/collect-meter'),
+                key:"1.9.1"    
+            },
+            
+            {
+                title: 'Riwayat Meter',
+                path: 'riwayat-meter',
+                component: import('./../views/riwayat-meter'),
+                auth:true,
+                key:"1.9.2"    
+            },
+   
+            {
+                title: 'Upgrade Akun iCare',
+                path: 'upgrade_step1',
+                component: import('../views/upgrade-akun/upgrade'),
+                key:"1.10.1"    
             },
             {
-                path: '',
-                component: '',
-                children: [
-                    {
-                        title: 'Collect Meter',
-                        path: 'collect-meter',
-                        component: import('./../views/menu/collect-meter')
-    
-                    },
-                    
-                    {
-                        title: 'Riwayat Meter',
-                        path: 'riwayat-meter',
-                        component: import('./../views/riwayat-meter')
-
-                    }
-                ]            
+                title: 'Upgrade Akun iCare',
+                path: 'upgrade_step2',
+                component: import('../views/upgrade-akun/form'),
+                auth:true,
+                key:"1.10.2"    
             },
             {
-                path: '',
-                component: '',
-                children: [
-                    {
-                        title: 'Upgrade Akun iCare',
-                        path: 'upgrade_step1',
-                        component: import('../views/upgrade-akun/upgrade')
-                    },
-                    {
-                        title: 'Upgrade Akun iCare',
-                        path: 'upgrade_step2',
-                        component: import('../views/upgrade-akun/form')
-                    },
-                    {
-                        title: 'Menunggu Upgrade Akun iCare',
-                        path: 'upgrade_step3',
-                        component: import('../views/upgrade-akun/waiting')
-                    }
-                ]
-            },
+                title: 'Menunggu Upgrade Akun iCare',
+                path: 'upgrade_step3',
+                component: import('../views/upgrade-akun/waiting'),
+                auth:true,
+                key:"1.10.3"    
+            }
             
         ]
     },
     {
         title: 'Setting',
         path: 'settings',
+        auth:true,
         component: import('../views/setting')
     },
     {
         title:'Kebijakan-Privasi',
         path:'kebijakan-privasi/:type?',
-        component: import('../views/auth/kebijakan-privasi')
+        component: import('../views/auth/kebijakan-privasi'),
+        key:"2"
     }, 
     {
         title:'Registrasi',
         path:'register',
-        component: import('../views/auth/register')
+        component: import('../views/auth/register'),
+        key:"3"
     },
     {
         title:'Lupa-Password',
         path:'lupa-password',
-        component: import('../views/auth/lupa-password')
+        component: import('../views/auth/lupa-password'),
+        key:"4"
     },
     {
         title:'Kode-OTP',
-        path:'kode-otp',
-        component: import('../views/auth/kode-otp')
+        path:'kode-otp/:id',
+        component: import('../views/auth/kode-otp'),
+	   key:"5"
     }
 ]
 

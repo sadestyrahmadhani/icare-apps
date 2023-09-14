@@ -1,12 +1,13 @@
 // @flow
 
-
+import axios from 'axios'
 import Cookies from 'universal-cookie'
 import { refreshToken } from "./API"
 import { appConfig } from '../config';
 /*
   window.location.origin polyfill
  */
+
 
 export const getLocationOrigin = () => {
   if (!window.location.origin) {
@@ -17,11 +18,11 @@ export const getLocationOrigin = () => {
   return window.location.origin;
 };
 const cookies = new Cookies()
-let cookie=cookies.get('iCare_user') 
+let cookie=cookies.get('token') 
 let token=''
 let refreshtoken=''
-if (cookie) token=cookies.get('iCare_user').token
-if (cookie) refreshtoken=cookies.get('iCare_user').refreshtoken
+if (cookie) token=cookies.get('token')
+if (cookie) refreshtoken=cookies.get('refreshtoken')
 /*
   query options:
  */
@@ -31,6 +32,12 @@ export const defaultOptions = {
 
 export const postMethod = {
   method: 'POST',
+};
+export const postFormMethod = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'image/jpeg'
+  },
 };
 
 export const getMethod = {
@@ -42,25 +49,29 @@ export const loginHeader = {
     'Content-Type': 'application/json'
   },
 };
+export const imageHeader = {
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'image/jpeg'
+  },
+};
 export const refreshAuthLogic = async failedRequest => {
   
   const url = `${appConfig.BASE_API}/refreshtoken`;
   console.log('refresh request',url)
-  
-  let cookie=cookies.get('iCare_user')
-  
       try{ 
           let param={
-              token: cookie.token, refreshtoken: cookie.refreshtoken
+              token: this.token, refreshtoken: this.refreshtoken
             }
             // console.log('refresh token param',param)
           let response = await refreshToken({
-              token: cookie.token, refreshtoken: cookie.refreshtoken
+              token: this.token, refreshtoken: this.refreshtoken
             });
            console.log('refresh token response',response)
           if (response){      
             if (response==403 || response==401){
-              cookies.remove('iCare_user', {path: '/'})
+              cookies.remove('token', {path: '/'})
+              cookies.remove('refreshtoken', {path: '/'})
               sessionStorage.clear()
               localStorage.clear()            
               return null;
@@ -72,7 +83,8 @@ export const refreshAuthLogic = async failedRequest => {
           } 
           cookie.refreshStatus="idle";
           // console.log('idle')
-          cookies.set('iCare_user', JSON.stringify(cookie), { path: '/' });  
+          cookies.set('token', token, { path: appConfig.DOMAIN });  
+          cookies.set('refreshtoken', refreshtoken, { path: appConfig.DOMAIN });  
           return Promise.resolve();
         }
         catch(error){
@@ -81,30 +93,33 @@ export const refreshAuthLogic = async failedRequest => {
         }
   
 }
-export const gettoken = async () => {
-  let cookie=cookies.get('iCare_user')
-  return cookie.token
+export const gettoken = ()=> {
+  let cookie=cookies.get('token')  
+  return cookie
   }
 export const getrefreshtoken = async () => {
-    let cookie=cookies.get('iCare_user') 
+    let cookie=cookies.get('refreshtoken') 
     // console.log('get refresh token',cookie)
     if (!cookie) return null
     
-    return cookie.token;
+    return cookie;
 };
-export const getaccesstoken = async () => {
-    let cookie=cookies.get('iCare_user')  
-    if (cookie)  
-      return cookie.token;
-    else
-      return null;
+export const settoken = async (token) => {
+  cookies.set('token', token, { path: appConfig.DOMAIN });  
+  }
+export const setrefreshtoken =  (token) => {
+    cookies.set('refreshtoken', token, { path: appConfig.DOMAIN });    
+};
+export const getaccesstoken =  () => {
+    cookies.get('token')  
+    
 };
 export const jsonHeaderAuth = () => {
-  let cookie=cookies.get('iCare_user')
+  let cookie=cookies.get('token')
   let header={headers : {
     Accept: 'application/json',
     'Content-Type' : 'application/json',
-    'Authorization' :'Bearer '+ cookie.token
+    'Authorization' :'Bearer '+ cookie
   }}
   return header;
 };
@@ -144,3 +159,59 @@ export const parseJSON = (response: any): any => {
   }
 };
 
+axios.interceptors.request.use(
+  config => {    
+    console.log('interceptor work')
+    const token = cookies.get('token')
+    if (token) {
+      config.headers['Authorization'] = 'Bearer ' + token
+    }
+    // config.headers['Content-Type'] = 'application/json';
+    return config
+  },
+  error => {
+    Promise.reject(error)
+  }
+)
+axios.interceptors.response.use(
+  response => {
+    return response
+  },
+  function (error) {
+    const originalRequest = error.config
+
+    if (
+      error.response.status === 401 
+      &&
+      originalRequest.url === `${appConfig.BASE_API}/refreshtoken`
+    ) {
+      cookies.remove('token', {path: appConfig.DOMAIN})
+      cookies.remove('refreshtoken', {path: appConfig.DOMAIN})
+      sessionStorage.clear()
+      localStorage.clear()  
+      this.props.router.push('/login')
+      return Promise.reject(error)
+    }
+
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true
+      let refreshtoken = cookies.get('refreshtoken')
+      let token = cookies.get('token')
+      return refreshToken({
+              token: this.token, refreshtoken: this.refreshtoken
+            })
+        .then(res => {
+          if (res.status === 201) {
+            token=res.token;
+            refreshtoken=res.refreshtoken;
+            cookies.set('token', token, { path: appConfig.DOMAIN });  
+            cookies.set('refreshtoken', refreshtoken, { path: appConfig.DOMAIN }); 
+            axios.defaults.headers.common['Authorization'] =
+              'Bearer ' + cookies.get('token')
+            return axios(originalRequest)
+          }
+        })
+    }
+    return Promise.reject(error)
+  }
+)

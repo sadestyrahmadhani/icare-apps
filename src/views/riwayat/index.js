@@ -74,18 +74,18 @@ export default class extends Component {
             <>
                 <div className="row mb-3">
                     <div className="col-md-3 col-sm-5 col-xs-6 col-12">
-                        <strong className="title-icare py-2" style={{ fontSize: 20, borderBottom: '3px solid #014C90' }}>Riwayat Permintaan</strong>
+                        <strong className="title-icare py-2" style={{ fontSize: 18, borderBottom: '3px solid #014C90' }}>Riwayat Permintaan</strong>
                     </div>
                     <div className="col-md-3 col-sm-5 col-xs-6 col-12"></div>
                 </div>
 
                 <div className="card mb-3 border-0 mt-5" style={{ boxShadow: '0 0 3rem rgba(0, 0, 0, .15)' }}>
                     <div className="card-body p-3 px-4">
-                        <div className="table-responsive mb-5">
+                        <div className="table-responsive mb-5 d-flex px-2" style={{fontSize:'14px'}}>
                             {
                                 this.state.tabItems.map((val, key) => (
                                     <div className="mx-2 d-inline" key={ key }>
-                                        <button className={ `btn-proses px-5 rounded-4 py-3 small fw-medium ${ key === this.state.tabActivated ? 'active' : '' }` } onClick={ () => {
+                                        <button style={{width:'100%'}} className={ `btn-proses px-5 rounded-4 py-3 small fw-medium ${ key === this.state.tabActivated ? 'active' : '' }` } onClick={ () => {
                                             this.setTabActive(key)
                                         } }>{ val }</button>
                                     </div>

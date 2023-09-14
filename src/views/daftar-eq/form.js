@@ -1,19 +1,22 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import ConfirmAlert from "../../component/alert/confirmAlert";
+// import Swal from "sweetalert2";
 
 export default class extends Component {
     constructor(props) {
         super(props)
-        this.submit = this.submit.bind(this)
         this.state = {
             noEq:'',
             model:'',
             keterangan:'',
             errorNoEq:'',
             errorModel:'',
-            errorKeterangan:''
+            errorKeterangan:'',
+            showPopup: false,
         };
+        this.submit = this.submit.bind(this)
+        this.handlePopup = this.handlePopup.bind(this)
     }
 
     handleNoEqChange = (e) => {
@@ -43,7 +46,11 @@ export default class extends Component {
         } else {
             this.setState({ keterangan: value, errorKeterangan: "" }); // Menghapus pesan kesalahan saat input valid
         }
-    };           
+    };  
+    
+    handlePopup() {
+        this.setState({showPopup:false})
+    }
 
     submit(e) {
         e.preventDefault()
@@ -67,11 +74,13 @@ export default class extends Component {
             this.setState({errorKeterangan:"Silahkan isi keterangan"});
         }
 
-        Swal.fire({
-            title:'Error',
-            text:'Input not valid',
-            confirmButtonColor:'#0099ff'
-        })
+        this.setState({showPopup: true})
+
+        // Swal.fire({
+        //     title:'Error',
+        //     text:'Input not valid',
+        //     confirmButtonColor:'#0099ff'
+        // })
     }
 
     render () {
@@ -128,6 +137,7 @@ export default class extends Component {
                             <button name="submit" className="btn btn-login py-2 px-5" style={{fontSize:'14px', maxWidth:'200px', height:'43px'}}>SIMPAN</button>
                         </div>
                     </form>
+                    <ConfirmAlert visible={this.state.showPopup} titleMessage="Error" message="Input not valid" customClass="col-md-2" onClick={this.handlePopup} />
                 </div>
             </div>
             </>

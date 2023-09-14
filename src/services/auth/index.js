@@ -8,13 +8,17 @@ import {
   type STORES_TYPES,
 } from '../../types/auth';
 import decode from 'jwt-decode';
-import isAfter from 'date-fns/is_after';
+import isAfter from 'date-fns/isAfter';
+import {gettoken} from '../fetchTools'
+import { refreshToken } from "../API"
+import Cookies from 'universal-cookie'
+import { appConfig } from '../../config';
 // #endregion
 
 // #region constants
 const TOKEN_KEY = 'token';
 const USER_INFO = 'userInfo';
-
+const cookies = new Cookies()
 const APP_PERSIST_STORES_TYPES: Array<STORES_TYPES> = [
   'localStorage',
   'sessionStorage',
@@ -111,28 +115,31 @@ export const auth = {
    * @param {any} [tokenKey=TOKEN_KEY] token key
    * @returns {bool} is authenticed response
    */
-  isAuthenticated(
-    fromStorage: Storage = APP_PERSIST_STORES_TYPES[0],
-    tokenKey: TokenKey = TOKEN_KEY,
-  ): boolean {
+  isAuthenticated(): boolean {
     // localStorage:
-    if (fromStorage === APP_PERSIST_STORES_TYPES[0]) {
-      if (localStorage && localStorage.getItem(tokenKey)) {
-        return true;
-      }
-      return false;
+    let token=gettoken();
+    // console.log('token',token)
+    if (!token) return false;
+    if (this.isExpiredToken(token)) {
+      refreshToken({
+              token: this.token, refreshtoken: this.refreshtoken
+            })
+        .then(res => {
+          // console.log('refreshtoken',res)
+          if (res.status === 201) {
+            token=res.token;
+            let refreshtoken=res.refreshtoken;
+            cookies.set('token', token, { path: appConfig.DOMAIN });  
+            cookies.set('refreshtoken', refreshtoken, { path: appConfig.DOMAIN }); 
+       
+          }else
+          {
+            return false;
+          }
+        })      
     }
-
-    // sessionStorage:
-    if (fromStorage === APP_PERSIST_STORES_TYPES[1]) {
-      if (sessionStorage && sessionStorage.getItem(tokenKey)) {
-        return true;
-      }
-      return false;
-    }
-
-    // default:
-    return false;
+    return true;
+    
   },
 
   /**
@@ -141,21 +148,14 @@ export const auth = {
    * @param {any} [tokenKey='token'] token key
    * @returns {bool} success/failure flag
    */
-  clearToken(
-    storage: Storage = APP_PERSIST_STORES_TYPES[0],
-    tokenKey: TokenKey = TOKEN_KEY,
-  ): boolean {
+  clearToken(): boolean {
     // localStorage:
-    if (localStorage && localStorage[tokenKey]) {
-      localStorage.removeItem(tokenKey);
+    let token=gettoken();
+    if (token) {
+      this.logout()
       return true;
     }
-    // sessionStorage:
-    if (sessionStorage && sessionStorage[tokenKey]) {
-      sessionStorage.removeItem(tokenKey);
-      return true;
-    }
-
+    
     return false;
   },
 
@@ -171,6 +171,7 @@ export const auth = {
     }
 
     const token = decode(encodedToken);
+    console.log('decode',token)
     if (!token.exp) {
       return new Date(0); // is expired
     }
@@ -189,8 +190,15 @@ export const auth = {
     const expirationDate = this.getTokenExpirationDate(encodedToken);
     const rightNow = new Date();
     const isExpiredToken = isAfter(rightNow, expirationDate);
-
+    console.log(expirationDate)
     return isExpiredToken;
+  },
+  logout(){
+      cookies.remove('token', {path: appConfig.DOMAIN})
+      cookies.remove('refreshtoken', {path: appConfig.DOMAIN})
+      sessionStorage.clear()
+      localStorage.clear()  
+      this.props.router.push('/login')
   },
 
   // /////////////////////////////////////////////////////////////
@@ -286,6 +294,7 @@ export const auth = {
    * forget me method: clear all
    * @returns {bool} success/failure flag
    */
+  
   clearAllAppStorage(): any {
     if (localStorage) {
       localStorage.clear();

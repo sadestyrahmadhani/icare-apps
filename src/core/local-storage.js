@@ -1,8 +1,36 @@
-export const setToken = (token) => {
-    localStorage.setItem('__token', token)
+export const setUser = (param) => {
+    localStorage.setItem('username', param)
 }
 
-export const getToken = () => {
-    return localStorage.getItem('__token') ?? null
+export const setEmail = (param) => {
+    localStorage.setItem('emailaddress', param)
 }
 
+export const setTelp = (param) => {
+    localStorage.setItem('telp', param)
+}
+
+
+export const setNamaPerusahaan = (param) => {
+    localStorage.setItem('namaperusahaan', param)
+}
+
+
+
+
+export const getUser = () => {
+    return localStorage.getItem('username') ?? null
+}
+
+export const getEmail = () => {
+    return localStorage.getItem('emailaddress') ?? null
+}
+
+
+export const getTelp = () => {
+    return localStorage.getItem('telp') ?? null
+}
+
+export const getNamaPerusahaan = () => {
+    return localStorage.getItem('namaperusahaan') ?? null
+}

@@ -1,11 +1,10 @@
 import React from "react";
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import { appConfig } from '../../config';
+import { appConfig } from "../../config";
 import { getCollectMeterById } from "../../services/API";
 
 export default class extends Component {
-
   componentDidMount() {
     // fetch("https://jsonplaceholder.typicode.com/users")
     // console.log(`test ${appConfig.BASE_API}/meter/readbyid/5`)
@@ -18,8 +17,7 @@ export default class extends Component {
     //     });
     //   });
 
-    this.init()
-
+    this.init();
   }
 
   async init() {
@@ -27,12 +25,17 @@ export default class extends Component {
       DataisLoaded: false,
     });
 
-    var res = await getCollectMeterById()
-    console.log('res : ', res)
+    var res = await getCollectMeterById();
+    console.log("res : ", res);
+
+    var Table = res["Table"];
+    // console.log("Table L ", Table);
 
     this.setState({
       DataisLoaded: true,
+      dataCollectMeter: Table,
     });
+    console.log("dataCollectMeter L ", this.state.dataCollectMeter);
   }
 
   previewImage(e) {
@@ -52,49 +55,8 @@ export default class extends Component {
     super(props);
     this.state = {
       // checkBoxCheckCount: 0
+      dataCollectMeter: [],
       isChecked: false,
-      dataItems: [
-        {
-          dateCollect: '2023-09-01',
-          timeCollect: '12:00:59.55',
-          eqNumber: '123456'
-        },
-        {
-          dateCollect: '2023-09-01',
-          timeCollect: '12:59:00.55',
-          eqNumber: '095684'
-        },
-        {
-          dateCollect: '2023-08-30',
-          timeCollect: '07:00:11.55',
-          eqNumber: '579579'
-        },
-        {
-          dateCollect: '2023-08-30',
-          timeCollect: '12:00:59.55',
-          eqNumber: '123456'
-        },
-        {
-          dateCollect: '2023-08-30',
-          timeCollect: '07:00:11.55',
-          eqNumber: '579579'
-        },
-        {
-          dateCollect: '2023-08-30',
-          timeCollect: '12:00:59.55',
-          eqNumber: '123456'
-        },
-        {
-          dateCollect: '2023-08-30',
-          timeCollect: '07:00:11.55',
-          eqNumber: '579579'
-        },
-        {
-          dateCollect: '2023-08-30',
-          timeCollect: '12:00:59.55',
-          eqNumber: '123456'
-        }
-      ]
     };
     this.checkCheckBox = this.checkCheckBox.bind(this);
   }
@@ -112,6 +74,14 @@ export default class extends Component {
 
   render() {
     const { isChecked } = this.state;
+
+    const { DataisLoaded, items } = this.state;
+    if (!DataisLoaded)
+      return (
+        <div>
+          <h1></h1>{" "}
+        </div>
+      );
 
     // const { DataisLoaded, items } = this.state;
     // if (!DataisLoaded)
@@ -131,7 +101,10 @@ export default class extends Component {
           </ol>
         ))} */}
         <div className="container-fluid py-3">
-          <div className="d-flex mb-4" style={{alignItems: 'baseline', height: '40px'}}>
+          <div
+            className="d-flex mb-4"
+            style={{ alignItems: "baseline", height: "40px" }}
+          >
             <Link className="list-items" to="/dashboard">
               <i
                 className="fa fa-arrow-left me-3"
@@ -146,7 +119,7 @@ export default class extends Component {
               Collect Meter
             </span>
           </div>
-          <div className="card px-3 shadow">
+          <div className="card px-3 shadow border-0">
             <div className="card-body">
               <div className="row mb-2">
                 {/* tabs */}
@@ -214,7 +187,7 @@ export default class extends Component {
                       <Link
                         className="py-4 mb-2"
                         style={{ border: "1px solid #000" }}
-                        to="/daftar-eq"
+                        to="/daftar_eq"
                       ></Link>
                       <div className="text-center">
                         <p
@@ -237,19 +210,19 @@ export default class extends Component {
                           <div
                             className="text-center rounded-circle p2"
                             style={{
-                              backgroundColor: '#014C90',
-                              color: '#fff',
-                              width: '50px',
-                              height: '50px',
-                              marginLeft: '48%'
+                              backgroundColor: "#014C90",
+                              color: "#fff",
+                              width: "50px",
+                              height: "50px",
+                              marginLeft: "48%",
                             }}
                           >
                             <img
                               src="/images/upload.png"
                               alt="upload image"
                               style={{
-                                width: '22px',
-                                marginTop: '10px'
+                                width: "22px",
+                                marginTop: "10px",
                               }}
                             />
                           </div>
@@ -281,9 +254,9 @@ export default class extends Component {
                             borderRadius: 0,
                             padding: "1px",
                             width: "20px",
-                            minHeight: "22px",
+                            minHeight: "18px",
                           }}
-                          className="form-check-input mt-0"
+                          className="form-check-input mt-1"
                           type="checkbox"
                           checked={isChecked}
                           onChange={this.toggleVisibility}
@@ -354,77 +327,95 @@ export default class extends Component {
                     tabindex="0"
                   >
                     <div className="scrolling-riwayat">
-                      {this.state.dataItems.map((value, key) => (
-                          <div className="mb-2" style={{ textDecoration: "none", marginBottom: '10px !important' }}>
-                            <div className="row">
-                              <div className="col">
-                                <Link className="card border-0 link-riwayat-meter" to="/riwayat_meter">
-                                  <div className="card-body" key={key}>
-                                      <div className="row">
-                                        <div className="d-flex col-12">
-                                          <div className="col-11">
-                                            <h7 className="card-subtitle d-flex align-items-center">
-                                              <i className="fa fa-info-circle" style={{marginRight: "10px", fontSize: "17px"}}>
-                                                <span
-                                                  className="info"
-                                                  style={{
-                                                    fontSize: "15px",
-                                                    marginLeft: "6px",
-                                                  }}
-                                                >
-                                                  Info
-                                                </span>
-                                              </i>
-                                              <i
-                                                className="fa fa-circle me-1 ms-2"
-                                                style={{ fontSize: "10px" }}
-                                              >
-                                                <span
-                                                  className="info"
-                                                  style={{
-                                                    fontSize: "15px",
-                                                    marginLeft: "6px",
-                                                  }}
-                                                >
-                                                  {value.dateCollect}T{value.timeCollect}
-                                                </span>
-                                              </i>
-                                            </h7>
-                                            <h6
-                                              className="card-title "
+
+                      {this.state.dataCollectMeter.map((item) => (
+                        <Link
+                          className="list-items"
+                          to=""
+                          style={{ textDecoration: "none" }}
+                        >
+                          <div className="row" key={item.id}>
+                            <div className="col">
+                              <div className="card border-0">
+                                <div className="card-body">
+                                  <Link
+                                    to="/riwayat-meter"
+                                    className="link-riwayat-meter"
+                                  >
+                                    <div className="row">
+                                      <div className="d-flex col-12">
+                                        <div className="col-11">
+                                          <h7 className="card-subtitle d-flex align-items-center">
+                                            <i
+                                              className="fa fa-info-circle"
                                               style={{
-                                                marginTop: "10px",
-                                                fontSize: "15px",
+                                                marginRight: "10px",
+                                                fontSize: "17px",
                                               }}
                                             >
-                                              OK, foto meter berhasil disubmit!!
-                                            </h6>
-                                            <p
-                                              className="card-text"
-                                              style={{ fontSize: "13px" }}
+                                              <span
+                                                className="info"
+                                                style={{
+                                                  fontSize: "15px",
+                                                  marginLeft: "6px",
+                                                }}
+                                              >
+                                                Info
+                                              </span>
+                                            </i>
+                                            <i
+                                              className="fa fa-circle me-1 ms-2"
+                                              style={{ fontSize: "10px" }}
                                             >
-                                              Terima kasih telah memberikan
-                                              infromasi meter device dengan nomor
-                                              EQ:{value.eqNumber}
-                                            </p>
-                                          </div>
-                                          <div className="col-1">
-                                              <img
-                                                src="images/riwayat-foto-collect.png"
-                                                alt="Logo Install"
-                                                height={52}
-                                              ></img>
-                                          </div>
+                                              <span
+                                                className="info"
+                                                style={{
+                                                  fontSize: "15px",
+                                                  marginLeft: "6px",
+                                                }}
+                                              >
+                                                {item.createDate}
+                                              </span>
+                                            </i>
+                                          </h7>
+                                          <h6
+                                            className="card-title "
+                                            style={{
+                                              marginTop: "10px",
+                                              fontSize: "15px",
+                                            }}
+                                          >
+                                            OK, foto meter berhasil disubmit!!
+                                          </h6>
+                                          <p
+                                            className="card-text"
+                                            style={{ fontSize: "13px" }}
+                                          >
+                                            Terima kasih telah memberikan
+                                            infromasi meter device dengan nomor
+                                            EQ:{item.Equipment}
+                                          </p>
+                                        </div>
+                                        <div className="col-1">
+                                          <Link to="/riwayat-meter">
+                                            <img
+                                              src="images/riwayat-foto-collect.png"
+                                              alt="Logo Install"
+                                              height={52}
+                                            ></img>
+                                          </Link>
                                         </div>
                                       </div>
-
-                                  </div>
-                                </Link>
+                                    </div>
+                                  </Link>
+                                </div>
                               </div>
                             </div>
-                            {/* <hr className="m-0" /> */}
                           </div>
+                          {/* <hr className="m-0" /> */}
+                        </Link>
                       ))}
+
                     </div>
                   </div>
                 </div>

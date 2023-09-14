@@ -21,3 +21,20 @@ export const getCollectMeterById = async () => {
     return result
 
 };
+
+
+export const getGambarRiwayatFoto = async () => {
+    createAuthRefreshInterceptor(axios, refreshAuthLogic);
+    const url = `https://icareapi.astragraphia.co.id/image/meter/nyancat.png`;
+    const result = await axios.get(url, jsonHeaderAuth())
+        .then(res => {
+            console.log('getCollectMeterById', res.data)
+            return res.data
+        })
+        .catch(error => {
+            // console.log('error', error)
+            return null;
+        })
+    return result
+
+};

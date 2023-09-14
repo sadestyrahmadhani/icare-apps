@@ -1,7 +1,8 @@
-import { Routes, Route, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import React from 'react';
 import ObjectRoute from './../routes';
 import { HelmetProvider, Helmet } from 'react-helmet-async';
+import {auth} from '../services/auth'
 
 const CreateRouteComponent = (props) => {
     const location = useLocation()
@@ -21,15 +22,25 @@ const CreateRouteComponent = (props) => {
     )
 }
 
-const mappingRoutes = (routes) => {
-    return routes.map((value, key) => {
+const mappingRoutes = (routes) => {    
+    return routes.map((value, key) => {        
+        // console.log('key',value.key)
+        let isAuthenticated=true;
+        if (!value.auth) value.auth=false
+        if (value.auth){
+            if (!auth.isAuthenticated()){
+                isAuthenticated=false;
+            }
+        }
+        
         if(typeof value.children != "undefined") {
             if(typeof value.component == 'object') {
-                var Component = React.lazy(() => value.component)
+                console.log('object',value)
+                let Component = React.lazy(() => value.component)
                 return(
                     <Route 
                         path={ value.path }
-                        key={ key }
+                        key={ value.key }
                         element={
                             <React.Suspense
                                 fallback="Loading..."
@@ -42,10 +53,11 @@ const mappingRoutes = (routes) => {
                     </Route>
                 )
             } else {
+                console.log('not object',value,value.ch)
                 return(
                     <Route
                         path={ value.path }
-                        key={ key }
+                        key={ value.key }
                         Component={ value.component }
                     >
                         { mappingRoutes(value.children) }
@@ -53,29 +65,35 @@ const mappingRoutes = (routes) => {
                 )
             }
         } else {
+
             if(typeof value.component == 'object') {
-                var Component = React.lazy(() => value.component)
+                let Component = React.lazy(() => value.component)
                 return(
                     <Route 
                         path={ value.path }
-                        key={ key }
+                        key={ value.key }                        
                         element={
+                            (isAuthenticated === true || !value.auth) ?
                             <React.Suspense
                                 fallback="Loading..."
                         >
                                 <CreateRouteComponent component={Component} data={ value } />
                             </React.Suspense>
+                            : <Navigate to='/' />
                         }
                     />
                 )
             } else 
             {
-                var Component = value.component
+                let Component = value.component
                 return(
                     <Route
                         path={ value.path }
-                        key={ key }
-                        element={ <CreateRouteComponent component={Component} data={ value } /> }
+                        key={ value.key }                        
+                        element={ (isAuthenticated === true || !value.auth) ? 
+                            <CreateRouteComponent component={Component} data={ value } />
+                            : <Navigate to='/' />
+                        }
                     />
                 )
             }
@@ -83,7 +101,7 @@ const mappingRoutes = (routes) => {
     })
 }
 
-export default () => {
+export default () => {    
     return(
         <Routes>
             { mappingRoutes(ObjectRoute) }

@@ -16,7 +16,7 @@ export default class extends Component {
                 {
                     title:'Breakfix',
                     imgIcon:'images/breakfix.png',
-                    url:'/breakfix-request'
+                    url:'/breakfix_request'
                 },
                 {
                     title:'Supplies',
@@ -31,7 +31,7 @@ export default class extends Component {
                 {
                     title:'Collect Meter',
                     imgIcon:'images/collectMeter.png',
-                    url:'/collect-meter'
+                    url:'/collect_meter'
                 },
                 {
                     title:'Call Center',
@@ -43,6 +43,11 @@ export default class extends Component {
                     imgIcon:'images/informasiTagihan.png',
                     url:'/informasi'
                 },
+                // {
+                //     title:'Request',
+                //     imgIcon:'images/InformasiTagihan.png',
+                //     url:'/request'
+                // }
             ],
             dataNews: [
                 {
@@ -93,14 +98,15 @@ export default class extends Component {
             <> 
             <div className="content-menus" id="contentMenus">
                 <div className="menu-items col-12">
-                    <Link className="text-white" to="/settings" style={{ position: 'absolute', top: 15, right: 25, fontSize:'26px' }}><i className="fa fa-cog"></i></Link>
+                    <Link className="text-white" to="/settings" style={{ position: 'absolute', top: 15, right: 20, fontSize:'26px', zIndex:'11111' }}><i className="fa fa-cog"></i></Link>
                     <div className="col-md-7 col-12 mx-auto py-xs-0 m-0">
-                        <img src="images/bannerMobile-edit.png" alt="Beranda" width='100%' />
-                        <div className="row col-md-12 col-9 my-md-5 my-4 m-0 mx-auto menus">
+                        <img className="banner-desktop d-md-block d-none" src="images/banner1.png" alt="Beranda" width='100%'/>
+                        <img className="banner-desktop d-md-none d-block" src="images/bannerMobile-edit.png" alt="Beranda" width='100%'/>
+                        <div className="row col-md-12 col-9 my-md-3 m-0 mx-auto menus justify-content-center">
                             { this.state.menuItems.map((value, key) => (
-                                <div className="col-4 text-center" key={key}>
-                                    <Link className="list-items mb-4" to={value.url} >
-                                        <div className="col-md-5 col-10 mx-auto mb-2">
+                                <div className="col-4 text-center mb-md-4" key={key}>
+                                    <Link className="list-items" to={value.url} >
+                                        <div className="col-md-5 col-12 mx-auto mb-2 menus-icon" style={{width:'45%'}}>
                                             <img src={value.imgIcon} alt={value.title} width="100%" />
                                         </div>
                                         <p className="menus-title small fw-bold">{value.title}</p>
@@ -159,15 +165,15 @@ export default class extends Component {
             <div className="bottom-bar d-md-none d-flex">
                 <a href="" onClick={ this.navigationScroll } parent={ 0 } className="col-4 text-center">
                     <i style={{ pointerEvents: 'none', fontSize:'22px' }} className="fa fa-home "></i>
-                    <span style={{ pointerEvents: 'none', fontSize:'14px' }}>BERANDA</span>
+                    <span className="menus-bottom" style={{ pointerEvents: 'none', fontSize:'12px' }}>BERANDA</span>
                 </a>
                 <a href="" onClick={ this.navigationScroll } parent={ 1 } className="col-4 text-center">
                     <i style={{ pointerEvents: 'none', fontSize:'22px' }} className="fa fa-clipboard"></i>
-                    <span style={{ pointerEvents: 'none', fontSize:'14px' }}>RIWAYAT</span>
+                    <span className="menus-bottom" style={{ pointerEvents: 'none', fontSize:'12px' }}>RIWAYAT</span>
                 </a>
                 <a href="" onClick={ this.navigationScroll } parent={ 2 } className="col-4 text-center">
                     <i style={{ pointerEvents: 'none', fontSize:'22px' }} className="fa fa-bell"></i>
-                    <span style={{ pointerEvents: 'none', fontSize:'14px' }}>INFORMASI</span>
+                    <span className="menus-bottom" style={{ pointerEvents: 'none', fontSize:'12px' }}>INFORMASI</span>
                 </a>
                 <div className="bottom-bar-line" style={{ left: this.state.linePosition }}></div>
             </div>

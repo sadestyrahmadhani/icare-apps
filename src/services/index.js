@@ -10,4 +10,4 @@ export {
 
 
 // API:
-export { getEarningGraphData, getTeamMatesData, getUserInfoData } from './API';
+export {  requestOtpForgetPassword, verifyOtp } from './API';

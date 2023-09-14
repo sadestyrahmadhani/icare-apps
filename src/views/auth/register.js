@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Link, useResolvedPath } from "react-router-dom";
+import { register,registerimage } from "../../services/API"
 import Navbar from "../../component/navbar";
 import Footer from "./../../component/footer";
 import ConfirmAlert from "../../component/alert/confirmAlert";
@@ -13,6 +14,7 @@ export default class extends Component {
 
         this.handlePopup = this.handlePopup.bind(this)
         this.submit = this.submit.bind(this)
+        this.handleChange=this.handleChange.bind(this)
         this.validationEmail = this.validationEmail.bind(this)
         this.validationPhone = this.validationPhone.bind(this)
         this.validationPass = this.validationPass.bind(this)
@@ -36,6 +38,7 @@ export default class extends Component {
             pass:'',
             rePass:'',
             name:'',
+            meterImage:'',
             nameCompany:'',
             equipment:'',
             errorEmail:'',
@@ -53,21 +56,81 @@ export default class extends Component {
         this.setState({showPopup: false})
     }
     
-    submit(e) {
+    async submit(e) {
         e.preventDefault()
-        if(this.state.countFileInput > 0) {
-            this.setState({  showPopup: true, alertOption: {title: 'Error', message: 'Please fill empty field'} })
-            if(!this.state.email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) this.setState({errorEmail:"Silahkan isi email"})
-            if(this.state.phone === "") this.setState({errorPhone:"Silahkan isi nomor telepon"})
-            if(this.state.pass === "") this.setState({errorPass:"Silahkan isi password"})
-            if(this.state.rePass === "") this.setState({errorRePass:"Silahkan ulangi isi password"})
-            if(this.state.name === "") this.setState({errorName:"silahkan isi nama lengkap"})
-            if(this.state.nameCompany === "") this.setState({errorNameCompany:"silahkan isi nama perusahaan/instansi"})
-            if(this.state.equipment === "") this.setState({errorEQ:"silahkan isi nomor equipment"})
+        let isValid=true
+        if(this.state.countFileInput > 0) {            
+            if(!this.state.email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
+                isValid=false
+                this.setState({errorEmail:"Silahkan isi email"})
+            } 
+            if(this.state.phone === ""){ 
+                isValid=false
+                this.setState({errorPhone:"Silahkan isi nomor telepon"})
+            }
+            if(this.state.pass === ""){ 
+                isValid=false
+                this.setState({errorPass:"Silahkan isi password"})
+            }
+            if(this.state.rePass === ""){ 
+                isValid=false
+                this.setState({errorRePass:"Silahkan ulangi isi password"})
+            }
+            if(this.state.name === ""){ 
+                isValid=false
+                this.setState({errorName:"silahkan isi nama lengkap"})
+            }
+            if(this.state.nameCompany === ""){ 
+                isValid=false
+                this.setState({errorNameCompany:"silahkan isi nama perusahaan/instansi"})
+            }
+            if(this.state.equipment === ""){ 
+                isValid=false
+                this.setState({errorEQ:"silahkan isi nomor equipment"})
+            }
         } else { 
+            isValid=false
             this.setState({showPopup: true, alertOption: {title: 'Error', message: 'Belum ada foto'}})
         } 
-        
+        if (isValid){
+            const {email, phone,pass,name,nameCompany,equipment,meterImage} = this.state
+            
+            this.setState({loading:true, error: false})
+
+            const uploadFile=await registerimage(meterImage)
+            if (uploadFile.data.includes("Succes upload")){
+                let filename=uploadFile.data.substring(15,uploadFile.data.length-15)
+                // console.log('file name',filename)
+                const response = await register({
+                "username": email,    
+                "password":  pass,    
+                "namalengkap": name,    
+                "emailaddress": email,    
+                "telp": phone,    
+                "validationcode": "", "otp": "False","token2": "",
+                "namaperusahaan":nameCompany,
+                "fotoEquipment":filename, 
+                "NoEquipment":equipment,
+                "type":"normal"
+              });
+                console.log('register response',response)
+                if (response.data.includes("Succes")) {
+                    this.setState({  showPopup: true, alertOption: {title: '', message: 
+                            `Terima kasih untuk data-data yang anda input, selanjutnya \n 
+                          kami akan memvalidasi data-data tersebut dan akan menginformasikannya \n
+                          melalui email anda.`} })
+                    this.props.router.navigate("/")
+                }
+                else
+                    this.setState({  showPopup: true, alertOption: {title: '', message: response.data} })
+            }else{
+                this.setState({  showPopup: true, alertOption: {title: 'Error Upload', message: 'Please try again'} })
+            }
+            
+            console.log('submitting')
+        }else{
+            this.setState({  showPopup: true, alertOption: {title: 'Error', message: 'Please fill empty field'} })
+        }
         
         
         // Swal.fire({
@@ -155,7 +218,9 @@ export default class extends Component {
             this.setState({errorEQ:""})
         }
     }
-    
+    handleChange(e){
+        this.setState({countFileInput: e.target.files.length,meterImage:e.target.files[0]})
+    }
 
     render() {
         return(

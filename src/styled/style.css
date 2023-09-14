@@ -214,13 +214,84 @@ body {
     color: #000 ;
     text-decoration: none ;
     font-size: 16px;
-    margin-bottom: 5rem !important;
+    margin-bottom: 3rem !important;
     display: block;
 }
 
 .footer-items {
     color: #000;
     text-decoration: none;
+}
+
+/* Checkbox normal tanpa tanda centang */
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Menggunakan pesawat pesawat sejajar untuk menyembunyikan tanda centang */
+input[type="checkbox"]::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+}
+
+/* Checkbox color dengan latar belakang berwarna */
+input[type="checkbox"].consumable-checkbox-color {
+    background-color: transparent;
+}
+
+/* Mengatur latar belakang berwarna saat dicentang */
+input[type="checkbox"].consumable-checkbox-color-toner-black:checked::before {
+    background-color: black; /* Ganti dengan warna yang sesuai */
+    border: 0; /* Menghilangkan garis tepi */
+}
+
+input[type="checkbox"].consumable-checkbox-color-toner-cyan:checked::before {
+    background-color: cyan; /* Ganti dengan warna yang sesuai */
+    border: 0; /* Menghilangkan garis tepi */
+}
+
+input[type="checkbox"].consumable-checkbox-color-toner-magenta:checked::before {
+    background-color: magenta; /* Ganti dengan warna yang sesuai */
+    border: 0; /* Menghilangkan garis tepi */
+}
+
+input[type="checkbox"].consumable-checkbox-color-toner-yellow:checked::before {
+    background-color: yellow; /* Ganti dengan warna yang sesuai */
+    border: 0; /* Menghilangkan garis tepi */
+}
+
+input[type="checkbox"].consumable-checkbox-color-drum-black:checked::before {
+    background-color: black; /* Ganti dengan warna yang sesuai */
+    border: 0; /* Menghilangkan garis tepi */
+}
+
+input[type="checkbox"].consumable-checkbox-color-drum-cyan:checked::before {
+    background-color: cyan; /* Ganti dengan warna yang sesuai */
+    border: 0; /* Menghilangkan garis tepi */
+}
+
+input[type="checkbox"].consumable-checkbox-color-drum-magenta:checked::before {
+    background-color: magenta; /* Ganti dengan warna yang sesuai */
+    border: 0; /* Menghilangkan garis tepi */
+}
+
+input[type="checkbox"].consumable-checkbox-color-drum-yellow:checked::before {
+    background-color: yellow; /* Ganti dengan warna yang sesuai */
+    border: 0; /* Menghilangkan garis tepi */
 }
 
 /* Search Daftar EQ */
@@ -413,82 +484,42 @@ td {
 
 .scrolling-riwayat {
     max-height: 500px;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
-
-/* detail informasi */
-
-/* Style untuk overlay ketika modal terbuka */
-.ReactModal__Overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(20, 0, 10, 0); /* Warna latar belakang overlay */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-/* Style untuk konten modal */
-.ReactModal__Content {
+/* dashboard-banner */
+.banner-desktop {
     position: relative;
-    background-color: #fff; /* Warna latar belakang modal */
-    border-radius: 10px;
-    max-width: 80%; /* Lebar maksimal modal */
-    height: 68%;
-    padding: 20px;
-    margin-left: 7%;
-    margin-top: 6%;
-}
+    top: -25px; /* Sesuaikan dengan tinggi navbar Anda */
+    z-index: 1; /* Pastikan banner ada di atas konten lain */
+  }
+  
 
-/* Style untuk gambar di dalam active card */
-.ReactModal__Content img {
-    max-width: 100%;
-    height: 150px;
-    margin-top: 30px;
-    margin-bottom: 10px;
-    margin-left: 40%;
-}
-
-/* Style untuk tombol tutup modal */
-.ReactModal__Content button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    color: #888;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-/* Style untuk judul dan deskripsi */
-.ReactModal__Content h2 {
-    font-size: 24px;
-    margin-top: 0;
-}
-
-.ReactModal__Content p {
-    font-size: 16px;
-    color: #333;
-}
-
-/* Style untuk card yang aktif */
-.card.active {
-    border: 2px solid #014C90;
-/* Tambahkan style lain sesuai kebutuhan */
-}
-
-/* Style untuk card yang aktif saat dihover */
-
+/* review */
+/* Gaya CSS untuk bintang */
+.fa-star {
+    color: #bfbfbf; /* Warna default bintang */
+    cursor: pointer; /* Kursor berubah menjadi tangan saat diarahkan */
+  }
+  
+  /* Gaya CSS untuk bintang yang dipilih (berwarna kuning) */
+  .fa-star.yellow {
+    color: #FEE717; /* Warna kuning */
+  }
 
 
 .btn-alert:hover {
     background: #005cdc !important;
+}
+
+.btn-remove {
+    color: #014C90;
+}
+
+.btn-remove:hover {
+    background: #d3e6ff;
+    color: #014C90;
 }
 
 .custom-input-number::-webkit-outer-spin-button, .custom-input-number::-webkit-inner-spin-button {
@@ -566,6 +597,9 @@ td {
         width: calc(100% / 3);
         background: #fff;
     }
+    .menus-bottom {
+        font-weight: lighter;
+    }
 
     /* form login */
     .background, .main-background {
@@ -626,13 +660,16 @@ td {
         margin: 5px 0 !important;
     } 
     .menus {
-        margin-bottom: 14rem !important;
+        margin-bottom: 11rem !important;
     }
     .menus-title {
         font-weight: normal !important;
         font-size: 12px !important; 
-        white-space: nowrap !important; 
     }
+    .menus-icon {
+        width: 80% !important;
+    }
+
 
     /* navbar mobile */
     .responsive-bar {
@@ -678,6 +715,7 @@ td {
     .title-fitur {
         font-weight: normal !important;
     }
+
     
     /* kebijakan privasi */
     .custom-card {
@@ -696,6 +734,7 @@ td {
         text-align: justify;
         font-size: 16px !important;
         line-height: 12px;
+
     }
 
     /* register */

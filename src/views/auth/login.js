@@ -1,15 +1,18 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
-import { authUser } from "../../services/API"
-import { setToken } from "../../core/local-storage";
 import Carousel from "../../component/carousel";
-import Cookies from 'universal-cookie'
+import { authUser } from "../../services/API"
+import { setNamaPerusahaan, setUser } from "../../core/local-storage";
+import { setEmail } from "../../core/local-storage";
+import { setTelp } from "../../core/local-storage";
+import { getNamaPerusahaan } from "../../core/local-storage";
+
+import {
+    settoken,setrefreshtoken
+} from '../../services/fetchTools';
 import FiturCard from "./component/fitur-card";
 import ConfirmAlert from "../../component/alert/confirmAlert";
 import LoadingAlert from "../../component/alert/loadingAlert";
-const cookies = new Cookies();
-
-
 
 export default class extends Component {
     constructor(props) {
@@ -30,7 +33,7 @@ export default class extends Component {
           login: false,
           showPopup: false,
           email:'',
-          password:'',
+          
           errorEmail:'', 
           errorPassword:'',
             fiturData: [
@@ -146,12 +149,12 @@ export default class extends Component {
                                 <form onSubmit={ this.submit }>
                                     <div className="mb-3">
                                         <label className="size-13px fw-bold">EMAIL</label>
-                                        <input type="text"  name="username"  onChange={this.inputChange} className={`form-control border-only-bottom ${ this.state.errorEmail !== "" ? "is-invalid" : ""}`}/>
+                                        <input type="text"  name="username"  onChange={this.inputChange} autocomplete="email" className={`form-control border-only-bottom ${ this.state.errorEmail !== "" ? "is-invalid" : ""}`}/>
                                         <span className={`invalid-feedback ${this.state.errorEmail === "" ? "d-none": ""}`} style={{ fontSize: 12 }}>{this.state.errorEmail}</span>
                                     </div>
                                     <div className="mb-4">
                                         <label className="size-13px fw-bold">PASSWORD</label>
-                                        <input type="password"  name="password" onChange={this.inputChange} className={`form-control border-only-bottom ${ this.state.errorPassword !== "" ? "is-invalid" : ""}`}/>
+                                        <input type="password"  name="password" onChange={this.inputChange} autocomplete="password" className={`form-control border-only-bottom ${ this.state.errorPassword !== "" ? "is-invalid" : ""}`}/>
                                         <span className={`invalid-feedback ${this.state.errorPassword === "" ? "d-none": ""}`} style={{ fontSize: 12 }}>{this.state.errorPassword}</span>
                                     </div>
                                     <div className="mb-2 mx-auto text-center">
@@ -302,10 +305,23 @@ export default class extends Component {
         this.setState({loading: false})
 
         if (response != null) {
-        console.log('response', response)
-        
+        console.log('testingresponseLogin', response)
+            settoken(response.token)
+            setrefreshtoken(response.refreshtoken)
+            setUser(response.namalengkap)
+            console.log('testingnamalengkap :', response.namalengkap)
+            setEmail(response.emailaddress)
+            setTelp(response.telp)
+            console.log('testingtelp :', response.telp)
+            setNamaPerusahaan(response.namaperusahaan)
+            console.log('testingnamaperusahaan :', response.namaperusahaan)
+
+
             
-            cookies.set('iCare_user', JSON.stringify(response), { path: '/' });
+
+
+
+
             // console.log('iCare_user', cookies.get('iCare_user')); // Pacman
                 // this.setState({loading:false, error: false, login: true})
             // window.location.reload(false);
