@@ -24,6 +24,7 @@ export default class extends Component {
             showPopup: false,
             scanResult: null,
         }
+        this.scanner = null
         this.checkCheckBox = this.checkCheckBox.bind(this)
         this.checkCheckBoxPage = this.checkCheckBoxPage.bind(this)
         this.submit = this.submit.bind(this)
@@ -32,6 +33,8 @@ export default class extends Component {
         this.validationDescription = this.validationDescription.bind(this)
         this.validationPageToWC = this.validationPageToWC.bind(this)
         this.handlePopup = this.handlePopup.bind(this)
+        this.handleSuccessScanner = this.handleSuccessScanner.bind(this)
+        this.handleErrorScanner = this.handleErrorScanner.bind(this)
         getMasterRequest().then(response => {
             console.log(response)    
         })
@@ -68,28 +71,25 @@ export default class extends Component {
     }
 
     componentDidMount() {
-        useEffect(() => {
-            const scanner = new Html5QrcodeScanner('reader', {
-                qrbox: {
-                    width: 250,
-                    height: 250
-                },
-                fps: 5
-            })
+        this.scanner = new Html5QrcodeScanner('reader', {
+            qrbox: {
+                width: 250,
+                height: 250
+            },
+            fps: 5
+        })
 
-            scanner.render(success, error)
-        
-            scanSuccess(result); {
-                scanner.clear()
-                this.setState({scanResult: result})
-            }
-        
-            ScanError(error); {
-                console.warn(error)
-            }
-        },[])
+        this.scanner.render(this.handleSuccessScanner, this.handleErrorScanner)
     }
 
+    handleSuccessScanner(result) {
+        this.scanner.clear()
+        this.setState({scanResult: result})
+    }
+
+    handleErrorScanner(error) {
+        console.warn(error)
+    }
 
     validationEquipment(e) {
         e.preventDefault()
@@ -217,8 +217,8 @@ export default class extends Component {
                                         <Link className="py-md-4 py-3 w-100 d-block mb-md-4 mb-3" style={{border:'1px solid #797979'}} onChange={this.validationEquipment} to="/daftar-eq"></Link>
                                     </div>
                                     <div className="col-1 d-block d-lg-none px-1">
-                                        { scanResult ? 
-                                            <a className="fa fa-qrcode ms-0" style={{fontSize:'30px', textDecoration:'none', color:'#000'}} href={"http://"+scanResult}>{scanResult}</a>
+                                        { this.scanResult ? 
+                                            <a className="fa fa-qrcode ms-0" style={{fontSize:'30px', textDecoration:'none', color:'#000'}} href={"http://"+this.scanResult}>{this.scanResult}</a>
                                             : <div id="reader"></div>
                                         }
                                     </div>
