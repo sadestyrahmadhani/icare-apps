@@ -58,7 +58,16 @@ export default class extends Component {
 
     validationPhone(e) {
         e.preventDefault()
-        this.setState({phone: e.target.value})
+        if(e.target.value.charAt(0) === '0') {
+            this.setState({phone: `+62${e.target.value.substring(1)}`})
+        } else {
+            if(e.target.value.charAt(0) === '+') {
+                this.setState({phone: e.target.value})
+            } else {
+                this.setState({phone: `+${e.target.value}`})
+            }
+        }
+
         if(e.target.value === "") {
             this.setState({errorPhone:'Silahkan isi nomor telepon'})
             return
