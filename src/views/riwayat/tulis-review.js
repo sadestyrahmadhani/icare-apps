@@ -29,7 +29,7 @@ export default class extends Component {
         } else {
             this.setState({showPopup: false});
 
-            window.location.href = "/dashboard";
+            window.location.href = "/#/dashboard";
         }
     }
 

@@ -2,6 +2,7 @@ import React from "react";
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import ConfirmAlert from "../../component/alert/confirmAlert";
+import { redirect } from "react-router-dom";
 // import Swal from "sweetalert2";
 
 export default class extends Component {
@@ -23,6 +24,7 @@ export default class extends Component {
                 fuserWeb: false,
                 corotron: false,
                 showPopup: false,
+                showAddedPopup: false,
             },
             checkboxValues: {
                 tonerBlack: "",
@@ -122,18 +124,41 @@ export default class extends Component {
     // }
 
     handlePopup() {
-        this.setState({showPopup:false})
+        this.setState({showPopup:false, showAddedPopup: false})
+        if(this.state.isFormValid) {
+            window.location.href = "/#/dashboard"
+        }
     }
 
     submit(e) {
         e.preventDefault()
 
-        if(this.state.equipment === "") this.setState({errorMessageEquipmentNumber:'Silahkan isi equipment number'})
-        if(this.state.machineLocation === "") this.setState({errorAddressOrMachineLocation: 'Silahkan isi alamat/lokasi mesin'})
-        if(this.state.description === "") this.setState({errorDescription: 'Silahkan isi deskripsi'})
-        if(this.state.total === "") this.setState({errorTotal: 'Silahkan isi total meter'})
+        let isValid = true;
 
-        this.setState({showPopup: true})
+        if(this.state.equipment === "") { 
+            this.setState({errorMessageEquipmentNumber:'Silahkan isi equipment number'})
+            // isValid = false;
+        }
+        if(this.state.machineLocation === "") { 
+            this.setState({errorAddressOrMachineLocation: 'Silahkan isi alamat/lokasi mesin'})
+            // isValid = false;
+        }
+        // if(this.state.description === "") { 
+        //     this.setState({errorDescription: 'Silahkan isi deskripsi'})
+        //     isValid = false;
+        // }
+        if(this.state.total === "") { 
+            this.setState({errorTotal: 'Silahkan isi total meter'})
+            isValid = false;
+        }
+
+        this.setState({isFormValid: isValid});
+
+        if(isValid) {
+            this.setState({showPopup: false, showAddedPopup: true})
+        } else {
+            this.setState({showPopup: true, showAddedPopup: false});
+        }
 
         // Swal.fire({
         //     text:'Mohon isi field yang kosong, upload foto meter dan upload foto status consumable. Untuk field problem isi min. 1',
@@ -275,7 +300,7 @@ export default class extends Component {
                                 </div>
                                 <div className="mb-3 px-0" style={{color:'red'}}>
                                     <span style={{fontSize:'14px'}}>Apabila pilihan yang dibutuhkan tidak ada pada pilihan di bawah ini, silahkan melakukan service request melalui menu Breakfix atau </span>
-                                    <Link className="fw-bold fs-6" style={{color:'red'}} to="/breakfix_request">Klik disini</Link>
+                                    <Link className="fw-bold fs-6" style={{color:'red'}} to={{pathname:'/breakfix_request/0'}}>Klik disini</Link>
                                 </div>
                                 <div className="col-md-3 col-sm-6" style={{width:'190px'}}>
                                     <div className="check-item d-flex align-items-center mt-1 form-check" style={{height:'10%'}}>
@@ -432,6 +457,7 @@ export default class extends Component {
                             </div>
                         </form>
                         <ConfirmAlert visible={this.state.showPopup} message="Mohon isi field yang kosong, upload foto meter dan upload foto status consumable. Untuk field problem isi min. 1" customClass="col-md-5 col-sm-8 col-12" onClick={this.handlePopup} />
+                        <ConfirmAlert visible={this.state.showAddedPopup} message="Berhasil melakukan permintaan consumable" customClass="col-sm-4" onClick={this.handlePopup} />
                     </div>
                 </div>
             </div>

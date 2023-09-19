@@ -15,6 +15,11 @@ export const setNamaPerusahaan = (param) => {
     localStorage.setItem('namaperusahaan', param)
 }
 
+export const setId = (param) => {
+    localStorage.setItem('id', param)
+}
+
+
 
 
 
@@ -34,3 +39,11 @@ export const getTelp = () => {
 export const getNamaPerusahaan = () => {
     return localStorage.getItem('namaperusahaan') ?? null
 }
+
+
+export const getId = () => {
+    return localStorage.getItem('id') ?? null
+}
+
+
+

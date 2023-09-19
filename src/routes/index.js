@@ -9,14 +9,14 @@ export default [
         key:"1",
         children: [
             {
-                title:'Login',
+                title:'',
                 path:'',
                 component: import('./../views/auth/login'),
                 auth:false,
                 key:"1.1"
             },
             {
-                title:'Dashboard',
+                title:'',
                 path:'dashboard',
                 component: import('./../views/dashboard'),
                 auth:true,
@@ -24,28 +24,33 @@ export default [
             },           
 
             {
-                title:'Riwayat',
+                title:'',
                 path:'riwayat',
                 component: import('./../views/riwayat'),
                 auth:true,
                 key:"1.3.1"
             },
             {
-                title:'Detail Permintaan',
+                title:'',
                 path:'detail-permintaan',
                 component: import('./../views/riwayat/detail-permintaan'),
                 auth:true,
                 key:"1.3.2"
             },
             {
-                title:'Tulis Review',
+                title:'',
                 path:'tulis_review',
                 component: import('./../views/riwayat/tulis-review')
+            },
+            {
+                title:'',
+                path:'tanya_tim_support',
+                component: import('./../views/riwayat/tanya-tim')
             },
     
             {
                       
-                title:'Informasi',
+                title:'',
                 path:'informasi',
                 component: import('./../views/informasi'),
                 auth:true,
@@ -53,42 +58,42 @@ export default [
             },
             
             {
-                title:'Data Diri',
+                title:'',
                 path:'data_diri',
                 component: import('./../views/data-diri'),
                 auth:true,
                 key:"1.5.1"
             },
             {
-                title: 'Daftar Alamat',
+                title: '',
                 path:'daftar_alamat',
                 component: import('../views/daftar-alamat'),
                 auth:true,
                 key:"1.5.2"
             },
             {
-                title: 'Tambah Alamat',
-                path: 'tambah_alamat',
+                title: '',
+                path: 'tambah_alamat/:id',
                 component: import('../views/daftar-alamat/form'),
                 auth:true,
                 key:"1.5.3"
             },
             {
-                title:'Daftar EQ',
+                title:'',
                 path:'daftar_eq',
                 component: import('./../views/daftar-eq'),
                 auth:true,
                 key:"1.5.4"
             },
             {
-                title: 'Form EQ',
-                path: 'form_eq',
+                title: '',
+                path: 'form_eq/:id',
                 component: import('../views/daftar-eq/form'),
                 auth:true,
                 key:"1.5.5"
             },
             {
-                title: "Ubah Kata Sandi",
+                title: '',
                 path: 'ubah_kata_sandi',
                 component: import('../views/ubah-password'),
                 auth:true,
@@ -96,21 +101,21 @@ export default [
             },      
                
             {
-                title:'Breakfix',
-                path:'breakfix_request',
+                title:'',
+                path:'breakfix_request/:id',
                 component: import('./../views/menu/breakfix'),
-                auth:true,
+                auth:true, 
                 key:"1.6"
             },
             {
-                title:'Install',
+                title:'',
                 path:'install_request',
                 component: import('../views/menu/install'),
                 auth:true,
                 key:"1.7"
             },
             {
-                title:'Supplies',
+                title:'',
                 path:'supplies_request',
                 component: import('./../views/menu/supplies'),
                 auth:true,
@@ -118,14 +123,15 @@ export default [
             },
            
             {
-                title: 'Collect Meter',
+                title: '',
                 path: 'collect_meter',
                 component: import('./../views/menu/collect-meter'),
+                auth: true,
                 key:"1.9.1"    
             },
             
             {
-                title: 'Riwayat Meter',
+                title: '',
                 path: 'riwayat-meter',
                 component: import('./../views/riwayat-meter'),
                 auth:true,
@@ -133,54 +139,69 @@ export default [
             },
    
             {
-                title: 'Upgrade Akun iCare',
+                title: '',
                 path: 'upgrade_step1',
                 component: import('../views/upgrade-akun/upgrade'),
                 key:"1.10.1"    
             },
             {
-                title: 'Upgrade Akun iCare',
+                title: '',
                 path: 'upgrade_step2',
                 component: import('../views/upgrade-akun/form'),
                 auth:true,
                 key:"1.10.2"    
             },
             {
-                title: 'Menunggu Upgrade Akun iCare',
+                title: '',
                 path: 'upgrade_step3',
                 component: import('../views/upgrade-akun/waiting'),
                 auth:true,
                 key:"1.10.3"    
-            }
+            },
+
+            {
+                title: '',
+                path: 'news_detail',
+                component: import('./../views/berita-terbaru'),
+                auth: true,
+
+            },
+            // Path sama dengan news : news_detail
+            {
+                title: '',
+                path: 'product_detail',
+                component: import('./../views/berita-terbaru/produk'),
+                auth: true,
+            },
             
         ]
     },
     {
-        title: 'Setting',
+        title: '',
         path: 'settings',
         auth:true,
         component: import('../views/setting')
     },
     {
-        title:'Kebijakan-Privasi',
+        title:'',
         path:'kebijakan-privasi/:type?',
         component: import('../views/auth/kebijakan-privasi'),
         key:"2"
     }, 
     {
-        title:'Registrasi',
+        title:'',
         path:'register',
         component: import('../views/auth/register'),
         key:"3"
     },
     {
-        title:'Lupa-Password',
+        title:'',
         path:'lupa-password',
         component: import('../views/auth/lupa-password'),
         key:"4"
     },
     {
-        title:'Kode-OTP',
+        title:'',
         path:'kode-otp/:id',
         component: import('../views/auth/kode-otp'),
 	   key:"5"

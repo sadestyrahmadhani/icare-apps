@@ -32,6 +32,11 @@ body {
     border-color: #7C0041;
     opacity: 1;
 }
+
+.active-link {
+    color: #014C90;
+}
+
 .navbar-nav {
     display: block;
     margin-right: 10px;
@@ -494,6 +499,11 @@ td {
     top: -25px; /* Sesuaikan dengan tinggi navbar Anda */
     z-index: 1; /* Pastikan banner ada di atas konten lain */
   }
+
+.banner-news {
+    max-width: 100%;
+    height: auto;
+}
   
 
 /* review */
@@ -558,7 +568,7 @@ td {
         flex-wrap: nowrap;
         overflow-x: scroll;
     }
-    .menu-items {
+    .menu-items { 
         height: calc(100vh - 60px);
         overflow-y: auto;
         padding-bottom: 3rem;
@@ -599,6 +609,9 @@ td {
     }
     .menus-bottom {
         font-weight: lighter;
+    }
+    .p-15px {
+        padding: 15px !important;
     }
 
     /* form login */
@@ -668,6 +681,10 @@ td {
     }
     .menus-icon {
         width: 80% !important;
+    }
+    .banner-news {
+        max-width: 100%;
+        height: 100%;
     }
 
 
@@ -781,6 +798,13 @@ td {
     .input-check .form-check > label {
         font-size: 11px !important;
     }
+    .btn-plus {
+        height: 33px !important;
+        width: 45px !important;
+    }
+    .select-option {
+        height: 35px !important;
+    }
 
     /* lupa-password */
     .responsive-lupa-pass .card {
@@ -829,5 +853,101 @@ td {
     .label-supplies {
         font-size: 12px !important;
     }
+
+    /* ubah-kata-sandi */
+    .responsive-ubah-pass .card {
+        border: none !important;
+        box-shadow: none !important;
+        margin-top: 65px;
+    }
+
+    /* berita-terbaru */
+    .responsive-news .card {
+        border: none !important;
+        box-shadow: none !important;
+        margin-top: 65px;
+    }
+    .table-width {
+        max-width: 100% !important;
+    }
+    .bottom-news{
+        width: 45% !important;
+    }
+    .bottom-position {
+        text-align: center !important;   
+    }
+
+    /* upgrade-step1 */
+    .responsive-upgrade-step1 {
+        padding-top: 150px;
+    }
+    .responsive-upgrade-step1 .fa {
+        font-size: 5em !important;
+    }
+    .margin-bottom-90px {
+        margin-bottom: 90px !important;
+    }
+    .responsive-upgrade-step1 .border-dark {
+        border-radius: 10px !important;
+        border-color: #014C90 !important;
+        border-width: 3px !important;
+        height: 305px !important;
+        margin-bottom: 100px !important;
+    }
+    .responsive-upgrade-step1 img {
+        width: 60% !important;
+    }
+    .responsive-upgrade-step1 .btn-login {
+        padding: 15px 45px !important;
+    }
+
+    /* upgrade-step2 */
+    .responsive-upgrade-step2 {
+        border: none !important;
+    }
+    .responsive-upgrade-step2 .card-body {
+        padding-top: 3rem !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    .btn-photo {
+        padding: 15px 20px !important;
+    }
+    .btn-selfie {
+        padding: 15px 10px !important;
+    }
+
+    /* upgrade-step3 */
+    .responsive-upgrade-step3 {
+        padding-top: 300px !important;
+    }
+    .responsive-upgrade-step3 .text-center {
+        margin-left: 2em !important;
+        margin-right: 2em !important;
+    }
+    .responsive-upgrade-step3 .text-center img {
+        width: 40% !important;
+    }
+    .responsive-upgrade-step3 h5 {
+        font-size: 20px !important;
+    }
+    .responsive-upgrade-step3 h4 {
+        font-size: 16px !important;
+    }
+
+    /* form-alamat */
+    .responsive-form{
+        border: none !important;
+        box-shadow: none !important;
+        background: white !important;
+    }
+    .default-height {
+        height: auto !important;
+    }
+    .color-arrow-left {
+        color: #fff !important;
+    }
+
+    /* form-eq */
 }
 

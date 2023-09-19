@@ -14,7 +14,7 @@ const CreateRouteComponent = (props) => {
         <>
             <HelmetProvider>
                 <Helmet>
-                    <title>{ props.data.title } - iCare</title>
+                    <title>{ props.data.title }iCare</title>
                 </Helmet>
             </HelmetProvider>
             <Component router={{ location, navigate, params }} />
@@ -25,14 +25,8 @@ const CreateRouteComponent = (props) => {
 const mappingRoutes = (routes) => {    
     return routes.map((value, key) => {        
         // console.log('key',value.key)
-        let isAuthenticated=true;
-        if (!value.auth) value.auth=false
-        if (value.auth){
-            if (!auth.isAuthenticated()){
-                isAuthenticated=false;
-            }
-        }
         
+        if (!value.auth) value.auth=false
         if(typeof value.children != "undefined") {
             if(typeof value.component == 'object') {
                 console.log('object',value)
@@ -73,7 +67,7 @@ const mappingRoutes = (routes) => {
                         path={ value.path }
                         key={ value.key }                        
                         element={
-                            (isAuthenticated === true || !value.auth) ?
+                            (auth.isAuthenticated() === true || !value.auth) ?
                             <React.Suspense
                                 fallback="Loading..."
                         >
@@ -90,7 +84,7 @@ const mappingRoutes = (routes) => {
                     <Route
                         path={ value.path }
                         key={ value.key }                        
-                        element={ (isAuthenticated === true || !value.auth) ? 
+                        element={ (auth.isAuthenticated() === true || !value.auth) ? 
                             <CreateRouteComponent component={Component} data={ value } />
                             : <Navigate to='/' />
                         }

@@ -14,6 +14,11 @@ const Navbar = (props) => {
     const location = useLocation();
     const pathName = location.pathname;
 
+    const [isBerandaActive, setIsBerandaActive] = useState(true);
+    const [isRiwayatActive, setIsRiwayatActive] = useState(false);
+    const [isInformasiActive, setIsInformasiActive] = useState(false);
+    const [isPengaturanActive, setIsPengaturanActive] = useState(false);
+
     useEffect(() => {
         const handleScroll = () => {
             if(window.scrollY > 0) {
@@ -36,6 +41,23 @@ const Navbar = (props) => {
             window.removeEventListener('scroll', handleScroll)
         }
     }, []) 
+
+    const handleNavClick = (nav) => {
+        setIsBerandaActive(false);
+        setIsRiwayatActive(false);
+        setIsInformasiActive(false);
+        setIsPengaturanActive(false);
+
+        if(nav === 'beranda') {
+            setIsBerandaActive(true);
+        } else if(nav === 'riwayat') {
+            setIsRiwayatActive(true);
+        } else if(nav === 'informasi') {
+            setIsInformasiActive(true);
+        } else if(nav === 'pengaturan') {
+            setIsPengaturanActive(true);
+        }
+    }
 
 
     return(
@@ -69,25 +91,25 @@ const Navbar = (props) => {
                                     </div>
                                     <ul className="navbar-nav mx-auto"> 
                                         <li className="nav-item mx-3">
-                                            <Link className="nav-link nav-app" to="/dashboard">
+                                            <Link className={`nav-link nav-app ${isBerandaActive ? 'active-link' : ''}`} to="/dashboard" onClick={() => handleNavClick('beranda')}>
                                                 <i className="fa fa-home me-2"></i>
                                                 <span className="nav-dash">BERANDA</span>
                                             </Link>
                                         </li> 
                                         <li className="nav-item mx-3">
-                                            <Link className="nav-link nav-app" to="/riwayat"> 
+                                            <Link className={`nav-link nav-app ${isRiwayatActive ? 'active-link' : ''}`} to="/riwayat" onClick={() => handleNavClick('riwayat')}>
                                                 <i className="fa fa-clipboard me-2"></i>
                                                 <span className="nav-dash">RIWAYAT</span>
                                             </Link>
                                         </li>
                                         <li className="nav-item mx-3">
-                                            <Link className="nav-link nav-app" to="/informasi">
+                                            <Link className={`nav-link nav-app ${isInformasiActive ? 'active-link' : ''}`} to="/informasi" onClick={() => handleNavClick('informasi')}>
                                                 <i className="fa fa-bell me-2"></i>
                                                 <span className="nav-dash">INFORMASI</span>
                                             </Link>
                                         </li>
                                         <li className="nav-item mx-3">
-                                            <NavDropdown className="custom-dropdown" id="nav-dropdown" title={<span className="nav-dash" > <i className="fa fa-gear me-2 nav-app" style={{fontSize:'14px'}}></i> PENGATURAN</span>}>
+                                            <NavDropdown className={`custom-dropdown ${isPengaturanActive ? 'active-link' : ''}`} onClick={() => handleNavClick('pengaturan')} id="nav-dropdown" title={<span className="nav-dash" > <i className="fa fa-gear me-2 nav-app" style={{fontSize:'14px'}}></i> PENGATURAN</span>}>
                                                 <NavDropdown.Item href="/#/data_diri">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
@@ -250,7 +272,7 @@ const Navbar = (props) => {
                                         </li>
                                     </ul>
                                     <div className="account">
-                                        <h6 style={{fontSize:'14px', color:'#014C90' }}>Welcome, Indri</h6>
+                                        <h6 style={{fontSize:'14px', color:'#014C90' }}>Welcome, {localStorage.getItem('username')}</h6>
                                     </div>
                                 </div>
                             </nav> 

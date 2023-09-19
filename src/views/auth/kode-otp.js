@@ -5,6 +5,7 @@ import Footer from "../../component/footer";
 import ConfirmAlert from "../../component/alert/confirmAlert";
 import { verifyOtp } from "../../services";
 import { reSendOtp } from "../../services/API/mod_verifyOtp";
+import LoadingAlert from "../../component/alert/loadingAlert";
 
 export default class extends Component {
     constructor(props) {
@@ -17,7 +18,9 @@ export default class extends Component {
             iteration: 60,
             resendCodeDisabled:true,
             showPopup: false,
+            loading: false,
             otp: '',
+            titleMessage:'',
             errorMessage:'',
             userInfo: JSON.parse(window.atob(this.props.router.params.id))
         }
@@ -29,13 +32,21 @@ export default class extends Component {
 
     async submit(e) {
         e.preventDefault()
+        this.setState({loading: true})
         const res = await verifyOtp({userid: this.state.userInfo.userid, action: this.state.userInfo.action , otp: this.state.otp})
+        this.setState({loading: false})
         if(res.status == 200 && res.data !== 'Succes, OTP match') {
             this.setState({showPopup:true, errorMessage: res.data})
         } else {
-            this.props.router.navigate('/ubah_kata_sandi')
-        }
-    }
+            if(this.state.userInfo.action === "Change Telp") {
+                localStorage.setItem('username', this.state.userInfo.name)
+                localStorage.setItem('telp', this.state.userInfo.telp)
+                this.props.router.navigate('/data_diri')
+            } else {
+                this.props.router.navigate('/ubah_kata_sandi')
+            }
+        } 
+    } 
 
     async handleReSendOtp() {
         if(this.state.iteration === 0 ) {
@@ -95,9 +106,14 @@ export default class extends Component {
                                 </form>
                                 <ConfirmAlert 
                                     visible={this.state.showPopup} 
+                                    titleMessage="Error"
                                     message={this.state.errorMessage} 
                                     onClick={this.handlePopup} 
                                     customClass="col-md-3 col-sm-6 col-7" 
+                                />
+                                <LoadingAlert 
+                                visible={this.state.loading}
+                                customClass="col-md-2 col-8"
                                 />
                                 <p 
                                     className="mb-2" 

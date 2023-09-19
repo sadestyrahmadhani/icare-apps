@@ -35,12 +35,14 @@ export default class extends Component {
             errorPostalCode: '',
             errorPhoneNumber: '',
             errorDeliveryLocation: '',
-
+            
             showPopup: false,
             alertOption: {
                 title: '',
                 message: ''
-            }
+            },
+            
+            id: props.router.params.id
         }
     }
 
@@ -58,17 +60,19 @@ export default class extends Component {
         if (this.state.buildingName === "") this.setState({errorBuildingName: "Silahkan isi nama gedung/kantor"})
         if (this.state.city === "") this.setState({errorCity: "Silahkan isi kota"})
         if (this.state.deliveryLocation === "") this.setState({errorDeliveryLocation: "Silahkan isi lokasi pengiriman"})
-
         if(this.state.postalCode === "") this.setState({errorPostalCode: "Silahkan isi kode pos"})
         if(this.state.phoneNumber === "") this.setState({errorPhoneNumber: 'Silahkan isi nomor penerima'})
+
         
         if(this.state.addressLabel !== "" && this.state.recipientName !== "" && this.state.streetName !== "" && this.state.buildingName !== "" && this.state.buildingNumber !== "" && this.state.city !== "" && this.state.deliveryLocation !== "" && this.state.postalCode !== "" && this.state.phoneNumber !== "") {
-            // this.props.router.navigate("/daftar_alamat")
-            this.setState({showPopup: true, alertOption: { title: 'Berhasil', message: 'Alamat berhasil ditambah'}})
-            return
+            if (this.state.id === '0') {
+                this.setState({showPopup: true, alertOption: { title: 'Berhasil', message: 'Alamat berhasil ditambah'}})
+                return
+            } else {
+                this.setState({showPopup: true, alertOption: { title: 'Berhasil', message: 'Alamat berhasil diperbarui'}})
+                return
+            }
         }
-
-        // if(this.state.addressLabel === "" )
     }
 
     validationAddressLabel(e){
@@ -76,6 +80,7 @@ export default class extends Component {
         this.setState({addressLabel: e.target.value})
         if(e.target.value === ""){
             this.setState({errorAddressLabel: "Silahkan isi simpan alamat sebagai"})
+            return
         }
         this.setState({errorAddressLabel: ""})
     }
@@ -85,6 +90,7 @@ export default class extends Component {
         this.setState({recipientName: e.target.value})
         if(e.target.value === ""){
             this.setState({errorRecipientName: "Silahkan isi nama penerima"})
+            return
         }
         this.setState({errorRecipientName: ""})
     }
@@ -94,6 +100,7 @@ export default class extends Component {
         this.setState({streetName: e.target.value})
         if(e.target.value === ""){
             this.setState({errorStreetName: "Silahkan isi nama jalan"})
+            return
         }
         this.setState({errorStreetName: ""})
     }
@@ -103,6 +110,7 @@ export default class extends Component {
         this.setState({buildingNumber: e.target.value})
         if(e.target.value === ""){
             this.setState({errorBuildingNumber: "Silahkan isi nomor gedung/kantor"})
+            return
         }
         this.setState({errorBuildingNumber: ""})
     }
@@ -112,6 +120,7 @@ export default class extends Component {
         this.setState({buildingName: e.target.value})
         if(e.target.value === ""){
             this.setState({errorBuildingName: "Silahkan isi nama gedung/kantor"})
+            return
         }
         this.setState({errorBuildingName: ""})
     }
@@ -121,6 +130,7 @@ export default class extends Component {
         this.setState({city: e.target.value})
         if(e.target.value === ""){
             this.setState({errorCity: "Silahkan isi kota"})
+            return
         }
         this.setState({errorCity: ""})
     }
@@ -130,6 +140,7 @@ export default class extends Component {
         this.setState({deliveryLocation: e.target.value})
         if(e.target.value === ""){
             this.setState({errorDeliveryLocation: "Silahkan isi lokasi pengiriman"})
+            
         }
         this.setState({errorDeliveryLocation: ""})
     }
@@ -137,11 +148,16 @@ export default class extends Component {
     validationPhonrNumber(e){
         e.preventDefault()
         this.setState({phoneNumber: e.target.value})
-        if(!e.target.value.match("^[0-9]*$") || e.target.value.length < 9 || e.target.value.length > 16) {
-            this.setState({errorPhoneNumber: 'Nomor tidak valid'})
-            return
+        if(e.target.value === ""){
+            this.setState({errorPhoneNumber: 'Silahkan isi nomor telepon penerima'})
+        } else {
+            if(!e.target.value.match("^[0-9]*$") || e.target.value.length < 9 || e.target.value.length > 16) {
+                this.setState({errorPhoneNumber: 'Nomor tidak valid'})
+                return
+        
+            }
+            this.setState({errorPhoneNumber: ''})
         }
-        this.setState({errorPhoneNumber: ''})
     }
 
     validationPostalCode(e){
@@ -166,15 +182,19 @@ export default class extends Component {
     render(){
         return(
             <>
-                <div className="container">
-                    <div className="d-flex mb-4" style={{alignItems: 'baseline', height: '40px'}}>
-                        <Link className="list-items" to="/daftar_alamat">
-                            <i className="fa fa-arrow-left me-3" style={{fontSize: '16px', color: '#014C90'}}></i>
-                        </Link>
-                        <span className="title-icare fw-bold py-1" style={{borderBottom: '3px solid #014C90', fontSize: '16px'}}>Tambah Alamat</span>
+                <div className="responsive-bar">
+                    <div className="d-flex mx-md-auto my-md-2 my-0 default-height" style={{alignItems: 'baseline', height: '40px'}}>
+                        <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{fontSize: '18px'}}>
+                            <Link className="nav-link d-inline me-3" to="/daftar_alamat">
+                                <i className="fa fa-arrow-left color-arrow-left" style={{ color: '#014C90'}}></i>
+                            </Link>
+                            <span style={{borderBottom: '3px solid #014C90'}}>Tambah Alamat</span>
+                        </h4>
                     </div>
-                    <div className="card p-2 shadow border-0" style={{borderRadius: '20px'}}>
-                        <div className="card-body">
+                </div>
+                <div className="py-lg-0 py-md-0 py-5">
+                    <div className="card p-lg-2 p-md-2 p-0 py-2 shadow border-0 responsive-form" style={{borderRadius: '20px'}}>
+                        <div className="card-body px-lg-0 px-md-0 px-2">
                             <form onSubmit={this.sumbit}>
                                 <div className="card p-2 mb-3" style={{borderRadius: '10px', boxShadow: '1px 1px 2px 2px #bfbfbf'}}>
                                     <div className="card-body" style={{fontSize: '14px'}}>
@@ -235,10 +255,10 @@ export default class extends Component {
                                             <label style={{fontWeight: 'bold'}}>Lokasi Pengiriman</label>
                                         </div>
                                         <div className="row">
-                                            <div className="col-1 mb-2">
+                                            <div className="col-lg-1 col-md-1 col-2 mb-2">
                                                 <img src="/images/map.png" alt="" style={{width: '50px'}}/>
                                             </div>
-                                            <div className="col-11 mb-2">
+                                            <div className="col-lg-11 col-md-11 col-10 mb-2">
                                                 <input type="text" className={`border-only-bottom ${this.state.errorDeliveryLocation === "" ? "" : "invalid"}`} onChange={this.validationDeliveryLocation} style={{fontSize: '14px', width: '-webkit-fill-available', paddingTop: '20px'}}/>
                                                 <span className={`${this.state.errorDeliveryLocation === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {this.state.errorDeliveryLocation} </span>
                                             </div>
@@ -250,7 +270,7 @@ export default class extends Component {
                                     <button className="btn btn-login fw-bold" type="submit" style={{padding: '10px 50px'}}>SIMPAN</button>
                                 </div>
                             </form>
-                            <ConfirmAlert visible={this.state.showPopup} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-3 col-sm-6 col-12" />
+                            <ConfirmAlert visible={this.state.showPopup} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-3 col-sm-6 col-8" />
                         </div>
                     </div>
                 </div>

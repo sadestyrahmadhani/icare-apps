@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { getDaftarAlamat } from "../../services/API";
 import ConfirmAlert from "../../component/alert/confirmAlert";
 import RemoveAlert from "../../component/alert/removeAlert";
-import LoadingAlert from "../../component/alert/loadingAlert";
 
 export default class extends Component {
     componentDidMount() {
@@ -34,17 +33,16 @@ export default class extends Component {
     constructor(props) {
         super(props)
         this.handlePopup = this.handlePopup.bind(this)
-        this.validationData = this.validationData.bind(this)
-        // this.informationData = this.informationData.bind(this)
+        this.handleDelete = this.handleDelete.bind(this)
+        this.handleConfirmationDelete = this.handleConfirmationDelete.bind(this)
+        this.handlePrioritize = this.handlePrioritize.bind(this)
+        this.handleConfirmationPrioritize = this.handleConfirmationPrioritize.bind(this)
         this.state = {
-            showPopup: false,
-            loading: false,
-            error: false,
-            alertOptionOne: {
-                title: '',
-                message: ''
-            },
-            alertOptionTwo: {
+            showPopupDelete: false,
+            showPopupPrioritize: false,
+            showSuccessPopup: false,
+            addressItems: '',
+            alertOption: {
                 title: '',
                 message: ''
             },
@@ -87,30 +85,37 @@ export default class extends Component {
                 },
             ],
             dataDaftarAlamat: [],
+            count:0
         }
     }
 
-    handlePopup(){
-        this.setState({showPopup: false})
+    handlecount() {
+        this.setState({count: 0 + 1})
     }
 
-    // informationData(){
-    //     if(type === "submit"){
-    //         this.setState({showPopup: true, alertOptionOne: {title: 'Berhasil', message: "Alamat berhasil dihapus"}});
-    //     } else {
-    //         this.setState(this.handlePopup)
-    //     }
-    // }
+    handlePopup(){
+        this.setState({showPopupDelete: false, showPopupPrioritize: false, showSuccessPopup: false})
+    }
 
-    validationData(e){
-        this.setState({showPopup: true, alertOptionOne: {title: 'Konfirmasi', message: `Hapus alamat: ${e}`}})
-        // this.setState({loading: true, error: false})
-        // this.setState({loading: false})
+    handleDelete(e){
+        this.setState({showPopupDelete: true, alertOption: {title: 'Konfirmasi', message: `Hapus alamat: ${e}`}})
+    }
+
+    handleConfirmationDelete(){
+        this.setState({showPopupDelete: false, showSuccessPopup: true, alertOption: {title: 'Berhasil', message: 'Alamat berhasil dihapus'}})
+    }
+
+    handlePrioritize(e){
+        this.setState({showPopupPrioritize: true, alertOption: {title: 'Konfirmasi', message: `Utamakan alamat ${e} ?`}})
+    }
+
+    handleConfirmationPrioritize(){
+        this.setState({showPopupPrioritize: false, showSuccessPopup: true, alertOption: {title: 'Berhasil', message: 'Berhasil mengutamakan'}})
     }
 
     render() {
 
-        const { DataisLoaded, items } = this.state;
+        const { DataisLoaded, items, showPopupDelete, showSuccessPopup, showPopupPrioritize } = this.state;
         if (!DataisLoaded)
             return (
                 <div>
@@ -121,14 +126,30 @@ export default class extends Component {
 
         return (
             <>
-                <div className="container">
-                    <div className="container mb-4 d-flex mt-2">
-                        <div className="col-6" >
-                            <span className="title-icare fw-bold" style={{ borderBottom: '4px solid #014C90', width: '210px', fontSize: '18px', marginLeft: '20px' }}>Pengaturan Alamat</span>
+                    <div className="responsive-bar d-md-flex">
+                        <div className="col-md-6 col-12 mb-md-5">
+                            <div className="row">
+                                <div className="col-md-12 col-8" >
+                                    <Link to="/settings" style={{textDecoration:'none'}}>
+                                        <i className="fa fa-arrow-left text-white me-1" style={{fontSize:'16px'}}></i>
+                                        <span className="title-icare title-fitur fw-bold py-1" style={{ borderBottom: '3px solid #014C90', width: '210px', fontSize: '18px', marginLeft: '20px' }}>Pengaturan Alamat</span>
+                                    </Link>
+                                </div>
+                                <div className="col-2 d-md-none d-block text-end py-1">
+                                    <Link to="/tambah_alamat/0">
+                                        <i className="fa fa-plus-circle" style={{fontSize:'20px'}}></i>
+                                    </Link>
+                                </div>
+                                <div className="col-2 d-md-none d-block text-end py-1">
+                                    <a href="">
+                                        <i className="fa fa-search text-white" style={{fontSize:'20px'}}></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-6 row text-end">
-                            <div className="col-7">
-                                <form className="d-flex" style={{ width: '105%' }}>
+                        <div className="col-md-7 row d-md-flex d-none">
+                            <div className="col-lg-8 col-md-7 col-12">
+                                <form className="d-flex" style={{ width: '108%' }}>
                                     <span className="my-auto" style={{ color: '#014C90' }}>
                                         <i className="fa fa-search fa-fw" style={{ marginRight: 'auto' }}></i>
                                     </span>
@@ -138,98 +159,110 @@ export default class extends Component {
                                     </button>
                                 </form>
                             </div>
-                            <div className="col-5">
-                                <Link to="/tambah_alamat">
+                            <div className="col-md-4 col-3">
+                                <Link to="/tambah_alamat/0">
                                     <button className="btn btn-login" style={{ padding: '8px 20px', fontSize: '14px' }}><i className="fa fa-plus" style={{ marginRight: '5px' }}></i> Tambah Alamat</button>
                                 </Link>
                             </div>
                         </div>
                     </div>
-                    <div className="card shadow border-0">
+                    <div className="card shadow border-0 pt-5 ">
                         <div className="card-body">
-                            <div className="row">
 
-                                {this.state.dataDaftarAlamat.map((item) => (
-                                    <div className="card shadow-sm rounded m-4">
-                                        <div className="card-body">
-                                            <h6 className="card-title title-icare fw-bold" style={{ fontSize: '14px' }}>{item.Nama_Alamat}</h6>
-                                            <div className="row fw-bold">
-                                                <div className="col-6">
-                                                    <p className="mb-0" style={{ fontSize: '13px' }}>{item.Penerima}</p>
-                                                    <table className="table table-borderless mb-0">
-                                                        <thead>
-                                                            <tbody className="px-auto py-auto">
-                                                                <tr key="row">
-                                                                    <td style={{ fontSize: '13px' }}>Jalan : {item.Alamat}</td>
-                                                                </tr>
-                                                                <tr key="row">
-                                                                    <td style={{ fontSize: '13px' }}>No Gedung : {item.NoGedung}</td>
-                                                                </tr>
-                                                                <tr key="row">
-                                                                    <td style={{ fontSize: '13px' }}>Nama Gedung : {item.NamaGedung}</td>
-                                                                </tr>
-                                                                <tr key="row">
-                                                                    <td>{item.Telp_Penerima}</td>
-                                                                </tr>
-                                                            </tbody>
-                                                            {
-                                                                item.isPin ?
-                                                                (
-                                                                    <button style={{ border: '0', background: 'none', fontWeight: 'bold' }}>
-                                                                        <i className="fa fa-map-marker fa-lg my-auto" style={{ padding: 'initial' }}></i>
-                                                                        <span style={{ fontSize: '14px', padding: 'inherit', color: '#014C90' }}> Sudah Pinpoint</span>
-                                                                        {/* <span style={{ fontSize: '14px', padding: 'inherit', color: '#014C90' }}> {item.Kota}</span> */}
-                                                                    </button>
-                                                                ):(
-                                                                    <div></div>
-                                                                )
-                                                            }
-                                                        </thead>
-                                                    </table>
-                                                </div>
-                                                {
-                                                    item.verified ?
-                                                        (
-                                                            <div className="col-md-6 col-sm-6 col-12 text-end">
-                                                                <img src="images/verify.png" alt="" style={{ paddingTop: '32px', paddingBottom: '10px', width: "12%" }} />
-                                                                <div className="">
-                                                                    <ol className="title-icare mb-0" style={{ fontSize: '14px' }}>
-                                                                        <li className="nav-item" style={{ marginRight: '30px' }}>
-                                                                            <Link className="nav-link" to="/tambah_alamat">Ubah</Link>
-                                                                        </li>
-                                                                        <li className="nav-item">
-                                                                            {/* <Link className="nav-link">Hapus</Link> */}
-                                                                            <button onClick={()=>this.validationData(item.Nama_Alamat)} className="nav-link" >Hapus</button>
-                                                                        </li>
-                                                                    </ol>
-                                                                </div>
-                                                            </div>
-                                                        ) : (
-                                                            <div className="col-md-6 col-sm-6 col-12 text-end">
-                                                                <div style={{ marginTop: "70px" }}>
-                                                                    <ol className="title-icare mb-0" style={{ fontSize: '14px', position: 'relative', bottom: '-25px', paddingTop: '10px' }}>
-                                                                        <li className="nav-item" style={{ marginRight: '30px' }}>
-                                                                            <Link className="nav-link">Utamakan</Link>
-                                                                        </li>
-                                                                        <li className="nav-item" style={{ marginRight: '30px' }}>
-                                                                            <Link className="nav-link" to="/tambah_alamat">Ubah</Link>
-                                                                        </li>
-                                                                        <li className="nav-item">
-                                                                            {/* <Link className="nav-link">Hapus</Link> */}
-                                                                            <button onClick={()=>this.validationData(item.Nama_Alamat)} className="nav-link" >Hapus</button>
-                                                                        </li>
-                                                                    </ol>
-                                                                </div>
-                                                            </div>
-                                                        )
-                                                    }
-                                                    <RemoveAlert visible={this.state.showPopup} message={this.state.alertOptionOne.message} onClick={this.handlePopup} customClass="col-md-3 col-sm-6 col-9" />
-                                                    <LoadingAlert visible={this.state.loading} customClass="col-md-2 col-sm-4 col-8" />
+                            {this.state.dataDaftarAlamat.map((item) => (
+                                <div className="card shadow-sm rounded m-4">
+                                    <div className="card-body">
+                                        <h6 className="card-title title-icare fw-bold" style={{ fontSize: '14px' }}>{item.Nama_Alamat}</h6>
+                                        <div className="row fw-bold">
+                                            <div className="col-6">
+                                                <p className="mb-0" style={{ fontSize: '13px' }}>{item.Penerima}</p>
+                                                <table className="table table-borderless mb-0">
+                                                    <thead>
+                                                        <tbody className="px-auto py-auto">
+                                                            <tr key="row">
+                                                                <td style={{ fontSize: '13px' }}>Jalan : {item.Alamat}</td>
+                                                            </tr>
+                                                            <tr key="row">
+                                                                <td style={{ fontSize: '13px' }}>No Gedung : {item.NoGedung}</td>
+                                                            </tr>
+                                                            <tr key="row">
+                                                                <td style={{ fontSize: '13px' }}>Nama Gedung : {item.NamaGedung}</td>
+                                                            </tr>
+                                                            <tr key="row">
+                                                                <td>{item.Telp_Penerima}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                        {
+                                                            item.isPin ?
+                                                            (
+                                                                <button style={{ border: '0', background: 'none', fontWeight: 'bold' }}>
+                                                                    <i className="fa fa-map-marker fa-lg my-auto" style={{ padding: 'initial' }}></i>
+                                                                    <span style={{ fontSize: '14px', padding: 'inherit', color: '#014C90' }}> Sudah Pinpoint</span>
+                                                                    {/* <span style={{ fontSize: '14px', padding: 'inherit', color: '#014C90' }}> {item.Kota}</span> */}
+                                                                </button>
+                                                            ):(
+                                                                <div></div>
+                                                            )
+                                                        }
+                                                    </thead>
+                                                </table>
                                             </div>
+                                            {
+                                                item.verified ?
+                                                    (
+                                                        <div className="col-md-6 col-sm-6 col-12 text-end">
+                                                            <img src="images/verify.png" alt="" style={{ paddingTop: '32px', paddingBottom: '10px', width: "15%" }} />
+                                                            <div className="">
+                                                                <ol className="title-icare mb-0" style={{ fontSize: '14px' }}>
+                                                                    <li className="nav-item" style={{ marginRight: '30px' }}>
+                                                                        <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
+                                                                    </li>
+                                                                    <li className="nav-item">
+                                                                        {/* <Link className="nav-link">Hapus</Link> */}
+                                                                        <button onClick={()=>this.handleDelete(item.Nama_Alamat)} className="nav-link" >Hapus</button>
+                                                                    </li>
+                                                                </ol>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="col-md-6 col-sm-6 col-12 text-end">
+                                                            <div style={{ marginTop: "70px" }}>
+                                                                <ol className="title-icare mb-0" style={{ fontSize: '14px', position: 'relative', bottom: '-25px', paddingTop: '10px' }}>
+                                                                    <li className="nav-item" style={{ marginRight: '30px' }}>
+                                                                        {/* <Link className="nav-link">Utamakan</Link> */}
+                                                                        <button onClick={()=>this.handlePrioritize(item.Nama_Alamat)} className="nav-link">Utamakan</button>
+                                                                    </li>
+                                                                    <li className="nav-item" style={{ marginRight: '30px' }}>
+                                                                        <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
+                                                                    </li>
+                                                                    <li className="nav-item">
+                                                                        {/* <Link className="nav-link">Hapus</Link> */}
+                                                                        <button onClick={()=>this.handleDelete(item.Nama_Alamat)} className="nav-link" >Hapus</button>
+                                                                    </li>
+                                                                </ol>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                }
+                                                {
+                                                    showPopupDelete && (
+                                                        <RemoveAlert visible={this.state.showPopupDelete} message={this.state.alertOption.message} onCancel={this.handlePopup} onClick={this.handleConfirmationDelete} customClass="col-md-3 col-sm-6 col-9" />
+                                                    )
+                                                }
+                                                {
+                                                    showPopupPrioritize && (
+                                                        <RemoveAlert visible={this.state.showPopupPrioritize} message={this.state.alertOption.message} onCancel={this.handlePopup} onClick={this.handleConfirmationPrioritize} customClass="col-md-3 col-sm-6 col-9" />
+                                                    )
+                                                }
+                                                {
+                                                    showSuccessPopup && (
+                                                        <ConfirmAlert visible={this.state.showSuccessPopup} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-3 sol-sm-6 col-9" />
+                                                    )
+                                                }
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                     {/* <ConfirmAlert visible={this.state.showPopup} message={this.state.alertOptionTwo.message} onClick={this.handlePopup} customClass="col-md-3 col-sm-6 col-9" /> */}
@@ -324,7 +357,6 @@ export default class extends Component {
                     </div> */}
 
 
-                </div>
             </>
         )
     }

@@ -96,7 +96,7 @@ export default class extends Component {
               className="d-flex mb-4"
               style={{ alignItems: "baseline", height: "40px" }}
             >
-              <Link className="list-items" to="/collect-meter">
+              <Link className="list-items" to="/collect_meter">
                 <i
                   className="fa fa-arrow-left me-3"
                   style={{ fontSize: "16px", color: "#014C90" }}

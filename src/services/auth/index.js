@@ -171,7 +171,7 @@ export const auth = {
     }
 
     const token = decode(encodedToken);
-    console.log('decode',token)
+    // console.log('decode',token)
     if (!token.exp) {
       return new Date(0); // is expired
     }

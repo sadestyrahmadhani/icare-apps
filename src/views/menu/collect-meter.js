@@ -3,6 +3,7 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import { appConfig } from "../../config";
 import { getCollectMeterById } from "../../services/API";
+import ConfirmAlert from "../../component/alert/confirmAlert";
 
 export default class extends Component {
   componentDidMount() {
@@ -53,12 +54,25 @@ export default class extends Component {
 
   constructor(props) {
     super(props);
+    this.submit = this.submit.bind(this)
+    this.validationEquipmentNumber = this.validationEquipmentNumber.bind(this)
+    this.handlePopup = this.handlePopup.bind(this)
+    this.checkCheckBox = this.checkCheckBox.bind(this)
+    this.handleInputFile = this.handleInputFile.bind(this)
     this.state = {
+      showPopup: false,
+      alertOption: {
+        title: '',
+        message: ''
+      },
+      equipmentNumber: '',
+      errorEquipmentNumber: '',
       // checkBoxCheckCount: 0
       dataCollectMeter: [],
       isChecked: false,
+      photoMeter: ''
     };
-    this.checkCheckBox = this.checkCheckBox.bind(this);
+
   }
 
   toggleVisibility = () => {
@@ -71,6 +85,27 @@ export default class extends Component {
     var checkbox = document.querySelectorAll(".problem-checkbox:checked");
     this.setState({ checkBoxCheckCount: checkbox.length });
   }
+
+  handlePopup(){
+    this.setState({showPopup: false})
+  }
+
+  validationEquipmentNumber(e){
+    e.preventDefault()
+    this.setState({equipmentNumber: e.target.value})
+    if(this.state.equipmentNumber !== "") this.setState({errorEquipmentNumber: ''})
+  }
+
+  submit(e){
+    e.preventDefault()
+    if(this.state.equipmentNumber === "") this.setState({errorEquipmentNumber: "Silahkan isi equipment number"})
+    if(this.state.equipmentNumber !== ""){
+      this.setState({showPopup: true, alertOption: { title: 'Error', message: 'Berhasil melakukan Collect Meter' }})
+    } else {
+      this.setState({showPopup: true, alertOption: { title: 'Error', message: 'Pilih Equipment' }})
+    }
+  }
+
 
   render() {
     const { isChecked } = this.state;
@@ -173,149 +208,183 @@ export default class extends Component {
                     tabindex="0"
                   >
                     <div className="row">
-                      <div
-                        className="card-label py-1 "
-                        style={{ backgroundColor: "#014C90" }}
-                      >
-                        <label
-                          className="fw-medium"
-                          style={{ fontSize: "13px", color: "#fff" }}
-                        >
-                          Equipment Number
-                        </label>
-                      </div>
-                      <Link
-                        className="py-4 mb-2"
-                        style={{ border: "1px solid #000" }}
-                        to="/daftar_eq"
-                      ></Link>
-                      <div className="text-center">
-                        <p
-                          className="text-decoration-underline fw-medium fst-italic text-center mt-3"
-                          style={{ fontSize: "13px", color: "pink" }}
-                        >
-                          Please upload photo meter on machine
-                        </p>
-                        <input
-                          type="file"
-                          className="d-none"
-                          id="input-file"
-                          onChange={this.previewImage}
-                          accept="image/*"
-                        />
-                        <label
-                          className="file-icon mb-3 d-block"
-                          htmlFor="input-file"
-                        >
+                      <div className="scrolling-riwayat">
+                        <form onSubmit={this.submit}>
                           <div
-                            className="text-center rounded-circle p2"
-                            style={{
-                              backgroundColor: "#014C90",
-                              color: "#fff",
-                              width: "50px",
-                              height: "50px",
-                              marginLeft: "48%",
-                            }}
+                            className="card-label py-1 "
+                            style={{ backgroundColor: "#014C90" }}
                           >
-                            <img
-                              src="/images/upload.png"
-                              alt="upload image"
+                            <label
+                              className="fw-medium mx-3"
+                              style={{ fontSize: "13px", color: "#fff" }}
+                            >
+                              Equipment Number
+                            </label>
+                          </div>
+                          {/* <Link
+                            className="py-4 mb-2 d-flex"
+                            style={{ border: "1px solid #000" }}
+                            to="/daftar_eq"
+                          ></Link> */}
+                          
+                          {/* TEST POPUP BERHASIL */}
+                          <input type="text" className={`form-control mb-2 d-flex border-dark ${this.state.errorEquipmentNumber ===  "" ? "" : "is-invalid"}`} style={{borderRadius: 0, textDecoration: 'none', boxShadow: 'none'}} onChange={this.validationEquipmentNumber} />
+                          <div className="">
+                            <p
+                              className="text-decoration-underline fw-medium fst-italic text-center mt-3"
+                              style={{ fontSize: "13px", color: "pink" }}
+                            >
+                              Please upload photo meter on machine
+                            </p>
+                            <input
+                              type="file"
+                              className="d-none"
+                              id="input-file"
+                              onChange={this.previewImage}
+                              accept="image/*"
+                            />
+                            <input type="file" className="d-none" id="inputFiles" accept="image/*" onChange={this.handleInputFile} />
+                            <label
+                              className="file-icon d-block"
+                              htmlFor="inputFiles"
+                            >
+                              <div
+                                className="text-center rounded-circle p2"
+                                style={{
+                                  backgroundColor: "#014C90",
+                                  color: "#fff",
+                                  width: "50px",
+                                  height: "50px",
+                                  marginLeft: "48%",
+                                }}
+                              >
+                                <img
+                                  src="/images/upload.png"
+                                  alt="upload image"
+                                  style={{
+                                    width: "22px",
+                                    marginTop: "10px",
+                                  }}
+                                />
+                              </div>
+                            </label>
+                            <label className="inputFiles-displayName mt-3" htmlFor="inputFiles" style={{fontSize: '14px'}}></label>
+                            {/* <label
+                              className="file-icon mb-3 d-block"
+                              htmlFor="input-file"
+                            >
+                              <div
+                                className="text-center rounded-circle p2"
+                                style={{
+                                  backgroundColor: "#014C90",
+                                  color: "#fff",
+                                  width: "50px",
+                                  height: "50px",
+                                  marginLeft: "48%",
+                                }}
+                              >
+                                <img
+                                  src="/images/upload.png"
+                                  alt="upload image"
+                                  style={{
+                                    width: "22px",
+                                    marginTop: "10px",
+                                  }}
+                                />
+                              </div>
+                            </label> */}
+                            <div
+                              className="d-none col-md-6 col-sm-8 mx-auto my-5"
+                              id="display-image"
+                            >
+                              <img
+                                src="#"
+                                alt=""
+                                className="w-50"
+                                id="preview-image"
+                              />
+                            </div>
+                          </div>
+                                
+                          <hr className="mb-5" />
+                          <div
+                            className="text-center align-items-center"
+                            style={{ fontSize: "15px" }}
+                          >
+                            <span className="me-2">
+                              Apakah anda bersedia input meter manual?{" "}
+                            </span>
+                                
+                            <input
                               style={{
-                                width: "22px",
-                                marginTop: "10px",
+                                borderRadius: 0,
+                                padding: "1px",
+                                width: "20px",
+                                minHeight: "18px",
                               }}
+                              className="form-check-input mt-1"
+                              type="checkbox"
+                              checked={isChecked}
+                              onChange={this.toggleVisibility}
                             />
                           </div>
-                        </label>
-                        <div
-                          className="d-none col-md-6 col-sm-8 mx-auto my-5"
-                          id="display-image"
-                        >
-                          <img
-                            src="#"
-                            alt=""
-                            className="w-50"
-                            id="preview-image"
-                          />
-                        </div>
-                      </div>
-
-                      <hr className="mt-5 mb-5" />
-                      <div
-                        className="text-center align-items-center"
-                        style={{ fontSize: "15px" }}
-                      >
-                        <span className="me-2">
-                          Apakah anda bersedia input meter manual?{" "}
-                        </span>
-
-                        <input
-                          style={{
-                            borderRadius: 0,
-                            padding: "1px",
-                            width: "20px",
-                            minHeight: "18px",
-                          }}
-                          className="form-check-input mt-1"
-                          type="checkbox"
-                          checked={isChecked}
-                          onChange={this.toggleVisibility}
-                        />
-                      </div>
-
-                      {/* input form */}
-                      {isChecked && (
-                        <div>
-                          <div class="card card-body col-md-12 col-sm-6 col-12 mb-4 mt-4">
-                            <div className="px-2 py-3">
-                              <div className="col ">
-                                <div className="check-item d-flex align-items-center mb-2 mt-2 ">
-                                  <label>Meter 1</label>
-                                  <input
-                                    type="text"
-                                    className="py-1 border-only-bottom ms-2"
-                                    style={{ fontSize: "12px", width: "92%" }}
-                                  />
-                                  {/* <input type="text" className="py-1 border-only-bottom ms-2" disabled={this.state.checkBoxCheckCount == 0} style={{ fontSize: '14px', width: '92%' }} /> */}
-                                </div>
-                                <div className="check-item d-flex align-items-center mb-2">
-                                  <label>Meter 2</label>
-                                  <input
-                                    type="text"
-                                    className="py-1 border-only-bottom ms-2"
-                                    style={{ fontSize: "12px", width: "92%" }}
-                                  />
-                                </div>
-                                <div className="check-item d-flex align-items-center mb-2">
-                                  <label>Meter 3</label>
-                                  <input
-                                    type="text"
-                                    className="py-1 border-only-bottom ms-2"
-                                    style={{ fontSize: "12px", width: "92%" }}
-                                  />
-                                </div>
-                                <div className="check-item d-flex align-items-center mb-2">
-                                  <label>Meter 4</label>
-                                  <input
-                                    type="text"
-                                    className="py-1 border-only-bottom ms-2"
-                                    style={{ fontSize: "12px", width: "92%" }}
-                                  />
+                            
+                          {/* input form */}
+                          {isChecked && (
+                            <div>
+                              <div class="card card-body col-md-12 col-sm-6 col-12 mb-4 mt-4">
+                                <div className="px-2 py-3">
+                                  <div className="col ">
+                                    <div className="check-item d-flex align-items-center mb-2 mt-2 ">
+                                      <label>Meter 1</label>
+                                      <input
+                                        type="text"
+                                        className="py-1 border-only-bottom ms-2"
+                                        style={{ fontSize: "12px", width: "92%" }}
+                                      />
+                                      {/* <input type="text" className="py-1 border-only-bottom ms-2" disabled={this.state.checkBoxCheckCount == 0} style={{ fontSize: '14px', width: '92%' }} /> */}
+                                    </div>
+                                    <div className="check-item d-flex align-items-center mb-2">
+                                      <label>Meter 2</label>
+                                      <input
+                                        type="text"
+                                        className="py-1 border-only-bottom ms-2"
+                                        style={{ fontSize: "12px", width: "92%" }}
+                                      />
+                                    </div>
+                                    <div className="check-item d-flex align-items-center mb-2">
+                                      <label>Meter 3</label>
+                                      <input
+                                        type="text"
+                                        className="py-1 border-only-bottom ms-2"
+                                        style={{ fontSize: "12px", width: "92%" }}
+                                      />
+                                    </div>
+                                    <div className="check-item d-flex align-items-center mb-2">
+                                      <label>Meter 4</label>
+                                      <input
+                                        type="text"
+                                        className="py-1 border-only-bottom ms-2"
+                                        style={{ fontSize: "12px", width: "92%" }}
+                                      />
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      )}
+                          )}
 
-                      <div className="col text-center mt-5">
-                        <button
-                          className="btn btn-login py-2 px-3"
-                          style={{ fontSize: "14px", width: "10%" }}
-                          type="submit"
-                        >
-                          Submit
-                        </button>
+                          <div className="col text-center mt-5">
+                            <button
+                              className="btn btn-login py-2 px-3"
+                              style={{ fontSize: "14px", width: "10%" }}
+                              type="submit"
+                            >
+                              Submit
+                            </button>
+                          </div>
+                        </form>
+                        <ConfirmAlert visible={this.state.showPopup} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-3 col-sm-7 col-12" />
                       </div>
                     </div>
                   </div>
@@ -436,5 +505,21 @@ export default class extends Component {
         </div>
       </>
     );
+  }
+
+  handleInputFile(e) {
+    this.setState({photoMeter: e.target.files.length})
+    document.querySelectorAll('.inputFiles-displayName').forEach((val, key) => {
+        if(e.target.files.length > 0) {
+            val.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <div class="w-100">${ e.target.files[0].name }</div>
+                    <i class="fa fa-check text-success d-block d-md-none"></i>
+                </div>
+            `
+        } else {
+            val.innerHTML = ""
+        }
+    })
   }
 }

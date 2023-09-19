@@ -8,7 +8,7 @@ import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
 export const getDaftarAlamat = async () => {
     createAuthRefreshInterceptor(axios, refreshAuthLogic);
-    const url = `${appConfig.BASE_API}/useraddress/read/12`;
+    const url = `${appConfig.BASE_API}/useraddress/read/${localStorage.getItem('id')}`;
     console.log('api link', url)
     const result = await axios.get(url, jsonHeaderAuth())
         .then(res => {

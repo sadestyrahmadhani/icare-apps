@@ -5,7 +5,7 @@ import { authUser } from "../../services/API"
 import { setNamaPerusahaan, setUser } from "../../core/local-storage";
 import { setEmail } from "../../core/local-storage";
 import { setTelp } from "../../core/local-storage";
-import { getNamaPerusahaan } from "../../core/local-storage";
+import { setId } from "../../core/local-storage";
 
 import {
     settoken,setrefreshtoken
@@ -32,6 +32,7 @@ export default class extends Component {
           errMsg: "",
           login: false,
           showPopup: false,
+          showPermissionPopup: true,
           email:'',
           
           errorEmail:'', 
@@ -169,8 +170,9 @@ export default class extends Component {
                                         </button>
                                     </div>
                                 </form>
-                                <ConfirmAlert visible={this.state.showPopup} titleMessage={this.state.alertOption.title} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-2 col-sm-4 col-8" />
+                                <ConfirmAlert visible={this.state.showPopup} titleMessage={this.state.alertOption.title} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-3 col-sm-4 col-8" />
                                 <LoadingAlert visible={this.state.loading} customClass="col-md-2 col-sm-4 col-8"  />
+                                <ConfirmAlert visible={this.state.showPermissionPopup} titleMessage="Permintaan Perizinan" message="Mohon setujui permintaan perizinan agar aplikasi dapat berjalan dengan baik" customClass="col-md-6 col-sm-4 col-9" onClick={this.handlePopup} />
                             </div>
                         </div>
                     </div>
@@ -284,7 +286,7 @@ export default class extends Component {
     
 
     handlePopup() {
-        this.setState({showPopup: false})
+        this.setState({showPopup: false, showPermissionPopup: false})
     }
 
     async submit(e) {
@@ -309,12 +311,15 @@ export default class extends Component {
             settoken(response.token)
             setrefreshtoken(response.refreshtoken)
             setUser(response.namalengkap)
-            console.log('testingnamalengkap :', response.namalengkap)
+            // console.log('testingnamalengkap :', response.namalengkap)
             setEmail(response.emailaddress)
             setTelp(response.telp)
-            console.log('testingtelp :', response.telp)
+            // console.log('testingtelp :', response.telp)
             setNamaPerusahaan(response.namaperusahaan)
-            console.log('testingnamaperusahaan :', response.namaperusahaan)
+            // console.log('testingnamaperusahaan :', response.namaperusahaan)
+            setId(response.id)
+            // console.log('testinguserid :', response.id)
+
 
 
             
@@ -327,7 +332,7 @@ export default class extends Component {
             // window.location.reload(false);
             this.props.router.navigate("/dashboard")
         } else {
-            this.setState({showPopup: true, alertOption:{title:"Error", message:"Invalid username/password"}})
+            this.setState({showPopup: true, alertOption:{title:"Error", message:"Username / Password salah"}})
         }
 
         

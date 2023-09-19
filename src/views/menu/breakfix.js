@@ -1,14 +1,35 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import ConfirmAlert from "../../component/alert/confirmAlert";
-import { getMasterRequest } from "../../services/API";
-import { Html5QrcodeScanner } from "html5-qrcode";
+import { getMasterRequest } from "../../services/API"
+import { redirect } from "react-router-dom";
+// import Swal from "sweetalert2";
 
 
 export default class extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            equipmentList: [
+                {
+                    id: 1,
+                    noEQ: '71221',
+                    namaModel: 'CobaInsert',
+                    keterangan: 'CobaInsert',
+                },
+                {
+                    id: 2,
+                    noEQ: '300822',
+                    namaModel: 'model1',
+                    keterangan: 'tes aja',
+                },
+                {
+                    id: 3,
+                    noEQ: '798689',
+                    namaModel: 'ApeosPort C2060',
+                    keterangan: 'test',
+                }
+            ],
             checkBoxCheckCount:0,
             checkBoxCheckCountPage:0,
             equipment:'',
@@ -22,7 +43,9 @@ export default class extends Component {
             errorAddressOrMachineLocation: '',
             errorInput:'',
             showPopup: false,
-            scanResult: null,
+            showAddedPopup: false,
+            selectedEquipment: null,
+            id:props.router.params.id
         }
         this.checkCheckBox = this.checkCheckBox.bind(this)
         this.checkCheckBoxPage = this.checkCheckBoxPage.bind(this)
@@ -39,18 +62,42 @@ export default class extends Component {
     }
 
     handlePopup() {
-        this.setState({showPopup:false})
+        this.setState({showPopup:false, showAddedPopup: false})
+        if(this.state.isFormValid) {
+            window.location.href = "/#/dashboard"
+        }
     }
 
     submit(e) {
         e.preventDefault()
         var checkboxPage = document.querySelectorAll('.page-checkbox:checked')
-        if(this.state.equipment === "") this.setState({errorMessageEquipmentNumber:'Silahkan isi quipment number'})
-        if(this.state.machineLocation === "") this.setState({errorAddressOrMachineLocation:'Silahkan isi alamat/lokasi mesin'})
-        if(this.state.description === "") this.setState({errorDescription:'Silahkan isi deskripsi'})
-        if(this.state.pageToWC === "") this.setState({errorPageToWC: checkboxPage.length > 0 ? 'Silahkan isi page' : ''})
 
-        this.setState({showPopup: true})
+        let isValid = true;
+
+        if(this.state.equipment === "") {
+            this.setState({errorMessageEquipmentNumber:'Silahkan isi quipment number'})
+            // isValid = false;
+        }   
+        if(this.state.machineLocation === "") { 
+            this.setState({errorAddressOrMachineLocation:'Silahkan isi alamat/lokasi mesin'})
+            // isValid = false;
+        }
+        if(this.state.description === "") { 
+            this.setState({errorDescription:'Silahkan isi deskripsi'})
+            isValid = false;
+        }
+        if(this.state.pageToWC === "") { 
+            this.setState({errorPageToWC: checkboxPage.length > 0 ? 'Silahkan isi page' : ''})
+            isValid = false;
+        }
+
+        this.setState({isFormValid: isValid});
+
+        if(isValid) {
+            this.setState({showPopup: false, showAddedPopup: true});
+        } else {
+            this.setState({showPopup: true, showAddedPopup: false});
+        }
 
 
         // this.setState({
@@ -67,28 +114,13 @@ export default class extends Component {
         // })
     }
 
-    componentDidMount() {
-        useEffect(() => {
-            const scanner = new Html5QrcodeScanner('reader', {
-                qrbox: {
-                    width: 250,
-                    height: 250
-                },
-                fps: 5
-            })
-
-            scanner.render(success, error)
-        
-            scanSuccess(result); {
-                scanner.clear()
-                this.setState({scanResult: result})
-            }
-        
-            ScanError(error); {
-                console.warn(error)
-            }
-        },[])
-    }
+    // validationEquipment(e) {
+    //     const selectedEquipment = e.target.value;
+    //     this.setState({selectedEquipment});
+    //     if(selectedEquipment !== '') {
+    //         this.setState({errorMessageEquipmentNumber: ''});
+    //     }
+    // }
 
 
     validationEquipment(e) {
@@ -180,7 +212,11 @@ export default class extends Component {
         }
     }
 
-    
+    // checkCheckBoxPage() {
+    //     var checkboxPage = document.querySelectorAll('.page-checkbox:checked')
+    //     this.setState({checkBoxCheckCountPage:checkboxPage.length})
+    // }
+
     previewImage(e) {
         const file = e.target
         if(file.files[0]) {
@@ -194,14 +230,31 @@ export default class extends Component {
         document.getElementById('display-image').classList.add('d-block')
     }
 
-    
+    handleEquipmentSelect = (e) => {
+        const selectedEquipmentId = e.target.value;
+        const selectedEquipment = this.state.equipmentList.find(
+          (equipment) => equipment.id === parseInt(selectedEquipmentId)
+        );
+        this.setState({ selectedEquipment });
+      };      
+
+    // componentDidMount() {
+    //     getMasterRequest()
+    //     .then(response => {
+    //         const equipmentList = response.data.equipmentList;
+    //         this.setState({equipmentList});
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching equipment data:', error);
+    //     })
+    // }
 
     render() {
         return(
             <>
-            <div className="py-3"> 
+            <div className="py-md-3 py-2"> 
                 <div className="responsive-bar" style={{alignItems:'baseline', height:'55px'}}>
-                    <Link className="list-items" to="/dashboard">
+                    <Link className="list-items" to={this.state.id === '0' ? '/supplies_request' : '/dashboard'}>
                         <i className="fa fa-arrow-left me-3" style={{fontSize:'16px', color:'#014C90'}}></i>
                         <span className="title-icare title-fitur fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Breakfix Request</span>
                     </Link>
@@ -213,20 +266,39 @@ export default class extends Component {
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style= {{fontSize:'14px', color:'#fff'}}>Equipment Number</label>
                                 </div>
-                                    <div className="col-md-12 col-11 p-0">
-                                        <Link className="py-md-4 py-3 w-100 d-block mb-md-4 mb-3" style={{border:'1px solid #797979'}} onChange={this.validationEquipment} to="/daftar-eq"></Link>
+                                <div className="d-flex p-0">
+                                    <div className="col-lg-11 col-9">
+                                        {/* <div className="py-md-4 py-3 w-100 d-block mb-md-4 mb-3" style={{border:'1px solid #797979'}} onChange={this.validationEquipment} ></div> */}
+                                        <select className="input-page select-option w-100 d-block mb-md-4 mb-3" style={{height:'50px', border:'1px solid #797979'}} onChange={this.handleEquipmentSelect} value={this.state.selectedEquipment ? this.state.selectedEquipment.id: ''} >
+                                            <option></option>
+                                            
+                                            {this.state.equipmentList.map(noEQ => (
+                                                <option key={noEQ.id} value={noEQ.id}>
+                                                    <option>{noEQ.noEQ}</option>
+                                                    <option>{noEQ.namaModel}</option>
+                                                    <option>{noEQ.keterangan}</option>
+                                                </option>
+                                            ))}
+                                            
+                                        </select>
                                     </div>
-                                    <div className="col-1 d-block d-lg-none px-1">
-                                        { scanResult ? 
-                                            <a className="fa fa-qrcode ms-0" style={{fontSize:'30px', textDecoration:'none', color:'#000'}} href={"http://"+scanResult}>{scanResult}</a>
-                                            : <div id="reader"></div>
-                                        }
+                                    <div className="col-lg-1 col-2 text-center">
+                                        <Link to="/form_eq">
+                                            <button className="btn btn-login btn-plus" style={{height: '50px', width:'80px'}}>
+                                                <i className="fa fa-plus fs-4 py-auto"></i>
+                                            </button>
+                                        </Link>
                                     </div>
+                                    <div className="col-1 d-block d-lg-none">
+                                        <Link className="fa fa-qrcode" style={{fontSize:'34px', textDecoration:'none', color:'#000', right:5}} />
+                                    </div>
+                                </div>
                                 <span className={`text-danger small mx-2 ${ this.state.errorMessageEquipmentNumber !== '' ? '' : 'd-none' }`} style={{fontSize:'12px'}} >{ this.state.errorMessageEquipmentNumber }</span>
+
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Alamat/Lokasi Mesin</label>
                                 </div>
-                                <Link className="py-md-4 py-3 w-100 d-block mb-md-4 mb-3" style={{border:'1px solid #797979'}} onChange={this.validationMachineLocation} to="/data-diri" ></Link>
+                                <Link className="py-md-4 py-3 w-100 d-block mb-md-4 mb-3" style={{border:'1px solid #797979'}} onChange={this.validationMachineLocation} to="" ></Link>
                                 <span className={`text-danger mx-2 small ${ this.state.errorAddressOrMachineLocation !== '' ? '' : 'd-none' }`} style={{fontSize:'12px'}} >{ this.state.errorAddressOrMachineLocation }</span>
                                 <div className="card-lable py-1 mb-md-4 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'14px', color:'#fff'}}>Problem&#40;Please Select&#41;</label>
@@ -379,7 +451,7 @@ export default class extends Component {
                                                 <img className="mt-1" src="images/upload.png" style={{width:'22px'}}></img>
                                             </div>
                                             <div className="d-md-none d-block">
-                                                <i className="fa fa-camera fs-2 my-1" />
+                                                <i className="fa fa-camera fs-2 my-1" /> 
                                             </div>
                                         </div>
                                     </label>
@@ -391,6 +463,7 @@ export default class extends Component {
                             </div>
                         </form>
                         <ConfirmAlert visible={this.state.showPopup} message="Mohon isi field yang kosong dengan foto meter. Untuk field problem isi min.1" customClass="col-md-5 col-sm-8 col-12" onClick={this.handlePopup} />
+                        <ConfirmAlert visible={this.state.showAddedPopup} message="Berhasil melakukan permintaan breakfix" customClass="col-sm-3" onClick={this.handlePopup}/>
                     </div>
                 </div>
             </div>

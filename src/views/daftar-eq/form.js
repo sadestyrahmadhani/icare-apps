@@ -1,10 +1,12 @@
 import { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import ConfirmAlert from "../../component/alert/confirmAlert";
-// import Swal from "sweetalert2";
+import { redirect } from "react-router-dom";
 
 export default class extends Component {
     constructor(props) {
+        // console.log('props',props)
+        // console.log('tes id', props.router.params.id)
         super(props)
         this.state = {
             noEq:'',
@@ -14,9 +16,16 @@ export default class extends Component {
             errorModel:'',
             errorKeterangan:'',
             showPopup: false,
+            showAddedPopup: false,
+            isFormValid: false,
+            id:props.router.params.id
         };
         this.submit = this.submit.bind(this)
         this.handlePopup = this.handlePopup.bind(this)
+
+        //console.log('actionType', this.state.actionType)
+        //console.log('this.props.location.state',this.props.location.state)
+        //console.log('this.props.location.param1 ', this.props.location.param1 )
     }
 
     handleNoEqChange = (e) => {
@@ -49,53 +58,87 @@ export default class extends Component {
     };  
     
     handlePopup() {
-        this.setState({showPopup:false})
+        this.setState({showAddedPopup: false, showPopup:false})
+        if(this.state.isFormValid) {
+            window.location.href = "/#/daftar_eq"
+        }
     }
 
     submit(e) {
         e.preventDefault()
 
+        let isValid = true;
+        
+
         if(this.state.noEq === "") {
+            // console.log('this.state.noEq === ""')
             this.setState({errorNoEq:"Silahkan isi nomor equipment"});
+            isValid = false;
         } else {
             this.setState({errorNoEq:""});
+            
         }
 
         if(!this.state.noEq.match(/^\d*$/)) {
+            // console.log('Nomor equipment harus berupa angka')
             this.setState({errorNoEq: "Nomor equipment harus berupa angka"});
-            return;
+            isValid = false;
         }
 
         if(this.state.model === "") {
+            // console.log('Silahkan isi nama model"')
             this.setState({errorModel:"Silahkan isi nama model"});
+            isValid = false;
+        } else {
+            this.setState({errorModel: ""});
         }
 
         if(this.state.keterangan === "") {
+            // console.log('Silahkan isi keterangan')
             this.setState({errorKeterangan:"Silahkan isi keterangan"});
+            isValid = false;
+        } else {
+            this.setState({errorKeterangan: ""});
         }
 
-        this.setState({showPopup: true})
+        this.setState({isFormValid: isValid});
 
-        // Swal.fire({
-        //     title:'Error',
-        //     text:'Input not valid',
-        //     confirmButtonColor:'#0099ff'
-        // })
+        if(isValid) {
+            this.setState({showAddedPopup: true, showPopup: false});
+        } else {
+            this.setState({showPopup: true, showAddedPopup: false});
+        }
+
+        // if (isValid) {
+        //     this.setState({showAddedPopup: true, showPopup: false});
+        // } else {
+        //     this.setState({showPopup: true, showAddedPopup: false});
+        // }
     }
+
+    // submit(e) {
+    //     e.preventDefault()
+
+    //     this.setState({showAddedPopup: true, showUpdatePopup: false});
+    // }
 
     render () {
         return (
             <>
-            <div className="container">
-                <div className="d-flex" style={{alignItems:'baseline', height:'55px'}}>
-                    <Link className="list-items" to="../daftar_eq">
-                        <i className="fa fa-arrow-left me-3" style={{fontSize:'16px', color:'#014C90'}}></i>
-                        <span className="title-icare fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Tambah EQ</span>
-                    </Link>
+            <div className="responsive-bar">
+                <div className="d-flex mx-md-auto my-md-2 my-0 default-height" style={{alignItems:'baseline', height:'55px'}}>
+                    <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{fontSize: '18px'}}>
+                        <Link className="nav-link d-inline me-3" to="../daftar_eq">
+                            <i className="fa fa-arrow-left color-arrow-left" style={{color:'#014C90'}}></i>
+                        </Link>
+                            <span style={{borderBottom:'3px solid #014C90'}}>Tambah EQ</span>
+                    </h4>
                 </div>
-                <div className="card shadow border-0" style={{borderRadius:'20px'}}>
+            </div>
+            <div className="py-lg-0 my-md-0 py-5">
+                <div className="card shadow border-0 responsive-form" style={{borderRadius:'20px'}}>
                     <form onSubmit={this.submit}>
-                        <div className="card-body">
+                        <div className="card-body px-lg-0 px-md-0 px-2">
                             <div className="card border-0 mt-2" style={{borderRadius:'15px', boxShadow:'1px 1px 3px 3px #bfbfbf'}}>
                                 <div className="card-body">
                                     <div className="card-label">
@@ -138,6 +181,8 @@ export default class extends Component {
                         </div>
                     </form>
                     <ConfirmAlert visible={this.state.showPopup} titleMessage="Error" message="Input not valid" customClass="col-md-2" onClick={this.handlePopup} />
+                    <ConfirmAlert visible={this.state.showAddedPopup} message={this.state.id === '0' ? 'Berhasil menambahkan Eq' : 'Berhasil update Eq'} customClass="col-md-3" onClick={this.handlePopup}/>
+                    {/* <ConfirmAlert visible={this.state.showUpdatePopup} message="Berhasil update Eq" customClass="col-md-3" onClick={this.handlePopup}/> */}
                 </div>
             </div>
             </>

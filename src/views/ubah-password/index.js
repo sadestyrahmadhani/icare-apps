@@ -1,6 +1,6 @@
 import { Component } from "react";
-import Swal from "sweetalert2";
 import ConfirmAlert from "../../component/alert/confirmAlert";
+import { Link } from "react-router-dom";
 
 
 export default class extends Component {
@@ -92,116 +92,121 @@ export default class extends Component {
     render(){
         return(
             <>
-                <div className="container">
-                    <div className="card-title text-center mx-auto my-4 mb-4" style={{borderBottom: '3px solid #014C90', width: '135px'}}>
-                        <h4 className="title-icare fw-bold" style={{fontSize: '18px'}}>Ubah Kata Sandi</h4>
+                <div className="responsive-bar">
+                    <div className="card-title mx-md-auto my-md-3 my-0" style={{borderBottom: '3px solid #014C90', width: '134px'}}>
+                        <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{fontSize: '18px'}}>
+                            <Link to="/settings" className="nav-link d-md-none d-inline me-3">
+                                <i className="fa fa-arrow-left"></i>
+                            </Link>
+                            Ubah Kata Sandi
+                        </h4>
                     </div>
-                    <div className="col-md-6 col-sm-6 col-12 mx-auto">
-                        <div className="card mb-5">
-                            <div className="card-body p-5">
-                                <form onSubmit={this.submit}>
-                                    <div className="mb-3">
-                                        <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Lama</label>
-                                        <div className="border border-dark">
-                                            <div className="row">
-                                                <div className="col-11">
-                                                    <input type={ this.state.typeInput[0] } className={`form-control border-0 ${this.state.errorOldPassword === "" ? "" : "is-invalid"}`} style={{boxShadow: 'none', textDecoration: 'none'}} onChange={this.validationOldPassword}/>
-                                                </div>
-                                                <div className="col-1 my-auto" style={{paddingLeft: 0}}>
-                                                    <i 
-                                                        className={ `fa ${ this.state.iconClass[0] } fa-lg my-auto me-2` } 
-                                                        onClick={ () => this.setState({
-                                                            typeInput: [
-                                                                this.state.typeInput[0] == 'password' ? 'text' : 'password',
-                                                                this.state.typeInput[1],
-                                                                this.state.typeInput[2],
-                                                            ],
-                                                            iconClass: [
-                                                                this.state.typeInput[0] == 'password' ? 'fa-eye-slash' : 'fa-eye',
-                                                                this.state.iconClass[1],
-                                                                this.state.iconClass[2]
-                                                            ]
-                                                        }) }
-                                                    ></i>
-                                                </div>
+                </div>
+                <div className="col-md-7 col-12 mx-auto responsive-ubah-pass">
+                    <div className="card mb-5 px-2 px-md-4">
+                        <div className="card-body p-lg-5 px-0 input-mobile">
+                            <form onSubmit={this.submit}>
+                                <div className="mb-3">
+                                    <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Lama</label>
+                                    <div className="border border-dark">
+                                        <div className="d-flex">
+                                            <div className="col-11">
+                                                <input type={ this.state.typeInput[0] } className={`form-control border-0 ${this.state.errorOldPassword === "" ? "" : "is-invalid"}`} style={{boxShadow: 'none', textDecoration: 'none'}} onChange={this.validationOldPassword}/>
                                             </div>
-                                            <div className="row">
-                                                <div className="col-12">
-                                                    <span className={`text-danger small mx-2 ${this.state.errorOldPassword === "" ? "d-none" : ""}`} style={{fontSize: 12}}>{this.state.errorOldPassword}</span>
-                                                </div>
+                                            <div className="col-1 my-auto text-center" style={{paddingLeft: 0}}>
+                                                <i 
+                                                    className={ `fa ${ this.state.iconClass[0] } fa-lg` } 
+                                                    onClick={ () => this.setState({
+                                                        typeInput: [
+                                                            this.state.typeInput[0] == 'password' ? 'text' : 'password',
+                                                            this.state.typeInput[1],
+                                                            this.state.typeInput[2],
+                                                        ],
+                                                        iconClass: [
+                                                            this.state.typeInput[0] == 'password' ? 'fa-eye-slash' : 'fa-eye',
+                                                            this.state.iconClass[1],
+                                                            this.state.iconClass[2]
+                                                        ]
+                                                    }) }
+                                                ></i>
                                             </div>
-                                        </div>  
-                                    </div>
-                                    <div className="mb-3">
-                                        <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Baru</label>
-                                        <div className="border border-dark">
-                                            <div className="row">
-                                                <div className="col-11">
-                                                    <input type={ this.state.typeInput[1] } className={`form-control border-0 ${this.state.errorNewPassword === "" ? "" : "is-invalid"}`} style={{boxShadow: 'none', textDecoration: 'none'}} onChange={this.validationNewPassword}/>
-                                                </div>
-                                                <div className="col-1 my-auto" style={{paddingLeft: 0}}>
-                                                    <i 
-                                                        className={ `fa ${ this.state.iconClass[1] } fa-lg my-auto me-2` } 
-                                                        onClick={ () => this.setState({
-                                                            typeInput: [
-                                                                this.state.typeInput[0],
-                                                                this.state.typeInput[1] == 'password' ? 'text' : 'password',
-                                                                this.state.typeInput[2],
-                                                            ],
-                                                            iconClass: [
-                                                                this.state.iconClass[0],
-                                                                this.state.typeInput[1] == 'password' ? 'fa-eye-slash' : 'fa-eye',
-                                                                this.state.iconClass[2]
-                                                            ]
-                                                        }) }
-                                                    ></i>
-                                                </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <span className={`text-danger small mx-2 ${this.state.errorOldPassword === "" ? "d-none" : ""}`} style={{fontSize: 12}}>{this.state.errorOldPassword}</span>
                                             </div>
-                                            <div className="row">
-                                                <div className="col-12">
-                                                    <span className={`text-danger small mx-2 ${this.state.errorNewPassword === "" ? "d-none" : ""}`} style={{fontSize: 12}}>{this.state.errorNewPassword}</span>
-                                                </div>
+                                        </div>
+                                    </div>  
+                                </div>
+                                <div className="mb-3">
+                                    <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Baru</label>
+                                    <div className="border border-dark">
+                                        <div className="d-flex">
+                                            <div className="col-11">
+                                                <input type={ this.state.typeInput[1] } className={`form-control border-0 ${this.state.errorNewPassword === "" ? "" : "is-invalid"}`} style={{boxShadow: 'none', textDecoration: 'none'}} onChange={this.validationNewPassword}/>
+                                            </div>
+                                            <div className="col-1 my-auto text-center" style={{paddingLeft: 0}}>
+                                                <i 
+                                                    className={ `fa ${ this.state.iconClass[1] } fa-lg` } 
+                                                    onClick={ () => this.setState({
+                                                        typeInput: [
+                                                            this.state.typeInput[0],
+                                                            this.state.typeInput[1] == 'password' ? 'text' : 'password',
+                                                            this.state.typeInput[2],
+                                                        ],
+                                                        iconClass: [
+                                                            this.state.iconClass[0],
+                                                            this.state.typeInput[1] == 'password' ? 'fa-eye-slash' : 'fa-eye',
+                                                            this.state.iconClass[2]
+                                                        ]
+                                                    }) }
+                                                ></i>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <span className={`text-danger small mx-2 ${this.state.errorNewPassword === "" ? "d-none" : ""}`} style={{fontSize: 12}}>{this.state.errorNewPassword}</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="mb-4">
-                                        <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Ulangi Kata Sandi Baru</label>
-                                        <div className="border border-dark">
-                                            <div className="row">
-                                                <div className="col-11">
-                                                    <input type={ this.state.typeInput[2] } className={`form-control border-0 ${this.state.errorRepeatPassword === "" ? "" : "is-invalid"}`} style={{boxShadow: 'none', textDecoration: 'none'}} onChange={this.validationRepeatPassword} />
-                                                </div>
-                                                <div className="col-1 my-auto" style={{paddingLeft: 0}}>
-                                                    <i 
-                                                        className={ `fa ${ this.state.iconClass[2] } fa-lg my-auto me-2` } 
-                                                        onClick={ () => this.setState({
-                                                            typeInput: [
-                                                                this.state.typeInput[0],
-                                                                this.state.typeInput[1],
-                                                                this.state.typeInput[2] == 'password' ? 'text' : 'password'
-                                                            ],
-                                                            iconClass: [
-                                                                this.state.iconClass[0],
-                                                                this.state.iconClass[1],
-                                                                this.state.typeInput[2] == 'password' ? 'fa-eye-slash' : 'fa-eye'
-                                                            ]
-                                                        }) }
-                                                        ></i>
-                                                </div>
+                                </div>
+                                <div className="mb-4">
+                                    <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Ulangi Kata Sandi Baru</label>
+                                    <div className="border border-dark">
+                                        <div className="d-flex">
+                                            <div className="col-11">
+                                                <input type={ this.state.typeInput[2] } className={`form-control border-0 ${this.state.errorRepeatPassword === "" ? "" : "is-invalid"}`} style={{boxShadow: 'none', textDecoration: 'none'}} onChange={this.validationRepeatPassword} />
                                             </div>
-                                            <div className="row">
-                                                <div className="col-12">
-                                                    <span className={`text-danger small mx-2 ${this.state.errorRepeatPassword === "" ? "d-none" : ""}`} style={{fontSize: '12px'}}> {this.state.errorRepeatPassword} </span>
-                                                </div>
+                                            <div className="col-1 my-auto text-center" style={{paddingLeft: 0}}>
+                                                <i 
+                                                    className={ `fa ${ this.state.iconClass[2] } fa-lg` } 
+                                                    onClick={ () => this.setState({
+                                                        typeInput: [
+                                                            this.state.typeInput[0],
+                                                            this.state.typeInput[1],
+                                                            this.state.typeInput[2] == 'password' ? 'text' : 'password'
+                                                        ],
+                                                        iconClass: [
+                                                            this.state.iconClass[0],
+                                                            this.state.iconClass[1],
+                                                            this.state.typeInput[2] == 'password' ? 'fa-eye-slash' : 'fa-eye'
+                                                        ]
+                                                    }) }
+                                                    ></i>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <span className={`text-danger small mx-2 ${this.state.errorRepeatPassword === "" ? "d-none" : ""}`} style={{fontSize: '12px'}}> {this.state.errorRepeatPassword} </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="text-center">
-                                        <button className="btn btn-login px-5 py-2 fw-medium" type="submit">Submit</button>
-                                    </div>
-                                </form>
-                                <ConfirmAlert visible={this.state.showPopup} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-3 col-sm-6 col-9" />
-                            </div>
+                                </div>
+                                <div className="text-center">
+                                    <button className="btn btn-login px-5 py-2 fw-medium" type="submit">Submit</button>
+                                </div>
+                            </form>
+                            <ConfirmAlert visible={this.state.showPopup} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-3 col-sm-6 col-9" />
                         </div>
                     </div>
                 </div>

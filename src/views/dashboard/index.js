@@ -16,7 +16,7 @@ export default class extends Component {
                 {
                     title:'Breakfix',
                     imgIcon:'images/breakfix.png',
-                    url:'/breakfix_request'
+                    url:'/breakfix_request/1'
                 },
                 {
                     title:'Supplies',
@@ -51,9 +51,10 @@ export default class extends Component {
             ],
             dataNews: [
                 {
-                    imgNews:'images/astragraphiaNews.png',
-                    date:'2023-06-28 10:00:00',
-                    titleNews:'Astragraphia Cabang Batam Gelar Workshop dan Update Teknologi Produk Serta Solusi Bagi Pelanggan Di Wilayah Tanjung Pinang'
+                    imgNews:'images/apeos7580-6580.png',
+                    date:'2023-09-15 10:00:00',
+                    titleNews:'Apeos 7580 / 6580',
+                    redirect:'/product_detail'
                 },
                 {
                     imgNews:'images/astragraphiaNews.png',
@@ -98,7 +99,7 @@ export default class extends Component {
             <> 
             <div className="content-menus" id="contentMenus">
                 <div className="menu-items col-12">
-                    <Link className="text-white" to="/settings" style={{ position: 'absolute', top: 15, right: 20, fontSize:'26px', zIndex:'11111' }}><i className="fa fa-cog"></i></Link>
+                    <Link className="text-white" to="/settings" style={{ position: 'absolute', top: 15, right: 20, fontSize:'26px', zIndex:'11111' }}><i className="fa fa-cog d-md-none"></i></Link>
                     <div className="col-md-7 col-12 mx-auto py-xs-0 m-0">
                         <img className="banner-desktop d-md-block d-none" src="images/banner1.png" alt="Beranda" width='100%'/>
                         <img className="banner-desktop d-md-none d-block" src="images/bannerMobile-edit.png" alt="Beranda" width='100%'/>
@@ -121,35 +122,40 @@ export default class extends Component {
                             <h3 className="d-block mx-3 mx-md-5" style={{whiteSpace:'nowrap', color:'#014C90'}}>Astragraphia News</h3>
                             <hr className="w-100 h-style" style={{border:'1px solid #014C90'}}/>
                         </div>
+                        <Link to="/news_detail" style={{textDecoration: 'none'}}>
                         <div className="card news border-0 mx-auto text-white mb-4" style={{position:'relative', background:'rgba(0,0,0,.3'}}>
                             <div style={{position:"absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: -1, overflow:'hidden'}} >
-                                <img src="images/astragraphiaNews.png" alt="Astragraphia News" width="100%" height="100%" />
+                                {/* <img src="images/astragraphiaNews.png" alt="Astragraphia News" width="100%" height="100%" /> */}
+                                <img src="images/banner-news1.jpg" alt="Astragraphia News" className="banner-news"/>
                             </div> 
                             <div className="py-4 p-md-5 d-md-block d-none">
                                 <p className="card-text">2023-07-21 19:00:00</p>
-                                <h5 className="card-title fw-bold">Astragraphia Customer Gathering 2023: Sebuah Sinergi Untuk Bertumbuh Berkelanjutan dan Terus Berkembang Bersama</h5>
-                                <h4 className="card-title fw-bold">Astragraphia Customer Gathering 2023: Sebuah Sinergi Untuk Bertumbuh Berkelanjutan dan Terus Berkembang Bersama</h4>
-                                <p style={{fontSize:'14px'}}>Astragraphia selenggarakan Customer Gathering 2023 yang menghadirkan pelanggan Graphic Art dari berbagai daerah untuk Bapak/Ibu dapat memperluas jaringan, berbagai pengetahuan, dan memperoleh inspirasi baru tentang update tren bisnis printing.</p>
+                                <h5 className="card-title fw-bold">Dukung Pelaku Ekonomi Kreatif, Astragraphia Berkolaborasi Dengan Kemenparekraf dalam Program Apresiasi Kreasi Indonesia (AKI) 2023</h5>
+                                <h4 className="card-title fw-bold">Dukung Pelaku Ekonomi Kreatif, Astragraphia Berkolaborasi Dengan Kemenparekraf dalam Program Apresiasi Kreasi Indonesia (AKI) 2023</h4>
+                                <p style={{fontSize:'14px'}}><strong>Jakarta, 8-10 September 2023</strong> { this.limitChar("- Sudah bukan rahasia lagi bahwa Usaha Kecil dan Menengah (UKM) di Indonesia memiliki potensi ekonomi yang besar, apalagi dengan pengelolaan manajemen yang baik.Oleh karena itu pemerintah melalui lembaga kementerian, salah satunya Kementerian Pariwisata dan Ekonomi Kreatif (Kemenparekraf), menyelenggarakan rangkaian Apresiasi Kreasi Indonesia (AKI) 2023, yang termasuk di dalamnya proses kurasi, pembekalan/bootcamp, pameran, hingga festival puncak.", 280, "...")}</p>
                             </div>
                             <div className="p-4 d-md-none d-block">
                                 <p className="card-text fw-bold">2023-07-21 19:00:00</p>
-                                <h5 className="card-title fw-bold"> Astragraphia Customer Gathering 2023: Sebuah Sinergi Untuk Bertumbuh Berkelanjutan dan Terus Berkembang Bersama </h5> 
-                                <h4 className="card-title fw-bold"> { this.limitChar("Astragraphia Customer Gathering 2023: Sebuah Sinergi Untuk Bertumbuh Berkelanjutan dan Terus Berkembang Bersama", 50, "...") } </h4>
-                                <p> { this.limitChar("Astragraphia selenggarakan Customer Gathering 2023 yang menghadirkan pelanggan Graphic Art dari berbagai daerah untuk Bapak/Ibu dapat memperluas jaringan, berbagai pengetahuan, dan memperoleh inspirasi baru tentang update tren bisnis printing.", 70, "...") } </p>
+                                <h5 className="card-title fw-bold"> Dukung Pelaku Ekonomi Kreatif, Astragraphia Berkolaborasi Dengan Kemenparekraf dalam Program Apresiasi Kreasi Indonesia (AKI) 2023</h5> 
+                                <h4 className="card-title fw-bold"> { this.limitChar("Dukung Pelaku Ekonomi Kreatif, Astragraphia Berkolaborasi Dengan Kemenparekraf dalam Program Apresiasi Kreasi Indonesia (AKI) 2023", 50, "...") } </h4>
+                                <p style={{fontSize: '14px'}}> <strong>Jakarta, 8-10 September 2023</strong> { this.limitChar(" - Sudah bukan rahasia lagi bahwa Usaha Kecil dan Menengah (UKM) di Indonesia memiliki potensi ekonomi yang besar, apalagi dengan pengelolaan manajemen yang baik.", 70, "...") } </p>
                             </div>
                         </div>
+                        </Link>
                         <div className="row m-0 card-news">
                             { this.state.dataNews.map((value, key) => (
                                 <div className="col-md-4 col-12 mb-5" key={ key }>
-                                    <div className="card h-100 border-0 mx-0" style={{backgroundColor:'#EBEBEB'}} >
-                                        <div className="m-2 border">
-                                            <img src={value.imgNews} className=" w-100" alt="Astragraphia News" />
-                                        </div>  
-                                        <div className="card-body" key={key}>
-                                            <p className="card-text">{value.date}</p>
-                                            <h6 className="card-title fw-bold">{value.titleNews}</h6>
+                                    <Link to={value.redirect} style={{textDecoration: 'none'}}>
+                                        <div className="card h-100 border-0 mx-0" style={{backgroundColor:'#EBEBEB'}} >
+                                            <div className="m-2 border">
+                                                <img src={value.imgNews} className=" w-100" alt="Astragraphia News" />
+                                            </div>  
+                                            <div className="card-body" key={key}>
+                                                <p className="card-text">{value.date}</p>
+                                                <h6 className="card-title fw-bold">{value.titleNews}</h6>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </div>
                             )) } 
                         </div>

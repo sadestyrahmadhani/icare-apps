@@ -19,6 +19,7 @@ export default class extends Component {
             errorDescription:'',
             errorPageToWC:'',
             showPopup: false,
+            showAddedPopup: false,
         }
         this.submit = this.submit.bind(this)
         this.checkCheckBox = this.checkCheckBox.bind(this)
@@ -51,19 +52,41 @@ export default class extends Component {
     }
 
     handlePopup() {
-        this.setState({showPopup:false})
+        this.setState({showPopup:false, showAddedPopup: false})
+        if(this.state.isFormValid) {
+            window.location.href = "/#/dashboard";
+        }
     }
 
     submit(e) {
         e.preventDefault()
-
         var checkboxPage = document.querySelectorAll('.page-checkbox:checked')
-        if(this.state.equipment === "") this.setState({errorMessageEqipmentNumber:'Silahkan isi equipment number'})
-        if(this.state.machineLocation === "") this.setState({errorAddressOrMachineLocation:'Silahkan isi alamat/lokasi mesin'})
-        if(this.state.description === "") this.setState({errorDescription:'Silahkan isi deskripsi'})
-        if(this.state.pageToWC === "") this.setState({errorPageToWC: checkboxPage.length > 0 ? 'Silahkan isi page' : ''})
+        let isValid = true;
 
-        this.setState({showPopup: true})
+        if(this.state.equipment === "") { 
+            this.setState({errorMessageEqipmentNumber:'Silahkan isi equipment number'})
+            // isValid = false;
+        }
+        if(this.state.machineLocation === "") { 
+            this.setState({errorAddressOrMachineLocation:'Silahkan isi alamat/lokasi mesin'})
+            // isValid = false;
+        }
+        if(this.state.description === "") { 
+            this.setState({errorDescription:'Silahkan isi deskripsi'})
+            isValid = false;
+        }
+        if(this.state.pageToWC === "") { 
+            this.setState({errorPageToWC: checkboxPage.length > 0 ? 'Silahkan isi page' : ''})
+            isValid = false;
+        }
+
+        this.setState({isFormValid: isValid});
+
+        if(isValid) {
+            this.setState({showPopup: false, showAddedPopup: true});
+        } else {
+            this.setState({showPopup: true, showAddedPopup: false});
+        }
 
         // Swal.fire({
         //     text:'Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min. 1',
@@ -278,6 +301,7 @@ export default class extends Component {
                             </div>
                         </form>
                         <ConfirmAlert visible={this.state.showPopup} message="Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min. 1" customClass="col-md-5 col-sm-8 col-12" onClick={this.handlePopup} />
+                        <ConfirmAlert visible={this.state.showAddedPopup} message="Berhasil melakukan permintaan install" customClass="col-sm-3" onClick={this.handlePopup} />
                     </div>
                 </div>
             </div>

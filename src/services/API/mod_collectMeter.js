@@ -8,7 +8,7 @@ import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
 export const getCollectMeterById = async () => {
     createAuthRefreshInterceptor(axios, refreshAuthLogic);
-    const url = `${appConfig.BASE_API}/meter/readbyid/29`;
+    const url = `${appConfig.BASE_API}/meter/readbyid/${localStorage.getItem('id')}`;
     const result = await axios.get(url, jsonHeaderAuth())
         .then(res => {
             console.log('getCollectMeterById', res.data)

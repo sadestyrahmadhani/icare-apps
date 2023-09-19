@@ -2,6 +2,7 @@ import React from "react";
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import RemoveAlert from "../../component/alert/removeAlert";
+import ConfirmAlert from "../../component/alert/confirmAlert";
 
 export default class extends Component {
     constructor(props) {
@@ -33,6 +34,7 @@ export default class extends Component {
                 }
             ],
             showPopup: false,
+            showSuccessPopup: false,
             itemToDeleted: null,
             // nomorEQToDelete:'',
         };
@@ -41,7 +43,7 @@ export default class extends Component {
     }
 
     handlePopup() {
-        this.setState({showPopup: false})
+        this.setState({showPopup: false, showSuccessPopup: false})
     }
 
     setDeletedConfirmation(noEQ) {
@@ -54,7 +56,7 @@ export default class extends Component {
 
     // Di dalam fungsi handleCancelDelete
     handleCancelDelete() {
-        this.setState({showPopup: false})
+        this.setState({showPopup: false, showSuccessPopup: false})
     }
 
     handleConfirmDelete() {
@@ -63,6 +65,8 @@ export default class extends Component {
         if(nomorEQToDelete) {
             const updateDaftarEQ = daftarEQ.filter((item) => item.noEQ !== nomorEQToDelete);
             this.setState({daftarEQ: updateDaftarEQ, showPopup: false, nomorEQToDelete: ''});
+
+            this.setState({showSuccessPopup: true});
         }
     }
 
@@ -119,27 +123,31 @@ export default class extends Component {
 
     render () {
 
-        const {daftarEQ, showPopup} = this.state;
+        const {daftarEQ, showPopup, showSuccessPopup} = this.state;
+        const buttonDaftarEQ = daftarEQ.length > 10;
 
         return (
             <>
             <div className="container">
                 <div className="container d-flex">
-                    <div className="col-6 mb-5">
+                    <div className="col-5 mb-5">
                         <span className="title-icare fw-bold" style={{borderBottom: '3px solid #014C90', width: '110px', fontSize:'18px'}}>Daftar EQ</span>
                     </div>
-                    <div className="col-6 row text-end">
+                    <div className="col-7 row text-end">
                         <div className="col-7">
-                            <form class="d-flex" style={{width:'120%'}}>
-                                <span> <i class="fa fa-search fa-fw fa-lg" aria-hidden="true"></i> </span>
-                                <input class="form-control form-control-sm ml-3 w-100 border-only-bottom" type="text" aria-label="Search" style={{fontSize: '16px', color:'black'}}></input>
-                                <button type="reset" className="btn border-0" style={{background:'none'}}><i className="fa fa-close fa-fw fa-lg" style={{cursor:'pointer'}}></i></button>
-                                {/* <input type="reset" class="btn btn-success" value="Reset Button"></input> */}
+                            <form className="d-flex" style={{ width: '130%' }}>
+                                <span className="my-auto" style={{ color: '#014C90' }}>
+                                    <i className="fa fa-search fa-fw" style={{ marginRight: 'auto' }}></i>
+                                </span>
+                                <input type="text" className="form-control me-2 border-0 border-only-bottom" style={{ fontSize: '14px', marginLeft: '5px', color: 'black' }} />
+                                <button style={{ margin: 'auto', cursor: 'pointer', border: '0', background: 'none' }} type="reset">
+                                    <i className="fa fa-close"></i>
+                                </button>
                             </form>
                         </div>
                         <div className="col-5">
-                            <Link to="/form_eq">
-                                <button className="btn btn-login" style={{padding: '8px 23px', fontSize: '16px'}}><i className="fa fa-plus" style={{marginRight: '5px'}}></i> Tambah EQ</button>
+                            <Link to={{pathname:'/form_eq/0'}}>
+                                <button className="btn btn-login" style={{padding: '8px 20px', fontSize: '14px'}}><i className="fa fa-plus" style={{marginRight: '5px'}}></i> Tambah EQ</button>
                             </Link>
                         </div>
                     </div>
@@ -158,7 +166,9 @@ export default class extends Component {
                                         </div>
                                         <div className="col-5 px-5 d-flex mb-2 py-2">
                                             <div className="col-2">
-                                                <Link className="text-decoration-none" to="/form_eq"><h6 className="text title-icare" style={{marginTop:'70px', fontWeight: 'bold'}}>Ubah</h6></Link>
+                                                <Link to={{pathname:'/form_eq/1'}}
+                                                    className="text-decoration-none"><h6 className="text title-icare" style={{marginTop:'70px', fontWeight: 'bold'}}>Ubah</h6>
+                                                </Link>
                                             </div>
                                             <div className="col-3">
                                                 {value.imgEQ && (
@@ -172,9 +182,17 @@ export default class extends Component {
                                     </div>
                                 )))
                             }
+                            {buttonDaftarEQ && (
+                                <div className="button-daftar-eq p-0">
+                                    <button type="button" className="btn btn-primary" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}}>Lihat lebih banyak ...</button>
+                                </div>
+                            )}
                         </div>
                         {showPopup && (
                             <RemoveAlert visible={this.state.showPopup} message={`Hapus EQ: ${this.state.nomorEQToDelete}`} customClass="col-sm-3" onCancel={this.handleCancelDelete} onClick={() => {this.handleConfirmDelete(); }} />
+                        )}
+                        {showSuccessPopup && (
+                            <ConfirmAlert visible={this.state.showSuccessPopup} message="Berhasil hapus EQ" customClass="col-sm-3" onClick={this.handlePopup}/>
                         )}
 
 

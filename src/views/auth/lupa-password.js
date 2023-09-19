@@ -4,6 +4,7 @@ import Footer from "../../component/footer";
 import { Link } from "react-router-dom";
 import { requestOtpForgetPassword } from "../../services";
 import ConfirmAlert from "../../component/alert/confirmAlert";
+import LoadingAlert from "../../component/alert/loadingAlert";
 
 export default class extends Component {
     constructor(props) {
@@ -17,7 +18,8 @@ export default class extends Component {
             phone:'',
             errorEmail:'',
             errorPhone:'',
-            showPopup: false
+            showPopup: false,
+            loading: false,
         }
     }
 
@@ -32,8 +34,9 @@ export default class extends Component {
         if(!this.state.email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) return
         if(!this.state.phone.match(/^(\+\d{1,3})?\d{8,15}$/) || this.state.phone.length < 9 || this.state.phone.length > 16) return
         if(this.state.email !== "" && this.state.phone !== "") {
+            this.setState({loading: true})
             const res = await requestOtpForgetPassword({email: this.state.email, telp: this.state.phone})  
-            console.log(res)
+            this.setState({loading: false})
             if(res.status == 200 && res.data == null) {
                 this.setState({showPopup: true})
             } else {
@@ -58,7 +61,16 @@ export default class extends Component {
 
     validationPhone(e) {
         e.preventDefault()
-        this.setState({phone: e.target.value})
+        if(e.target.value.charAt(0) === '0') {
+            this.setState({phone: `+62${e.target.value.substring(1)}`})
+        } else {
+            if(e.target.value.charAt(0) === '+') {
+                this.setState({phone: e.target.value})
+            } else {
+                this.setState({phone: `+${e.target.value}`})
+            }
+        }
+
         if(e.target.value === "") {
             this.setState({errorPhone:'Silahkan isi nomor telepon'})
             return
@@ -95,7 +107,7 @@ export default class extends Component {
                                     </div>
                                     <div className="mb-md-5 mb-2">
                                         <label className="size-13px fw-bold">Number Phone</label>
-                                        <input type="text"  className={`form-control border-only-bottom ${this.state.errorPhone === "" ? "": "invalid"}`} onChange={this.validationPhone}/>
+                                        <input type="tel"  className={`form-control border-only-bottom ${this.state.errorPhone === "" ? "": "invalid"}`} onChange={this.validationPhone}/>
                                         <span className={`${this.state.errorPhone === "" ? "d-none": ""} text-danger`} style={{fontSize:'12px'}}> {this.state.errorPhone} </span>
                                     </div>
                                     <div className="text-center pt-4">
@@ -103,6 +115,7 @@ export default class extends Component {
                                     </div>
                                 </form>
                                 <ConfirmAlert visible={this.state.showPopup} titleMessage="Error" message="No.telp/Email tidak sesuai" onClick={this.handlePopup} />
+                                <LoadingAlert visible={this.state.loading} customClass="col-md-2 col-8" />
                             </div>
                         </div>
                     </div>
