@@ -1,6 +1,8 @@
 import { Component } from "react";
 import ConfirmAlert from "../../component/alert/confirmAlert";
+import LoadingAlert from "../../component/alert/loadingAlert";
 import { Link } from "react-router-dom";
+import { updatePasswordById } from "../../services/API";
 
 
 export default class extends Component {
@@ -23,7 +25,9 @@ export default class extends Component {
             errorRepeatPassword: '',
             alertOption: {
                 title: '',
-                message: ''
+                message: '',
+                redirect: false,
+                url: '',
             },
             typeInput: [
                 'password',
@@ -34,24 +38,41 @@ export default class extends Component {
                 'fa-eye',
                 'fa-eye',
                 'fa-eye',
-            ]
+            ],
+            loading: false,
         }
     }
 
     handlePopup(){
-        this.setState({showPopup: false})
+        if(this.state.alertOption.redirect) {
+            this.setState({showPopup:false})
+            this.props.router.navigate(this.state.alertOption.url)
+        } else {
+            this.setState({showPopup: false})
+        }
     }
 
-    submit(e){
+    async submit(e){
         e.preventDefault()
         if(this.state.newPassword === "") this.setState({errorNewPassword: "Silahkan isi kata sandi baru"})
         if(this.state.repeatPassword === "") this.setState({errorRepeatPassword: "Silahkan ulangi isi kata sandi"})
         if(this.state.oldPassword === "") this.setState({errorOldPassword: "Silahkan isi kata sandi lama"})
+        if(this.state.oldPassword === this.state.newPassword && this.state.oldPassword  !== "" && this.state.newPassword !== "" && this.state.repeatPassword) {
+            this.setState({showPopup: true, alertOption: {title: '', message: 'Password baru sama dengan password lama', redirect: false, url: ''}})
+            return
+        }
         if(this.state.oldPassword !== "" && this.state.newPassword !== "" && this.state.repeatPassword !== ""){
-            this.setState({showPopup: true, alertOption: {title: 'Berhasil', message: 'Berhasil mengubah kata sandi'}})
-            // this.props.router.navigate("")
+            const res = await updatePasswordById({userid: localStorage.getItem('id'), oldPassword: this.state.oldPassword, newPassword: this.state.newPassword})
+            if(res.status == 200 && res.data !== null) {
+                if(res.data === "Old password not match") {
+                    this.setState({showPopup: true, alertOption: {title: '', message: res.data, redirect: false, url: ''}})
+                } else {
+                    this.setState({showPopup: true, alertOption: {title: '', message: res.data, redirect: true, url: '/dashboard'}})
+                }
+                // console.log(res.data)
+            }
         } else {
-            this.setState({showPopup: true, alertOption: {title: 'Error', message: 'Harap isi seluruh data'}})
+            this.setState({showPopup: true, alertOption: {title: 'Error', message: 'Harap isi seluruh data', redirect: false, url: ''}})
         }
     }
     
@@ -207,6 +228,7 @@ export default class extends Component {
                                 </div>
                             </form>
                             <ConfirmAlert visible={this.state.showPopup} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-3 col-sm-6 col-9" />
+                            <LoadingAlert visible={this.state.loading} customClass="col-md-2 col-9" />
                         </div>
                     </div>
                 </div>
