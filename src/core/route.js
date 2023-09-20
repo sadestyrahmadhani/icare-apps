@@ -67,13 +67,13 @@ const mappingRoutes = (routes) => {
                         path={ value.path }
                         key={ value.key }                        
                         element={
-                            (auth.isAuthenticated() === true || !value.auth) ?
+                            // (auth.isAuthenticated() === true || !value.auth) ?
                             <React.Suspense
                                 fallback="Loading..."
                         >
                                 <CreateRouteComponent component={Component} data={ value } />
                             </React.Suspense>
-                            : <Navigate to='/' />
+                            // : <Navigate to='/' />
                         }
                     />
                 )
@@ -84,9 +84,10 @@ const mappingRoutes = (routes) => {
                     <Route
                         path={ value.path }
                         key={ value.key }                        
-                        element={ (auth.isAuthenticated() === true || !value.auth) ? 
+                        element={ 
+                            // (auth.isAuthenticated() === true || !value.auth) ? 
                             <CreateRouteComponent component={Component} data={ value } />
-                            : <Navigate to='/' />
+                            // : <Navigate to='/' />
                         }
                     />
                 )
