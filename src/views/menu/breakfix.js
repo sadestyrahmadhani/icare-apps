@@ -47,7 +47,6 @@ export default class extends Component {
             selectedEquipment: null,
             id:props.router.params.id
         }
-        this.scanner = null
         this.checkCheckBox = this.checkCheckBox.bind(this)
         this.checkCheckBoxPage = this.checkCheckBoxPage.bind(this)
         this.submit = this.submit.bind(this)
@@ -56,8 +55,6 @@ export default class extends Component {
         this.validationDescription = this.validationDescription.bind(this)
         this.validationPageToWC = this.validationPageToWC.bind(this)
         this.handlePopup = this.handlePopup.bind(this)
-        this.handleSuccessScanner = this.handleSuccessScanner.bind(this)
-        this.handleErrorScanner = this.handleErrorScanner.bind(this)
         getMasterRequest().then(response => {
             console.log(response)    
         })
@@ -124,26 +121,7 @@ export default class extends Component {
     //         this.setState({errorMessageEquipmentNumber: ''});
     //     }
     // }
-    componentDidMount() {
-        this.scanner = new Html5QrcodeScanner('reader', {
-            qrbox: {
-                width: 250,
-                height: 250
-            },
-            fps: 5
-        })
 
-        this.scanner.render(this.handleSuccessScanner, this.handleErrorScanner)
-    }
-
-    handleSuccessScanner(result) {
-        this.scanner.clear()
-        this.setState({scanResult: result})
-    }
-
-    handleErrorScanner(error) {
-        console.warn(error)
-    }
 
     validationEquipment(e) {
         e.preventDefault()
@@ -304,11 +282,12 @@ export default class extends Component {
                                             
                                         </select>
                                     </div>
-                                    <div className="col-1 d-block d-lg-none px-1">
-                                        { this.scanResult ? 
-                                            <a className="fa fa-qrcode ms-0" style={{fontSize:'30px', textDecoration:'none', color:'#000'}} href={"http://"+this.scanResult}>{this.scanResult}</a>
-                                            : <div id="reader"></div>
-                                        }
+                                    <div className="col-lg-1 col-2 text-center">
+                                        <Link to="/form_eq">
+                                            <button className="btn btn-login btn-plus" style={{height: '50px', width:'80px'}}>
+                                                <i className="fa fa-plus fs-4 py-auto"></i>
+                                            </button>
+                                        </Link>
                                     </div>
                                     <div className="col-1 d-block d-lg-none">
                                         <Link className="fa fa-qrcode" style={{fontSize:'34px', textDecoration:'none', color:'#000', right:5}} />
@@ -483,7 +462,7 @@ export default class extends Component {
                                 </div>
                             </div>
                         </form>
-                        <ConfirmAlert visible={this.state.showPopup} message="Mohon isi field yang kosong dengan foto meter. Untuk field problem isi min.1" customClass="col-md-5 col-sm-8 col-12" onClick={this.handlePopup} />
+                        <ConfirmAlert visible={this.state.showPopup} message="Mohon isi field yang kosong dengan foto meter. Untuk field problem isi min.1" customClass="col-md-5 col-sm-8 col-10" onClick={this.handlePopup} />
                         <ConfirmAlert visible={this.state.showAddedPopup} message="Berhasil melakukan permintaan breakfix" customClass="col-sm-3" onClick={this.handlePopup}/>
                     </div>
                 </div>

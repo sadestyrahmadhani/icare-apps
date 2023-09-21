@@ -78,7 +78,7 @@ export default class extends Component {
                                     <div className="mt-2 mb-3">
                                         <div className="row">
                                             <div className="col-4">
-                                                <label className="mb-1 btn btn-login me-2 btn-photo" htmlFor="inputFiles" style={{padding: '10px 40px'}}>Foto KTP</label>
+                                                <label className="mb-1 btn btn-login btn-photo" htmlFor="inputFiles" style={{padding: '10px 40px'}}>Foto KTP</label>
                                                 <input type="file" className="form-control border-0 d-none" id="inputFiles" onChange={this.handleFileInputIdCard} accept="image/*" />
                                             </div>
                                             <div className="col-8 my-auto" style={{paddingLeft: '0px'}}>
@@ -105,7 +105,7 @@ export default class extends Component {
                                     <div className="mt-2 mb-3">
                                         <div className="row">
                                             <div className="col-5">
-                                                <label className="btn-selfie mb-1 btn btn-login me-2" htmlFor="inputFilesSelfie" style={{padding: '10px 40px'}}>Selfie dengan KTP</label>
+                                                <label className="btn-selfie mb-1 btn btn-login" htmlFor="inputFilesSelfie" style={{padding: '10px 40px'}}>Selfie dengan KTP</label>
                                                 <input type="file" className="form-control border-0 d-none" id="inputFilesSelfie" onChange={this.handleFileInputSelfiePhoto} accept="image/*" />
                                             </div>
                                             <div className="col-7 my-auto" style={{paddingLeft: '0px'}}>

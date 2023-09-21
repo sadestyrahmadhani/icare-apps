@@ -128,12 +128,29 @@ export default class extends Component {
 
         return (
             <>
-            <div className="container">
-                <div className="container d-flex">
-                    <div className="col-5 mb-5">
-                        <span className="title-icare fw-bold" style={{borderBottom: '3px solid #014C90', width: '110px', fontSize:'18px'}}>Daftar EQ</span>
+            <div className="responsive-bar d-md-flex">
+                <div className="col-md-6 col-12 mb-md-5">
+                    <div className="row">
+                        <div className="col-md-12 col-8">
+                            <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{fontSize: '18px'}}>
+                                <Link className="nav-link d-inline d-md-none me-3" to="/settings">
+                                    <i className="fa fa-arrow-left color-arrow-left"></i>
+                                </Link>
+                                <span style={{borderBottom: '3px solid #014C90'}}>Daftar EQ</span>
+                            </h4>
+                        </div>
+                        <div className="col-2 d-md-none d-block text-center">
+                            <Link to="/form_eq/0">
+                                <i className="fa fa-plus-circle" style={{fontSize: '20px'}}></i>
+                            </Link>
+                        </div>
+                        <div className="col-2 d-md-none d-block text-center">
+                            <div>
+                                <i className="fa fa-search text-white" style={{fontSize: '20px'}}></i>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col-7 row text-end">
+                    {/* <div className="col-7 row text-end">
                         <div className="col-7">
                             <form className="d-flex" style={{ width: '130%' }}>
                                 <span className="my-auto" style={{ color: '#014C90' }}>
@@ -150,32 +167,55 @@ export default class extends Component {
                                 <button className="btn btn-login" style={{padding: '8px 20px', fontSize: '14px'}}><i className="fa fa-plus" style={{marginRight: '5px'}}></i> Tambah EQ</button>
                             </Link>
                         </div>
+                    </div> */}
+                </div>
+                <div className="col-md-7 row d-md-flex d-none">
+                    <div className="col-lg-7 col-md-7 col-12">
+                        <form className="d-flex" style={{ width: '108%' }}>
+                            <span className="my-auto" style={{color: '#014C90'}}>
+                                <i className="fa fa-search fa-fw" style={{marginRight: 'auto'}}></i>
+                            </span>
+                            <input type="text" className="form-control me-2 border-0 border-only-bottom" style={{fontSize: '14px', marginLeft: '5px', color: 'black'}} />
+                            <button style={{margin: 'auto', cursor: 'pointer', border: '0', background: 'none' }} type="reset">
+                                <i className="fa fa-close"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div className="col-md-4 col-3 text-end" style={{paddingRight: '25px'}}>
+                        <Link to="/form_eq/0">
+                            <button className="btn btn-login" style={{padding: '8px 20px', fontSize: '14px'}}>
+                                <i className="fa fa-plus" style={{marginRight: '5px'}}></i>
+                                 Tambah Eq
+                            </button>
+                        </Link>
                     </div>
                 </div>
-                <div className="card shadow border-0 px-4 py-4 pb-0" style={{borderRadius:'20px'}}>
+            </div>
+            <div className="py-lg-0 my-md-0 py-3">
+                <div className="card shadow border-0 px-lg-4 px-md-4 py-lg-4 py-md-4 pb-lg-0 responsive-form" style={{borderRadius:'20px'}}>
                     <div className="card-body">
-                        <div className="row">
+                        <div className="row my-lg-0 my-5">
                             {
                                 this.state.daftarEQ.map((value, key) => (
                                     !value.deleted && (
-                                    <div className="card-eq d-flex mb-5" key={value.id} style={{borderRadius:'10px', boxShadow:'1px 1px 2px 2px #bfbfbf'}}>
-                                        <div className="col-9 px-2 pt-0">
+                                    <div className="card-eq d-flex mb-lg-5 mb-3" key={value.id} style={{borderRadius:'10px', boxShadow:'1px 1px 2px 2px #bfbfbf'}}>
+                                        <div className="col-lg-9 col-7 px-2 pt-0">
                                             <p className="mb-0 mt-2 fw-bold" style={{fontSize:'15px'}}>{value.noEQ}</p>
                                             <p className="title-icare fw-bold mb-0" style={{fontSize:'15px'}}>{value.namaModel}</p>
                                             <p className="fw-bold" style={{fontSize:'14px'}}>{value.keterangan}</p>
                                         </div>
-                                        <div className="col-5 px-5 d-flex mb-2 py-2">
-                                            <div className="col-2">
+                                        <div className="col-lg-5 col-5 px-lg-5 px-0 d-lg-flex responsive-eq mb-2 py-2">
+                                            <div className="col-2 text-position-right">
                                                 <Link to={{pathname:'/form_eq/1'}}
                                                     className="text-decoration-none"><h6 className="text title-icare" style={{marginTop:'70px', fontWeight: 'bold'}}>Ubah</h6>
                                                 </Link>
                                             </div>
-                                            <div className="col-3">
+                                            <div className="col-lg-3 col-1 my-lg-0 my-3">
                                                 {value.imgEQ && (
                                                     <img src={value.imgEQ} style={{height:'70px'}} alt="Image"></img>
                                                 )}
                                             </div>
-                                            <div className="col-2">
+                                            <div className="col-2 text-position-center">
                                                 <button className="title-icare fw-bold" style={{background:'none', border:'none', marginTop:'70px'}} onClick={() => this.handleDeletedItem(value.noEQ)}>Hapus</button>
                                             </div>
                                         </div>

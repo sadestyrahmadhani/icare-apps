@@ -24,7 +24,9 @@ export default class extends Component {
                         date: '4/12/2023 12:41:01 PM',
                         EQCode: '300822',
                         items: 'Toner Cyan, Drum Cyan',
-                        description: 'Test12345678'
+                        description: 'Test12345678',
+                        dataStatus: 'menunggu',
+                        id: 1
                     }
                 ],
                 [
@@ -34,7 +36,9 @@ export default class extends Component {
                         date: '4/12/2023 12:41:01 PM',
                         EQCode: '300822',
                         items: 'Toner Cyan, Drum Cyan',
-                        description: 'Test12345678'
+                        description: 'Test12345678',
+                        dataStatus: 'diproses',
+                        id: 2
                     }
                 ],
                 [
@@ -44,7 +48,9 @@ export default class extends Component {
                         date: '4/12/2023 12:41:01 PM',
                         EQCode: '300822',
                         items: 'Toner Cyan, Drum Cyan',
-                        description: 'Test12345678'
+                        description: 'Test12345678',
+                        dataStatus: 'reject',
+                        id: 3
                     },
                 ],
                 [
@@ -54,7 +60,10 @@ export default class extends Component {
                         date: '4/12/2023 12:41:01 PM',
                         EQCode: '300822',
                         items: 'Toner Cyan, Drum Cyan',
-                        description: 'Test12345678'
+                        description: 'Test12345678',
+                        dataStatus: 'selesai',
+                        id: 4,
+                        statues: 'belum nilai'
                     },
                     {
                         code: 'CR-2310784',
@@ -62,7 +71,21 @@ export default class extends Component {
                         date: '4/12/2023 12:41:01 PM',
                         EQCode: '300822',
                         items: 'Toner Cyan, Drum Cyan',
-                        description: 'Test12345678'
+                        description: 'Test12345678',
+                        dataStatus: 'selesai',
+                        id: 4,
+                        statues: 'belum nilai'
+                    },
+                    {
+                        code: 'CR-2310784',
+                        requestType: 'Consumable Request',
+                        date: '4/12/2023 12:41:01 PM',
+                        EQCode: '300822',
+                        items: 'Toner Cyan, Drum Cyan',
+                        description: 'Test12345678',
+                        dataStatus: 'selesai',
+                        id: 5,
+                        statues: 'sudah nilai'
                     }
                 ],
             ]
@@ -97,12 +120,12 @@ export default class extends Component {
                             this.state.tabActivated === 0 ? (
                                 this.state.tabData.map((value, tabKey) => (
                                     this.state.tabData[tabKey].map((val, key) => (
-                                        <TabelComponent tabActive={ tabKey + 1 } key={ key } data={ val } cardBg={ this.state.cardBg } />
+                                        <TabelComponent tabActive={ tabKey + 1 } key={ key } data={ val } cardBg={ this.state.cardBg } belumNilai={val.statues === 'belum nilai'} sudahNilai={val.statues === 'sudah nilai'} />
                                     ))
                                 ))
                             ) : (
                                 this.state.tabData[this.state.tabActivated - 1].map((val, key) => (
-                                    <TabelComponent tabActive={ this.state.tabActivated } key={ key } data={ val } cardBg={ this.state.cardBg } />
+                                    <TabelComponent tabActive={ this.state.tabActivated } key={ key } data={ val } cardBg={ this.state.cardBg } belumNilai={val.statues === 'belum nilai'} sudahNilai={val.statues === 'sudah nilai'} />
                                 ))
                             )
                         }

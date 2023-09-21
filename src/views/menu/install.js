@@ -175,14 +175,18 @@ export default class extends Component {
     render () {
         return (
             <>
-            <div className="container">
-                <div className="d-flex" style={{alignItems:'baseline', height:'55px'}}>
-                    <Link className="list-items" to="../dashboard">
-                        <i className="fa fa-arrow-left me-3" style={{fontSize:'16px', color:'#014C90'}}></i>
-                        <span className="title-icare fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Install Request</span>
-                    </Link>
+            <div className="py-md-3 py-2">
+                <div className="responsive-bar" style={{alignItems:'baseline', height:'55px'}}>
+                    <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{fontSize: '18px'}}>
+                        <Link className="nav-link d-inline me-3" to="../dashboard">
+                            <i className="fa fa-arrow-left color-arrow-left" style={{color: '#014C90'}}></i>
+                            {/* <i className="fa fa-arrow-left me-3" style={{fontSize:'16px', color:'#014C90'}}></i> */}
+                        </Link>
+                        {/* <span className="title-icare title-fitur fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Install Request</span> */}
+                        <span style={{borderBottom:'3px solid #014C90'}}>Install Request</span>
+                    </h4>
                 </div>
-                <div className="container">
+                <div className="responsive-install">
                     <div className="card px-3 shadow border-0">
                         <form onSubmit={this.submit}>
                             <div className="card-body">
@@ -190,8 +194,22 @@ export default class extends Component {
                                     <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                         <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Equipment Number</label>
                                     </div>
-                                    <Link className="py-4 mb-2" style={{border:'1px solid #000'}} onChange={this.validationEquipment} to="/daftar_eq"></Link>
-                                    <span className={`text-danger small mb-4 px-0 ${this.state.errorMessageEqipmentNumber !== '' ? '' : 'd-none'}`} style={{fontSize:'12px'}}> {this.state.errorMessageEqipmentNumber} </span>
+                                    
+                                    <div className="d-lg-grid d-none p-0">
+                                            <Link className="py-4 mb-2" style={{border:'1px solid #000'}} onChange={this.validationEquipment} to="/daftar_eq"></Link>
+                                            <span className={`text-danger small mb-4 px-0 ${this.state.errorMessageEqipmentNumber !== '' ? '' : 'd-none'}`} style={{fontSize:'12px'}}> {this.state.errorMessageEqipmentNumber} </span>
+                                    </div>
+
+
+                                    <div className="d-lg-none d-flex p-0">
+                                        <div className="col-10 p-0 d-grid">
+                                            <Link className="py-4 mb-2" style={{border:'1px solid #000'}} onChange={this.validationEquipment} to="/daftar_eq"></Link>
+                                            <span className={`text-danger small mb-4 px-0 ${this.state.errorMessageEqipmentNumber !== '' ? '' : 'd-none'}`} style={{fontSize:'12px'}}> {this.state.errorMessageEqipmentNumber} </span>
+                                        </div>
+                                        <div className="col-2 text-center my-auto">
+                                            <Link className="fa fa-qrcode" style={{fontSize: '45px', textDecoration: 'none', color: '#000', right: 5}}></Link>
+                                        </div>
+                                    </div>
                                     
                                     <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                         <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Alamat/Lokasi Mesin</label>
@@ -203,26 +221,26 @@ export default class extends Component {
                                         <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Problem (Please Select)</label>
                                     </div>
 
-                                    <div className="col-md-4 col-sm-6 col-12 mt-3">
+                                    <div className="col-md-4 col-sm-6 col-6 input-check d-md-block d-none">
                                         <div className="check-item d-flex align-items-center mb-4 form-check">
-                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="install-checkbox me-2 form-check-input"/> 
-                                            <label style={{fontSize:'14px'}}>Install driver printer</label>
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="mt-0 me-2 form-check-input"/> 
+                                            <label className="form-check-label" style={{fontSize:'14px'}}>Install driver printer</label>
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4 form-check">
-                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="install-checkbox me-2 form-check-input"/>
-                                            <label style={{fontSize:'14px'}}>Setting printer</label>
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="mt-0 me-2 form-check-input"/>
+                                            <label className="form-check-label" style={{fontSize:'14px'}}>Setting printer</label>
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4 form-check">
-                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="install-checkbox me-2 form-check-input"/>
-                                            <label style={{fontSize:'14px'}}>Setting address book</label>
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="mt-0 me-2 form-check-input"/>
+                                            <label className="form-check-label" style={{fontSize:'14px'}}>Setting address book</label>
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4 form-check">
-                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="install-checkbox me-2 form-check-input"/>
-                                            <label style={{fontSize:'14px'}}>Setting Kalibrasi</label>
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="mt-0 me-2 form-check-input"/>
+                                            <label className="form-check-label" style={{fontSize:'14px'}}>Setting Kalibrasi</label>
                                         </div>
                                     </div>
 
-                                    <div className="col-md-4 col-sm-6 col-12 mt-3">
+                                    <div className="col-md-4 col-sm-6 col-6 input-check d-md-block d-none">
                                         <div className="check-item d-flex align-items-center mb-4 form-check">
                                             <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="install-checkbox me-2 form-check-input"/> 
                                             <label style={{fontSize:'14px'}}>Install resite</label>
@@ -241,7 +259,7 @@ export default class extends Component {
                                         </div>
                                     </div>
 
-                                    <div className="col-md-4 col-sm-6 col-12 mt-3">
+                                    <div className="col-md-4 col-sm-6 col-6 input-check d-md-block d-none">
                                         <div className="check-item d-flex align-items-center mb-4 form-check">
                                             <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="install-checkbox me-2 form-check-input"/> 
                                             <label style={{fontSize:'14px'}}>Install accessories</label>
@@ -256,6 +274,61 @@ export default class extends Component {
                                         </div>
                                         <div className="check-item d-flex align-items-center mb-4 form-check">
                                             <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="form-check-input install-checkbox me-2"/>
+                                            <label style={{fontSize:'14px'}}>Setting Fax</label>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div className="col-md-4 col-sm-6 col-6 input-check d-md-none d-block">
+                                        <div className="check-item d-flex align-items-center mb-4 form-check">
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="me-md-3 mt-0 me-2 form-check-input"/> 
+                                            <label className="form-check-label" style={{fontSize:'14px'}}>Install driver printer</label>
+                                        </div>
+                                        <div className="check-item d-flex align-items-center mb-4 form-check">
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="me-md-3 mt-0 me-2 form-check-input"/>
+                                            <label className="form-check-label" style={{fontSize:'14px'}}>Setting printer</label>
+                                        </div>
+                                        <div className="check-item d-flex align-items-center mb-4 form-check">
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="me-md-3 mt-0 me-2 form-check-input"/>
+                                            <label className="form-check-label" style={{fontSize:'14px'}}>Setting address book</label>
+                                        </div>
+                                        <div className="check-item d-flex align-items-center mb-4 form-check">
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="me-md-3 mt-0 me-2 form-check-input"/>
+                                            <label className="form-check-label" style={{fontSize:'14px'}}>Setting Kalibrasi</label>
+                                        </div>
+                                        <div className="check-item d-flex align-items-center mb-4 form-check">
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="me-md-3 mt-0 me-2 form-check-input"/> 
+                                            <label style={{fontSize:'14px'}}>Install resite</label>
+                                        </div>
+                                        <div className="check-item d-flex align-items-center mb-4 form-check">
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="me-md-3 mt-0 me-2 form-check-input"/>
+                                            <label style={{fontSize:'14px'}}>Setting scan</label>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4 col-sm-6 col-6 input-check d-md-none d-block mb-2">
+                                        <div className="check-item d-flex align-items-center mb-4 form-check">
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="me-md-3 mt-0 me-2 form-check-input"/>
+                                            <label style={{fontSize:'14px'}}>Install New Machine</label>
+                                        </div>
+                                        <div className="check-item d-flex align-items-center mb-4 form-check">
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="me-md-3 mt-0 me-2 form-check-input"/>
+                                            <label style={{fontSize:'14px'}}>Setting Warna</label>
+                                        </div>
+                                        <div className="check-item d-flex align-items-center mb-4 form-check">
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="me-md-3 mt-0 me-2 form-check-input"/> 
+                                            <label style={{fontSize:'14px'}}>Install accessories</label>
+                                        </div>
+                                        <div className="check-item d-flex align-items-center mb-4 form-check">
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="my-auto me-md-2 me-2 form-check-input"/>
+                                            <label style={{fontSize:'14px'}}>Setting Authentication / Auditron</label>
+                                        </div>
+                                        <div className="check-item d-flex align-items-center mb-4 form-check">
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="me-md-3 mt-0 me-2 form-check-input"/>
+                                            <label style={{fontSize:'14px'}}>Setting IP Address</label>
+                                        </div>
+                                        <div className="check-item d-flex align-items-center mb-4 form-check">
+                                            <input type="checkbox" style={{borderRadius: 0, padding:'1px'}} className="me-md-3 mt-0 me-2 form-check-input"/>
                                             <label style={{fontSize:'14px'}}>Setting Fax</label>
                                         </div>
                                     </div>
@@ -288,7 +361,7 @@ export default class extends Component {
                                         <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'14px', color:'pink'}}>Please upload photo meter information/photo machine</p>
                                         <input type="file" className="d-none" id="input-file" onChange={this.previewImage} accept="image/*" />
                                         <label className="file-icon mb-3 d-block" htmlFor="input-file">
-                                            <div className="text-center rounded-circle p-2" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px', marginLeft:'48%'}}>
+                                            <div className="mx-auto rounded-circle p-2" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px', marginLeft:'48%'}}>
                                                 <img className="mt-1" src="images/upload.png" style={{width:'22px'}}></img>
                                             </div>
                                         </label>
@@ -300,7 +373,7 @@ export default class extends Component {
                                 </div>
                             </div>
                         </form>
-                        <ConfirmAlert visible={this.state.showPopup} message="Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min. 1" customClass="col-md-5 col-sm-8 col-12" onClick={this.handlePopup} />
+                        <ConfirmAlert visible={this.state.showPopup} message="Mohon isi field yang kosong dan upload foto meter. Untuk field problem isi min. 1" customClass="col-md-5 col-sm-8 col-10" onClick={this.handlePopup} />
                         <ConfirmAlert visible={this.state.showAddedPopup} message="Berhasil melakukan permintaan install" customClass="col-sm-3" onClick={this.handlePopup} />
                     </div>
                 </div>

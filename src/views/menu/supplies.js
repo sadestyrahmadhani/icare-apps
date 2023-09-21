@@ -264,14 +264,17 @@ export default class extends Component {
     render () {
         return (
             <>
-            <div className="container mt-4 mb-5">
-                <div className="d-flex mb-4" style={{alignItems:'baseline', height:'30px'}}>
-                    <Link className="list-items" to="../dashboard">
-                        <i className="fa fa-arrow-left me-3" style={{fontSize:'16px', color:'#014C90'}}></i>
-                        <span className="title-icare fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}>Supplies Request</span>
-                    </Link>
+            <div className="py-md-3 py-2">
+                <div className="responsive-bar" style={{alignItems:'baseline', height:'55px'}}>
+                    <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{fontSize: '18px'}}>
+                        <Link className="nav-link d-inline me-3" to="../dashboard">
+                            <i className="fa fa-arrow-left color-arrow-left" style={{color:'#014C90'}}></i>
+                        </Link>
+                            <span style={{borderBottom:'3px solid #014C90'}}>Supplies Request</span>
+                    </h4>
                 </div>
-                <div className="card px-3 shadow border-0">
+                <div className="responsive-supplies">
+                <div className="card px-lg-3 px-1 shadow border-0">
                     <div className="card-body">
                         <form onSubmit={this.submit}>
                             <div className="row">
@@ -279,14 +282,27 @@ export default class extends Component {
                                     <label className="fw-medium" style={{fontSize:'12px', color:'white'}}>Equipment Number</label>
                                 </div>
 
+
                                 <div className="d-flex p-0">
-                                    <div className="col-sm-11">
+                                    <div className="col-sm-11 col-10">
                                         <div className="py-4 mb-2" style={{border:'1px solid #000'}} onChange={this.validationEquipment} ></div>
                                     </div>
-                                    <div className="col-sm-2 mx-2">
+
+
+
+                                    <div className="col-sm-1 col-2 d-none d-lg-block d-md-block text-end">
                                         <button className="btn btn-login" style={{height:'50px', width:'80px'}}><i className="fa fa-plus fs-4 py-1"></i></button>
                                     </div>
+
+                                    <div className="col-2 d-block d-lg-none d-md-none text-center py-1">
+                                        <Link className="fa fa-qrcode" style={{fontSize: '45px', textDecoration: 'none', color: '#000', right: 5}}></Link>
+                                    </div>
+
+
+
                                 </div>
+
+
                                 <span className={`text-danger small mb-4 px-0 ${ this.state.errorMessageEquipmentNumber !== '' ? '' : 'd-none' }`} style={{fontSize:'12px'}} >{ this.state.errorMessageEquipmentNumber }</span>
 
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
@@ -332,7 +348,8 @@ export default class extends Component {
                                         <label style={{fontSize:'14px'}} htmlFor="cleaning-cartridge">Cleaning Cartridge</label>
                                     </div>
                                 </div>
-                                <div className="col-md-3 col-sm-6">
+
+                                <div className="col-md-3 col-sm-6 col-6 input-check d-md-block d-none">
                                     <div className="check-item d-flex align-items-center mb-3">
                                         <input type="text" className="input-consumable py-2" maxLength="1" value={this.state.checkboxStatus.tonerBlack ? this.state.checkboxValues.tonerBlack : ''} onChange={(e) => this.handleInputChange(e, 'tonerBlack')} disabled={!this.state.checkboxStatus.tonerBlack} style={{width:'20%', height:'45px', backgroundColor:'white'}}></input>
                                     </div>
@@ -456,9 +473,10 @@ export default class extends Component {
                                 
                             </div>
                         </form>
-                        <ConfirmAlert visible={this.state.showPopup} message="Mohon isi field yang kosong, upload foto meter dan upload foto status consumable. Untuk field problem isi min. 1" customClass="col-md-5 col-sm-8 col-12" onClick={this.handlePopup} />
+                        <ConfirmAlert visible={this.state.showPopup} message="Mohon isi field yang kosong, upload foto meter dan upload foto status consumable. Untuk field problem isi min. 1" customClass="col-md-5 col-sm-8 col-10" onClick={this.handlePopup} />
                         <ConfirmAlert visible={this.state.showAddedPopup} message="Berhasil melakukan permintaan consumable" customClass="col-sm-4" onClick={this.handlePopup} />
                     </div>
+                </div>
                 </div>
             </div>
             </>

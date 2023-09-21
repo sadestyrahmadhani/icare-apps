@@ -43,7 +43,7 @@ export default class extends Component {
                 localStorage.setItem('telp', this.state.userInfo.telp)
                 this.props.router.navigate('/data_diri')
             } else {
-                this.props.router.navigate('/ubah_kata_sandi')
+                this.props.router.navigate('/update_password')
             }
         } 
     } 
@@ -64,7 +64,7 @@ export default class extends Component {
             this.setState({iteration: 60, resendCodeDisabled: true})
         }
     }
-
+    
     render() {  
         return(
             <div className="bg-light">

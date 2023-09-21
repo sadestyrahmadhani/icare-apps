@@ -32,7 +32,7 @@ export default [
             },
             {
                 title:'',
-                path:'detail-permintaan',
+                path:'detail-permintaan/:id',
                 component: import('./../views/riwayat/detail-permintaan'),
                 auth:true,
                 key:"1.3.2"

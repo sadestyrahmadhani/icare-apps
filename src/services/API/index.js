@@ -7,3 +7,4 @@ export { verifyOtp } from './mod_verifyOtp';
 export { getDaftarAlamat } from './mod_daftarAlamat'
 export { getDaftarEq } from './mod_daftarEQ';
 export { updateDataDiriById } from './mod_dataDiri';
+export { updatePasswordById } from './mod_updatePassword';

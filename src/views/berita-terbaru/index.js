@@ -15,6 +15,9 @@ export default class extends Component {
                     <div className="responsive-news card px-md-4 px-1 shadow">
                         <div className="card-body">
                             <div className="row">
+                                <div className="mb-3 mt-1 d-lg-none d-md-none">
+                                    <img src="images/iCareLogo.png" alt="" style={{width: '30%'}}/>
+                                </div>
                                 <div className="fw-bold mb-3">
                                     <h5 className="title-icare fw-bold">Dukung Pelaku Ekonomi Kreatif, Astragraphia Berkolaborasi Dengan Kemenparekraf dalam Program Apresiasi Kreasi Indonesia (AKI) 2023</h5>
                                     <span style={{fontSize: '14px'}}>2023-09-10 09:00:00</span>

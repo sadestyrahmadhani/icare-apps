@@ -138,7 +138,7 @@ export default class extends Component {
             <div className="py-lg-0 my-md-0 py-5">
                 <div className="card shadow border-0 responsive-form" style={{borderRadius:'20px'}}>
                     <form onSubmit={this.submit}>
-                        <div className="card-body px-lg-0 px-md-0 px-2">
+                        <div className="card-body px-lg-2 px-md-2 px-2">
                             <div className="card border-0 mt-2" style={{borderRadius:'15px', boxShadow:'1px 1px 3px 3px #bfbfbf'}}>
                                 <div className="card-body">
                                     <div className="card-label">

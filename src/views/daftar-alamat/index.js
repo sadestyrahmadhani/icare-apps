@@ -84,13 +84,8 @@ export default class extends Component {
                     deliveryLocation: false
                 },
             ],
-            dataDaftarAlamat: [],
-            count:0
+            dataDaftarAlamat: []
         }
-    }
-
-    handlecount() {
-        this.setState({count: 0 + 1})
     }
 
     handlePopup(){
@@ -126,21 +121,27 @@ export default class extends Component {
 
         return (
             <>
-                    <div className="responsive-bar d-md-flex">
+                    <div className="responsive-bar d-md-flex h-address">
                         <div className="col-md-6 col-12 mb-md-5">
                             <div className="row">
                                 <div className="col-md-12 col-8" >
-                                    <Link to="/settings" style={{textDecoration:'none'}}>
-                                        <i className="fa fa-arrow-left text-white me-1" style={{fontSize:'16px'}}></i>
-                                        <span className="title-icare title-fitur fw-bold py-1" style={{ borderBottom: '3px solid #014C90', width: '210px', fontSize: '18px', marginLeft: '20px' }}>Pengaturan Alamat</span>
+                                    <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{fontSize: '18px'}}>
+                                        <Link className="nav-link d-inline d-md-none me-3" to="/settings">
+                                            <i className="fa fa-arrow-left color-arrow-left"></i>
+                                        </Link>
+                                        <span style={{borderBottom: '3px solid #014C90'}}>Pengaturan Alamat</span>
+                                    </h4>
+                                    {/* <Link to="/settings" style={{textDecoration:'none'}}>
+                                        <i className="fa fa-arrow-left text-white me-3" style={{fontSize:'16px'}}></i>
                                     </Link>
-                                </div>
-                                <div className="col-2 d-md-none d-block text-end py-1">
+                                        <span className="title-icare title-fitur fw-bold py-1" style={{ borderBottom: '3px solid #014C90', width: '210px', fontSize: '18px' }}>Pengaturan Alamat</span> */}
+                             </div>
+                                <div className="col-2 d-md-none d-block text-end">
                                     <Link to="/tambah_alamat/0">
                                         <i className="fa fa-plus-circle" style={{fontSize:'20px'}}></i>
                                     </Link>
                                 </div>
-                                <div className="col-2 d-md-none d-block text-end py-1">
+                                <div className="col-2 d-md-none d-block text-end">
                                     <a href="">
                                         <i className="fa fa-search text-white" style={{fontSize:'20px'}}></i>
                                     </a>
@@ -148,7 +149,7 @@ export default class extends Component {
                             </div>
                         </div>
                         <div className="col-md-7 row d-md-flex d-none">
-                            <div className="col-lg-8 col-md-7 col-12">
+                            <div className="col-lg-7 col-md-7 col-12">
                                 <form className="d-flex" style={{ width: '108%' }}>
                                     <span className="my-auto" style={{ color: '#014C90' }}>
                                         <i className="fa fa-search fa-fw" style={{ marginRight: 'auto' }}></i>
@@ -159,16 +160,17 @@ export default class extends Component {
                                     </button>
                                 </form>
                             </div>
-                            <div className="col-md-4 col-3">
+                            <div className="col-md-4 col-3 text-end" style={{paddingRight: '25px'}}>
                                 <Link to="/tambah_alamat/0">
                                     <button className="btn btn-login" style={{ padding: '8px 20px', fontSize: '14px' }}><i className="fa fa-plus" style={{ marginRight: '5px' }}></i> Tambah Alamat</button>
                                 </Link>
                             </div>
                         </div>
                     </div>
-                    <div className="card shadow border-0 pt-5 ">
+                    <div className="py-lg-0 py-md-0 py-3">
+                    <div className="card shadow border-0 pt-5 responsive-form">
                         <div className="card-body">
-
+                            
                             {this.state.dataDaftarAlamat.map((item) => (
                                 <div className="card shadow-sm rounded m-4">
                                     <div className="card-body">
@@ -264,6 +266,7 @@ export default class extends Component {
                                 </div>
                             ))}
                         </div>
+                    </div>
                     </div>
                     {/* <ConfirmAlert visible={this.state.showPopup} message={this.state.alertOptionTwo.message} onClick={this.handlePopup} customClass="col-md-3 col-sm-6 col-9" /> */}
                     {

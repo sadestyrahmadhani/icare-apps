@@ -629,7 +629,7 @@ td {
     .py-xs-0 {
         padding: 0 !important;
     }
-    .row-height .card, .responsive-breakfix {
+    .row-height .card, .responsive-breakfix, .responsive-install .responsive-supplies {
         box-shadow: none !important;
         border: none !important;
         margin-top: 45px !important;
@@ -846,9 +846,9 @@ td {
     }
 
     /* supplies */
-    .responsive-supplies .card {
+    .responsive-supplies .card, .responsive-install .card {
         box-shadow: none !important;
-        margin-top: 65px !important;
+        margin-top: 40px !important;
     }
     .label-supplies {
         font-size: 12px !important;
@@ -862,10 +862,11 @@ td {
     }
 
     /* berita-terbaru */
-    .responsive-news .card {
+    .responsive-news {
         border: none !important;
         box-shadow: none !important;
-        margin-top: 65px;
+        /* margin-top: 65px; */
+        background: white !important;
     }
     .table-width {
         max-width: 100% !important;
@@ -911,10 +912,11 @@ td {
         padding-right: 1rem !important;
     }
     .btn-photo {
-        padding: 15px 20px !important;
+        padding: 10px 13px !important;
     }
     .btn-selfie {
-        padding: 15px 10px !important;
+        padding: 10px 3px !important;
+        width: 100% !important;
     }
 
     /* upgrade-step3 */
@@ -948,6 +950,35 @@ td {
         color: #fff !important;
     }
 
-    /* form-eq */
+    /* informasi */
+    .image-information {
+        width: 60% !important;
+    }
+    .margin-close {
+        margin-left: 95% !important;
+    }
+
+    /* install-request */
+    .responsive-install .card {
+        padding-left: 0.25rem !important;
+        padding-right: 0.25rem !important;
+    }
+
+    .h-address {
+        height: 61px !important;
+    }
+
+    .responsive-eq {
+        display: contents !important;
+    }
+    .text-position-right {
+        text-align: end !important;
+    }
+    .text-position-center {
+        text-align: center !important;
+    }
+    .responsive-eq img {
+        height: 50px !important;
+    }
 }
 

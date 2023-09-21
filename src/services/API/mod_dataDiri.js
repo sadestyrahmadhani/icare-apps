@@ -23,18 +23,19 @@ export const getDataDiriByStatus = async () => {
 
 export const updateDataDiriById = async (payload) => {
     try {
+        // console.log(payload)
         const res = await fetch(`${appConfig.BASE_API}/user/update/${localStorage.getItem('id')}`, {
             method: 'POST',
             ...jsonHeaderAuth(),
             mode: 'cors',
             body: JSON.stringify(payload)
         })
-        var data = null
-        try {
-            data = await res.json()
-        } catch (error) {
-            data = null
-        }
+        var data = await res.text()
+        // try {
+        //     data = await res.json()
+        // } catch (error) {
+        //     data = null
+        // }
         return{status: res.status, data: data}
     } catch (error) {
         throw error

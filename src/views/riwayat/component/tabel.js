@@ -1,7 +1,26 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
+import DetailPermintaan from "../detail-permintaan";
+import { id } from "date-fns/locale";
 
 export default class extends Component {
+    // constructor(props) {
+    //     super(props)
+    //     this.state = {
+    //         sudahNilai: true,
+    //         belumNilai: false,
+    //     }
+    // }
+
+    // setViewActive = (value) => {
+    //     this.setState({viewActive: value, setViewActive: value === 3 ? (this.state.viewActive[3] && this.state.viewActive[4] && this.state.viewActive[2] && this.state.viewActive[1]) : this.state.viewActive[0]});
+    //     console.log("Nilai viewActive:", this.state.viewActive);
+    // }
+
+    // handleDetailClick = () => {
+    //     this.setState({setViewActive: 3});
+    // }
+
     render() {
         return (
             <div className="card border-0 mb-3" style={{ boxShadow: '0 0 1.5rem rgba(0, 0, 0, .2' }}>
@@ -44,7 +63,12 @@ export default class extends Component {
                             </div>
                         ) : this.props.tabActive == 4 ? (
                             <div style={{ position: 'relative', width: '70%', marginLeft: 'auto', marginRight: 'auto' }}>
-                                <hr style={{ position: 'absolute', top: 0, left: 0, right: '30%', border: '3px solid #23ad4c', opacity: 1 }} />
+                                {this.props.belumNilai && (
+                                    <hr style={{ position: 'absolute', top: 0, left: 0, right: '30%', border: '3px solid #23ad4c', opacity: 1 }} />
+                                )}
+                                {this.props.sudahNilai && (
+                                    <hr style={{ position: 'absolute', top: 0, left: 0, right: 0, border: '3px solid #23ad4c', opacity: 1 }} />
+                                )}
                                 <div style={{ position: 'absolute', textAlign: 'center', left: -40 }}>
                                     <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
                                         <i className="fa fa-check"></i>
@@ -63,12 +87,22 @@ export default class extends Component {
                                     </div>
                                     Selesai
                                 </div>
-                                <div style={{ position: 'absolute', right: -30, textAlign: 'center' }}>
-                                    <div className="mx-auto" style={{ padding: '4px', background: '#ccc', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                        <i className="fa fa-check"></i>
+                                {this.props.belumNilai && (
+                                    <div style={{ position: 'absolute', right: -30, textAlign: 'center' }}>
+                                        <div className="mx-auto" style={{ padding: '4px', background: '#ccc', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
+                                            <i className="fa fa-check"></i>
+                                        </div>
+                                        Nilai
                                     </div>
-                                    Nilai
-                                </div>
+                                )}
+                                {this.props.sudahNilai && (
+                                    <div style={{ position: 'absolute', right: -30, textAlign: 'center' }}>
+                                        <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
+                                            <i className="fa fa-check"></i>
+                                        </div>
+                                        Nilai
+                                    </div>
+                                )}
                             </div>
                         ) : this.props.tabActive == 2 ? (
                             <div style={{ position: 'relative', width: '70%', marginLeft: 'auto', marginRight: 'auto' }}>
@@ -130,7 +164,7 @@ export default class extends Component {
                     </div>
                     <div className="col-md-3 col-sm-5 col-12 p-4">
                         {
-                            this.props.tabActive == 4 ? (
+                            this.props.tabActive === 4 && this.props.belumNilai && (
                                 <Link className="btn-view shadow rounded-2 d-flex align-items-center p-0 mx-auto mb-3" style={{width:'90%', border:'none',backgroundColor:'#01c9d4', textDecoration:'none'}} to="/tulis_review">
                                     <div className="col-9 p-2 text-center" style={{color:'#fff', fontSize:'12px'}}>
                                         BERIKAN NILAI
@@ -139,7 +173,7 @@ export default class extends Component {
                                         <i className="fa fa-external-link-square ms-2" style={{backgroundColor:'#fff', color:'#01c9d4'}}></i>
                                     </div>
                                 </Link>
-                            ) : ''
+                            )
                         }
                         {
                             this.props.tabActive == 2 ? (
@@ -153,14 +187,18 @@ export default class extends Component {
                                 </button>
                             ) : ''
                         }
-                        <Link className="btn btn-view d-flex shadow rounded-2 d-flex align-items-center p-0 mx-auto" style={{width:'90%', border:'none',backgroundColor:'#014C90'}} to="/detail-permintaan">
-                            <div className="col-9 p-2 text-center" style={{color:'#fff', fontSize:'12px'}}>
-                                VIEW DETAIL
-                            </div>
-                            <div className="col-3 text-center bg-white text-danger p-2 rounded-end">
-                                <i className="fa fa-chevron-right ms-2" style={{backgroundColor:'#fff'}}></i>
-                            </div>
-                        </Link>
+                        {/* {
+                            this.state.viewActive === 0 ? ( */}
+                            <Link className="btn btn-view d-flex shadow rounded-2 d-flex align-items-center p-0 mx-auto" style={{width:'90%', border:'none', backgroundColor:'#014C90'}} to={{pathname:'/detail-permintaan/' +this.props.data.id}}>
+                                <div className="col-9 p-2 text-center" style={{color:'#fff', fontSize:'12px'}}>
+                                    VIEW DETAIL
+                                </div>
+                                <div className="col-3 text-center bg-white text-danger p-2 rounded-end">
+                                    <i className="fa fa-chevron-right ms-2" style={{backgroundColor:'#fff'}}></i>
+                                </div>
+                            </Link>
+                            {/* ) : ''
+                        }     */}
                     </div>
                 </div>
             </div>
