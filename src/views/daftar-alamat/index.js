@@ -200,7 +200,6 @@ export default class extends Component {
                                                                 <button style={{ border: '0', background: 'none', fontWeight: 'bold' }}>
                                                                     <i className="fa fa-map-marker fa-lg my-auto" style={{ padding: 'initial' }}></i>
                                                                     <span style={{ fontSize: '14px', padding: 'inherit', color: '#014C90' }}> Sudah Pinpoint</span>
-                                                                    {/* <span style={{ fontSize: '14px', padding: 'inherit', color: '#014C90' }}> {item.Kota}</span> */}
                                                                 </button>
                                                             ):(
                                                                 <div></div>
@@ -220,7 +219,6 @@ export default class extends Component {
                                                                         <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
                                                                     </li>
                                                                     <li className="nav-item">
-                                                                        {/* <Link className="nav-link">Hapus</Link> */}
                                                                         <button onClick={()=>this.handleDelete(item.Nama_Alamat)} className="nav-link" >Hapus</button>
                                                                     </li>
                                                                 </ol>
@@ -231,14 +229,12 @@ export default class extends Component {
                                                             <div style={{ marginTop: "70px" }}>
                                                                 <ol className="title-icare mb-0" style={{ fontSize: '14px', position: 'relative', bottom: '-25px', paddingTop: '10px' }}>
                                                                     <li className="nav-item" style={{ marginRight: '30px' }}>
-                                                                        {/* <Link className="nav-link">Utamakan</Link> */}
                                                                         <button onClick={()=>this.handlePrioritize(item.Nama_Alamat)} className="nav-link">Utamakan</button>
                                                                     </li>
                                                                     <li className="nav-item" style={{ marginRight: '30px' }}>
                                                                         <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
                                                                     </li>
                                                                     <li className="nav-item">
-                                                                        {/* <Link className="nav-link">Hapus</Link> */}
                                                                         <button onClick={()=>this.handleDelete(item.Nama_Alamat)} className="nav-link" >Hapus</button>
                                                                     </li>
                                                                 </ol>
@@ -354,11 +350,12 @@ export default class extends Component {
                             </div>
                         </div>
 
-                    ))}
-                    <div className="m-5">
+                    ))} */}
+                    {/* <div className="m-5">
                         <button type="button" className="btn btn-primary" style={{ width: '100%', height: '50px', backgroundColor: '#014C90', borderRadius: '10px' }}>Lihat lebih banyak...</button>
-                    </div> */}
-
+                    </div>
+                </div>
+            </div> */}
 
             </>
         )
