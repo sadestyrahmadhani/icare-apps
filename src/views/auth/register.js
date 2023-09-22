@@ -1,5 +1,5 @@
 import { Component, useState } from "react";
-import { Link, useResolvedPath } from "react-router-dom";
+import { Link, useNavigate, useResolvedPath } from "react-router-dom";
 import { register,registerimage } from "../../services/API"
 import Navbar from "../../component/navbar";
 import Footer from "./../../component/footer";
@@ -8,6 +8,7 @@ import { Col, Row } from "react-bootstrap";
 
 
 function Register() {
+    const navigate = useNavigate()
     const [ showPopup, setShowPopup ] = useState(false) 
     const [ alertOption, setAlertOption ] = useState({
         title:'',
@@ -30,7 +31,202 @@ function Register() {
     const [ errorNameCompany, setErrorNameCompany ] = useState('')
     const [ errorEQ, setErrorEQ] = useState('')
 
-
+    const handlePopup = () => {
+        setShowPopup(false)
+    }
+    
+    async function submit(e) {
+        e.preventDefault()
+        let isValid=true
+        if(countFileInput > 0) {            
+            if(!email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
+                isValid=false
+                setErrorEmail('Silahkan isi email')
+            } 
+            if(phone === ""){ 
+                isValid=false
+                setErrorPhone('Silahkan isi nomor telepon')
+            }
+            if(pass === ""){ 
+                isValid=false
+                setErrorPass('Silahkan isi password')
+            }
+            if(rePass === ""){ 
+                isValid=false
+                setErrorRePass('Silahkan ulangi isi password')
+            }
+            if(name === ""){ 
+                isValid=false
+                setErrorName('Silahkan isi nama lengkap')
+            }
+            if(nameCompany === ""){ 
+                isValid=false
+                setErrorNameCompany('Silahkan isi nama perusahaan/instansi')
+            }
+            if(equipment === ""){ 
+                isValid=false
+                setErrorEQ('Silahkan isi nomor equipment')
+            }
+        } else { 
+            isValid=false
+            setShowPopup(true)
+            setAlertOption({title: 'Error', message: 'Belum ada foto'})
+        } 
+        if (isValid){
+            const {email, phone,pass,name,nameCompany,equipment,meterImage} = useState
+            
+            setAlertOption(true)
+            setErrorEQ(false)
+    
+            const uploadFile = await registerimage(meterImage)
+            if (uploadFile.data.includes("Succes upload")){
+                let filename = uploadFile.data.substring(15,uploadFile.data.length-15)
+                // console.log('file name',filename)
+                const response = await register({
+                "username": email,    
+                "password":  pass,    
+                "namalengkap": name,    
+                "emailaddress": email,    
+                "telp": phone,    
+                "validationcode": "", "otp": "False","token2": "",
+                "namaperusahaan":nameCompany,
+                "fotoEquipment":filename, 
+                "NoEquipment":equipment,
+                "type":"normal"
+              });
+                console.log('register response',response)
+                if (response.data.includes("Succes")) {
+                    setShowPopup(true)
+                    setAlertOption({title: '', message : 
+                            `Terima kasih untuk data-data yang anda input, selanjutnya \n 
+                          kami akan memvalidasi data-data tersebut dan akan menginformasikannya \n
+                          melalui email anda.`
+                })
+                    navigate('/')
+                }
+                else
+                    setShowPopup(true)
+                    setAlertOption({title: '', message: ''})
+            }else{
+                setShowPopup(true)
+                setAlertOption({title: 'Error Upload', message: 'please try again'})
+            }
+            
+            console.log('submitting')
+        }else{
+            setShowPopup(true)
+            setAlertOption({title: 'Error', message: 'please fill empty field'})
+        }
+    }
+    
+    const validationEmail = (e) => {
+        e.preventDefault()
+        setEmail(e.target.value)
+        if(e.target.value === "") {
+            setErrorEmail('Silahkan isi email')
+        } else {
+            if(!e.target.value.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+                setErrorEmail('Email tidak valid')
+                return
+            } else {
+                setErrorEmail('')
+            }
+        } 
+    }
+    
+    const validationPhone = (e) => {
+        e.preventDefault()
+        setPhone(e.target.value)
+        if(e.target.value === "") {
+            setErrorPhone('Silahkan isi nomor telepon')
+        } else {
+            setErrorPhone('')
+        }
+    }
+    
+    const validationPass = (e) => {
+        e.preventDefault()
+        setPass(e.target.value)
+        if(e.target.value === "") {
+            setErrorPass('Silahkan isi password')
+        } else {
+            setErrorPass('')
+        }
+    }
+    
+    const validationRePass = (e) => {
+        e.preventDefault()
+        setRePass(e.target.value)
+        if(e.target.value === "") {
+            setErrorRePass('Silahkan ulang isi password')
+        } else {
+            if(e.target.value !== pass) {
+                setErrorRePass('Re-Enter password tidak sama dengan password')
+            } else {
+                setErrorRePass('')
+            }
+        }
+    }
+    
+    const validationName = (e) => {
+        e.preventDefault()
+        setName(e.target.value)
+        if(e.target.value === "") {
+            setErrorName('Silahkan isi nama lengkap')
+        } else {
+            setErrorName('')
+        }
+    }
+    
+    const validationNameCompany = (e) => {
+        e.preventDefault()
+        setNameCompany(e.target.value)
+        if(e.target.value === "") {
+            setErrorNameCompany('Silahkan isi nama perusahaan/isntansi')
+        } else {
+            setErrorNameCompany('')
+        }
+    }
+    
+    const validationEquipment = (e) => {
+        e.preventDefault()
+        setEquipment(e.target.value)
+        if(e.target.value === "") {
+            setErrorEQ('Silahkan isi nomor equipment')
+        } else {
+            setErrorEQ('')
+        }
+    }
+    const handleChange = (e) => {
+        setCountFileInput(e.target.files.length)
+        setMeterImage(e.target.files[0])
+    }
+    
+    
+    const handleFileInput = (e) => {
+        setCountFileInput(e.target.files.length)
+        document.querySelectorAll('.inputFiles-display').forEach((val, key) => {
+            if(e.target.files.length > 0) {
+                val.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <div class="w-100">${ e.target.files[0].name }</div>
+                        <i class="fa fa-check text-success d-block d-md-none"></i>
+                    </div>
+                `
+            } else {
+                val.innerHTML = ""
+            }
+        })
+    }
+    
+    const removeFileInput = (e) => {
+        e.preventDefault()
+        setCountFileInput(0)
+        document.querySelector('#inputFiles').value = ""
+        document.querySelectorAll('.inputFiles-display').forEach((val, key) => {
+            val.innerHTML = ``
+        })
+    }
     
 
     return(
@@ -141,202 +337,7 @@ function Register() {
 }
 
 
-const handlePopup = () => {
-    setShowPopup(false)
-}
 
-async function submit(e) {
-    e.preventDefault()
-    let isValid=true
-    if(countFileInput > 0) {            
-        if(!email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
-            isValid=false
-            setErrorEmail('Silahkan isi email')
-        } 
-        if(phone === ""){ 
-            isValid=false
-            setErrorPhone('Silahkan isi nomor telepon')
-        }
-        if(pass === ""){ 
-            isValid=false
-            setErrorPass('Silahkan isi password')
-        }
-        if(rePass === ""){ 
-            isValid=false
-            setErrorRePass('Silahkan ulangi isi password')
-        }
-        if(name === ""){ 
-            isValid=false
-            setErrorName('Silahkan isi nama lengkap')
-        }
-        if(nameCompany === ""){ 
-            isValid=false
-            setErrorNameCompany('Silahkan isi nama perusahaan/instansi')
-        }
-        if(equipment === ""){ 
-            isValid=false
-            setErrorEQ('Silahkan isi nomor equipment')
-        }
-    } else { 
-        isValid=false
-        setShowPopup(true)
-        setAlertOption({title: 'Error', message: 'Belum ada foto'})
-    } 
-    if (isValid){
-        const {email, phone,pass,name,nameCompany,equipment,meterImage} = useState
-        
-        setAlertOption(true)
-        setErrorEQ(false)
-
-        const uploadFile = await registerimage(meterImage)
-        if (uploadFile.data.includes("Succes upload")){
-            let filename = uploadFile.data.substring(15,uploadFile.data.length-15)
-            // console.log('file name',filename)
-            const response = await register({
-            "username": email,    
-            "password":  pass,    
-            "namalengkap": name,    
-            "emailaddress": email,    
-            "telp": phone,    
-            "validationcode": "", "otp": "False","token2": "",
-            "namaperusahaan":nameCompany,
-            "fotoEquipment":filename, 
-            "NoEquipment":equipment,
-            "type":"normal"
-          });
-            console.log('register response',response)
-            if (response.data.includes("Succes")) {
-                setShowPopup(true)
-                setAlertOption({title: '', message : 
-                        `Terima kasih untuk data-data yang anda input, selanjutnya \n 
-                      kami akan memvalidasi data-data tersebut dan akan menginformasikannya \n
-                      melalui email anda.`
-            })
-                navigate('/')
-            }
-            else
-                setShowPopup(true)
-                setAlertOption({title: '', message: res.data})
-        }else{
-            setShowPopup(true)
-            setAlertOption({title: 'Error Upload', message: 'please try again'})
-        }
-        
-        console.log('submitting')
-    }else{
-        setShowPopup(true)
-        setAlertOption({title: 'Error', message: 'please fill empty field'})
-    }
-}
-
-const validationEmail = (e) => {
-    e.preventDefault()
-    setEmail(e.target.value)
-    if(e.target.value === "") {
-        setErrorEmail('Silahkan isi email')
-    } else {
-        if(!e.target.value.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-            setErrorEmail('Email tidak valid')
-            return
-        } else {
-            setErrorEmail('')
-        }
-    } 
-}
-
-const validationPhone = (e) => {
-    e.preventDefault()
-    setPhone(e.target.value)
-    if(e.target.value === "") {
-        setErrorPhone('Silahkan isi nomor telepon')
-    } else {
-        setErrorPhone('')
-    }
-}
-
-const validationPass = (e) => {
-    e.preventDefault()
-    setPass(e.target.value)
-    if(e.target.value === "") {
-        setErrorPass('Silahkan isi password')
-    } else {
-        setErrorPass('')
-    }
-}
-
-const validationRePass = (e) => {
-    e.preventDefault()
-    setRePass(e.target.value)
-    if(e.target.value === "") {
-        setErrorRePass('Silahkan ulang isi password')
-    } else {
-        if(e.target.value !== pass) {
-            setErrorRePass('Re-Enter password tidak sama dengan password')
-        } else {
-            setErrorRePass('')
-        }
-    }
-}
-
-const validationName = (e) => {
-    e.preventDefault()
-    setName(e.target.value)
-    if(e.target.value === "") {
-        setErrorName('Silahkan isi nama lengkap')
-    } else {
-        setErrorName('')
-    }
-}
-
-const validationNameCompany = (e) => {
-    e.preventDefault()
-    setNameCompany(e.target.value)
-    if(e.target.value === "") {
-        setErrorNameCompany('Silahkan isi nama perusahaan/isntansi')
-    } else {
-        setErrorNameCompany('')
-    }
-}
-
-const validationEquipment = (e) => {
-    e.preventDefault()
-    setEquipment(e.target.value)
-    if(e.target.value === "") {
-        setErrorEQ('Silahkan isi nomor equipment')
-    } else {
-        setErrorEQ('')
-    }
-}
-const handleChange = (e) => {
-    setCountFileInput(e.target.files.length)
-    setMeterImage(e.target.files[0])
-}
-
-
-const handleFileInput = (e) => {
-    setCountFileInput(e.target.files.length)
-    document.querySelectorAll('.inputFiles-display').forEach((val, key) => {
-        if(e.target.files.length > 0) {
-            val.innerHTML = `
-                <div class="d-flex align-items-center">
-                    <div class="w-100">${ e.target.files[0].name }</div>
-                    <i class="fa fa-check text-success d-block d-md-none"></i>
-                </div>
-            `
-        } else {
-            val.innerHTML = ""
-        }
-    })
-}
-
-const removeFileInput = (e) => {
-    e.preventDefault()
-    setCountFileInput(0)
-    document.querySelector('#inputFiles').value = ""
-    document.querySelectorAll('.inputFiles-display').forEach((val, key) => {
-        val.innerHTML = ``
-    })
-}
 
 export default Register
 
