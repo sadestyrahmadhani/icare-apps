@@ -174,8 +174,7 @@ export default [
                 auth: true,
             },
             
-        ]
-    },
+        
     {
         title: '',
         path: 'settings',
@@ -202,9 +201,17 @@ export default [
     },
     {
         title:'',
-        path:'kode-otp/:id',
+        path:'kode-otp',
         component: import('../views/auth/kode-otp'),
-	   key:"5"
+	    key:"5"
+    },
+    {
+        title:'',
+        path:'update_password',
+        component: import('../views/ubah-password/update-password'),
+        key:"6"
     }
+]
+}
 ]
 

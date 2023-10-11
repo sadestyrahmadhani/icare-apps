@@ -190,7 +190,7 @@ export const auth = {
     const expirationDate = this.getTokenExpirationDate(encodedToken);
     const rightNow = new Date();
     const isExpiredToken = isAfter(rightNow, expirationDate);
-    console.log(expirationDate)
+    // console.log(expirationDate)
     return isExpiredToken;
   },
   logout(){
@@ -198,7 +198,7 @@ export const auth = {
       cookies.remove('refreshtoken', {path: appConfig.DOMAIN})
       sessionStorage.clear()
       localStorage.clear()  
-      this.props.router.push('/login')
+
   },
 
   // /////////////////////////////////////////////////////////////

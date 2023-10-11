@@ -18,10 +18,12 @@ export const setNamaPerusahaan = (param) => {
 export const setId = (param) => {
     localStorage.setItem('id', param)
 }
-
-
-
-
+export const setOtp = (param) => {
+    localStorage.setItem('otp', param)
+}
+export const setFirstLogin = (param) => {
+    localStorage.setItem('firstlogin', param)
+}
 
 export const getUser = () => {
     return localStorage.getItem('username') ?? null
@@ -39,10 +41,14 @@ export const getTelp = () => {
 export const getNamaPerusahaan = () => {
     return localStorage.getItem('namaperusahaan') ?? null
 }
-
-
 export const getId = () => {
     return localStorage.getItem('id') ?? null
+}
+export const getOtp = (param) => {
+    return localStorage.getItem('otp') ?? null
+}
+export const getFirstLogin = (param) => {
+    return localStorage.getItem('firstlogin') ?? null
 }
 
 

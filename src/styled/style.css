@@ -66,6 +66,88 @@ body {
     color: #014C90;
 }
 
+/* Breakfix Daftar EQ */
+
+.search-dropdown-breakfix {
+    width: 100%;
+    height: 50px;
+    border-radius: 0;
+    border: 1px solid #797979;
+    padding-left: 10px;
+    margin-bottom: 3%;
+}
+
+.search-dropdown-breakfix:focus {
+  border: 2px solid #014C90;
+  outline: none;
+}
+
+.dropdown-item-breakfix {
+    font-size: 14px;
+    padding: 10px 20px;
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1px solid black;
+  }
+  
+.dropdown-item-brakfix:hover {
+    background-color: #f8f8f8;
+}
+
+/* Supplies Daftar EQ */
+
+.search-dropdown-supplies {
+    width: 100%;
+    height: 50px;
+    border-radius: 0;
+    border: 1px solid #797979;
+    padding-left: 10px;
+    margin-bottom: 3%;
+}
+
+.search-dropdown-supplies:focus {
+    border: 2px solid #014C90;
+    outline: none;
+}
+
+.dropdown-item-supplies {
+    font-size: 14px;
+    padding: 10px 20px;
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1px solid black;
+}
+
+.dropdown-item-supplies:hover {
+    background-color: #f8f8f8;
+}
+
+/* Install Daftar EQ */
+.search-dropdown-install {
+    width: 100%;
+    height: 50px;
+    border-radius: 0;
+    border: 1px solid #797979;
+    padding-left: 10px;
+    margin-bottom: 3%;
+}
+
+.search-dropdown-install:focus {
+    border: 2px solid #014C90;
+    outline: none;
+}
+
+.dropdown-item-install {
+    font-size: 14px;
+    padding: 10px 20px;
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1px solid #797979;
+}
+
+.dropdown-item-install:hover {
+    background-color: #f8f8f8;
+}
 
 /* Dropdown */
 /* CSS Kustom untuk menghilangkan tanda panah di NavDropdown */
@@ -131,7 +213,16 @@ body {
       padding: 10px 20px;
     }
   }
-    
+
+  /*tulis review*/
+  .review-text::placeholder {
+    display: none;
+    color: #bfbfbf;
+  }
+
+  .review-container .review-text {
+    padding-left: 10px;
+  } 
 
 /* .item-drop:hover {
     background-color: #f1f1f1;
@@ -463,6 +554,11 @@ td {
     box-shadow: none;
 }
 
+.custom-radio:checked {
+    background-color: green;
+    border: green;
+}
+
 #inputFiles::file-selector-button {
     display: none;
 }
@@ -556,7 +652,15 @@ td {
     margin: 0 -1rem !important;
 }
 
+/*informasi desktop*/
+.card-information.info-card {
+    background-color: #014C90;
+    transition: background-color 0.3s ease;
+}
 
+.card-information {
+    background-color: white;
+}
 
 /* Media Query */
 @media(max-width: 768px) {
@@ -632,7 +736,6 @@ td {
     .row-height .card, .responsive-breakfix, .responsive-install .responsive-supplies {
         box-shadow: none !important;
         border: none !important;
-        margin-top: 45px !important;
     }
     .login-image {
         width: 100px;
@@ -690,11 +793,12 @@ td {
 
     /* navbar mobile */
     .responsive-bar {
-        position: fixed;
+        position: sticky;
         background: #014C90;
         top: 0;
-        left: 0;
-        right: 0;
+        /* left: 0;
+        right: 0; */
+        width: 100% !important;
         z-index: 11111;
         padding: 20px 15px; 
     }  
@@ -739,7 +843,7 @@ td {
         border: none !important;
         border-radius: 5px !important;
         box-shadow: 0 1px 6px;
-        margin-top: 50px !important;
+        margin-top: 1rem !important;
         padding-top: 10px !important;
         padding-left: 10px !important;
         padding-bottom: 20px !important;
@@ -758,7 +862,6 @@ td {
     .responsive-register .card {
         box-shadow: none;
         border: none;
-        margin-top: 65px !important;
     }
     .input-mobile .size-13px {
         background: #014C90;
@@ -806,11 +909,27 @@ td {
         height: 35px !important;
     }
 
+    
+
+    .form-breakfix {
+        height: 35px !important;
+        font-size: 12px;
+    }
+
+    .dropdown-breakfix {
+        width: 72% !important;
+        top: 11% !important;
+    }
+
+    .search-dropdown-breakfix:focus {
+        border: 2px solid #014C90 !important;
+        outline: none !important;
+    }
+
     /* lupa-password */
     .responsive-lupa-pass .card {
         border: none !important;
         box-shadow: none !important;
-        margin-top: 65px;
     }
 
     /* kode-OTP */
@@ -842,23 +961,59 @@ td {
     .responsive-data-diri .card {
         border: none !important;
         box-shadow: none !important;
-        margin-top: 65px !important;
     }
 
     /* supplies */
-    .responsive-supplies .card, .responsive-install .card {
+    .responsive-supplies .card {
         box-shadow: none !important;
-        margin-top: 40px !important;
     }
     .label-supplies {
         font-size: 12px !important;
+    }
+
+    .responsive-supplies .consumable-checkbox {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .responsive-supplies .form-check-input {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    .responsive-supplies .input-check .margin {
+        width: 78% !important;
+    }
+
+    .responsive-supplies .input-check .check-check .input-consumable {
+        width: 100% !important;
+    }
+
+    .search-dropdown-supplies {
+        height: 35px !important;
+    }
+
+    .dropdown-supplies {
+        width: 72% !important;
+        top: 93px !important;
+    }
+
+    .search-dropdown-supplies:focus {
+        border: 2px solid #014C90 !important;
+        outline: none !important;
     }
 
     /* ubah-kata-sandi */
     .responsive-ubah-pass .card {
         border: none !important;
         box-shadow: none !important;
-        margin-top: 65px;
+        margin-top: 35%;
+    }
+
+    .responsive-ubah-pass .label-update {
+        font-size: 15px !important;
+        color: #014C90 !important;
+        margin-bottom: 4px;
     }
 
     /* berita-terbaru */
@@ -880,7 +1035,7 @@ td {
 
     /* upgrade-step1 */
     .responsive-upgrade-step1 {
-        padding-top: 150px;
+        padding-top: 55px;
     }
     .responsive-upgrade-step1 .fa {
         font-size: 5em !important;
@@ -907,12 +1062,15 @@ td {
         border: none !important;
     }
     .responsive-upgrade-step2 .card-body {
-        padding-top: 3rem !important;
+        padding-top: 1rem !important;
         padding-left: 1rem !important;
         padding-right: 1rem !important;
     }
     .btn-photo {
         padding: 10px 13px !important;
+    }
+    .btn-photo-mobile {
+        padding: 10px 4px !important;
     }
     .btn-selfie {
         padding: 10px 3px !important;
@@ -921,7 +1079,7 @@ td {
 
     /* upgrade-step3 */
     .responsive-upgrade-step3 {
-        padding-top: 300px !important;
+        padding-top: 250px !important;
     }
     .responsive-upgrade-step3 .text-center {
         margin-left: 2em !important;
@@ -958,14 +1116,83 @@ td {
         margin-left: 95% !important;
     }
 
+    .responsive-informasi .card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .responsive-informasi p {
+        font-size: 12px;
+    }
+
+    .responsive-informasi h6 {
+        font-size: 14px;
+    }
+
+    .responsive-informasi i {
+        font-size: 12px;
+    }
+
+    .card-information.info-card {
+        background-color: #014C90;
+        transition: background-color 0.3s ease;
+    }
+
+    .card-information {
+        background-color: white;
+    }
+
+    .information-popup {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        display: block;
+        border-radius: 25px 25px 0 0;
+        border: 2px solid rgb(219, 219, 219);
+    }
+
+    .popup-button {
+        margin: 0 !important;
+    }
+
+    .list-description {
+        text-overflow: ellipsis !important;
+        overflow: hidden !important;
+        white-space: nowrap !important;
+    }
+
     /* install-request */
     .responsive-install .card {
         padding-left: 0.25rem !important;
         padding-right: 0.25rem !important;
     }
 
+    .form-install {
+        height: 35px !important;
+        font-size: 12px;
+    }
+
+    .dropdown-install {
+        width: 72% !important;
+        top: 93px !important;
+    }
+
+    .search-dropdown-install:focus {
+        border: 2px solid #014C90 !important;
+        outline: none !important;
+    }
+
+    /* Alamat */
     .h-address {
         height: 61px !important;
+    }
+    .responsive-address {
+        margin-top: -25px !important;
+    }
+    .responsive-address .nav-item {
+        font-size: 14px !important;
     }
 
     .responsive-eq {
@@ -979,6 +1206,37 @@ td {
     }
     .responsive-eq img {
         height: 50px !important;
+    }
+
+    /* Tulis Review Rating */
+    .responsive-tulis-review {
+        border: none !important;
+        box-shadow: none !important;
+        margin-top: 15%;
+    }
+
+    .review-container .mt-2 {
+        background-color: transparent !important;
+        padding-bottom: 0 !important;
+    }
+
+    .review-container .review-text {
+        padding: 0 !important;
+    }
+
+    /* Collect Meter */
+    .responsive-collect-meter {
+        box-shadow: none !important;
+        border: none !important;
+    }
+    .button-foto-meter {
+        width: 50% !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .title-bold {
+        font-weight: bold !important;
     }
 }
 

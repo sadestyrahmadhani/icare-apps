@@ -4,7 +4,7 @@ export default class extends Component {
     render() {
         return(
             <>
-                <div style={{position:'fixed', top: 0, left: 0, bottom: 0, backgroundColor:'rgba(0, 0, 0, .4)', zIndex: '11111', display: this.props.visible ? 'flex' : 'none', alignItems: 'center', justifyContent: 'center'}}>
+                <div style={{position:'fixed', top: 0, left: 0, bottom: 0, backgroundColor:'#00000066', zIndex: '11111', display: this.props.visible ? 'flex' : 'none', alignItems: 'center', justifyContent: 'center'}}>
                     <div className={this.props.customClass}>
                         <div className="card rounded-4">
                             <div className="card-body py-2 text-center">

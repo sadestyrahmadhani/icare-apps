@@ -1,4 +1,4 @@
-import { Component, useState } from "react";
+import { useState } from "react";
 import ConfirmAlert from "../../component/alert/confirmAlert";
 import LoadingAlert from "../../component/alert/loadingAlert";
 import { Link, useNavigate } from "react-router-dom";
@@ -55,7 +55,7 @@ function UpdatePassword() {
             setLoading(true)
             const res = await updatePasswordById({userid: localStorage.getItem('id'), oldPassword: oldPassword, newPassword: newPassword})
             setLoading(false)
-            if(res.status == 200 && res.data !== null) {
+            if(res.status === 200 && res.data !== null) {
                 if(res.data === "Old password not match") {
                     setShowPopup(true)
                     setAlertOption({title: '', message: res.data, redirect: false, url: ''})
@@ -113,7 +113,7 @@ function UpdatePassword() {
                         <Link to="/settings" className="nav-link d-md-none d-inline me-3">
                             <i className="fa fa-arrow-left"></i>
                         </Link>
-                        Ubah Kata Sandi
+                        <span className="title-bold">Ubah Kata Sandi</span>
                     </h4>
                 </div>
             </div>
@@ -134,12 +134,12 @@ function UpdatePassword() {
                                                 onClick={ 
                                                     () => {
                                                         setTypeInput([
-                                                            typeInput[0] == 'password' ? 'text' : 'password',
+                                                            typeInput[0] === 'password' ? 'text' : 'password',
                                                             typeInput[1],
                                                             typeInput[2]
                                                         ])
                                                         setIconClass([
-                                                            typeInput[0] == 'password' ? 'fa-eye-slash' : 'fa-eye',
+                                                            typeInput[0] === 'password' ? 'fa-eye-slash' : 'fa-eye',
                                                             iconClass[1],
                                                             iconClass[2]
                                                         ])
@@ -168,12 +168,12 @@ function UpdatePassword() {
                                                 onClick={ () => {
                                                     setTypeInput([
                                                         typeInput[0],
-                                                        typeInput[1] == 'password' ? 'text' : 'password',
+                                                        typeInput[1] === 'password' ? 'text' : 'password',
                                                         typeInput[2],
                                                     ])
                                                     setIconClass([
                                                         iconClass[0],
-                                                        typeInput[1] == 'password' ? 'fa-eye-slash' : 'fa-eye',
+                                                        typeInput[1] === 'password' ? 'fa-eye-slash' : 'fa-eye',
                                                         iconClass[2]
                                                     ])
                                                 } }
@@ -201,12 +201,12 @@ function UpdatePassword() {
                                                     setTypeInput([
                                                         typeInput[0],
                                                         typeInput[1],
-                                                        typeInput[2] == 'password' ? 'text' : 'password'
+                                                        typeInput[2] === 'password' ? 'text' : 'password'
                                                     ])
                                                     setIconClass([
                                                         iconClass[0],
                                                         iconClass[1],
-                                                        typeInput[2] == 'password' ? 'fa-eye-slash' : 'fa-eye'
+                                                        typeInput[2] === 'password' ? 'fa-eye-slash' : 'fa-eye'
                                                     ])
                                                 } }
                                             ></i>
@@ -296,7 +296,7 @@ export default UpdatePassword
 //             this.setState({loading: true})
 //             const res = await updatePasswordById({userid: localStorage.getItem('id'), oldPassword: this.state.oldPassword, newPassword: this.state.newPassword})
 //             this.setState({loading: false})
-//             if(res.status == 200 && res.data !== null) {
+//             if(res.status === 200 && res.data !== null) {
 //                 if(res.data === "Old password not match") {
 //                     this.setState({showPopup: true, alertOption: {title: '', message: res.data, redirect: false, url: ''}})
 //                 } else {
@@ -372,12 +372,12 @@ export default UpdatePassword
 //                                                     className={ `fa ${ this.state.iconClass[0] } fa-lg` } 
 //                                                     onClick={ () => this.setState({
 //                                                         typeInput: [
-//                                                             this.state.typeInput[0] == 'password' ? 'text' : 'password',
+//                                                             this.state.typeInput[0] === 'password' ? 'text' : 'password',
 //                                                             this.state.typeInput[1],
 //                                                             this.state.typeInput[2],
 //                                                         ],
 //                                                         iconClass: [
-//                                                             this.state.typeInput[0] == 'password' ? 'fa-eye-slash' : 'fa-eye',
+//                                                             this.state.typeInput[0] === 'password' ? 'fa-eye-slash' : 'fa-eye',
 //                                                             this.state.iconClass[1],
 //                                                             this.state.iconClass[2]
 //                                                         ]
@@ -405,12 +405,12 @@ export default UpdatePassword
 //                                                     onClick={ () => this.setState({
 //                                                         typeInput: [
 //                                                             this.state.typeInput[0],
-//                                                             this.state.typeInput[1] == 'password' ? 'text' : 'password',
+//                                                             this.state.typeInput[1] === 'password' ? 'text' : 'password',
 //                                                             this.state.typeInput[2],
 //                                                         ],
 //                                                         iconClass: [
 //                                                             this.state.iconClass[0],
-//                                                             this.state.typeInput[1] == 'password' ? 'fa-eye-slash' : 'fa-eye',
+//                                                             this.state.typeInput[1] === 'password' ? 'fa-eye-slash' : 'fa-eye',
 //                                                             this.state.iconClass[2]
 //                                                         ]
 //                                                     }) }
@@ -438,12 +438,12 @@ export default UpdatePassword
 //                                                         typeInput: [
 //                                                             this.state.typeInput[0],
 //                                                             this.state.typeInput[1],
-//                                                             this.state.typeInput[2] == 'password' ? 'text' : 'password'
+//                                                             this.state.typeInput[2] === 'password' ? 'text' : 'password'
 //                                                         ],
 //                                                         iconClass: [
 //                                                             this.state.iconClass[0],
 //                                                             this.state.iconClass[1],
-//                                                             this.state.typeInput[2] == 'password' ? 'fa-eye-slash' : 'fa-eye'
+//                                                             this.state.typeInput[2] === 'password' ? 'fa-eye-slash' : 'fa-eye'
 //                                                         ]
 //                                                     }) }
 //                                                     ></i>

@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 // import { getToken } from "../../core/local-storage";
 // import { Dropdown } from "bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
 // import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
+import {auth} from '../../services/auth'
 const Navbar = (props) => {
     const [ scrolling, setScrolling ] = useState(false)
     const [openDropdown, setOpenDropdown] = useState(false)
@@ -18,7 +20,7 @@ const Navbar = (props) => {
     const [isRiwayatActive, setIsRiwayatActive] = useState(false);
     const [isInformasiActive, setIsInformasiActive] = useState(false);
     const [isPengaturanActive, setIsPengaturanActive] = useState(false);
-
+    const navigate = useNavigate();
     useEffect(() => {
         const handleScroll = () => {
             if(window.scrollY > 0) {
@@ -58,7 +60,11 @@ const Navbar = (props) => {
             setIsPengaturanActive(true);
         }
     }
-
+    const logout = () => {
+        console.log('logout')
+        auth.logout()
+        navigate('/')
+    }
 
     return(
         <>
@@ -110,7 +116,7 @@ const Navbar = (props) => {
                                         </li>
                                         <li className="nav-item mx-3">
                                             <NavDropdown className={`custom-dropdown ${isPengaturanActive ? 'active-link' : ''}`} onClick={() => handleNavClick('pengaturan')} id="nav-dropdown" title={<span className="nav-dash" > <i className="fa fa-gear me-2 nav-app" style={{fontSize:'14px'}}></i> PENGATURAN</span>}>
-                                                <NavDropdown.Item href="/#/data_diri">
+                                                <NavDropdown.Item href="/data_diri">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}} >Data Diri</span>
@@ -120,7 +126,7 @@ const Navbar = (props) => {
                                                         </div>
                                                     </div>
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/#/daftar_alamat">
+                                                <NavDropdown.Item href="/daftar_alamat">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}}>Daftar Alamat</span>
@@ -130,7 +136,7 @@ const Navbar = (props) => {
                                                         </div>
                                                     </div>
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/#/daftar_eq">
+                                                <NavDropdown.Item href="/daftar_eq">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}}>Daftar EQ</span>
@@ -140,7 +146,7 @@ const Navbar = (props) => {
                                                         </div>
                                                     </div>
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/#/ubah_kata_sandi">
+                                                <NavDropdown.Item href="/ubah_kata_sandi">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}}>Kata Sandi</span>
@@ -150,7 +156,7 @@ const Navbar = (props) => {
                                                         </div>
                                                     </div>
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/">
+                                                <NavDropdown.Item href="#" onClick={logout}>
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}}>Keluar</span>

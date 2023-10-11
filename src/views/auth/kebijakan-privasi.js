@@ -11,14 +11,14 @@ function ConditionFooter() {
     return(
             <div className="bg-light intro-y">
                 <Navbar versi="2" />
-                <div className="text-md-center text-start pt-4 mb-5">
+                <div className="text-md-center text-start mb-5">
                     <div className="responsive-bar">
                         <div className="mx-md-auto my-md-3 my-0 my-md-3 pb-2" style={{borderBottom:'3px solid #014C90', width:'155px'}}>
                             <h5 className="title-icare title-fitur fw-bold m-0 p-0">
                                 <Link to="/" className="nav-link d-md-none d-inline me-3">
                                     <i className="fa fa-arrow-left"></i>
                                 </Link>
-                                Kebijakan Privasi
+                                <span className="title-bold">Kebijakan Privasi</span>
                             </h5>
                         </div>
                     </div>

@@ -4,6 +4,7 @@ import ConfirmAlert from "../../component/alert/confirmAlert";
 import { updateDataDiriById } from "../../services/API";
 import LoadingAlert from "../../component/alert/loadingAlert";
 import { Link, useNavigate } from "react-router-dom";
+import { setUser } from "../../core/local-storage";
 
 
 function DataDiri() {
@@ -52,23 +53,26 @@ function DataDiri() {
   }
 
   const handleChangePhone = (event) => {
-    if(event.target.value.charAt(0) === '0') {
-      setPhone(`+62${event.target.value.substring(1)}`)
-    } else {
-      if(event.target.value.charAt(0) === '+') {
-        setPhone(event.target.value)
-      } else {
-        setPhone(`+${event.target.value}`)
-      }
-    }
+  setPhone(event.target.value)
+  // if(event.target.value.charAt(0) === '0') {
+  //   setPhone(`+62${event.target.value.substring(1)}`)
+  // } else {
+  //     if(event.target.value.charAt(0) === '+') {
+  //         setPhone(event.target.value)
+  //     } else {
+  //         if(event.target.value !== '' && event.target.value != '+') {
+  //             setPhone(`+${event.target.value}`)
+  //         } else {
+  //             setPhone(``)
+  //         }
+  //     }
+  // }
 
     const value = event.target.value;
     if(value === "") {
-      setPhone(event.target.value)
       setErrorDataPhone('Silahkan isi nomor telepon')
       return
     } else {
-      setPhone(event.target.value)
       setErrorDataPhone('')
       return
     }
@@ -82,8 +86,8 @@ function DataDiri() {
     setIsEditPhone(false)
   };
 
-  async function submit(e) {
-    e.preventDefault();
+  async function submit(event) {
+    event.preventDefault();
 
     let isValid = true;
     setShowSuccessPopup(false)
@@ -105,19 +109,38 @@ function DataDiri() {
 
     if (isValid) { 
       setLoading(true)
-      const res = await updateDataDiriById({namalengkap: name, emailaddress: email, telp: phone.toString().trim(), namaperusahaan: instansi})
+      var telp = phone
+      if(telp.charAt(0) === '0') {
+        telp = `+62${telp.substring(1)}`
+      }
+      
+      // console.log(telp)
+      const res = await updateDataDiriById({namalengkap: name, emailaddress: email, telp: telp.toString().trim(), namaperusahaan: instansi})
       setLoading(false)
       if(res.status == 200 && res.data !== null) {
         if(!res.data.includes('action')) {
           if(res.data !== 'Nomer telepon sudah terdaftar') {
             setShowSuccessPopup(true)
+            setUser(name)
           } else {
             setShowErrorPopup(true)
             setErrorMessage(res.data)
           }
         } else {
           var data = JSON.parse(res.data)
-          navigate(`/kode-otp/${window.btoa(JSON.stringify({...data, email: email, telp: phone.toString().trim(), name: name}))}`)
+          // navigate(`/kode-otp/${window.btoa(JSON.stringify({...data, email: email, telp: phone.toString().trim(), name: name}))}`)
+          navigate('/kode-otp', {
+            state: {
+              firstlogin:false, 
+              email: email,
+              name: name,
+              phone: telp.toString().trim(),
+              telp: data.number,
+              userid: data.userid,
+              msg: data
+            }
+          })
+          
         }
       } else {
         setShowErrorPopup(true)
@@ -126,7 +149,7 @@ function DataDiri() {
       setShowErrorPopup(true)
     }
   }
-
+  
   return(
     <>
         {dataDiri.map((item) => (
@@ -141,7 +164,7 @@ function DataDiri() {
                 <Link to="/settings" className="nav-link d-inline d-md-none me-3">
                   <i className="fa fa-arrow-left"></i>
                 </Link>
-                Data Diri
+                <span className="title-bold" style={{borderBottom: '3px solid #014C90'}}>Data Diri</span>
               </h4>
               {/* <strong
                 className="title-icare"
@@ -153,7 +176,7 @@ function DataDiri() {
             </div>
           </div>
           <div className="responsive-data-diri">
-            <div className="card px-3 mt-4 shadow border-0" style={{ borderRadius: "20px" }} >
+            <div className="card px-3 mt-2 shadow border-0" style={{ borderRadius: "20px" }} >
               <div className="card-body p-2">
                 <div className="row">
                   
@@ -214,7 +237,7 @@ function DataDiri() {
                       <div className="card-body d-flex align-items-center mb-4 custom-width" >
                         {isEditPhone ? (
                           <div className="card-text flex-grow-1">
-                            <input type="tel" className={`form-control input-data py-2 w-100 no-hover ${errorDataPhone !== "" ? "border-danger border" : ""}`} value={phone} onChange={handleChangePhone} />
+                            <input type="tel" className={`form-control input-data py-2 w-100 no-hover ${errorDataPhone !== "" ? "border-danger border" : ""}`} value={phone.toString().trim()} onChange={handleChangePhone} />
                             
                           </div>
                         ) : (

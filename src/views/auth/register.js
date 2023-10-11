@@ -8,7 +8,7 @@ import { Col, Row } from "react-bootstrap";
 
 
 function Register() {
-    const navigate = useNavigate()
+    const navigate= useNavigate()
     const [ showPopup, setShowPopup ] = useState(false) 
     const [ alertOption, setAlertOption ] = useState({
         title:'',
@@ -106,7 +106,7 @@ function Register() {
                 }
                 else
                     setShowPopup(true)
-                    setAlertOption({title: '', message: ''})
+                    setAlertOption({title: '', message: response.data})
             }else{
                 setShowPopup(true)
                 setAlertOption({title: 'Error Upload', message: 'please try again'})
@@ -238,7 +238,7 @@ function Register() {
                             <Link to="/" className="nav-link d-md-none d-inline me-3">
                                 <i className="fa fa-arrow-left"></i>
                             </Link>
-                            <span className="d-md-none d-inline">Registrasi User</span>
+                            <span className="d-md-none d-inline title-bold">Registrasi User</span>
                             <span className="fw-bold d-md-inline d-none">Registrasi</span>
                         </h5>
                     </div>

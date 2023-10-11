@@ -1,9 +1,13 @@
-import { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Card, Row, Col } from "react-bootstrap";
-
-export default class extends Component {
-    render() {
+import {auth} from '../../services/auth'
+function Setting() {
+    const logout = () => {
+        console.log('logout')
+        auth.logout()
+    }
+    
         return (
             <div className="intro-y">
                 <div className="responsive-bar py-3" style={{ fontSize: 20 }}>
@@ -12,7 +16,7 @@ export default class extends Component {
                         <span>Pengaturan</span>
                     </Link>
                 </div>
-                <div className="py-4 mx-2" style={{ margin: "3rem 0" }}>
+                <div className="py-3 mx-2">
                     <Link to="/data_diri" className="nav-link">
                         <Card className="mb-2 shadow-sm">
                             <Card.Body className="p-2" style={{ fontSize: 11 }}>
@@ -69,7 +73,7 @@ export default class extends Component {
                             </Card.Body>
                         </Card>
                     </Link>
-                    <Link to="/" className="nav-link">
+                    <div className="nav-link" onClick={logout}>
                         <Card className="mb-2 shadow-sm">
                             <Card.Body className="p-2" style={{ fontSize: 11 }}>
                                 <Row>
@@ -82,12 +86,13 @@ export default class extends Component {
                                 </Row>
                             </Card.Body>
                         </Card>
-                    </Link>
+                    </div>
                 </div>
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 20, fontSize: 14 }} className="text-center text-primary fw-bold">
                     Version 3.0.6
                 </div>
             </div>
         )
-    }
+    
 }
+export default Setting

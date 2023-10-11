@@ -1,12 +1,13 @@
-import { Component } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Carousel from "../../component/carousel";
 import { authUser } from "../../services/API"
 import { setNamaPerusahaan, setUser } from "../../core/local-storage";
-import { setEmail } from "../../core/local-storage";
+import { setEmail as setEmailAddress, setOtp,setFirstLogin } from "../../core/local-storage";
 import { setTelp } from "../../core/local-storage";
 import { setId } from "../../core/local-storage";
-
+import NavbarLogin from "../../component/navbar";
+import Footer from "../../component/footer";
 import {
     settoken,setrefreshtoken
 } from '../../services/fetchTools';
@@ -14,30 +15,30 @@ import FiturCard from "./component/fitur-card";
 import ConfirmAlert from "../../component/alert/confirmAlert";
 import LoadingAlert from "../../component/alert/loadingAlert";
 
-export default class extends Component {
-    constructor(props) {
-        super(props)
-        this.submit = this.submit.bind(this)
-        this.handlePopup = this.handlePopup.bind(this)
-        this.inputChange = this.inputChange.bind(this)
-        this.state = {
-        alertOption:{
-            title:'',
-            message:''
-        },
-	    username: "",
-          password: "",
-          loading: false,
-          error: false,
-          errMsg: "",
-          login: false,
-          showPopup: false,
-          showPermissionPopup: true,
-          email:'',
-          
-          errorEmail:'', 
-          errorPassword:'',
-            fiturData: [
+function Login () {
+    
+    // constructor(props) {
+        // super(props)
+    const navigate = useNavigate();
+        // this.submit = this.submit.bind(this)
+        // this.handlePopup = this.handlePopup.bind(this)
+        // this.inputChange = this.inputChange.bind(this)
+        const [alertOption, setAlertOption] = useState({
+                                                    title:'',
+                                                    message:''
+                                                })
+	    const [username, setUsername]= useState('')
+        const [password, setPassword]= useState('')
+        const [loading, setLoading]= useState(false) 
+        const [error, setError]= useState(false)
+        const [errMsg, setErrMsg]= useState('')
+        const [login, setLogin]= useState(false)
+        const [showPopup, setShowPopup]= useState(false)
+        const [showPermissionPopup, setShowPermissionPopup]= useState(false)
+        const [email, setEmail]= useState('')
+        const [errorEmail, setErrorEmail]= useState('')
+        const [errorPassword, setErrorPassword]= useState('')
+        const fiturData= [
                 {
                     lg: 3,
                     md: 3,
@@ -120,22 +121,92 @@ export default class extends Component {
                 },
 
             ]
-        }
+        
+    // }
+
+    const handleEmailInput = (event) => {
+        setEmail(event.target.value)        
+        if(event.target.value === "") 
+            setErrorEmail("Silahkan isi email")
+        else
+            setErrorEmail("")
+      }
+   const handlePasswordInput = (event) => {
+        setPassword(event.target.value) 
+        if(event.target.value === "") 
+            setErrorPassword("Silahkan isi password")
+        else
+            setErrorPassword("")
+    }
+    const handlePopup = ()=> {
+        setShowPopup(false)
+        setShowPermissionPopup(false)
     }
 
-    inputChange = (event) => {
-        event.preventDefault()
-        this.setState({ [event.target.name] : event.target.value })
-        this.setState({email: event.target.value})
-        if(event.target.value === "") {
-            this.setState({[event.target.name === 'username' ? 'errorEmail' : 'errorPassword'] : event.target.name === 'username' ? 'Silahkan isi email' : 'Silahkan isi password'})
-        } else {
-            this.setState({[event.target.name === 'username' ? 'errorEmail' : 'errorPassword'] : event.target.name === 'username' ? '' : ''})
+    async function useLogin (e) {
+        e.preventDefault() 
+        if(email === "" || password === "") {
+            setShowPopup(true)
+            setAlertOption({title:"Error", message:"Form not Valid"}) 
+            if(email === "") setErrorEmail("Silahkan isi email")
+            if(password === "") setErrorPassword("Silahkan isi password")
+            return
         }
-      }
+        
+        // const {username, password} = this.state 
+        setLoading(true)
+        setError(false)
+        const response = await authUser({
+            username: email, password: password, type:"normal"
+          });
 
-    render() {
+        setLoading(false)
+
+        if (response != null) {
+        console.log('testingresponseLogin', response)
+            if (response.action){
+                
+                setOtp(false)
+                setFirstLogin(response)
+                navigate('/kode-otp',{                      
+                        state: {firstlogin:true,email:email,password:password,
+                        telp:response.number,userid:response.userid,msg:response
+                        }} // your data array of objects
+                    )
+            }else{
+                settoken(response.token)
+                setrefreshtoken(response.refreshtoken)
+                setUser(response.namalengkap)
+                // console.log('testingnamalengkap :', response.namalengkap)
+                setEmailAddress(response.emailaddress)
+                setTelp(response.telp)
+                // console.log('testingtelp :', response.telp)
+                setNamaPerusahaan(response.namaperusahaan)
+                // console.log('testingnamaperusahaan :', response.namaperusahaan)
+                setId(response.id)
+                // console.log('testinguserid :', response.id)    
+                navigate("/dashboard")
+            }
+        
+
+        //     // console.log('iCare_user', cookies.get('iCare_user')); // Pacman
+        //         // this.setState({loading:false, error: false, login: true})
+        //     // window.location.reload(false);
+            
+        } else {
+            setShowPopup(true)
+            setAlertOption({title:"Error", message:"Username / Password salah"})
+        }
+
+        
+        
+    }
+
+    
         return(
+            <>
+            <NavbarLogin />
+                <div className="container py-4 py-xs-0" id="layout">                    
             <div className="intro-y">
                 {/* Beranda */}
                 <div className="d-lg-block d-none" style={{ background: 'url(/images/Vector1.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100vh', position: 'absolute', top: 0, left: 0, right: 0, zIndex: -1 }} id="beranda"></div>
@@ -147,16 +218,16 @@ export default class extends Component {
                                 <div className="col-12 text-center mb-3">
                                     <img src="/images/iCareLogo.png" alt="Logo iCare" className="h-50 login-image"/>
                                 </div>
-                                <form onSubmit={ this.submit }>
+                                <form onSubmit={ useLogin }>
                                     <div className="mb-3">
                                         <label className="size-13px fw-bold">EMAIL</label>
-                                        <input type="text"  name="username"  onChange={this.inputChange} autocomplete="email" className={`form-control border-only-bottom ${ this.state.errorEmail !== "" ? "is-invalid" : ""}`}/>
-                                        <span className={`invalid-feedback ${this.state.errorEmail === "" ? "d-none": ""}`} style={{ fontSize: 12 }}>{this.state.errorEmail}</span>
+                                        <input type="text"  name="username"  onChange={handleEmailInput} autocomplete="email" className={`form-control border-only-bottom ${ errorEmail !== "" ? "is-invalid" : ""}`}/>
+                                        <span className={`invalid-feedback ${errorEmail === "" ? "d-none": ""}`} style={{ fontSize: 12 }}>{errorEmail}</span>
                                     </div>
                                     <div className="mb-4">
                                         <label className="size-13px fw-bold">PASSWORD</label>
-                                        <input type="password"  name="password" onChange={this.inputChange} autocomplete="password" className={`form-control border-only-bottom ${ this.state.errorPassword !== "" ? "is-invalid" : ""}`}/>
-                                        <span className={`invalid-feedback ${this.state.errorPassword === "" ? "d-none": ""}`} style={{ fontSize: 12 }}>{this.state.errorPassword}</span>
+                                        <input type="password"  name="password" onChange={handlePasswordInput} autocomplete="password" className={`form-control border-only-bottom ${ errorPassword !== "" ? "is-invalid" : ""}`}/>
+                                        <span className={`invalid-feedback ${errorPassword === "" ? "d-none": ""}`} style={{ fontSize: 12 }}>{errorPassword}</span>
                                     </div>
                                     <div className="mb-2 mx-auto text-center">
                                         <button className="btn btn-login my-1" style={{paddingLeft:'70px', paddingRight:'70px', paddingBottom:'10px', paddingTop:'10px'}}>LOGIN</button>
@@ -170,9 +241,9 @@ export default class extends Component {
                                         </button>
                                     </div>
                                 </form>
-                                <ConfirmAlert visible={this.state.showPopup} titleMessage={this.state.alertOption.title} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-3 col-sm-4 col-8" />
-                                <LoadingAlert visible={this.state.loading} customClass="col-md-2 col-sm-4 col-8"  />
-                                <ConfirmAlert visible={this.state.showPermissionPopup} titleMessage="Permintaan Perizinan" message="Mohon setujui permintaan perizinan agar aplikasi dapat berjalan dengan baik" customClass="col-md-6 col-sm-4 col-9" onClick={this.handlePopup} />
+                                <ConfirmAlert visible={showPopup} titleMessage={alertOption.title} message={alertOption.message} onClick={handlePopup} customClass="col-md-3 col-sm-4 col-8" />
+                                <LoadingAlert visible={loading} customClass="col-md-2 col-sm-4 col-8"  />
+                                <ConfirmAlert visible={showPermissionPopup} titleMessage="Permintaan Perizinan" message="Mohon setujui permintaan perizinan agar aplikasi dapat berjalan dengan baik" customClass="col-md-6 col-sm-4 col-6" onClick={handlePopup} />
                             </div>
                         </div>
                     </div>
@@ -201,7 +272,7 @@ export default class extends Component {
                 <section className="section-fitur d-lg-block d-none" id="fitur">
                     <div className="container mb-5">
                         <h3 className="title-icare text-center fw-bold mb-5"> Fitur iCare</h3>
-                        <FiturCard data={this.state.fiturData} />
+                        <FiturCard data={fiturData} />
                     </div>
                 </section>
 
@@ -281,65 +352,15 @@ export default class extends Component {
                 </div>
                 <p className="cp-mobile text-center d-md-none d-block">iCare &copy; PT ASTRA GRAPHIA TBK</p>
             </div>
+
+        </div>
+        <Footer />
+        </>
         )
-    } 
     
-
-    handlePopup() {
-        this.setState({showPopup: false, showPermissionPopup: false})
-    }
-
-    async submit(e) {
-        e.preventDefault() 
-        if(this.state.email === "" || this.state.password === "") {
-            this.setState({showPopup: true, alertOption:{title:"Error", message:"Form not Valid"}}) 
-            if(this.state.email === "") this.setState({errorEmail:"Silahkan isi email"})
-            if(this.state.password === "") this.setState({errorPassword:"Silahkan isi password"})
-            return
-        }
-        
-        const {username, password} = this.state
-        this.setState({loading:true, error: false})
-        const response = await authUser({
-            username: username, password: password, type:"normal"
-          });
-
-        this.setState({loading: false})
-
-        if (response != null) {
-        console.log('testingresponseLogin', response)
-            settoken(response.token)
-            setrefreshtoken(response.refreshtoken)
-            setUser(response.namalengkap)
-            // console.log('testingnamalengkap :', response.namalengkap)
-            setEmail(response.emailaddress)
-            setTelp(response.telp)
-            // console.log('testingtelp :', response.telp)
-            setNamaPerusahaan(response.namaperusahaan)
-            // console.log('testingnamaperusahaan :', response.namaperusahaan)
-            setId(response.id)
-            // console.log('testinguserid :', response.id)
-
-
-
-            
-
-
-
-
-            // console.log('iCare_user', cookies.get('iCare_user')); // Pacman
-                // this.setState({loading:false, error: false, login: true})
-            // window.location.reload(false);
-            this.props.router.navigate("/dashboard")
-        } else {
-            this.setState({showPopup: true, alertOption:{title:"Error", message:"Username / Password salah"}})
-        }
-
-        
-        
-    }
+    
 
     
     
 }
-
+export default Login

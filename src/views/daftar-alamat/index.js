@@ -1,32 +1,64 @@
-import { Component, useState } from "react";
+import { Component, useState, useEffect } from "react";
 import 'font-awesome/css/font-awesome.min.css';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getDaftarAlamat } from "../../services/API";
 import ConfirmAlert from "../../component/alert/confirmAlert";
 import RemoveAlert from "../../component/alert/removeAlert";
+import LoadingAlert from "../../component/alert/loadingAlert";
+import { deleteDaftarAlamat } from "../../services/API/mod_daftarAlamat";
 
 function AddressList() {
-
+    const location = useLocation()
+    const navigate = useNavigate()
     const [showPopupDelete, setShowPopupDelete] = useState(false)
     const [showPopupPrioritize, setShowPopupPrioritize] = useState(false)
     const [showSuccessPopup, setShowSuccessPopup] = useState(false)
     const [alertOption, setAlertOption] = useState({ title: '', message: '' })
     const [dataisLoaded, setDataisLoaded] = useState(false)
-    const [dataDaftarAlamat, setDataDaftarAlamat] = useState('')
+    const [dataDaftarAlamat, setDataDaftarAlamat] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [originalData, setOriginalData] = useState('')
+    const [daftarAlamatToDelete, setDaftarAlamatToDelete] = useState('')
 
-    const componentDidMount = () => {
-        init();
-    }
+    // const componentDidMount = () => {
+    //     init();
+    // }
 
+    useEffect(() => {
+     return () => {
+        init()
+     }
+    },[]);
+    
     async function init() {
+        setLoading(true)
         const res = await getDaftarAlamat();
-        console.log('res : ', res);
+        setLoading(false)
+        if(res.status == 200) {
+            setDataDaftarAlamat(res.data.Table)
+            setOriginalData(res.data.Table)
+            // console.log(res)
+        }
 
-        const Table = res['Table'];
-        setDataisLoaded(true);
-        setDataDaftarAlamat(Table);
+        // console.log('res : ', res);
 
-        console.log('dataDaftarAlamat ', setDataDaftarAlamat());
+        // const Table = res['Table'];
+        // setDataisLoaded(true);
+        // setDataDaftarAlamat(Table);
+
+        // console.log('dataDaftarAlamat ', setDataDaftarAlamat());
+    } 
+
+    const handleAddressItem = (e) => {
+        if(location.state?.isSelectAddress) {
+            // console.log(e.target.getAttribute('data-item'))
+            navigate(`/form_eq/${location.state.id}`, {
+                state: {
+                    address: JSON.parse(e.currentTarget.getAttribute('data-item')),
+                    input: location.state.input
+                }
+            })
+        }
     }
 
     const handlePopup = () => {
@@ -37,14 +69,21 @@ function AddressList() {
 
     const handleDelete = (e) => {
         setShowPopupDelete(true)
-        setAlertOption({ title: 'Konfirmasi', message: `Hapus alamat : ${e}` })
+        setDaftarAlamatToDelete(e)
+        setAlertOption({ title: 'Konfirmasi', message: `Hapus alamat : ${e}`, redirect: false })
     }
 
-    const handleConfirmationDelete = () => {
-        setShowPopupDelete(false)
-        setShowSuccessPopup(true)
-        setAlertOption({ title: 'Berhasil', message: 'Alamat berhasil dihapus' })
-    }
+    const handleConfirmationDelete = async () => {
+        const res = await deleteDaftarAlamat(daftarAlamatToDelete)
+        if(res.status == 200) {
+            getDaftarAlamat()
+            setShowPopupDelete(false)
+            setShowSuccessPopup(true)
+            setDaftarAlamatToDelete('')
+            setAlertOption({ title: 'Berhasil', message: 'Alamat berhasil dihapus', redirect: false })
+        }
+    } 
+
 
     const handlePrioritize = (e) => {
         setShowPopupPrioritize(true)
@@ -55,6 +94,15 @@ function AddressList() {
         setShowPopupPrioritize(false)
         setShowSuccessPopup(true)
         setAlertOption({ title: 'Berhasil', message: 'Berhasil mengutamakan' })
+    }
+
+    const handleSearch = (e) => {
+        if(e.target.value != '') {
+            var filterData = originalData.filter(val => (val.Nama_Alamat.toString().toLowerCase().includes(e.target.value.toLowerCase())) || val.Penerima.toLowerCase().includes(e.target.value.toLowerCase()) || val.Alamat.toLowerCase().includes(e.target.value.toLowerCase()) || val.Kota.toLowerCase().includes(e.target.value.toLowerCase()) || val.Kode_Pos.toLowerCase().includes(e.target.value.toLowerCase()) || val.Telp_Penerima.toLowerCase().includes(e.target.value.toLowerCase()))
+            setDataDaftarAlamat(filterData)
+        } else {
+            setDataDaftarAlamat(originalData)
+        }
     }
 
         // if (!dataisLoaded) {
@@ -75,7 +123,7 @@ function AddressList() {
                                 <Link className="nav-link d-inline d-md-none me-3" to="/settings">
                                     <i className="fa fa-arrow-left color-arrow-left"></i>
                                 </Link>
-                                <span style={{ borderBottom: '3px solid #014C90' }}>Pengaturan Alamat</span>
+                                <span className="title-bold" style={{ borderBottom: '3px solid #014C90' }}>Pengaturan Alamat</span>
                             </h4>
                         </div>
                         <div className="col-2 d-md-none d-block text-end">
@@ -96,8 +144,8 @@ function AddressList() {
                             <span className="my-auto" style={{ color: '#014C90' }}>
                                 <i className="fa fa-search fa-fw" style={{ marginRight: 'auto' }}></i>
                             </span>
-                            <input type="text" className="form-control me-2 border-0 border-only-bottom" style={{ fontSize: '14px', marginLeft: '5px', color: 'black' }} />
-                            <button style={{ margin: 'auto', cursor: 'pointer', border: '0', background: 'none' }} type="reset">
+                            <input onKeyUp={handleSearch} type="text" className="form-control me-2 border-0 border-only-bottom" style={{ fontSize: '14px', marginLeft: '5px', color: 'black' }} />
+                            <button style={{ margin: 'auto', cursor: 'pointer', border: '0', background: 'none' }} type="reset" onClick={() => setDataDaftarAlamat(originalData)}>
                                 <i className="fa fa-close"></i>
                             </button>
                         </form>
@@ -113,8 +161,8 @@ function AddressList() {
                 <div className="card shadow border-0 pt-lg-0 pt-5 responsive-form">
                     <div className="card-body px-lg-0 px-md-0 px-1">
 
-                        {init.map((item) => (
-                            <div className="card shadow-sm rounded m-lg-4 m-0">
+                        {dataDaftarAlamat.map((item,key) => (
+                            <div className="card shadow-sm rounded m-lg-4 m-0" onClick={handleAddressItem} data-item={JSON.stringify(item)} key={key}>
                                 <div className="card-body">
                                     <h6 className="card-title title-icare fw-bold" style={{ fontSize: '14px' }}>{item.Nama_Alamat}</h6>
                                     <div className="row fw-bold">
@@ -123,17 +171,17 @@ function AddressList() {
                                             <table className="table table-borderless mb-0">
                                                 <thead>
                                                     <tbody className="px-auto py-auto">
-                                                        <tr key="row">
+                                                        <tr>
                                                             <td style={{ fontSize: '13px' }}>Jalan : {item.Alamat}</td>
                                                         </tr>
-                                                        <tr key="row">
+                                                        <tr>
                                                             <td style={{ fontSize: '13px' }}>No Gedung : {item.NoGedung}</td>
                                                         </tr>
-                                                        <tr key="row">
+                                                        <tr>
                                                             <td style={{ fontSize: '13px' }}>Nama Gedung : {item.NamaGedung}</td>
                                                         </tr>
-                                                        <tr key="row">
-                                                            <td>{item.Telp_Penerima}</td>
+                                                        <tr>
+                                                            <td style={{ fontSize: '13px' }} >{item.Telp_Penerima}</td>
                                                         </tr>
                                                     </tbody>
                                                     {
@@ -153,23 +201,29 @@ function AddressList() {
                                         {
                                             item.verified ?
                                                 (
-                                                    <div className="col-md-6 col-sm-6 col-12 text-end">
-                                                        <img src="images/verify.png" alt="" style={{ paddingTop: '32px', paddingBottom: '10px', width: "15%" }} />
+                                                    <div className="col-6 text-end">
+                                                     <div className="d-lg-block d-md-block d-none">
+                                                        <img src="images/verify.png" alt="" style={{ paddingTop: '5px', paddingBottom: '10px', width: "15%" }} />
                                                         <div className="">
                                                             <ol className="title-icare mb-0" style={{ fontSize: '14px' }}>
                                                                 <li className="nav-item" style={{ marginRight: '30px' }}>
                                                                     <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
                                                                 </li>
                                                                 <li className="nav-item">
-                                                                    <button onClick={() => handleDelete(item.Nama_Alamat)} className="nav-link" >Hapus</button>
+                                                                    <button onClick={() => handleDelete(item.id)} className="nav-link" >Hapus</button>
                                                                 </li>
                                                             </ol>
                                                         </div>
+                                                        </div>
+                                                            <div className="d-lg-none d-md-none d-block my-4">
+                                                                    <img src="images/verify.png" alt="" style={{ width: '32%' }} />
+                                                            </div>
                                                     </div>
                                                 ) : (
-                                                    <div className="col-md-6 col-sm-6 col-6 text-end">
+                                                    <div className="col-6 text-end">
+                                                     <div className="d-ld-block d-md-block d-none">
                                                         <div style={{ marginTop: "70px" }}>
-                                                            <ol className="title-icare mb-0" style={{ fontSize: '14px', position: 'relative', bottom: '-25px', paddingTop: '10px' }}>
+                                                            <ol className="title-icare mb-4" style={{ fontSize: '14px', position: 'relative', bottom: '-25px', paddingTop: '10px' }}>
                                                                 <li className="nav-item" style={{ marginRight: '30px' }}>
                                                                     <button onClick={() => handlePrioritize(item.Nama_Alamat)} className="nav-link">Utamakan</button>
                                                                 </li>
@@ -177,32 +231,34 @@ function AddressList() {
                                                                     <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
                                                                 </li>
                                                                 <li className="nav-item">
-                                                                    <button onClick={() => handleDelete(item.Nama_Alamat)} className="nav-link" >Hapus</button>
+                                                                    <button onClick={() => handleDelete(item.id)} className="nav-link" >Hapus</button>
                                                                 </li>
                                                             </ol>
+                                                        </div>
                                                         </div>
                                                     </div>
                                                 )
                                         }
+                                    </div>
                                         {
                                             showPopupDelete && (
-                                                <RemoveAlert visible={showPopupDelete} message={alertOption.message} onCancel={handlePopup} onClick={handleConfirmationDelete} customClass="col-md-3 col-sm-6 col-9" />
-                                            )
-                                        }
+                                                <RemoveAlert visible={showPopupDelete} titleMessage={alertOption.title} message={alertOption.message} onCancel={handlePopup} onClick={handleConfirmationDelete} customClass="col-md-3 col-sm-6 col-9" />
+                                                )
+                                            }
                                         {
                                             showPopupPrioritize && (
-                                                <RemoveAlert visible={showPopupPrioritize} message={alertOption.message} onCancel={handlePopup} onClick={handleConfirmationPrioritize} customClass="col-md-3 col-sm-6 col-9" />
-                                            )
+                                                <RemoveAlert visible={showPopupPrioritize} titleMessage={alertOption.title} message={alertOption.message} onCancel={handlePopup} onClick={handleConfirmationPrioritize} customClass="col-md-3 col-sm-6 col-9" />
+                                                )
                                         }
                                         {
                                             showSuccessPopup && (
-                                                <ConfirmAlert visible={showSuccessPopup} message={alertOption.message} onClick={handlePopup} customClass="col-md-3 sol-sm-6 col-9" />
+                                                <ConfirmAlert visible={showSuccessPopup} titleMessage={alertOption.title} message={alertOption.message} onClick={handlePopup} customClass="col-md-3 sol-sm-6 col-9" />
                                             )
                                         }
-                                    </div>
                                 </div>
                             </div>
                         ))}
+                        <LoadingAlert visible={loading} customClass="col-md-2 col-8" />
                     </div>
                 </div>
             </div>
@@ -222,6 +278,9 @@ function AddressList() {
 }
 
 export default AddressList
+
+
+
 
 // export default class extends Component {
 //     componentDidMount() {
@@ -386,7 +445,7 @@ export default AddressList
 //                         <div className="card-body px-lg-0 px-md-0 px-1">
 
 //                             {this.state.dataDaftarAlamat.map((item) => (
-//                                 <div className="card shadow-sm rounded m-lg-4 m-0">
+//                                 <div className="card shadow-sm rounded m-lg-4 m-0 mb-2">
 //                                     <div className="card-body">
 //                                         <h6 className="card-title title-icare fw-bold" style={{ fontSize: '14px' }}>{item.Nama_Alamat}</h6>
 //                                         <div className="row fw-bold">
@@ -425,53 +484,95 @@ export default AddressList
 //                                             {
 //                                                 item.verified ?
 //                                                     (
-//                                                         <div className="col-md-6 col-sm-6 col-12 text-end">
-//                                                             <img src="images/verify.png" alt="" style={{ paddingTop: '32px', paddingBottom: '10px', width: "15%" }} />
-//                                                             <div className="">
-//                                                                 <ol className="title-icare mb-0" style={{ fontSize: '14px' }}>
-//                                                                     <li className="nav-item" style={{ marginRight: '30px' }}>
-//                                                                         <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
-//                                                                     </li>
-//                                                                     <li className="nav-item">
-//                                                                         <button onClick={() => this.handleDelete(item.Nama_Alamat)} className="nav-link" >Hapus</button>
-//                                                                     </li>
-//                                                                 </ol>
+//                                                         <div className="col-md-6 col-sm-6 col-6 text-end">
+//                                                             <div className="d-lg-block d-md-block d-none">
+//                                                                 <img src="images/verify.png" alt="" style={{ paddingTop: '5px', paddingBottom: '10px', width: "15%" }} />
+//                                                                 <div className="">
+//                                                                     <ol className="title-icare mb-0" style={{ fontSize: '14px' }}>
+//                                                                         <li className="nav-item" style={{ marginRight: '30px' }}>
+//                                                                             <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
+//                                                                         </li>
+//                                                                         <li className="nav-item">
+//                                                                             <button onClick={() => this.handleDelete(item.Nama_Alamat)} className="nav-link" >Hapus</button>
+//                                                                         </li>
+//                                                                     </ol>
+//                                                                 </div>
+//                                                             </div>
+//                                                             <div className="d-lg-none d-md-none d-block my-4">
+//                                                                     <img src="images/verify.png" alt="" style={{ width: '32%' }} />
 //                                                             </div>
 //                                                         </div>
+
+
 //                                                     ) : (
-//                                                         <div className="col-md-6 col-sm-6 col-6 text-end">
-//                                                             <div style={{ marginTop: "70px" }}>
-//                                                                 <ol className="title-icare mb-0" style={{ fontSize: '14px', position: 'relative', bottom: '-25px', paddingTop: '10px' }}>
-//                                                                     <li className="nav-item" style={{ marginRight: '30px' }}>
-//                                                                         <button onClick={() => this.handlePrioritize(item.Nama_Alamat)} className="nav-link">Utamakan</button>
-//                                                                     </li>
-//                                                                     <li className="nav-item" style={{ marginRight: '30px' }}>
-//                                                                         <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
-//                                                                     </li>
-//                                                                     <li className="nav-item">
-//                                                                         <button onClick={() => this.handleDelete(item.Nama_Alamat)} className="nav-link" >Hapus</button>
-//                                                                     </li>
-//                                                                 </ol>
+//                                                         <div className="col-6 text-end">
+//                                                             <div className="cod-ld-block d-md-block d-none">
+//                                                                 <div style={{ marginTop: "70px" }}>
+//                                                                     <ol className="title-icare mb-0" style={{ fontSize: '14px', position: 'relative', bottom: '-25px', paddingTop: '10px' }}>
+//                                                                         <li className="nav-item" style={{ marginRight: '30px' }}>
+//                                                                             <button onClick={() => this.handlePrioritize(item.Nama_Alamat)} className="nav-link">Utamakan</button>
+//                                                                         </li>
+//                                                                         <li className="nav-item" style={{ marginRight: '30px' }}>
+//                                                                             <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
+//                                                                         </li>
+//                                                                         <li className="nav-item">
+//                                                                             <button onClick={() => this.handleDelete(item.Nama_Alamat)} className="nav-link" >Hapus</button>
+//                                                                         </li>
+//                                                                     </ol>
+//                                                                 </div>
 //                                                             </div>
 //                                                         </div>
 //                                                     )
 //                                             }
-//                                             {
-//                                                 showPopupDelete && (
-//                                                     <RemoveAlert visible={this.state.showPopupDelete} message={this.state.alertOption.message} onCancel={this.handlePopup} onClick={this.handleConfirmationDelete} customClass="col-md-3 col-sm-6 col-9" />
-//                                                 )
-//                                             }
-//                                             {
-//                                                 showPopupPrioritize && (
-//                                                     <RemoveAlert visible={this.state.showPopupPrioritize} message={this.state.alertOption.message} onCancel={this.handlePopup} onClick={this.handleConfirmationPrioritize} customClass="col-md-3 col-sm-6 col-9" />
-//                                                 )
-//                                             }
-//                                             {
-//                                                 showSuccessPopup && (
-//                                                     <ConfirmAlert visible={this.state.showSuccessPopup} message={this.state.alertOption.message} onClick={this.handlePopup} customClass="col-md-3 sol-sm-6 col-9" />
-//                                                 )
-//                                             }
 //                                         </div>
+//                                         {
+//                                             item.verified ?
+//                                                 (
+//                                                     <div className="row d-lg-none d-md-none d-block responsive-address">
+//                                                         <div className="text-end fw-bold">
+//                                                             <ol className="title-icare mb-0">
+//                                                                 <li className="nav-item">
+//                                                                     <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
+//                                                                 </li>
+//                                                                 <li className="nav-item">
+//                                                                     <button className="nav-link" onClick={() => this.handleDelete(item.Nama_Alamat)}>Hapus</button>
+//                                                                 </li>
+//                                                             </ol>
+//                                                         </div>
+//                                                     </div>
+//                                                 ) : (
+//                                                     <div className="row d-lg-none d-md-none d-block responsive-address">
+//                                                         <div className="text-end fw-bold">
+//                                                             <ol className="title-icare mb-0">
+//                                                                 <li className="nav-item">
+//                                                                     <button onClick={() => this.handlePrioritize(item.Nama_Alamat)} className="nav-link">Utamakan</button>
+//                                                                 </li>
+//                                                                 <li className="nav-item">
+//                                                                     <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
+//                                                                 </li>
+//                                                                 <li className="nav-item">
+//                                                                     <button className="nav-link" onClick={() => this.handleDelete(item.Nama_Alamat)}>Hapus</button>
+//                                                                 </li>
+//                                                             </ol>
+//                                                         </div>
+//                                                     </div>
+//                                                 )
+//                                         }
+//                                         {
+//                                             showPopupDelete && (
+//                                                 <RemoveAlert visible={this.showPopupDelete} message={this.alertOption.message} onCancel={this.handlePopup} onClick={this.handleConfirmationDelete} customClass="col-md-3 col-sm-6 col-9" />
+//                                             )
+//                                         }
+//                                         {
+//                                             showPopupPrioritize && (
+//                                                 <RemoveAlert visible={this.showPopupPrioritize} message={this.alertOption.message} onCancel={this.handlePopup} onClick={this.handleConfirmationPrioritize} customClass="col-md-3 col-sm-6 col-9" />
+//                                             )
+//                                         }
+//                                         {
+//                                             showSuccessPopup && (
+//                                                 <ConfirmAlert visible={this.showSuccessPopup} message={this.alertOption.message} onClick={this.handlePopup} customClass="col-md-3 sol-sm-6 col-9" />
+//                                             )
+//                                         }
 //                                     </div>
 //                                 </div>
 //                             ))}
