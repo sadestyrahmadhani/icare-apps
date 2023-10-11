@@ -1,6 +1,10 @@
 import { Component, useState } from "react";
+<<<<<<< HEAD
 import { Link, redirect, useNavigate, useParams } from "react-router-dom";
 import { createDaftarAlamat } from "../../services/API/mod_daftarAlamat";
+=======
+import { Link, useNavigate } from "react-router-dom";
+>>>>>>> 369b0c44ad81728eb46d7df279bac46a5937db58
 import ConfirmAlert from "../../component/alert/confirmAlert";
 import LoadingAlert from "../../component/alert/loadingAlert";
 
@@ -14,6 +18,7 @@ function FormAddress(){
     const [postalCode, setPostalCode] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [deliveryLocation, setDeliveryLocation] = useState('')
+<<<<<<< HEAD
     const [latitude, setLatitude] = useState('')
     const [longitude, setLongitude] = useState('')
     
@@ -24,6 +29,13 @@ function FormAddress(){
     const navigate = useNavigate()
     // const { id } = useParams()
     // const location = useLocation()
+=======
+    
+    const [alertOption, setAlertOption] = useState({title: '', message: '', redirect: '', url: ''})
+    const [showPopup, setShowPopup] = useState(false)
+    const id = useState(router.params.id)
+    const navigate = useNavigate()
+>>>>>>> 369b0c44ad81728eb46d7df279bac46a5937db58
 
     const [errorAddressLabel, setErrorAddressLabel] = useState('')
     const [errorBuildingName, setErrorBuildingName] = useState('')
@@ -37,9 +49,218 @@ function FormAddress(){
 
     const handlePopup = () => {
         setShowPopup(false)
+<<<<<<< HEAD
         console.log(alertOption)
         if(alertOption.redirect){
             navigate('/daftar_alamat')
+=======
+        navigate('/daftar_alamat')
+    }
+
+    const validationAddressLabel = (e) =>{
+        e.preventDefault()
+        setAddressLabel(e.target.value)
+        if(e.target.value === ""){
+            setErrorAddressLabel('Silahkan isi simpan alamat sebagai')
+            return
+        }
+        setErrorAddressLabel()
+    }
+
+    const validationRecipientName = (e) => {
+        e.preventDefault()
+        setRecipientName(e.target.value)
+        if(e.target.value === ""){
+            setErrorRecipientName('Silahkan isi nama penerima')
+            return
+        }
+        setErrorRecipientName()
+    }
+
+    const validationStreetName = (e) => {
+        e.preventDefault()
+        setStreetName(e.target.value)
+        if(e.target.value === ""){
+            setErrorStreetName('Silahkan isi nama jalan')
+            return
+        }
+        setErrorStreetName()
+    }
+
+    const validationBuildingNumber = (e) => {
+        e.preventDefault()
+        setBuildingNumber(e.target.value)
+        if(e.target.value === ""){
+            setErrorBuildingNumber('Silahkan isi nomor gedung/kantor')
+            return
+        }
+        setErrorBuildingNumber()
+    }
+
+    const validationBuildingName = (e) => {
+        e.preventDefault()
+        setBuildingName(e.target.value)
+        if(e.target.value === ""){
+            setErrorBuildingName('Silahkan isi nama gedung/kantor')
+            return
+        }
+        setErrorBuildingName()
+    }
+
+    const validationCity = (e) => {
+        e.preventDefault()
+        setCity(e.target.value)
+        if(e.target.value === ""){
+            setErrorCity('Silahkan isi kota')
+            return
+        }
+        setErrorCity()
+    }
+
+    const validationDeliveryLocation = (e) => {
+        e.preventDefault()
+        setDeliveryLocation(e.target.value)
+        if(e.target.value === ""){
+            setErrorDeliveryLocation('Silahkan isi lokasi pengiriman')
+        }
+        setErrorDeliveryLocation()
+    }
+
+    const validationPhonrNumber = (e) =>{
+        e.preventDefault()
+        setPhoneNumber(e.target.value)
+        if(e.target.value === ""){
+            setErrorPhoneNumber('Silahkan isi nomor telepon penerima')
+        } else {
+            if(!e.target.value.match("^[0-9]*$") || e.target.value.length < 9 || e.target.value.length > 16) {
+                setErrorPhoneNumber('Nomor tidak valid')
+                return
+            }
+            setErrorPhoneNumber()
+        }
+    }
+
+    const validationPostalCode = (e) =>{
+        e.preventDefault()
+        setPostalCode(e.target.value)
+        if(e.target.value == ""){
+            setErrorPostalCode('Silahkan isi kode pos')
+        } else {
+            if(!e.target.value.match("^[0-9]*$")){
+                setErrorPostalCode('Kode pos harus berupa angka')
+                return
+            } else {
+                if(e.target.value.length > 20){
+                    setErrorPostalCode('Kode pos tidak boleh lebih dari 20 karakter')
+                    return
+                }
+            }
+            setErrorPostalCode()
+        }
+    }
+
+    async function sumbit(e){
+        e.preventDefault()
+        let isValid = true
+        if (addressLabel === "") {
+            isValid = false
+            setErrorAddressLabel("Silahkan isi simpan alamat sebagai")
+        }
+        if (recipientName === "") {
+            isValid = false
+            setErrorRecipientName("Silahkan isi nama penerima")
+        }
+        if (streetName === "") {
+            isValid = false
+            setErrorStreetName("Silahkan isi nama jalan")
+        }
+        if (buildingNumber === "") {
+            isValid = false
+            setErrorBuildingNumber("Silahkan isi nomor gedung/kantor")
+        }
+        if (buildingName === "") {
+            isValid = false
+            setErrorBuildingName("Silahkan isi nama gedung/kantor")
+        }
+        if (city === "") {
+            isValid = false
+            setErrorCity("Silahkan isi kota")
+        }
+        if (deliveryLocation === "") {
+            isValid = false
+            setErrorDeliveryLocation("Silahkan isi lokasi pengiriman")
+        }
+        if (postalCode === "") {
+            isValid = false
+            setErrorPostalCode("Silahkan isi kode pos")
+        }
+        if (phoneNumber === "") {
+            isValid = false
+            setErrorPhoneNumber("Silahkan isi nomor penerima")
+        }
+
+        if (isValid) {
+            const {addressLabel, recipientName, streetName, buildingName, buildingNumber, city, deliveryLocation, postalCode, phoneNumber} = useState
+
+            setAlertOption(true)
+            
+        }
+        
+        if(this.state.addressLabel !== "" && this.state.recipientName !== "" && this.state.streetName !== "" && this.state.buildingName !== "" && this.state.buildingNumber !== "" && this.state.city !== "" && this.state.deliveryLocation !== "" && this.state.postalCode !== "" && this.state.phoneNumber !== "") {
+            if (this.state.id === '0') {
+                this.setState({showPopup: true, alertOption: { title: 'Berhasil', message: 'Alamat berhasil ditambah'}})
+                return
+            } else {
+                this.setState({showPopup: true, alertOption: { title: 'Berhasil', message: 'Alamat berhasil diperbarui'}})
+                return
+            }
+        }
+    }
+    
+}
+
+export default class extends Component {
+    constructor(props){
+        super(props)
+        this.sumbit  = this.sumbit.bind(this)
+        this.validationAddressLabel = this.validationAddressLabel.bind(this)
+        this.validationBuildingName = this.validationBuildingName.bind(this)
+        this.validationBuildingNumber = this.validationBuildingNumber.bind(this)
+        this.validationCity = this.validationCity.bind(this)
+        this.validationDeliveryLocation = this.validationDeliveryLocation.bind(this)
+        this.validationRecipientName = this.validationRecipientName.bind(this)
+        this.validationStreetName = this.validationStreetName.bind(this)
+        this.validationPhonrNumber = this.validationPhonrNumber.bind(this)
+        this.validationPostalCode = this.validationPostalCode.bind(this)
+        this.handlePopup = this.handlePopup.bind(this)
+        this.state = {
+            addressLabel: '',
+            recipientName: '',
+            streetName: '',
+            buildingNumber: '',
+            buildingName: '',
+            city: '',
+            postalCode: '',
+            phoneNumber: '',
+            deliveryLocation: '',
+            errorAddressLabel: '',
+            errorRecipientName: '',
+            errorStreetName: '',
+            errorBuildingNumber: '',
+            errorBuildingName: '',
+            errorCity: '',
+            errorPostalCode: '',
+            errorPhoneNumber: '',
+            errorDeliveryLocation: '',
+            
+            showPopup: false,
+            alertOption: {
+                title: '',
+                message: ''
+            },
+            
+            id: props.router.params.id
+>>>>>>> 369b0c44ad81728eb46d7df279bac46a5937db58
         }
     }
 
@@ -330,6 +551,7 @@ function FormAddress(){
                         </div>
                     </div>
                 </div>
+<<<<<<< HEAD
         </>
     )
     
@@ -337,6 +559,16 @@ function FormAddress(){
 
 export default FormAddress
 
+=======
+            </>
+        )
+    }
+}
+
+// import { Component } from "react";
+// import { Link } from "react-router-dom";
+// import ConfirmAlert from "../../component/alert/confirmAlert";
+>>>>>>> 369b0c44ad81728eb46d7df279bac46a5937db58
 
 // export default class extends Component {
 //     constructor(props){
@@ -378,7 +610,11 @@ export default FormAddress
 //                 message: ''
 //             },
             
+<<<<<<< HEAD
 //             // id: props.router.params.id
+=======
+//             id: props.router.params.id
+>>>>>>> 369b0c44ad81728eb46d7df279bac46a5937db58
 //         }
 //     }
 
