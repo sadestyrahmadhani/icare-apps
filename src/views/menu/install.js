@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ConfirmAlert from "../../component/alert/confirmAlert";
 import { getDaftarEq } from "../../services/API/mod_daftarEQ";
-import { uploadImages } from "../../services/API/mod_uploadImages";
 
 function Install() {
     const [checkBoxCheckCount, setCheckBoxCheckCount] = useState(0)
@@ -122,16 +121,13 @@ function Install() {
         setIsFormValid(isValid);
 
         if(isValid) {
-            const res = await uploadImages(meterImage)
-            if(res.status == 200 && res.data === 'succes upload') {
-                setShowPopup(false)
-                setShowAddedPopup(true)
-                console.log(res.data) 
-            }
+            setShowPopup(false)
+            setShowAddedPopup(true)
         } else {
             setShowPopup(true)
             setShowAddedPopup(false)
         }
+        
     }
 
     const validationEquipment = (e) => {

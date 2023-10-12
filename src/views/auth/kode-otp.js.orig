@@ -1,5 +1,5 @@
 import {  useState, useEffect  } from "react";
-import { Link, useLocation, useNavigate} from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import Navbar from "../../component/navbar";
 import Footer from "../../component/footer";
 import ConfirmAlert from "../../component/alert/confirmAlert";
@@ -7,9 +7,29 @@ import { verifyOtp } from "../../services";
 import { reSendOtp } from "../../services/API/mod_verifyOtp";
 import LoadingAlert from "../../component/alert/loadingAlert";
 
+<<<<<<< Updated upstream
+export default class extends Component {
+    constructor(props) {
+        super(props)
+        this.submit = this.submit.bind(this)
+        this.handlePopup = this.handlePopup.bind(this)
+        this.handleReSendOtp = this.handleReSendOtp.bind(this)
+        this.resetIteration = this.resetIteration.bind(this)
+        this.state = {
+            iteration: 60,
+            resendCodeDisabled:true,
+            showPopup: false,
+            loading: false,
+            otp: '',
+            titleMessage:'',
+            errorMessage:'',
+            userInfo: JSON.parse(window.atob(this.props.router.params.id))
+        }
+    }
+=======
  function Otp() {
-    const navigate = useNavigate();
-    // const {userid, email, password, telp, msg, firstlogin }= this.props.params; 
+    
+    // const {userid, email, password, telp, msg, firstlogin }= this.props.params;
     // this.submit = this.submit.bind(this)
     // this.handlePopup = this.handlePopup.bind(this)
     // this.handleReSendOtp = this.handleReSendOtp.bind(this)
@@ -19,7 +39,6 @@ import LoadingAlert from "../../component/alert/loadingAlert";
     const [iteration, setIteration]= useState(60)       
     const [resendCodeDisabled,setresendCodeDisabled]=useState(true)
     const [showPopup,setshowPopup]=useState( false)
-    const [loading,setLoading]=useState( false)
     const [otp,setotp]=useState( '')
     const [titleMessage,settitleMessage]=useState('')
     const [errorMessage,seterrorMessage]=useState('')
@@ -34,10 +53,10 @@ import LoadingAlert from "../../component/alert/loadingAlert";
     useEffect(()=> {
         
         const interval=setInterval(() => {
+            setIteration(iteration - 1)
             if(iteration === 0) {
                 setresendCodeDisabled(true)
             } else {
-                setIteration(iteration - 1)
                 setresendCodeDisabled(false)
             }
         }, 1000);
@@ -47,35 +66,40 @@ import LoadingAlert from "../../component/alert/loadingAlert";
 
     // componentDidMount(){        
     // }
+>>>>>>> Stashed changes
 
-    const handlePopup = ( )=>{
-        setshowPopup(false)
+    const handlePopup= ()=>{
+        setshowPopup=false
     }
 
     async function useSubmit(e) {
         e.preventDefault()
+<<<<<<< Updated upstream
+        this.setState({loading: true})
+        const res = await verifyOtp({userid: this.state.userInfo.userid, action: this.state.userInfo.action , otp: this.state.otp})
+        this.setState({loading: false})
+=======
         const res = await verifyOtp({userid: userid, action: msg.action , otp: otp})
+>>>>>>> Stashed changes
         if(res.status == 200 && res.data !== 'Succes, OTP match') {
-            setshowPopup(true) 
+            setshowPopup(true)
             seterrorMessage(res.data)
         } else {
-            if(msg.action === "Change Telp") { 
-                localStorage.setItem('username', location.state.name)
-                localStorage.setItem('telp', location.state.phone)
-                navigate('/data_diri')
+<<<<<<< Updated upstream
+            if(this.state.userInfo.action === "Change Telp") {
+                localStorage.setItem('username', this.state.userInfo.name)
+                localStorage.setItem('telp', this.state.userInfo.telp)
+                this.props.router.navigate('/data_diri')
             } else {
-                var data = res.data
-                navigate('/update_password', {
-                    state: {
-                        firstlogin: false,
-                        userid: location.state.userid,
-                        otp: otp,
-                        msg: data
-                    }
-                })
+                this.props.router.navigate('/ubah_kata_sandi')
             }
         } 
     } 
+=======
+            this.props.router.navigate('/dashboard')
+        }
+    }
+>>>>>>> Stashed changes
 
     const handleReSendOtp = async () => {
         if(iteration === 0 ) {
@@ -85,7 +109,7 @@ import LoadingAlert from "../../component/alert/loadingAlert";
                 seterrorMessage('Opps! terjadi kesalahan')
                 return
             }
-            resetIteration()
+            this.resetIteration()
         }
     }
 
@@ -96,6 +120,7 @@ import LoadingAlert from "../../component/alert/loadingAlert";
         }
     }
 
+    
         return(
             <div className="bg-light">
                 <Navbar versi="2" />
@@ -112,7 +137,7 @@ import LoadingAlert from "../../component/alert/loadingAlert";
                                     className="mb-2 text-otp" 
                                     style={{fontSize:'14px', textAlign:'justify'}}
                                 >
-                                    Silahkan masukkan kode OTP yang telah dikirimkan melalui sms ke No. + 
+                                    Silahkan masukkan kode OTP yang telah dikirimkan melalui sms ke No. 
                                     {telp}
                                 </p>
                                 <form 
@@ -122,7 +147,7 @@ import LoadingAlert from "../../component/alert/loadingAlert";
                                     <input 
                                         className="form-control border-only-bottom custom-input-number text-center mb-4" 
                                         type="number" 
-                                        onChange={(e) => setotp(e.target.value)} 
+                                        onChange={(e) => this.setState({otp: e.target.value})} 
                                         placeholder="Masukkan Kode OTP" 
                                         style={{fontSize:'14px'}} 
                                     />
@@ -142,7 +167,7 @@ import LoadingAlert from "../../component/alert/loadingAlert";
                                     customClass="col-md-3 col-sm-6 col-7" 
                                 />
                                 <LoadingAlert 
-                                visible={loading}
+                                visible={this.state.loading}
                                 customClass="col-md-2 col-8"
                                 />
                                 <p 
@@ -152,7 +177,7 @@ import LoadingAlert from "../../component/alert/loadingAlert";
                                     Belum terima SMS kode OTP ?
                                 </p>
                                 <button 
-                                    className={`${!resendCodeDisabled ? 'disabled' : 'fw-bold text-primary'}`} 
+                                    className={`${resendCodeDisabled ? 'disabled' : 'fw-bold text-primary'}`} 
                                     type="button" 
                                     onClick={handleReSendOtp} 
                                     style={{textDecoration:'none', color:'#9b9b9b', fontSize:'14px', border:'none', background:'transparent'}}
@@ -174,4 +199,3 @@ import LoadingAlert from "../../component/alert/loadingAlert";
 
 }
 export default Otp
-

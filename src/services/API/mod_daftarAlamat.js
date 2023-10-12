@@ -36,6 +36,20 @@ export const getDaftarAlamat = async () => {
 
 };
 
+export const getDaftarAlamatById = async (id) => {
+    try {
+        const res = await fetch(`${appConfig.BASE_API}/useraddress/readid/${id}`, {
+            method: 'GET',
+            ...jsonHeaderAuth(),
+            mode: 'cors'
+        })
+        var data = await res.json()
+        return{status: res.status, data: data}
+    } catch (error) {
+        throw error
+    }
+}
+
 export const createDaftarAlamat = async (payload) => {
     try {
         const res = await fetch(`${appConfig.BASE_API}/useraddress/create`, {
@@ -64,3 +78,4 @@ export const deleteDaftarAlamat = async (id) => {
         throw error
     }
 }
+

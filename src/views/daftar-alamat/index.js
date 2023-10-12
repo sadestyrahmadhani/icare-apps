@@ -61,6 +61,15 @@ function AddressList() {
         }
     }
 
+    const handleUpdate = (e) => {
+        e.preventDefault()
+        navigate(e.target.getAttribute('href'), {
+            state: {
+                id: e.target.getAttribute('data-id')
+            }
+        })
+    }
+
     const handlePopup = () => {
         setShowPopupDelete(false)
         setShowPopupPrioritize(false)
@@ -74,10 +83,10 @@ function AddressList() {
     }
 
     const handleConfirmationDelete = async () => {
+        setShowPopupDelete(false)
         const res = await deleteDaftarAlamat(daftarAlamatToDelete)
         if(res.status == 200) {
-            getDaftarAlamat()
-            setShowPopupDelete(false)
+            init()
             setShowSuccessPopup(true)
             setDaftarAlamatToDelete('')
             setAlertOption({ title: 'Berhasil', message: 'Alamat berhasil dihapus', redirect: false })
@@ -207,7 +216,14 @@ function AddressList() {
                                                         <div className="">
                                                             <ol className="title-icare mb-0" style={{ fontSize: '14px' }}>
                                                                 <li className="nav-item" style={{ marginRight: '30px' }}>
-                                                                    <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
+                                                                    <a 
+                                                                        href="/tambah_alamat/1"
+                                                                        className="nav-link"
+                                                                        onClick={handleUpdate}
+                                                                        data-id={item.id}
+                                                                    >
+                                                                        Ubah
+                                                                    </a>
                                                                 </li>
                                                                 <li className="nav-item">
                                                                     <button onClick={() => handleDelete(item.id)} className="nav-link" >Hapus</button>

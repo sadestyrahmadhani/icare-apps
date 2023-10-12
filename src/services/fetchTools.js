@@ -55,14 +55,6 @@ export const imageHeader = {
     'Content-Type': 'image/jpeg'
   },
 };
-export const imageHeaderAuth = () => {
-  let cookie=cookies.get('token')
-  let header={headers : {
-    'Content-Type' : 'image/jpeg',
-    'Authorization' :'Bearer '+ cookie
-  }}
-  return header;
-};
 export const refreshAuthLogic = async failedRequest => {
   
   const url = `${appConfig.BASE_API}/refreshtoken`;

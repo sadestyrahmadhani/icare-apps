@@ -1238,5 +1238,108 @@ td {
     .title-bold {
         font-weight: bold !important;
     }
+
+    /* Tanya Tim Support (Chat) */
+
+    .responsive-tanya-tim .card {
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    .responsive-tanya-tim .card-support {
+        border: none !important;
+        border-radius: 0 !important;
+        height: 470px !important;
+    }
+
+    .responsive-tanya-tim .info {
+        position: fixed !important;
+        border: 2px solid #014C90;
+        border-radius: 10px !important;
+        width: 89% !important;
+        height: 20% !important;
+        box-shadow: 1px 1px 5px 1px gray !important;
+    }
+
+    .info p {
+        font-size: 12px !important;
+        text-align: left;
+        margin-top: 0 !important;
+        margin-left: 9px !important;
+    }
+
+    .info .date {
+        margin-top: 5px !important;
+    }
+
+    .info .request {
+        margin-top: 0 !important;
+        font-size: 16px !important;
+        text-align: center !important;
+    }
+
+    .responsive-tanya-tim .chat {
+        border-left: none !important;
+        border-top: 3px solid #014C90;
+        border-radius: 0 !important;
+        height: 343px !important;
+        margin-top: 40% !important;
+    }
+
+    .card-bubble-chat {
+        margin-top: 5% !important;
+        width: 20% !important;
+        margin-left: 75% !important;
+    }
+
+    .card-message-send {
+        margin-top: 223px !important;
+        border-radius: 0 !important;
+        height: 15% !important;
+        box-shadow: 0 1px 2px 0 gray !important;
+    }
+
+    .input-chat {
+        width: 85% !important;
+    }
+
+    /* Riwayat Index */
+    .responsive-bar .search-riwayat {
+        background: none !important;
+        border: none !important;
+        width: 80% !important;
+        outline: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 10px 0 !important;
+    }
+
+    .responsive-bar .search-riwayat:focus {
+        border-bottom: 2px solid #41abf1 !important;
+        color: #41abf1 !important;
+        padding: 10px 0 !important;
+    }
+
+    .responsive-bar .search-riwayat::placeholder {
+        color: white !important;
+    }
+
+    /* Detail Permintaan */
+    .btn-tanya {
+        width: 65% !important;
+        padding: 10px !important;
+    }
+
+    .responsive-detail-permintaan .col-11 {
+        margin-left: 20px !important;
+    }
+
+    .responsive-detail-permintaan .col-10 {
+        width: 55% !important;
+    }
+
+    .responsive-detail-permintaan .col-3 {
+        width: 55% !important;
+    }
 }
 
