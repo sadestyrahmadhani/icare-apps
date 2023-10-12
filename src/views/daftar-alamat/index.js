@@ -15,7 +15,19 @@ function AddressList() {
     const [showSuccessPopup, setShowSuccessPopup] = useState(false)
     const [alertOption, setAlertOption] = useState({ title: '', message: '' })
     const [dataisLoaded, setDataisLoaded] = useState(false)
-    const [dataDaftarAlamat, setDataDaftarAlamat] = useState([])
+    const [dataDaftarAlamat, setDataDaftarAlamat] = useState([
+        {
+            id: 1,
+            Nama_Alamat: 'Test 23',
+            Penerima: 'Test',
+            Alamat: 'Jl. Test No. 23',
+            NoGedung: '123',
+            NamaGedung: 'Gedung Test',
+            Telp_Penerima: '+62897874673',
+            isPin: true,
+            verified: false,
+        }
+    ])
     const [loading, setLoading] = useState(false)
     const [originalData, setOriginalData] = useState('')
     const [daftarAlamatToDelete, setDaftarAlamatToDelete] = useState('')
@@ -26,7 +38,7 @@ function AddressList() {
 
     useEffect(() => {
      return () => {
-        init()
+        // init()
      }
     },[]);
     
@@ -217,7 +229,7 @@ function AddressList() {
                                                             <ol className="title-icare mb-0" style={{ fontSize: '14px' }}>
                                                                 <li className="nav-item" style={{ marginRight: '30px' }}>
                                                                     <a 
-                                                                        href="/tambah_alamat/1"
+                                                                        href="/tambah_alamat"
                                                                         className="nav-link"
                                                                         onClick={handleUpdate}
                                                                         data-id={item.id}
@@ -244,7 +256,14 @@ function AddressList() {
                                                                     <button onClick={() => handlePrioritize(item.Nama_Alamat)} className="nav-link">Utamakan</button>
                                                                 </li>
                                                                 <li className="nav-item" style={{ marginRight: '30px' }}>
-                                                                    <Link className="nav-link" to="/tambah_alamat/1">Ubah</Link>
+                                                                    <a 
+                                                                        href="/tambah_alamat"
+                                                                        className="nav-link"
+                                                                        onClick={handleUpdate}
+                                                                        data-id={item.id}
+                                                                    >
+                                                                        Ubah
+                                                                    </a>
                                                                 </li>
                                                                 <li className="nav-item">
                                                                     <button onClick={() => handleDelete(item.id)} className="nav-link" >Hapus</button>

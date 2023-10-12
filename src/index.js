@@ -97,7 +97,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback="Loading..."><ProtectedRoute><DaftarAlamat /></ProtectedRoute></Suspense>,    
       },
       {
-        path: "/tambah_alamat/:id",
+        path: "/tambah_alamat",
         element: <Suspense fallback="Loading..."><ProtectedRoute><DaftarAlamatForm /></ProtectedRoute></Suspense>,    
       },
       {
