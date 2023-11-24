@@ -1,69 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import InformationAlert from "../../component/alert/informationAlert";
 import { Link } from 'react-router-dom';
+import { getInformasiByUserid, updateIsRead } from '../../services/API/mod_informasi';
+import LoadingAlert from '../../component/alert/loadingAlert';
 
 function Information() {
     const [showPopup, setShowPopup] = useState(false)
     const [selectedInformation, setSelectedInformation] = useState(null)
     const [clickedCard, setClickedCard] = useState([])
-    const dataInformation = [
-        {
-            imgInformation: "images/detail-informasi.png",
-            title: "INFO",
-            dateInformation: "2023-04-12",
-            alert: "Maaf, permintaan Anda dibatalkan!",
-            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            messageInformation: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book....",
-        },
-        {
-            imgInformation: "images/detail-informasi.png",
-            title: "INFO",
-            dateInformation: "2023-04-13",
-            alert: "Maaf, permintaan Anda dibatalkan!",
-            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            messageInformation: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        },
-        {
-            imgInformation: "images/detail-informasi.png",
-            title: "INFO",
-            dateInformation: "2023-04-12",
-            alert: "Hai, permintaanmu sedang di validasi.",
-            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            messageInformation: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        },
-        {
-            imgInformation: "images/detail-informasi.png",
-            title: "INFO",
-            dateInformation: "2023-04-12",
-            alert: "Maaf, permintaan Anda dibatalkan!",
-            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            messageInformation: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        },
-        {
-            imgInformation: "images/detail-informasi.png",
-            title: "INFO",
-            dateInformation: "2023-04-12",
-            alert: "Maaf, permintaan Anda dibatalkan!",
-            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            messageInformation: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        },
-        {
-            imgInformation: "images/detail-informasi.png",
-            title: "INFO",
-            dateInformation: "2023-04-12",
-            alert: "Maaf, permintaan Anda dibatalkan!",
-            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            messageInformation: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        },
-        {
-            imgInformation: "images/detail-informasi.png",
-            title: "INFO",
-            dateInformation: "2023-04-12",
-            alert: "Maaf, permintaan Anda dibatalkan!",
-            description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            messageInformation: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    const [dataInformation, setDataInformation] = useState([])
+    const [number, setNumber] = useState(10)
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        init()
+    }, [number]);
+
+
+    const init = async () => {
+        setLoading(true)
+        const res = await getInformasiByUserid(number)
+        setLoading(false)
+        if(res.status == 200) {
+            setDataInformation(res.data.Table)
         }
-    ]
+    }
 
     const showPopupHandler = (value) => {
         document.body.style.overflow = 'hidden';
@@ -76,6 +37,12 @@ function Information() {
         setShowPopup(false)
         setSelectedInformation(null)
     }
+    const formatDate = (val) => {
+        var date = new Date(val)
+        return `${ date.getDate().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) }-${ date.getMonth().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) }-${ date.getFullYear().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) }`
+    }
+
+    
 
     // const handleCardClick = (value) => {
     //     setShowPopup()
@@ -95,31 +62,32 @@ function Information() {
                 </div>
             </div>
             <div className="responsive-informasi">
-                <div className="card border-0 shadow-lg">
+                <div className="card border-0 shadow-lg px-3">
                     <div className="card-body">
                         <div className="row">
                             {
                                 dataInformation.map((value, key) => (
-                                    <div style={{cursor:'pointer'}} className={`card-information col-md-12 mb-4 ${clickedCard.includes(key) ? '' : 'info-card'}`} key={key} onClick={() => { showPopupHandler(value); setClickedCard([...clickedCard, key])}}>
+                                    <div style={{cursor:'pointer'}} className={`card-information col-md-12 mb-4 ${value.isRead ? '' : 'info-card'}`} key={key} onClick={async () => { showPopupHandler(value); await updateIsRead(value.id.toString()); init()}}>
                                         <div className="d-flex align-items-center mt-2 mb-2">
                                             <i className="fa fa-info-circle" style={{fontSize:'18px'}}>
                                                 <span className="info mx-2" style={{fontSize:'15px'}}>Info</span>
                                             </i>
                                             <i className="fa fa-circle align-items-center mx-2" style={{fontSize:'12px'}}>
-                                                <span className="date mx-2" style={{fontSize:'15px'}}>{value.dateInformation}</span>
+                                                <span className="date mx-2" style={{fontSize:'15px'}}>{formatDate(value.createDate)}</span>
                                             </i>
                                         </div>
-                                        <h6 style={{color:'black'}}>{value.alert}</h6>
-                                        <p className="list-description" style={{fontSize:'14px'}}>{value.description}</p>
+                                        <h6 style={{color:'black'}}>{value.title}</h6>
+                                        <p className="list-description" style={{fontSize:'14px'}}>{value.message}</p>
                                     </div>
                                 ))
                             }
                         
-                            <div className="button-informasi">
-                                <button type="button" className="btn btn-primary" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}}>Lihat lebih banyak ...</button>
+                            <div className="button-informasi p-0">
+                                <button type="button" className="btn btn-informasi btn-primary" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}} onClick={() => setNumber(number+10)}>Lihat lebih banyak ...</button>
                             </div>
                         </div>
-                        <InformationAlert visible={showPopup} customClass={`col-sm-9 ${showPopup ? 'information-popup' : ''}`} dataInformation={selectedInformation} onClick={hidePopupHandler} />
+                        <LoadingAlert visible={loading} customClass="col-md-2 col-8" />
+                        <InformationAlert visible={showPopup} customClass={`col-9 ${showPopup ? 'information-popup' : ''}`} dataInformation={selectedInformation} onClick={hidePopupHandler} />
                     </div>
                 </div>
             </div>

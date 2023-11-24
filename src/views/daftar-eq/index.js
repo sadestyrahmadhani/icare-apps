@@ -1,26 +1,36 @@
 import React, { Component, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useLocation,useNavigate, useParams } from "react-router-dom";
+
 import RemoveAlert from "../../component/alert/removeAlert";
 import ConfirmAlert from "../../component/alert/confirmAlert";
 import LoadingAlert from "../../component/alert/loadingAlert";
-import { deleteDaftarEq, getDaftarEq } from "../../services/API/mod_daftarEQ";
-
+// import { deleteDaftarEq, getDaftarEq } from "../../services/API/mod_daftarEQ";
+import UploadFileAlert from "../../component/alert/uploadFileAlert";
+import ErrorAlert from "../../component/alert/errorAlert";
+import { deleteDaftarEq, getDaftarEq, getDownloadEquipment, UploadEquipment } from "../../services/API/mod_daftarEQ";
+import { NavDropdown } from "react-bootstrap";
 function DaftarEQ() {
+    const { id } = useParams()
+    const location = useLocation()
+    const navigate = useNavigate()
     const [showPopup, setShowPopup] = useState(false)
     const [showSuccessPopup, setShowSuccessPopup] = useState(false)
+    const [showErrorPopup, setShowErrorPopup] = useState(false)
+    const [alertOption, setAlertOption] = useState({ title: '', message: '' })
     // const [itemToDeleted, setItemToDeleted] = useState(null)
     const [nomorEQToDelete, setNomorEQToDelete] = useState('')
-    const { id } = useParams()
     const [loading, setLoading] = useState(false)
     const [daftarEQ, setDaftarEQ] = useState([])
     const [originalData, setOriginalData] = useState('')
-    const navigate = useNavigate()
+    const [searchActive, setSearchActive] = useState(false)
+    const [isActive, setIsActive] = useState(false)
+    const [showPopupUpload, setShowPopupUpload] = useState(false)
+    const [itemDaftarEQ, setItemDaftarEQ] = useState(5)
+    const [showMoreDaftarEQ, setShowMoreDaftarEQ] = useState(true)
+    const inputFileRef = React.useRef();
 
     useEffect(() => {
-        return () => {
             daftarEq() 
-        }
     },[]);
 
     const daftarEq = async () => {
@@ -60,13 +70,15 @@ function DaftarEQ() {
     
     const handlePopup = () => {
         setShowPopup(false)
-        setShowSuccessPopup(false)
+        setShowSuccessPopup(false)        
+        setShowErrorPopup(false)
     }
 
     const handleSuccessPopup = () => {
         setShowPopup(false)
         setShowSuccessPopup(false)
         daftarEq()
+        setShowPopupUpload(false)
     }
 
     const handleDeletedItem = (noEQToDelete) => {
@@ -74,11 +86,20 @@ function DaftarEQ() {
         setNomorEQToDelete(noEQToDelete)
     }    
 
+    const getEquipmentToDelete = () => {
+        const equipmentToDelete = daftarEQ.find(eq => eq.id === nomorEQToDelete)
+        return equipmentToDelete ? equipmentToDelete.equipment : ''
+    }
+
     const handleCancelDelete = () => {
         setShowPopup(false)
         setShowSuccessPopup(false)
     }
-
+    const handleDownloadCSV = () => {
+        setLoading(true)
+        getDownloadEquipment()
+        setLoading(false)
+    }
     const handleConfirmDelete = async () => {
         const res = await deleteDaftarEq(nomorEQToDelete)
         if(res.status = 200) {
@@ -86,7 +107,42 @@ function DaftarEQ() {
             setShowPopup(false)
             setNomorEQToDelete('')
             setShowSuccessPopup(true)
+            setAlertOption({title: 'Hapus', message: 'Berhasil hapus EQ', redirect: false})
         }
+    }
+    const handleUpload = () => {        
+        inputFileRef.current.click();
+    }
+    const handleCSVUpload = async (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            setLoading(true)
+            const res=await UploadEquipment(file)
+            e.target.value=null
+            console.log('upload equipment',res)
+            if (res.result=="Sukses") {
+                console.log("masuk error")
+                setShowSuccessPopup(true)
+                setAlertOption({ title: 'Upload', message: `Sukses`, redirect: false })
+                daftarEq()
+            }else{
+                console.log("masuk error")
+                setShowErrorPopup(true)
+                let message=""
+                if (res.error){                    
+                    message+="<ul>"
+                    res.error.forEach(e=>{
+                        message+="<li>"+ e +"</li>"
+                    })
+                    message+="</ul>"
+                }
+                setAlertOption({ title: res.result, message: message, redirect: false })
+            }
+            setLoading(false)
+            
+        }
+
     }
 
     const handleSearch = (e) => {
@@ -98,37 +154,120 @@ function DaftarEQ() {
         }
     }
 
-    
-    
+    const handleNavClick = (nav) => {
+        setIsActive(false)
+
+        if (nav === "active") {
+            setIsActive(true)
+        }
+    }
+
+    const handleShowMoreDaftarEQ = () => {
+        const showItem = 5
+        const newItemDaftarEQ = itemDaftarEQ + showItem
+
+        setItemDaftarEQ(newItemDaftarEQ)
+
+        if(newItemDaftarEQ >= daftarEQ.length) {
+            setShowMoreDaftarEQ(false)
+        }
+    }
+
+    // const handleCSVUpload = async () => {
+    //     const uploadedCSV = localStorage.getItem('uploadedcsvfile')
+
+    //     if(uploadedCSV) {
+    //         const decodedData = atob(uploadedCSV.split(',')[1])
+    //         const rows = decodedData.split('\n').map(row => row.trim()).filter(row => row)
+    //         const headerRow = rows[0]
+    //         const cleanedHeader = headerRow.split(',').map(column => column.trim())
+    //         const dataRows = rows.slice(1)
+
+    //         const csvData = dataRows.map(dataRow => {
+    //             const rowValues = dataRow.split(',').map(value => value.replace(/"/g, '').trim())
+    //             const rowData = {}
+    //             cleanedHeader.forEach((column, index) => {
+    //                 if(column === "Latitude" || column === "Longitude") {
+    //                     rowData[column] = parseFloat(rowValues[index])
+    //                 } else {
+    //                     rowData[column] = rowValues[index]
+    //                 }
+    //             })
+    //             return rowData
+    //         })
+
+    //         csvData.forEach(async(rowData) => {
+    //             const requestData = {
+    //                 userid: parseInt(localStorage.getItem('id')),
+    //                 equipment: rowData.equipment,
+    //                 eqmodelName: rowData.eqmodelName,
+    //                 description: rowData.description,
+    //                 Nama_Alamat: rowData.Nama_Alamat,
+    //                 Penerima: rowData.Penerima,
+    //                 Alamat: rowData.Alamat
+    //             }
+    //             console.log('Data : ', requestData)
+
+    //             setShowPopupUpload(false)
+    //         })
+    //     } else {
+    //         console.log("File tidak ditemukan")
+    //     }
+    // }
+
+        
     // const buttonDaftarEQ = daftarEQ.length > 10;
     
     return (
         <>
             <div className="responsive-bar d-md-flex">
-                <div className="col-md-6 col-12 mb-md-5">
+                <div className="col-md-2 col-2 mb-md-5">
                     <div className="row">
-                        <div className="col-md-12 col-8">
-                            <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{fontSize: '18px'}}>
-                                <Link className="nav-link d-inline d-md-none me-3" to="/settings">
-                                    <i className="fa fa-arrow-left color-arrow-left"></i>
-                                </Link>
-                                <span className="title-bold" style={{borderBottom: '3px solid #014C90'}}>Daftar EQ</span>
-                            </h4>
-                        </div>
-                        <div className="col-2 d-md-none d-block text-center">
-                            <Link to="/form_eq/0">
-                                <i className="fa fa-plus-circle" style={{fontSize: '20px'}}></i>
-                            </Link>
-                        </div>
-                        <div className="col-2 d-md-none d-block text-center">
-                            <div>
-                                <i className="fa fa-search text-white" style={{fontSize: '20px'}}></i>
-                            </div>
-                        </div>
+                        {
+                            searchActive ? (
+                                <div className="d-flex align-items-center">
+                                    <span className="nav-link d-inline d-md-none me-3" onClick={() => setSearchActive(false)}>
+                                        <i className="fa fa-arrow-left color-arrow-left"></i>
+                                    </span>
+                                    <input type="text" onKeyUp={handleSearch} className="form-control search-riwayat" placeholder="Telusuri..." style={{position: 'absolute', right: 35}} />
+                                    <NavDropdown className={`custom-dropdown text-white ${isActive ? 'active-link' : ''}`} onClick={() => handleNavClick('active')} id="nav-dropdown" title={<i className="fa fa-ellipsis-v d-md-none nav-app" style={{fontSize: '20px',}}></i>} style={{position: 'absolute', right: 20, zIndex: '1111'}}>
+                                        <NavDropdown.Item href="/tambah_eq/0">
+                                            <div className="item-drop d-flex align-items-center">
+                                                <div className="col-9">
+                                                    <span className="text-decoration-none nav-app" style={{color: '#000'}}>Tambah EQ</span>
+                                                </div>
+                                            </div>
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="col-md-12 col-8">
+                                        <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{fontSize: '18px'}}>
+                                            <Link className="nav-link d-inline d-md-none me-3" to="/dashboard">
+                                                <i className="fa fa-arrow-left color-arrow-left"></i>
+                                            </Link>
+                                            <span className="title-bold" style={{borderBottom: '3px solid #014C90'}}>Daftar EQ</span>
+                                        </h4>
+                                    </div>
+                                    <div className="col-2 d-md-none d-block text-center">
+                                        <Link to="/tambah_eq/0">
+                                            <i className="fa fa-plus-circle" style={{fontSize: '20px'}}></i>
+                                        </Link>
+                                    </div>
+                                    <div className="col-2 d-md-none d-block text-center">
+                                        <span>
+                                            <i className="fa fa-search text-white" onClick={() => setSearchActive(true)} style={{fontSize: '20px'}}></i>
+                                        </span>
+                                    </div>
+                                
+                                </>
+                            )
+                        }
                     </div>
                 </div>
-                <div className="col-md-7 row d-md-flex d-none">
-                    <div className="col-lg-7 col-md-7 col-12">
+                <div className="d-md-flex d-none">
+                    <div className="col-sm-8" style={{marginRight:'10%'}}>
                         <form className="d-flex" style={{ width: '108%' }}>
                             <span className="my-auto" style={{color: '#014C90'}}>
                                 <i className="fa fa-search fa-fw" style={{marginRight: 'auto'}}></i>
@@ -139,21 +278,30 @@ function DaftarEQ() {
                             </button>
                         </form>
                     </div>
-                    <div className="col-md-4 col-3 text-end" style={{paddingRight: '25px'}}>
-                        <Link to="/form_eq">
+                    <div className="col-md-8 col-3 text-end px-0">
+                        <input type="file" ref={inputFileRef} accept=".xlsx" onChange={handleCSVUpload} className="d-none" />
+                        <label htmlFor="csvFile">
+                            <button onClick={handleUpload} className="btn btn-outline-danger me-3" style={{ fontSize: '14px', padding: '8px 10px' }}>
+                                Upload Equipment <i className="fa fa-upload" style={{ marginLeft: '5px' }}></i>
+                            </button>
+                        </label>
+                        <button onClick={handleDownloadCSV} className="btn btn-outline-primary btn-download me-3" style={{ fontSize: '14px', padding: '8px 23.5px', color: '#014C90' }}>
+                            Download <i className="fa fa-download" style={{ marginLeft: '5px' }}></i>
+                        </button>                    
+                        <Link to="/tambah_eq">
                             <button className="btn btn-login" style={{padding: '8px 20px', fontSize: '14px'}}>
                                 <i className="fa fa-plus" style={{marginRight: '5px'}}></i>
-                                    Tambah Eq
+                                    Tambah EQ
                             </button>
                         </Link>
-                    </div>
+                    </div>                    
                 </div>
             </div>
                 <div className="card shadow border-0 px-lg-4 px-md-4 py-lg-4 py-md-4 pb-lg-0 responsive-form" style={{borderRadius:'20px'}}>
                     <div className="card-body">
                         <div className="row">
                             {
-                                daftarEQ.map((value, key) => (
+                                daftarEQ.slice(0, itemDaftarEQ).map((value, key) => (
                                     !value.deleted && (
                                     <div className="card-eq d-flex mb-lg-5 mb-3" key={value.id} style={{borderRadius:'10px', boxShadow:'1px 1px 2px 2px #bfbfbf'}}>
                                         <div className="col-lg-9 col-7 px-2 pt-0">
@@ -161,37 +309,41 @@ function DaftarEQ() {
                                             <p className="title-icare fw-bold mb-0 font-eq" style={{fontSize:'15px'}}>{value.eqmodelName}</p>
                                             <p className="fw-bold font-eq" style={{fontSize:'14px'}}>{value.description}</p>
                                         </div>
-                                        <div className="col-5 d-lg-flex responsive-eq mb-2 py-2">
-                                            <div className="col-2 text-position-right">
-                                                <a href={`/form_eq/${value.id}`}
-                                                    className="text-decoration-none"
+                                        <div className="col-lg-3 col-5 d-lg-flex responsive-eq mb-2 py-2 text-center">
+                                            <div className="col-lg-4 col-2 text-position-right ">
+                                                <a href={`/tambah_eq/${value.id}`}
+                                                    className="text-decoration-none "
                                                     onClick={handleUpdate}
                                                     data-item={JSON.stringify(value)}
                                                 >
                                                         <h6 className="text title-icare font-eq" style={{marginTop:'70px', fontWeight: 'bold', pointerEvents: 'none'}}>Ubah</h6>
                                                 </a>
                                             </div>
-                                            <div className="col-lg-3 col-1 my-lg-0 my-3">
+                                            <div className="col-lg-4 col-1 my-lg-0 my-3 ">
                                                 {value.eqVerified && (
                                                     <img src="images/Verified.png" style={{height:'70px'}} alt="Image"></img>
                                                 )}
                                             </div>
-                                            <div className="col-2 text-position-center">
+                                            <div className="col-lg-4 col-2 text-position-center">
                                                 <button className="title-icare fw-bold font-eq" style={{background:'none', border:'none', marginTop:'70px'}} onClick={() => handleDeletedItem(value.id)}>Hapus</button>
                                             </div>
                                         </div>
                                     </div>
                                 )))
                             }
-                            {
-                                daftarEQ.length > 10 ?
-                                (
-                                    <div className="button-daftar-eq p-0">
-                                        <button type="button" className="btn btn-primary" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}}>Lihat lebih banyak ...</button>
-                                    </div>
-                                ) : (
-                                    <div></div>
-                                )
+                            { showMoreDaftarEQ && (
+                                <div className="button-daftar-eq p-0">
+                                    <button type="button" className="btn btn-primary" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}} onClick={handleShowMoreDaftarEQ}>Lihat lebih banyak ...</button>
+                                </div>
+                            )
+                                // daftarEQ.length > 10 ?
+                                // (
+                                //     <div className="button-daftar-eq p-0">
+                                //         <button type="button" className="btn btn-primary" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}}>Lihat lebih banyak ...</button>
+                                //     </div>
+                                // ) : (
+                                //     <div></div>
+                                // )
                             }
                             {/* {buttonDaftarEQ && (
                                 <div className="button-daftar-eq p-0">
@@ -201,11 +353,19 @@ function DaftarEQ() {
                         </div> 
                         <LoadingAlert visible={loading} customClass="col-md-2 col-8" />
                         {showPopup && (
-                            <RemoveAlert visible={showPopup} message={`Hapus EQ: ${nomorEQToDelete}`} customClass="col-md-3 col-8" onCancel={handleCancelDelete} onClick={() => {handleConfirmDelete(); }} />
+                            <RemoveAlert visible={showPopup} message={`Hapus EQ: ${getEquipmentToDelete()}`} customClass="col-md-3 col-8" onCancel={handleCancelDelete} onClick={() => {handleConfirmDelete(); }} />
                         )}
                         {showSuccessPopup && (
-                            <ConfirmAlert visible={showSuccessPopup} message="Berhasil hapus EQ" customClass="col-md-2 col-8" onClick={handleSuccessPopup}/>
+                            <ConfirmAlert visible={showSuccessPopup} message={alertOption.message} customClass="col-md-2 col-8" onClick={handleSuccessPopup}/>
                         )}
+                        {showPopupUpload && (
+                            <UploadFileAlert visible={showPopupUpload} onClick={handleCSVUpload} onCancel={handleSuccessPopup}/>
+                        )}
+                        {
+                            showErrorPopup && (
+                                <ErrorAlert visible={showErrorPopup} titleMessage={alertOption.title} message={alertOption.message} onClick={handlePopup} customClass="col-md-3 sol-sm-6 col-9" />
+                            )
+                        }
                     </div>
                 </div>
         </>

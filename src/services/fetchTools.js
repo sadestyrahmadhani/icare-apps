@@ -123,6 +123,14 @@ export const jsonHeaderAuth = () => {
   }}
   return header;
 };
+export const imageHeaderAuth = () => {
+  let cookie=cookies.get('token')
+  let header={headers : {
+    // 'Content-Type' : 'multipart/form-data',
+    'Authorization' :'Bearer '+ cookie
+  }}
+  return header;
+};
 export const jsonHeader = (tok) => {
   let header={headers : {
     Accept: 'application/json',
@@ -161,7 +169,7 @@ export const parseJSON = (response: any): any => {
 
 axios.interceptors.request.use(
   config => {    
-    console.log('interceptor work')
+    // console.log('interceptor work')
     const token = cookies.get('token')
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token

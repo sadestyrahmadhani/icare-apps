@@ -1,349 +1,226 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-use-before-define */
 import RiwayatTabel from './component/tabel.js'
 import AlertConfirm from './../../component/alert/confirmAlert.js'
+import LoadingAlert from './../../component/alert/loadingAlert.js'
 import { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { getRiwayatOrderByRow } from '../../services/API'
+import { Link, useLocation } from 'react-router-dom'
+import { getRiwayatOrderByStatus } from '../../services/API/mod_riwayatOrder.js'
 
 function Riwayat() {
-    const [tabActivated, setTabActivated] = useState(0)
-    const [alertVisible, setAlertVisible] = useState(0)
-    const [searchActive, setSearchActive] = useState(false)
+    const location = useLocation()
+    // const history = useHistory()
+    // console.log(location.state);
     
+    const [tabActivated, setTabActivated] = useState(location.state?.currentTabActive ?? 'all')
+    const [alertVisible, setAlertVisible] = useState(false)
+    const [searchActive, setSearchActive] = useState(false)
+    // const [pageSize, setPageSize] = useState(10)
+    
+    const [originalData, setOriginalData] = useState([])
     const [dataRiwayatOrder, setDataRiwayatOrder] = useState([])
-    const [dataRiwayatOrderInit, setDataRiwayatOrderInit] = useState([])
-    const [dataNamaProduk, setDataNamaProduk] = useState([])
-    const [dataisLoaded, setDataisLoaded] = useState(false)
+    const [skipData, setSkipData] = useState(0)
+    const [rowCount, setRowCount] = useState(10)
+    const [searchValue, setSearchValue] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [showPopup, setShowPopup] = useState(false)
+    const [alertOption, setAlertOption] = useState({title:'', message: ''})
 
-    const { statusid, requestNo } = useParams()
-    // const tabItems = [
-    //     'Semua',
-    //     'Menunggu Konfirmasi',
-    //     'Permintaan Diproses',
-    //     'Permintaan Ditolak',
-    //     'Permintaan Selesai',
-    // ]
-    const cardBg = [
-        {title: 'Menunggu Konfirmasi', background: '#ff8000'},
-        {title: 'Permintaan Diproses', background: '#1eb716'},
-        {title: 'Selesai', background: '#009FC7'},
-        {title: 'Reject', background: '#ff2020'},
-    ]
-    const tabItems = [
-        {statusid: '0', statusName: 'Semua'},
-        {statusid: '1', statusName: 'Menunggu Konfirmasi'},
-        {statusid: '2', statusName: 'Permintaan Diproses'},
-        {statusid: '4', statusName: 'Permintaan Ditolak'},
-        {statusid: '3', statusName: 'Permintaan Selesai'},
-    ]
+    const cardBg = {
+        1: {
+            title: 'Menunggu Konfirmasi',
+            background: '#ff8000'
+        },
+        2: {
+            title: 'Permintaan Diproses',
+            background: '#1eb716'
+        },
+        4: {
+            title: 'Reject',
+            background: '#ff2020'
+        },
+        3: {
+            title: 'Selesai',
+            background: '#009FC7'
+        },
+        5: {
+            title: 'Internal Proses',
+            background: '#ffbf00'
+        }
+    }
 
     useEffect(() => {
-        init()
-        getRiwayatOrderByRow().then(response => {
-            console.log(response)
-        })
-    }, [statusid, requestNo])
+        // alert(1)
+        window.history.replaceState({}, document.title)
+        init(tabActivated === 'all' ? "0" : tabActivated.toString(), skipData.toString(), rowCount.toString())
+    }, [])
 
-    async function init() {
-        setDataisLoaded(false)
-
-        var res = await getRiwayatOrderByRow(statusid, requestNo);
-        console.log("res : ", res);
-
-        console.log("resrequestNo", res[0].requestNo)
-        console.log("resrequestd", res[0].requestd)
-        console.log("resrequestd", res[0].requestd[0].qty)
-
-        var getDataNamaRequest = [] 
-
-        for (var i = 0; i<res.length; i++) {
-            console.log("resi L ", res[i]);
-
-            var dataRequestType = res[i].requestd.map(o => o.namarequesttype).join(', ')
-
-            getDataNamaRequest.push({
-                namarequesttype: dataRequestType,
-                createdate: res[i].createdate,
-                namarequest: res[i].namarequest,
-                requestNo: res[i].requestNo,
-                equipment: res[i].equipment,
-                keterangan: res[i].keterangan,
-                status: res[i].status,
-                statusid: res[i].statusid
+    const init = async (status, skip, row) => {
+        setDataRiwayatOrder([])
+        setLoading(true)
+        var res = await getRiwayatOrderByStatus({status: status, skip: skip, rowcount: row})
+        setLoading(false)
+        console.log(status);
+        if(res.status == 200 && res.data !== 'Not Found') {
+            var data = res.data.map(({id, namarequest, requestNo, requestd, statusid, keterangan, equipment, createdate, review}) => {
+                var requesttype = requestd.map(val => val.namarequesttype).join(', ')
+                return{id, namarequest, requestNo, requesttype, statusid, keterangan, equipment, createdate, review}
             })
-    }
-
-    console.log("getDataNamaRequest", getDataNamaRequest)
-
-    setDataisLoaded(true)
-    setDataRiwayatOrder(res)
-    setDataNamaProduk(getDataNamaRequest)
-    setDataRiwayatOrderInit(res)
-
-    console.log("dataRiwayatorder L ", dataNamaProduk)
-    console.log("dataNamaProduk L ", dataNamaProduk)
-}
-    
-
-    const toggleSearch = () => {
-        setSearchActive(!searchActive)
-    }
-
-    // const setTabActive = (statusid) => {
-    //     setTabActivated(statusid)
-    //     setAlertVisible(statusid === 0 ? (dataRiwayatOrder[0].length === 0 && dataRiwayatOrder[1].length === 0 && dataRiwayatOrder[2].length === 0 && dataRiwayatOrder[3].length === 0) : dataRiwayatOrder[statusid - 1].length === 0)
-    // }
-
-    const setTabActive = (statusid) => {
-        console.log("status id ", statusid)
-        setTabActivated(statusid)
-        const isTabZero = statusid === 0
-        const filteredData = isTabZero ? dataRiwayatOrder : dataRiwayatOrder.filter(item => item.statusid === statusid)
-        // setAlertVisible(tabActivated === 0 ? (dataRiwayatOrder.length === 0) : (dataRiwayatOrder.filter(item => item.statusid === tabActivated).length === 0))
-        setAlertVisible(tabActivated === 0 ? (dataRiwayatOrder[0].length === 0 && dataRiwayatOrder[1].length === 0 && dataRiwayatOrder[2].length === 0 && dataRiwayatOrder[3].length === 0) : (dataRiwayatOrder.filter(item => item.statusid === tabActivated).length === 0))
-        // setAlertVisible(tabActivated === 0 ? (dataRiwayatOrder.filter(item => item.statusid !== 0 ).length === 0) : (dataRiwayatOrder.filter(item => item.statusid === tabActivated).length === 0))
-        // console.log("tab", tabActivated)
-        filterDataByStatus(statusid)
-    }
-
-    function filterDataByStatus (status_id) {
-        if(status_id !== 0) {
-            console.log("filter data by status id ", status_id)
-        console.log("data riwayat order", dataRiwayatOrderInit)
-        var filteredDataByStatus = dataRiwayatOrderInit.filter(x => {
-            return x.statusid.includes(status_id)
-        })
-        console.log("filter data", filteredDataByStatus)
-        setDataRiwayatOrder(filteredDataByStatus)
+            console.log(data);
+            setOriginalData(data)
+            setDataRiwayatOrder(data)
         } else {
-            setDataRiwayatOrder(dataRiwayatOrderInit)
+            setShowPopup(true)
+            setAlertOption({title: 'Error', message: 'Oops! Terjadi kesalahan'})
+        }
+
+    }
+
+    const tabItems = [
+        {status: 'all', name: 'Semua'},
+        {status: '1', name: 'Menunggu Konfirmasi'},
+        {status: '2', name: 'Permintaan Diproses'},
+        {status: '4', name: 'Permintaan Ditolak'},
+        {status: '3', name: 'Permintaan Selesai'},
+    ]
+
+    const changeTabActive = (status) => {
+        setTabActivated(status)
+        setSkipData(0)
+        setRowCount(10)
+        if(status === 'all') {
+            console.log(1);
+            init("0", skipData.toString(), rowCount.toString())
+        } else {
+            console.log(2);
+            init(status.toString(), skipData.toString(), rowCount.toString())
+        }
+    }
+
+    const handleSearch = (e) => {
+        var searchValue = e.target.value.toLowerCase()
+        var tempData = originalData
+        if(tabActivated !== 'all') {
+            tempData = originalData.filter(val => val.statusid === tabActivated)
+        }
+
+        const filteredData = tempData.filter(val => (val.namarequest.toLowerCase().includes(searchValue) || val.requesttype.toLowerCase().includes(searchValue) || val.equipment.toLowerCase().includes(searchValue) || val.requestNo.toLowerCase().includes(searchValue) || val.createdate.toLowerCase().includes(searchValue)))
+        setDataRiwayatOrder(filteredData)
+        
+        setSearchValue(e.currentTarget.value)
+    }
+
+    const handleClear = () => {
+        var filteredData = originalData.filter(val => val.statusid === tabActivated)
+        if(tabActivated !== 'all') {
+            setDataRiwayatOrder(filteredData)
+        } else {
+            setDataRiwayatOrder(originalData)
+        }
+    }
+
+    const handleShowMore = async () => {
+        setSkipData(skipData + 10)
+        // setRowCount(rowCount + 10)
+        setLoading(true)
+        const res = await getRiwayatOrderByStatus({status: tabActivated === 'all' ? '0' : tabActivated.toString(), skip: (skipData+10).toString(), rowcount: rowCount.toString()})
+        setLoading(false)
+        if(res.status == 200) {
+            var temp = originalData
+            var data = res.data.map(({id, namarequest, requestNo, requestd, statusid, keterangan, equipment, createdate, review}) => {
+                var requesttype = requestd.map(val => val.namarequesttype).join(', ')
+                return{id, namarequest, requestNo, requesttype, statusid, keterangan, equipment, createdate, review}
+            })
+            temp = [...originalData, ...data]
+            console.log(temp);
+            setOriginalData(temp)
+            setDataRiwayatOrder(temp)
         }
     }
         
     return (
         <>
-            <div className="row responsive-bar mb-3">
-                <div className="card-title col-md-3 col-sm-5 col-xs-6 col-12">
-                    {searchActive ? (
-                        <div className="d-flex align-items-center">
-                            <Link className="nav-link d-inline d-md-none me-3" to="/riwayat" onClick={toggleSearch}>
-                                <i className="fa fa-arrow-left color-arrow-left"></i>
-                            </Link>
-                            <input type="text" className="form-control search-riwayat" placeholder="Telusuri..." style={{position:'absolute', right: 35}}></input>
-                        </div>
-                    ) : (
-                        <>
-                            <strong className="title-icare py-2" style={{ fontSize: 18, borderBottom: '3px solid #014C90' }}>Riwayat Permintaan</strong>
-                            <span className="my-auto" onClick={toggleSearch}>
-                                <i className="fa fa-search fa-fw text-white" style={{ fontSize: '20px', position:'absolute', right: 60 }}></i>
-                            </span>
-                        </>
-                    )}
-                    <Link className="text-white" to="/settings" style={{position:'absolute', top: 12, right: 20, fontSize:'26px', zIndex:'11111'}}>
+            <div className="responsive-bar">
+                <div className="row">
+                    <div className="card-title col-md-3 col-12">
                         {searchActive ? (
-                            <i className="fa fa-ellipsis-v d-md-none"></i>
+                            <div className="d-flex align-items-center">
+                                <span className="nav-link d-inline d-md-none me-3" onClick={ () => setSearchActive(false) }>
+                                    <i className="fa fa-arrow-left color-arrow-left"></i>
+                                </span>
+                                <input type="text" className="form-control search-riwayat d-md-none d-inline" placeholder="Telusuri..." style={{position:'absolute', right: 35}}></input>
+                            </div>
                         ) : (
-                            <i className="fa fa-cog d-md-none"></i>
+                            <>
+                                <strong className="title-icare py-2" style={{ fontSize: 18, borderBottom: '3px solid #014C90' }}>Riwayat Permintaan</strong>
+                                <span className="my-auto" onClick={ () => setSearchActive(true) }>
+                                    <i className="fa fa-search fa-fw text-white" style={{ fontSize: '20px', position:'absolute', right: 60 }}></i>
+                                </span>
+                            </>
                         )}
-                    </Link>
+                        <Link className="text-white" to="/settings" style={{position:'absolute', top: 12, right: 20, fontSize:'26px', zIndex:'11111'}}>
+                            {searchActive ? (
+                                <i className="fa fa-ellipsis-v d-md-none"></i>
+                            ) : (
+                                <i className="fa fa-cog d-md-none"></i>
+                            )}
+                        </Link>
+                    </div>
+                    <div className='d-md-flex d-none col-md-9'>
+                        <div className="col-6 d-flex ms-auto">
+                            <form className='w-75' onSubmit={(e) => e.preventDefault()}>    
+                                <span className="my-auto" style={{ color: '#014C90' }}>
+                                    <i className="fa fa-search fa-fw" style={{ marginRight: 'auto' }}></i>
+                                </span>
+                                <input type="text" className="form-control me-2 border-0 border-only-bottom" style={{ fontSize: '14px', marginLeft: '5px', color: 'black' }} onKeyUp={ handleSearch } defaultValue={searchValue} onKeyDown={(e) => 
+                                {if(typeof e.key != 'undefined' && e.keyCode === 13) {
+                                    e.currentTarget.blur()
+                                    return
+                                }}} />
+                                <button style={{ margin: 'auto', cursor: 'pointer', border: '0', background: 'none' }} type="reset" onClick={handleClear}>
+                                    <i className="fa fa-close"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div className="col-md-3 col-sm-5 col-xs-6 col-12"></div>
             </div>
 
-            <div className="card mb-3 border-0 mt-5" style={{ boxShadow: '0 0 3rem rgba(0, 0, 0, .15)' }}>
+            <div className="card mb-3 border-0 mt-5 responsive-riwayat" style={{ boxShadow: '0 0 3rem rgba(0, 0, 0, .15)' }}>
                 <div className="card-body p-3 px-4">
-                    <div className="table-responsive mb-5 d-flex px-2" style={{fontSize:'14px'}}>
+                    <div className="table-responsive mb-4 d-flex px-1 pb-md-2 pb-1 mt-1" style={{fontSize:'14px'}}>
                         {
                             tabItems.map((val, key) => (
-                                <div className="mx-2 d-inline" key={ key }>
-                                    <button style={{width:'100%'}} className={ `btn-proses px-5 rounded-4 py-3 small fw-medium ${ key === tabActivated ? 'active' : '' }` } onClick={ () => {
-                                        setTabActive(val.statusid)
-                                    } }>{ val.statusName }</button>
+                                <div className="me-md-4 me-2 d-inline" key={ key }>
+                                    <button style={{width:'100%', whiteSpace: 'nowrap'}} className={ `btn-proses px-md-5 px-4 rounded-4 py-3 small fw-medium ${ val.status === tabActivated ? 'active' : '' }` } onClick={ () => {
+                                        changeTabActive(val.status)
+                                    } }>{ val.name }</button>
                                 </div>
                             ))
                         }
                     </div>
 
                     {
-                        tabActivated === 0 ? (
-                            dataRiwayatOrder.map((val, tabKey) => (
-                                    <RiwayatTabel tabActive={ tabKey + 1 } key={ val.requestNo } cardBg={ cardBg } dataRiwayatOrder={ val }/>
-                            ))
+                        dataRiwayatOrder.map((val, key) => (
+                            <RiwayatTabel tabActive={ tabActivated } key={ key } data={ val } cardBg={ cardBg } dataRiwayatOrder={ val } />
+                        ))
+                    }
+                    {
+                        dataRiwayatOrder.length >= 10 ? (
+                            <div className="button-list-riwayat p-0">
+                                <button type="button" className="btn btn-list-riwayat btn-primary" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}} onClick={handleShowMore} >Lihat lebih banyak ...</button>
+                            </div>
                         ) : (
-                            dataRiwayatOrder.map((val, key) => (
-                                <RiwayatTabel tabActive={ tabActivated } key={ key } data={ val } cardBg={ cardBg } dataRiwayatOrder={ val }/>
-                            ))
+                            <div></div>
                         )
                     }
-
-                    {/* {
-                        tabActivated === 0 ? 
-                            dataRiwayatOrder.map((val, tabKey) => (
-                                    <RiwayatTabel tabActive={ tabKey + 1 } key={ tabKey } data={ val } cardBg={ cardBg } dataRiwayatOrder={dataRiwayatOrder}/>
-                                ))
-                            
-                         : 
-                            dataRiwayatOrder.filter(item => item.statusid === tabActivated).map((val, tabKey) => (
-                                <RiwayatTabel tabActive={ tabActivated } key={ val.requestNo } data={ val } cardBg={ cardBg } dataRiwayatOrder={dataRiwayatOrder}/>
-                            ))
-                        
-                    } */}
-
                 </div>
             </div>
+            <AlertConfirm visible={showPopup} titleMessage={alertOption.title} message={alertOption.message} customClass="col-md-3 col-9" onClick={() => setShowPopup(false)} />
             <AlertConfirm visible={ alertVisible } onClick={ () => setAlertVisible(0) } message="Belum pernah melakukan permintaan"/>
+            <LoadingAlert visible={loading} customClass="col-md-2 col-8" />
         </>
     )
 }
 
 export default Riwayat
-
-// export default class extends Component {
-//     constructor(props) {
-//         super(props)
-
-//         this.state = {
-//             tabActivated: 0,
-//             alertVisible: 0,
-//             tabItems: ['Semua', 'Menunggu Konfirmasi', 'Permintaan Diproses', 'Permintaan Ditolak', 'Permintaan Selesai'],
-//             cardBg: [
-//                 { title: 'Menunggu Konfirmasi', background: '#ff8000'},
-//                 { title: 'Permintaan Diproses', background: '#1eb716'},
-//                 { title: 'Reject', background: '#ff2020'},
-//                 { title: 'Selesai', background: '#009FC7'}
-//             ],
-//             tabData: [
-//                 [
-//                     {
-//                         id: 1,
-//                         code: 'CR-2310784',
-//                         requestType: 'Consumable Request',
-//                         date: '4/12/2023 12:41:01 PM',
-//                         EQCode: '300822',
-//                         items: 'Toner Cyan, Drum Cyan',
-//                         description: 'Test12345678',
-//                         dataStatus: 'menunggu',
-//                     }
-//                 ],
-//                 [
-//                     {
-//                         id: 2,
-//                         code: 'CR-2310784',
-//                         requestType: 'Consumable Request',
-//                         date: '4/12/2023 12:41:01 PM',
-//                         EQCode: '300822',
-//                         items: 'Toner Cyan, Drum Cyan',
-//                         description: 'Test12345678',
-//                         dataStatus: 'diproses',
-//                         statues: 'belum proses'
-//                     },
-//                     {
-//                         id: 6,
-//                         code: 'CR-2310784',
-//                         requestType: 'Consumable Request',
-//                         date: '4/12/2023 12:41:01 PM',
-//                         EQCode: '300822',
-//                         items: 'Toner Cyan, Drum Cyan',
-//                         description: 'Test12345678',
-//                         dataStatus: 'diproses',
-//                         statues: 'sudah proses'
-//                     }
-//                 ],
-//                 [
-//                     {
-//                         id: 3,
-//                         code: 'CR-2310784',
-//                         requestType: 'Consumable Request',
-//                         date: '4/12/2023 12:41:01 PM',
-//                         EQCode: '300822',
-//                         items: 'Toner Cyan, Drum Cyan',
-//                         description: 'Test12345678',
-//                         dataStatus: 'reject',
-//                     },
-//                 ],
-//                 [
-//                     {
-//                         id: 4,
-//                         code: 'CR-2310784',
-//                         requestType: 'Consumable Request',
-//                         date: '4/12/2023 12:41:01 PM',
-//                         EQCode: '300822',
-//                         items: 'Toner Cyan, Drum Cyan',
-//                         description: 'Test12345678',
-//                         dataStatus: 'selesai',
-//                         statues: 'belum nilai'
-//                     },
-//                     {
-//                         id: 4,
-//                         code: 'CR-2310784',
-//                         requestType: 'Consumable Request',
-//                         date: '4/12/2023 12:41:01 PM',
-//                         EQCode: '300822',
-//                         items: 'Toner Cyan, Drum Cyan',
-//                         description: 'Test12345678',
-//                         dataStatus: 'selesai',
-//                         statues: 'belum nilai'
-//                     },
-//                     {
-//                         id: 5,
-//                         code: 'CR-2310784',
-//                         requestType: 'Consumable Request',
-//                         date: '4/12/2023 12:41:01 PM',
-//                         EQCode: '300822',
-//                         items: 'Toner Cyan, Drum Cyan',
-//                         description: 'Test12345678',
-//                         dataStatus: 'selesai',
-//                         statues: 'sudah nilai'
-//                     },
-//                 ],
-//             ]
-//         }
-//     }
-
-//     render() {
-//         return (
-//             <>
-//                 <div className="row mb-3">
-//                     <div className="col-md-3 col-sm-5 col-xs-6 col-12">
-//                         <strong className="title-icare py-2" style={{ fontSize: 18, borderBottom: '3px solid #014C90' }}>Riwayat Permintaan</strong>
-//                     </div>
-//                     <div className="col-md-3 col-sm-5 col-xs-6 col-12"></div>
-//                 </div>
-
-//                 <div className="card mb-3 border-0 mt-5" style={{ boxShadow: '0 0 3rem rgba(0, 0, 0, .15)' }}>
-//                     <div className="card-body p-3 px-4">
-//                         <div className="table-responsive mb-5 d-flex px-2" style={{fontSize:'14px'}}>
-//                             {
-//                                 this.state.tabItems.map((val, key) => (
-//                                     <div className="mx-2 d-inline" key={ key }>
-//                                         <button style={{width:'100%'}} className={ `btn-proses px-5 rounded-4 py-3 small fw-medium ${ key === this.state.tabActivated ? 'active' : '' }` } onClick={ () => {
-//                                             this.setTabActive(key)
-//                                         } }>{ val }</button>
-//                                     </div>
-//                                 ))
-//                             }
-//                         </div>
-
-//                         {
-//                             this.state.tabActivated === 0 ? (
-//                                 this.state.tabData.map((value, tabKey) => (
-//                                     this.state.tabData[tabKey].map((val, key) => (
-//                                         <TabelComponent tabActive={ tabKey + 1 } key={ key } data={ val } cardBg={ this.state.cardBg } belumNilai={val.statues === 'belum nilai'} sudahNilai={val.statues === 'sudah nilai'} />
-//                                     ))
-//                                 ))
-//                             ) : (
-//                                 this.state.tabData[this.state.tabActivated - 1].map((val, key) => (
-//                                     <TabelComponent tabActive={ this.state.tabActivated } key={ key } data={ val } cardBg={ this.state.cardBg } belumNilai={val.statues === 'belum nilai'} sudahNilai={val.statues === 'sudah nilai'} />
-//                                 ))
-//                             )
-//                         }
-//                     </div>
-//                 </div>
-//                 <AlertConfirm visible={ this.state.alertVisible } onClick={ () => this.setState({ alertVisible: 0 }) } message="Belum pernah melakukan permintaan"/>
-//             </>
-//         )
-//     }
-
-//     setTabActive(key) {
-//         this.setState({ tabActivated: key, alertVisible: key === 0 ? (this.state.tabData[0].length === 0 && this.state.tabData[1].length === 0 && this.state.tabData[2].length === 0 && this.state.tabData[3].length === 0) : this.state.tabData[key - 1].length === 0})
-//     }
-// }

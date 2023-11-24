@@ -79,6 +79,13 @@ export default [
                 key:"1.5.3"
             },
             {
+                title: '',
+                path: 'google_maps',
+                component: import('../views/daftar-alamat/google-maps'),    
+                auth:true,
+                key:"1.5.3"
+            },
+            {
                 title:'',
                 path:'daftar_eq',
                 component: import('./../views/daftar-eq'),
@@ -87,7 +94,7 @@ export default [
             },
             {
                 title: '',
-                path: 'form_eq/:id',
+                path: 'tambah_eq/:id',
                 component: import('../views/daftar-eq/form'),
                 auth:true,
                 key:"1.5.5"
@@ -98,7 +105,21 @@ export default [
                 component: import('../views/ubah-password'),
                 auth:true,
                 key:"1.5.6"
-            },      
+            },
+            {
+                title:'',
+                path:'daftar_anggota',
+                component: import('./../views/daftar-anggota'),
+                auth:true,
+                key:"1.5.7"
+            },
+            {
+                title:'',
+                path:'tambah_anggota',
+                component: import('../views/daftar-anggota/form'),
+                auth:true,
+                key:'1.5.8'
+            },
                
             {
                 title:'',
@@ -132,7 +153,7 @@ export default [
             
             {
                 title: '',
-                path: 'riwayat-meter',
+                path: 'riwayat_meter/:id',
                 component: import('./../views/riwayat-meter'),
                 auth:true,
                 key:"1.9.2"    

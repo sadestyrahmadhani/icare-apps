@@ -46,6 +46,11 @@ function UpdatePassword() {
         if(newPassword === "") setErrorNewPassword('Silahkan isi kata sandi baru')
         if(oldPassword === "") setErrorOldPassword('Silahkan isi kata sandi lama')
         if(repeatPassword === "") setErrorRepeatPassword('Silahkan ulangi isi kata sandi') 
+        if(newPassword !== repeatPassword) {
+            setShowPopup(true)
+            setAlertOption({title: '', message: 'Inputkan konfirmasi password sesuai password baru', redirect: false})
+            return
+        }
         if(oldPassword === newPassword && oldPassword  !== "" && newPassword !== "" && repeatPassword) {
             setShowPopup(true)
             setAlertOption({title: '', message: 'Password baru sama dengan password lama', redirect: false, url: ''})
@@ -110,7 +115,7 @@ function UpdatePassword() {
             <div className="responsive-bar">
                 <div className="card-title mx-md-auto my-md-3 my-0" style={{borderBottom: '3px solid #014C90', width: '134px'}}>
                     <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{fontSize: '18px'}}>
-                        <Link to="/settings" className="nav-link d-md-none d-inline me-3">
+                        <Link to="/dashboard" className="nav-link d-md-none d-inline me-3">
                             <i className="fa fa-arrow-left"></i>
                         </Link>
                         <span className="title-bold">Ubah Kata Sandi</span>
@@ -120,7 +125,7 @@ function UpdatePassword() {
             <div className="col-md-7 col-12 mx-auto responsive-ubah-pass">
                 <div className="card mb-5 px-2 px-md-4">
                     <div className="card-body p-lg-5 px-0 input-mobile">
-                        <form onSubmit={submit}>
+                        <form onSubmit={submit} className="col-12">
                             <div className="mb-3">
                                 <label className="fw-medium form-control border border-dark size-13px" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Lama</label>
                                 <div className="border border-dark">

@@ -1,16 +1,21 @@
-import React, {Suspense, lazy, useState} from 'react';
+import React, {Suspense, lazy, useState, useRef} from 'react';
 import ReactDOM from 'react-dom/client';
 // import { Routes, Route, Navigate, useLocation, useNavigate, useParams,Outlet } from 'react-router-dom';
 import { Routes, BrowserRouter, Navigate, HashRouter,createBrowserRouter, RouterProvider, } from 'react-router-dom';
+import { initializeApp }  from "firebase/app";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { setFirebaseToken } from "./services/API";
 import Route from './core/route'
-// import { messaging } from "./init-fcm";
+import Swal from "sweetalert2";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styled/style.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import {auth} from './services/auth';
 import Login from  './views/auth/login';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import QRScanner from './views/menu/scanner';
+
 // import Layout from "./views/main";
-// import App from "./App"
 const Layout = React.lazy(() => import('./views/main'));
 const Dashboard = React.lazy(() => import('./views/dashboard'));
 const Riwayat = React.lazy(() => import('./views/riwayat'));
@@ -19,8 +24,11 @@ const TulisReview = React.lazy(() => import('./views/riwayat/tulis-review'));
 const TanyaTim = React.lazy(() => import('./views/riwayat/tanya-tim'));
 const Informasi = React.lazy(() => import('./views/informasi'));
 const DataDiri = React.lazy(() => import('./views/data-diri'));
+const DaftarAnggota = React.lazy(() => import('./views/daftar-anggota'));
+const DaftarAnggotaForm = React.lazy(() => import('./views/daftar-anggota/form'));
 const DaftarAlamat = React.lazy(() => import('./views/daftar-alamat'));
 const DaftarAlamatForm = React.lazy(() => import('./views/daftar-alamat/form'));
+const DaftarAlamatMaps = React.lazy(() => import('./views/daftar-alamat/google-maps'));
 const DaftarEq = React.lazy(() => import('./views/daftar-eq'));
 const DaftarEqForm = React.lazy(() => import('./views/daftar-eq/form'));
 const UbahPassword = React.lazy(() => import('./views/ubah-password'));
@@ -41,24 +49,100 @@ const LupaPassword = React.lazy(() => import('./views/auth/lupa-password'));
 const KodeOtp = React.lazy(() => import('./views/auth/kode-otp'));
 const UpdatePassword = React.lazy(() => import('./views/ubah-password/update-password'));
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 // debugger;
 
+const serverkey = "AAAA9VTiNyE:APA91bGzoX4grTE-2Wcy2f3fPrrTDSEm86nRTLV5uUjJEkx1w0n8MrqE-MC5CKL6xje7MQrz9a9RNrFIZoyrJqJzc7MWvt-uB8e8Hhssg1o5qzAqkgTO7vCgmNdRoJ3bha7ILA8EYdrf";
+  const firebaseApp=initializeApp({
+    apiKey: "AIzaSyA5B8lIJvw0LoG64NOdvflbLxegxv-6kdw",
+    authDomain: "conserv-8de54.firebaseapp.com",
+    databaseURL: "https://conserv-8de54.firebaseio.com",
+    projectId: "conserv-8de54",
+    storageBucket: "conserv-8de54.appspot.com",
+    messagingSenderId: "191941183516",
+    appId: "1:191941183516:web:d6c05110720ea5075077d9"
+  });
+  let messaging = getMessaging(firebaseApp);
+// if ("serviceWorker" in navigator) {
+  // navigator.serviceWorker
+  //   .register("./firebase-messaging-sw.js")
+  //   .then(function(registration) {
+  //     console.log("Registration successful, scope is:", registration.scope);
+  //   })
+  //   .catch(function(err) {
+  //     console.log("Service worker registration failed, error:", err);
+  //   });
+// }
+    Notification.requestPermission()
+        .then((permission) => {
+          if (permission === 'granted') {
+          console.log('Notification permission granted.');
+          }else{
+            console.log('Notification permission not granted ', permission)
+          }
+        })
+        .catch(function(err) {
+          console.log("Unable to get permission to notify.", err);
+        });
+        
+  const refreshToken = async () => {
+
+    // const tkn= await getToken(messaging, {vapidKey: "BHcT8mOKjG_to3JlEHVuwmdehV8pINLGkhD04CgZ-72rBtq20TBJ9PDnw9AMlThsj6RR04YnuUWwUKy7FFaUPW4"});
+    //   console.log('new token',tkn)
+    //   // setToken(tkn);
+    //   setFirebaseToken(tkn);
+    //   setMessage();
+  };  
+  const setMessage = ()=>{
+    onMessage(messaging,function (payload) {
+          try {  //try???
+            console.log('Message received. ', payload);
+
+            const noteTitle = payload.notification.title;
+            const noteOptions = {
+              body: payload.notification.body,
+              icon: "typewriter.jpg", //this is my image in my public folder
+            };
+            Swal.fire({
+                text:payload.notification.body,
+                title:payload.notification.title,
+                confirmButtonColor:'#0099ff'
+            })
+            console.log("title ", noteTitle, " ", payload.notification.body);
+            //var notification = //examples include this, seems not needed
+
+            // new Notification(noteTitle, noteOptions).onclick = function (event) {
+            //   // console.log(event);
+            //   // console.log(payload.notification.click_action);
+            //   if(payload && payload.notification &&  payload.notification.click_action &&  payload.notification.click_action.length > 0)
+            //   {
+            //     window.open(payload.notification.click_action, '_blank');
+            //   }
+            //   this.close();
+            // };
+          }
+          catch (err) {
+            console.log('Caught error: ', err);
+          }
+        });
+  }
+  // setMessage();
 const ProtectedRoute = ({ children }) => {
 
-  // if (!auth.isAuthenticated()) {
-  //   return <Navigate to="/" replace />;
-  // }
+  if (!auth.isAuthenticated()) {
+    return <Navigate to="/" replace />;
+  }
 
   return children;
 };
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Login />,    
+    path: "/:id?",
+    element: <Login getToken={refreshToken} />,    
   },
   {
     path: "",
-    element: <Layout />,
+    element: <Suspense fallback="Loading..."><ProtectedRoute><Layout /></ProtectedRoute></Suspense>,
     children: [
       {
         path: "/dashboard",
@@ -73,7 +157,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback="Loading..."><ProtectedRoute><Riwayat /></ProtectedRoute></Suspense>,    
       },
       {
-        path: "/detail-permintaan/:id",
+        path: "/detail_permintaan/:id",
         element: <Suspense fallback="Loading..."><ProtectedRoute><DetailPermintaan /></ProtectedRoute></Suspense>,    
       },
       {
@@ -81,7 +165,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback="Loading..."><ProtectedRoute><TulisReview /></ProtectedRoute></Suspense>,    
       },
       {
-        path: "/tanya_tim_support",
+        path: "/tanya_tim_support/:id",
         element: <Suspense fallback="Loading..."><ProtectedRoute><TanyaTim /></ProtectedRoute></Suspense>,    
       },
       {
@@ -91,6 +175,14 @@ const router = createBrowserRouter([
       {
         path: "/data_diri",
         element: <Suspense fallback="Loading..."><ProtectedRoute><DataDiri /></ProtectedRoute></Suspense>,    
+      },
+      {
+        path: "/daftar_anggota",
+        element: <Suspense fallback="Loading..."><ProtectedRoute><DaftarAnggota /></ProtectedRoute></Suspense>,
+      },
+      {
+        path: "/tambah_anggota/:id",
+        element: <Suspense fallback="Loading..."><ProtectedRoute><DaftarAnggotaForm /></ProtectedRoute></Suspense>,
       },
       {
         path: "/daftar_alamat",
@@ -105,16 +197,12 @@ const router = createBrowserRouter([
         element: <Suspense fallback="Loading..."><ProtectedRoute><DaftarEq /></ProtectedRoute></Suspense>,    
       },
       {
-        path: "/form_eq/:id?",
+        path: "/tambah_eq/:id?",
         element: <Suspense fallback="Loading..."><ProtectedRoute><DaftarEqForm /></ProtectedRoute></Suspense>,    
       },
       {
         path: "/ubah_kata_sandi",
         element: <Suspense fallback="Loading..."><ProtectedRoute><UbahPassword /></ProtectedRoute></Suspense>,    
-      },
-      {
-        path: "/breakfix_request",
-        element: <Suspense fallback="Loading..."><ProtectedRoute><Breakfix /></ProtectedRoute></Suspense>,    
       },
       {
         path: "/install_request",
@@ -129,7 +217,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback="Loading..."><ProtectedRoute><CollectMeter /></ProtectedRoute></Suspense>,    
       },
       {
-        path: "/riwayat-meter",
+        path: "/riwayat_meter/:id",
         element: <Suspense fallback="Loading..."><ProtectedRoute><RiwayatMeter /></ProtectedRoute></Suspense>,    
       },
       {
@@ -145,11 +233,11 @@ const router = createBrowserRouter([
         element: <Suspense fallback="Loading..."><ProtectedRoute><UpgradeAkunWaiting /></ProtectedRoute></Suspense>,    
       },
       {
-        path: "/news_detail",
+        path: "/news_detail/:id",
         element: <Suspense fallback="Loading..."><ProtectedRoute><BeritaTerbaru /></ProtectedRoute></Suspense>,    
       },
       {
-        path: "/product_detail",
+        path: "/product_detail/:id",
         element: <Suspense fallback="Loading..."><ProtectedRoute><BeritaTerbaruProduk /></ProtectedRoute></Suspense>,    
       },
       ]    
@@ -178,13 +266,24 @@ const router = createBrowserRouter([
     path: "/update_password",
     element: <Suspense fallback="Loading..."><UpdatePassword /></Suspense>,    
   },
+  {
+    path: "/google_maps",
+    element: <Suspense fallback="Loading..."><ProtectedRoute><DaftarAlamatMaps /></ProtectedRoute></Suspense>,    
+  },
+  {
+    path: "/qr-scanner",
+    element: <Suspense fallback="Loading..."><ProtectedRoute><QRScanner /></ProtectedRoute></Suspense>,    
+  },
 ]);
 
 root.render(
+  <>
   <React.StrictMode>
+  <GoogleOAuthProvider clientId="776828661409-i24mjr032oc9eb8k6v8u2dv7ifftplvb.apps.googleusercontent.com">
     <RouterProvider router={router} />
+  </GoogleOAuthProvider>
   </React.StrictMode>
-    
+  </>
   
 );
 

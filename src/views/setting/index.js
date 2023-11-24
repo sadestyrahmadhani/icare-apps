@@ -1,11 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, Row, Col } from "react-bootstrap";
 import {auth} from '../../services/auth'
 function Setting() {
+
+    const navigate = useNavigate()
+
     const logout = () => {
         console.log('logout')
         auth.logout()
+        navigate('/')
     }
     
         return (
@@ -23,6 +27,20 @@ function Setting() {
                                 <Row>
                                     <Col xs="8">
                                         <span>Data Diri</span>
+                                    </Col>
+                                    <Col xs="4" className="text-end">
+                                        <i className="fa fa-chevron-right"></i>
+                                    </Col>
+                                </Row>
+                            </Card.Body>
+                        </Card>
+                    </Link>
+                    <Link to="/daftar_anggota" className="nav-link">
+                        <Card className="mb-2 shadow-sm">
+                            <Card.Body className="p-2" style={{ fontSize: 11 }}>
+                                <Row>
+                                    <Col xs="8">
+                                        <span>Daftar Anggota</span>
                                     </Col>
                                     <Col xs="4" className="text-end">
                                         <i className="fa fa-chevron-right"></i>

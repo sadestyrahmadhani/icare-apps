@@ -1,4 +1,3 @@
-import { Component } from "react";
 import { Link } from "react-router-dom";
 
 function UpgradeStep1() {
@@ -15,7 +14,7 @@ function UpgradeStep1() {
                 </div>
             </div>
             <div className="col-md-11 col-12 mx-auto responsive-upgrade-step1">
-                <div className="text-center mb-3 margin-bottom-90px">
+                <div className="text-center mb-3 margin-bottom-70px">
                     <i className="fa fa-arrow-circle-up fa-4x text-danger"></i>
                 </div>
                 <div className="col-md-7 col-sm-5 col-9 mx-auto">
@@ -25,7 +24,7 @@ function UpgradeStep1() {
                             <h5 className="mt-4 fw-bold title-icare" style={{ fontSize: '16px' }}>Upgrade akun iCare anda untuk dapat melakukan Consumable Request</h5>
                         </div>
                     </div>
-                    <div className="text-center mb-5 mx-auto">
+                    <div className="text-center mb-lg-5 mx-auto">
                         <Link className="btn btn-login" style={{ padding: '12px 40px', borderRadius: '10px' }} to="/upgrade_step2">Upgrade Sekarang</Link>
                     </div>
                 </div>

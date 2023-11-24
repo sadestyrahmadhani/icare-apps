@@ -11,7 +11,7 @@ export const getDataDiriByStatus = async () => {
     const url = `${appConfig.BASE_API}/requestRO/readbystatus/1.0`;
     const result = await axios.get(url, jsonHeaderAuth())
         .then(res => {
-            console.log('getDataDiriByStatus', res.data)
+            // console.log('getDataDiriByStatus', res.data)
             return res.data
         })
         .catch(error => {
@@ -40,4 +40,18 @@ export const updateDataDiriById = async (payload) => {
     } catch (error) {
         throw error
     }
+
+
+    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    // try {
+    //     const res = await axios.post(`${appConfig.BASE_API}/user/update/${localStorage.getItem('id')}`, payload, {
+    //         headers: {
+    //             ...jsonHeaderAuth()
+    //         }
+    //     })
+
+    //     return {status: res.status, data: res.data}
+    // } catch (error) {
+    //     throw error
+    // }
 }

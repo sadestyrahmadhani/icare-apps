@@ -8,7 +8,7 @@ export const getMasterRequest = async () => {
     const url = `${appConfig.BASE_API}/masterrequest/read`;
     const result = await axios.get(url)
         .then(res => {
-            console.log('masterrequest', res.data)
+            // console.log('masterrequest', res.data)
             return res.data
         })
         .catch(error => {

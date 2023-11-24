@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import decode from 'jwt-decode';
 import Carousel from "../../component/carousel";
-import { authUser } from "../../services/API"
+import { authUser,setFirebaseToken } from "../../services/API"
 import { setNamaPerusahaan, setUser } from "../../core/local-storage";
 import { setEmail as setEmailAddress, setOtp,setFirstLogin } from "../../core/local-storage";
 import { setTelp } from "../../core/local-storage";
@@ -14,8 +15,11 @@ import {
 import FiturCard from "./component/fitur-card";
 import ConfirmAlert from "../../component/alert/confirmAlert";
 import LoadingAlert from "../../component/alert/loadingAlert";
+import { GoogleLogin } from '@react-oauth/google';
+import { getEQByCodeWithoutAuth } from "../../services/API/mod_request";
+import auth from "../../services/auth";
 
-function Login () {
+function Login ({getToken}) {
     
     // constructor(props) {
         // super(props)
@@ -38,6 +42,7 @@ function Login () {
         const [email, setEmail]= useState('')
         const [errorEmail, setErrorEmail]= useState('')
         const [errorPassword, setErrorPassword]= useState('')
+        const [equipment, setEquipment] = useState([])
         const fiturData= [
                 {
                     lg: 3,
@@ -123,6 +128,35 @@ function Login () {
             ]
         
     // }
+    const params = useParams()
+
+    useEffect(() => {
+        if(params?.id) {
+            checkEQ()
+        }
+    }, [])
+
+    const checkEQ = async () => {
+        setLoading(true)
+        const res = await getEQByCodeWithoutAuth(params.id)
+    
+        setLoading(false)
+        if(auth.isAuthenticated()) {
+            if(res.status == 200 && typeof res.data !== 'string') {
+                navigate('/dashboard', {
+                    state: res.data.Table[0]
+                })
+                return
+            }
+        }
+
+        if(typeof res.data === 'string') {
+            setAlertOption({ title: 'Error', message: res.data })
+            setShowPopup(true)
+        } else {
+            setEquipment(res.data.Table[0])
+        }
+    }
 
     const handleEmailInput = (event) => {
         setEmail(event.target.value)        
@@ -141,6 +175,58 @@ function Login () {
     const handlePopup = ()=> {
         setShowPopup(false)
         setShowPermissionPopup(false)
+    }
+    const googleLogin = async (credential)=> {
+        console.log(credential)
+        const d = decode(credential.credential);
+        console.log('decoded',d)
+        const response = await authUser({
+            username: d.email, password: '', type:"google",googleToken:credential.credential
+          });
+
+        setLoading(false)
+        console.log('testingresponseLogin', response)
+        
+        if (response != null) {
+        
+            successlogin(response)
+        
+        } else {
+            setShowPopup(true)
+            setAlertOption({title:"Error", message:"Username / Password salah"})
+        }
+    }
+    const successlogin = async (response)=> {
+        if (response.action){                
+            setOtp(false)
+            setFirstLogin(response)
+            navigate('/kode-otp',{                      
+                    state: {firstlogin:true,email:email,password:password,
+                    telp:response.number,userid:response.userid,msg:response
+                    }} // your data array of objects
+                )
+        }else{
+            localStorage.setItem('status_internal', response.status_internal)
+            settoken(response.token)
+            setrefreshtoken(response.refreshtoken)
+            setUser(response.namalengkap)
+            // console.log('testingnamalengkap :', response.namalengkap)
+            setEmailAddress(response.emailaddress)
+            setTelp(response.telp)
+            // console.log('testingtelp :', response.telp)
+            setNamaPerusahaan(response.namaperusahaan)
+            // console.log('testingnamaperusahaan :', response.namaperusahaan)
+            setId(response.id)
+            // console.log('testinguserid :', response.id) 
+            await getToken()   
+            if(params?.id && equipment) {
+                navigate('/dashboard', {
+                    state: equipment
+                })
+            } else {
+                navigate("/dashboard")
+            }
+        }
     }
 
     async function useLogin (e) {
@@ -162,40 +248,17 @@ function Login () {
 
         setLoading(false)
 
-        if (response != null) {
         console.log('testingresponseLogin', response)
-            if (response.action){
-                
-                setOtp(false)
-                setFirstLogin(response)
-                navigate('/kode-otp',{                      
-                        state: {firstlogin:true,email:email,password:password,
-                        telp:response.number,userid:response.userid,msg:response
-                        }} // your data array of objects
-                    )
-            }else{
-                settoken(response.token)
-                setrefreshtoken(response.refreshtoken)
-                setUser(response.namalengkap)
-                // console.log('testingnamalengkap :', response.namalengkap)
-                setEmailAddress(response.emailaddress)
-                setTelp(response.telp)
-                // console.log('testingtelp :', response.telp)
-                setNamaPerusahaan(response.namaperusahaan)
-                // console.log('testingnamaperusahaan :', response.namaperusahaan)
-                setId(response.id)
-                // console.log('testinguserid :', response.id)    
-                navigate("/dashboard")
-            }
-        
+        if (response != null && typeof response == 'object') {
+            successlogin(response)
 
-        //     // console.log('iCare_user', cookies.get('iCare_user')); // Pacman
-        //         // this.setState({loading:false, error: false, login: true})
-        //     // window.location.reload(false);
+        // console.log('iCare_user', cookies.get('iCare_user')); // Pacman
+            // this.setState({loading:false, error: false, login: true})
+        // window.location.reload(false);
             
         } else {
             setShowPopup(true)
-            setAlertOption({title:"Error", message:"Username / Password salah"})
+            setAlertOption({title:"Error", message: response})
         }
 
         
@@ -221,12 +284,12 @@ function Login () {
                                 <form onSubmit={ useLogin }>
                                     <div className="mb-3">
                                         <label className="size-13px fw-bold">EMAIL</label>
-                                        <input type="text"  name="username"  onChange={handleEmailInput} autocomplete="email" className={`form-control border-only-bottom ${ errorEmail !== "" ? "is-invalid" : ""}`}/>
+                                        <input type="text"  name="username"  onChange={handleEmailInput} autoComplete="email" className={`form-control border-only-bottom ${ errorEmail !== "" ? "is-invalid" : ""}`}/>
                                         <span className={`invalid-feedback ${errorEmail === "" ? "d-none": ""}`} style={{ fontSize: 12 }}>{errorEmail}</span>
                                     </div>
                                     <div className="mb-4">
                                         <label className="size-13px fw-bold">PASSWORD</label>
-                                        <input type="password"  name="password" onChange={handlePasswordInput} autocomplete="password" className={`form-control border-only-bottom ${ errorPassword !== "" ? "is-invalid" : ""}`}/>
+                                        <input type="password"  name="password" onChange={handlePasswordInput} autoComplete="password" className={`form-control border-only-bottom ${ errorPassword !== "" ? "is-invalid" : ""}`}/>
                                         <span className={`invalid-feedback ${errorPassword === "" ? "d-none": ""}`} style={{ fontSize: 12 }}>{errorPassword}</span>
                                     </div>
                                     <div className="mb-2 mx-auto text-center">
@@ -235,10 +298,22 @@ function Login () {
                                     <div className="text-center">
                                         <Link className="nav-link size-13px fw-medium my-2" to="kebijakan-privasi/register">Belum Punya akun ?</Link>
                                         <Link className="nav-link size-13px fw-medium my-2 mb-3"  to="/lupa-password">Lupa Password ?</Link>
-                                        <button type="button" className="btn btn-google shadow-sm me-2 fw-medium px-3 text-muted py-1" >
+                                        <div className="btn btn-google shadow-sm me-2 fw-medium px-3 text-muted py-1">
+                                        <GoogleLogin 
+                                            onSuccess={credentialResponse => {
+                                              googleLogin(credentialResponse);
+                                            }}
+                                          
+                                            onError={() => {
+                                              console.log('Login Failed');
+                                            }}
+                                          
+                                          />
+                                          </div>
+                                        {/*<button type="button" className="btn btn-google shadow-sm me-2 fw-medium px-3 text-muted py-1" >
                                             <img src="/images/google-icons.png" alt="google-icons" height="20" className="me-3" />
                                             Sign in with Google
-                                        </button>
+                                        </button>*/}
                                     </div>
                                 </form>
                                 <ConfirmAlert visible={showPopup} titleMessage={alertOption.title} message={alertOption.message} onClick={handlePopup} customClass="col-md-3 col-sm-4 col-8" />

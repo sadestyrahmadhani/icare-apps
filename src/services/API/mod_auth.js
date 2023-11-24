@@ -17,10 +17,16 @@ export const authUser = async (req) => {
   try {
     var response = await fetch(url, options);
     // var status = await checkStatus(response);
-    var json = await parseJSON(response);
-    return json;
+    // var json = await parseJSON(response);
+    var data = await response.text()
+    try {
+      data = JSON.parse(data)
+    } catch (error) {
+      
+    }
+    return data;
   } catch (error) {
-    /*console.log('error', error)*/
+    // console.log('error', error)
     return null;
   }
   
@@ -30,10 +36,10 @@ export const register = async (req) => {
   // const options = { ...postMethod, ...loginHeader, body: JSON.stringify(req) };
   
   try {
-    var response = await axios({url:url,method:'post', data:req,headers:loginHeader});
+    var {status, data} = await axios({url:url,method:'post', data:req,headers:loginHeader});
     // var status = await checkStatus(response);
     // var json = await parseJSON(response);
-    return response;
+    return {status, data};
   } catch (error) {
     /*console.log('error', error)*/
     return null;
@@ -44,6 +50,8 @@ export const registerimage = async (imageFile) => {
   const url = `${appConfig.BASE_API}/image/register`;
   var bodyFormData = new FormData();
   bodyFormData.append('file', imageFile); 
+  // console.log('imagefile',imageFile)
+  // console.log('formdata',bodyFormData)
   // const options = { ...postFormMethod, ...imageHeader, data: bodyFormData };
   
   try {

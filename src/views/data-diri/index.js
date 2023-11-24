@@ -180,81 +180,94 @@ function DataDiri() {
               <div className="card-body p-2">
                 <div className="row">
                   
-                  <div className="border border-dark mb-4">
-                    <div className="row" style={{height:'85px'}}>
-                        <div className="card-lable p-md-2 py-2" style={{ backgroundColor: "#014C90" }} >
-                          <label className="fw-medium" style={{ fontSize: "13px", color: "white" }} >
+                  {/* <div className="border border-dark mb-lg-4 mb-2"> */}
+                  <div className="mb-lg-4 mb-2 p-0">
+                    <div className="card">
+                        <div className="card-lable p-md-2 form-color" >
+                          <label className="font-size-12px-mobile fw-medium px-md-0 px-2" style={{ fontSize: "13px", color: "white" }} >
                             Nama
                           </label>
                         </div>
-                        <div className="card-body d-flex align-items-center mb-4 custom-width" >
-                          {isEditName ? (
+                        <div className="border border-dark">
+                          <div className="d-flex align-items-center my-lg-1 my-md-1 custom-width" >
+                            {isEditName ? (
+                              <div className="card-text flex-grow-1">
+                                <input type="text" className={`font-size-11px-mobile form-control w-100 no-hover ${errorDataName !== "" ? "border-danger border" : "" }`} value={name} onChange={handleChangeName} />
+                                
+                              </div>
+                            ) : (
+                              <div className="card-text flex-grow-1 px-2 w-100">
+                                <h6 className="font-size-11px-mobile my-auto">{name}</h6>
+                              </div>
+                            )}
+                            <div className="col-md-auto">
+                              {isEditName ? (
+                                <button className="font-size-12px-mobile btn data-diri title-icare fw-bold w-100" onClick={handleSubmitName} style={{fontSize: 14}} >
+                                  Submit
+                                </button>
+                              ) : (
+                                <button className="font-size-12px-mobile btn data-diri title-icare fw-bold w-100" onClick={handleEditName} style={{fontSize: 14}} >
+                                  Ubah
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="col-12 mx-2">
+                              <span className={`text-danger small font-size-11px-mobile ${ errorDataName !== "" ? "" : "d-none" }`} style={{ fontSize: "12px"}} > {errorDataName} </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+
+                  <div className="mb-lg-4 mb-2 p-0">
+                    <div className="card">
+                      <div className="card-label p-md-2 form-color">
+                        <label className="font-size-12px-mobile fw-medium px-md-0 px-2" style={{ fontSize: "13px", color: "white" }} >
+                          Email
+                        </label>
+                      </div>
+                      <div className="border border-dark py-2">
+                        <div className="align-items-center my-lg-1 my-md-1 custom-width">
+                          <div className="card-text flex-grow-1 px-2 w-100">
+                            <h6 className="font-size-11px-mobile my-auto">{email}</h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mb-lg-4 mb-2 p-0">
+                    <div className="card">
+                      <div className="card-lable p-md-2 border form-color" >
+                        <label className="font-size-12px-mobile fw-medium px-md-0 px-2" style={{ fontSize: "13px", color: "white" }} >
+                          No Telepon
+                        </label>
+                      </div>
+                      <div className="border border-dark">
+                        <div className="d-flex align-items-center my-lg-1 my-md-1 custom-width" >
+                          {isEditPhone ? (
                             <div className="card-text flex-grow-1">
-                              <input type="text" className={`form-control w-100 no-hover ${errorDataName !== "" ? "border-danger border" : "" }`} value={name} onChange={handleChangeName} />
+                              <input type="tel" className={`font-size-11px-mobile form-control input-data py-md-2 py-1 w-100 no-hover ${errorDataPhone !== "" ? "border-danger border" : ""}`} value={phone.toString().trim()} onChange={handleChangePhone} />
                               
                             </div>
                           ) : (
-                            <div className="card-text flex-grow-1 p-2 mt-1 w-100">
-                              <h6>{name}</h6>
+                            <div className="card-text flex-grow-1 px-2 mt-lg-1 w-100">
+                              <h6 className="font-size-11px-mobile my-auto">{phone}</h6>
                             </div>
                           )}
                           <div className="col-md-auto">
-                            {isEditName ? (
-                              <button className="btn data-diri title-icare fw-bold w-100" onClick={handleSubmitName} style={{fontSize: 14}} >
+                            {isEditPhone ? (
+                              <button className="font-size-12px-mobile btn data-diri title-icare fw-bold w-100" onClick={handleSubmitPhone} style={{fontSize: 14}}>
                                 Submit
                               </button>
                             ) : (
-                              <button className="btn data-diri title-icare fw-bold w-100" onClick={handleEditName} style={{fontSize: 14}} >
+                              <button className="font-size-12px-mobile btn data-diri title-icare fw-bold w-100" onClick={handleEditPhone} style={{fontSize: 14}}>
                                 Ubah
                               </button>
                             )}
                           </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-12">
-                          <span className={`text-danger small ${ errorDataName !== "" ? "" : "d-none" }`} style={{ fontSize: "12px"}} > {errorDataName} </span>
-                        </div>
-                      </div>
-                  </div>
-
-                  <div className="card-lable p-2" style={{ backgroundColor: "#014C90" }} >
-                    <label className="fw-medium" style={{ fontSize: "13px", color: "white" }} >
-                      Email
-                    </label>
-                  </div>
-                  <div className="mb-4 p-2" style={{ border: "1px solid black" }} >
-                    <h6>{email}</h6>
-                  </div>
-
-                  <div className="border border-dark mb-4">
-                    <div className="row" style={{height:'85px'}}>
-                      <div className="card-lable p-2" style={{ backgroundColor: "#014C90" }} >
-                        <label className="fw-medium" style={{ fontSize: "13px", color: "white" }} >
-                          No Telepon
-                        </label>
-                      </div>
-                      <div className="card-body d-flex align-items-center mb-4 custom-width" >
-                        {isEditPhone ? (
-                          <div className="card-text flex-grow-1">
-                            <input type="tel" className={`form-control input-data py-2 w-100 no-hover ${errorDataPhone !== "" ? "border-danger border" : ""}`} value={phone.toString().trim()} onChange={handleChangePhone} />
-                            
-                          </div>
-                        ) : (
-                          <div className="card-text flex-grow-1 p-2 mt-1 w-100">
-                            <h6>{phone}</h6>
-                          </div>
-                        )}
-                        <div className="col-md-auto">
-                          {isEditPhone ? (
-                            <button className="btn data-diri title-icare fw-bold w-100" onClick={handleSubmitPhone} style={{fontSize: 14}}>
-                              Submit
-                            </button>
-                          ) : (
-                            <button className="btn data-diri title-icare fw-bold w-100" onClick={handleEditPhone} style={{fontSize: 14}}>
-                              Ubah
-                            </button>
-                          )}
                         </div>
                       </div>
                     </div>
@@ -265,13 +278,21 @@ function DataDiri() {
                     </div>
                   </div>
 
-                  <div className="card-lable p-2" style={{ backgroundColor: "#014C90" }} >
-                    <label className="fw-medium" style={{ fontSize: "13px", color: "white" }} >
-                      Nama Perusahaan/Instansi
-                    </label>
-                  </div>
-                  <div className="mb-4 p-2" style={{ border: "1px solid black" }} >
-                    <h6>{instansi}</h6>
+                  <div className="mb-lg-4 mb-2 p-0">
+                    <div className="card">
+                      <div className="card-label p-md-2 form-color">
+                        <label className="font-size-12px-mobile fw-medium px-md-0 px-2" style={{ fontSize: "13px", color: "white" }} >
+                          Nama Perusahaan/Instansi
+                        </label>
+                      </div>
+                      <div className="border border-dark py-2">
+                        <div className="align-items-center my-lg-1 my-md-1 custom-width">
+                          <div className="card-text flex-grow-1 px-2 w-100">
+                            <h6 className="font-size-11px-mobile my-auto">{instansi}</h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="col-md-12 text-center d-flex justify-content-center">

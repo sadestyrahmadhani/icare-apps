@@ -1,771 +1,345 @@
-import { Link, useParams } from "react-router-dom";
-import { getDetailRiwayatOrder } from "../../services/API";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { getDetailRiwayatOrder, getTrackingRiwayat, getDaftarAlamatById, getImageRiwayatOrder } from "../../services/API";
 import React, { useEffect, useState } from "react";
-import TrackingAlert from "../../component/alert/trackingAlert";
+import TrackingAlert from "./component/trackingAlert";
+import LoadingAlert from "../../component/alert/loadingAlert";
+import ConfirmAlert from "../../component/alert/confirmAlert";
+import { getReviewByTRequestId } from "../../services/API/mod_riwayatOrder";
 
-function DetailPermintaan() {
-    const [dataisLoaded, setDataisLoaded] = useState(false)
-    const [dataRiwayatorder, setDataRiwayatorder] = useState({})
+function DetailRiwayat() {
+    const params = useParams()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const [dataDetailRiwayat, setDataDetailRiwayat] = useState([])
+    const [imageDetailRiwayat, setImageDetailRiwayat] = useState(null)
+    const [imageDetailRiwayatConsumable, setImageDetailRiwayatConsumable] = useState(null)
+    const [tracking, setTracking] = useState([])
+    const [address, setAddress] = useState([])
+    const [loading, setLoading] = useState(false)
     const [showPopup, setShowPopup] = useState(false)
-    const { id, statusid } = useParams()
+    const [showErrorPopup, setShowErrorPopup] = useState(false)
+    const [ratting, setRatting] = useState([])
+    const [alertOption, setAlertOption] = useState({title: '', message: ''})
 
-    // useEffect(() => {
-    //     init()
-    //     getDetailRiwayatOrder().then(response => {
-    //         console.log(response)
-    //     })
-    // }, [])
+    // console.log(location.state);
+    
 
     useEffect(() => {
         init()
-        getDetailRiwayatOrder(id).then(response => {
-            console.log("get detail riwayat order", response)
-            setDataRiwayatorder(response)
-            setDataisLoaded(true)
-        })
-    }, [id])
-
-    // async function getDetailRiwayatOrder(id) {
-    //     const response = await fetch(`/api/getDetailRiwayatOrder/${id}`);
-    //     const data = await response.json();
-    //     return data;
-    // }    
-
-    // componentDidMount() {
-    //     this.init();
-    // }
+    }, []);
 
     async function init() {
-        setDataisLoaded(false)
+        setLoading(true)
+        const res = await getDetailRiwayatOrder(params.id)
+        setLoading(false)
+        if(res.status == 200) {
+            setDataDetailRiwayat(res.data)
+            if(res.data.capture){
+                setLoading(true)
+                const resImg = await getImageRiwayatOrder(res.data.capture)
+                setLoading(false)
+                if(resImg.status == 200) {
+                    setImageDetailRiwayat(resImg.data)
+                }
+            }
+            if(res.data.CaptureConsumable) {
+                setLoading(true)
+                const resImgConsumable = await getImageRiwayatOrder(res.data.CaptureConsumable)
+                setLoading(false)
+                if(resImgConsumable.status == 200) {
+                    setImageDetailRiwayatConsumable(resImgConsumable.data)
+                }
+            }
+        } else {
+            setShowPopup(true)
+            setAlertOption({title: 'Error', message: 'Oops! Terjadi kesalahan'})
+        }
+        
+        setLoading(true)
+        const resAddress = await getDaftarAlamatById(res.data.userAddressId)
+        setLoading(false)
+        if(resAddress.status == 200) {
+            console.log(resAddress.data);   
+            setAddress(resAddress.data.Table[0])
+        }
 
-        console.log("id detail", id)
-        var res = await getDetailRiwayatOrder(id)
-        console.log("res : ", res)
+        if(res.data.statusid == 2 || res.data.statusid == 3) {
+            setLoading(true)
+            const resTrack = await getTrackingRiwayat(params.id)
+            setLoading(false)
+            if(resTrack.status == 200) {
+                setTracking(resTrack.data.Table)
+            }
+        }
 
-        setDataisLoaded(true)
-        setDataRiwayatorder(res)
-        console.log("dataRiwayatorder L ", dataRiwayatorder)
-        console.log("status id", statusid)
-        // console.log("request no", requestNo)
+        const resReview = await getReviewByTRequestId(params.id)
+        if(resReview.status == 200) {
+            console.log(resReview.data)
+            setRatting(resReview.data.Table)
+        }
     }
 
     const handlePopup = () => {
-        setShowPopup(false)
+        setShowPopup(true)
+        setShowErrorPopup(false)
     }
-    
+
+    const handleRedirect = (e) => {
+        e.preventDefault()
+        
+        navigate(-1, {
+            state: {
+                currentTabActive: location.state?.currentTabActive
+            }
+        })
+    }
+
+
+    // console.log(dataDetailRiwayat.requestd?.lenght);
+
     return (
         <>
-                <div className="responsive-bar d-flex" style={{ alignItems: 'baseline', height: '55px' }}>
-                    <Link className="list-items" to="/riwayat">
-                        <i className="fa fa-arrow-left me-3" style={{ fontSize: '18px', color: '#014C90' }}></i>
-                        <span className="title-icare fw-bold py-1" style={{ borderBottom: '3px solid #014C90', fontSize: '18px' }}>Detail Permintaan</span>
-                    </Link>
+        <div className="responsive-bar d-flex" style={{ alignItems: 'baseline', height: '55px' }}>
+            <Link className="list-items" onClick={handleRedirect}>
+                <i className="fa fa-arrow-left me-3" style={{ fontSize: '18px', color: '#014C90' }}></i>
+                <span className="title-icare fw-bold py-1" style={{ borderBottom: '3px solid #014C90', fontSize: '18px' }}>Detail Permintaan</span>
+            </Link>
+        </div>
+            <div className="card shadow-sm mb-3 rounded-4">
+                <div className="card-body p-md-4 p-0" style={{fontSize: '14px'}}>
+                        <div className="tracking-vertical">
+                            <div className="tracking-item">
+                                <div className="track-icon">
+                                    <div className="track-icon-container bg-succes">
+                                        <i className="fa fa-check"></i>
+                                    </div>
+                                </div>
+                                <div className="track-content mb-4">
+                                    <div className="row">
+                                        <div className="col-12 mb-3">
+                                            Awal Permintaan
+                                        </div>
+                                        <div className="col-6 mb-3">Tanggal Permintaan</div>
+
+                                        <div className="col-6 text-end mb-3">{dataDetailRiwayat
+                                        .createdate}</div>
+                                        <div className="col-12 mb-3">
+                                            <div className="mb-4">
+                                                <h6 className="mb-3 fw-bold">Daftar Permintaan</h6>
+                                                <div className="rounded-4 px-4 py-2 border border-black">
+                                                    <p className="mb-2 mt-2">No. Request : {dataDetailRiwayat.requestNo}</p>
+                                                    <p className="mb-2">{dataDetailRiwayat.namarequest}</p>
+                                                    <p className="mb-2">EQ : {dataDetailRiwayat.equipment}</p>
+                                                    <p className="mb-2">{dataDetailRiwayat.requestd?.map(val => val.namarequesttype).join(', ')}</p>
+                                                    <p className="mb-2">{dataDetailRiwayat.keterangan}</p>
+                                                </div>
+                                            </div>
+                                            <div className="mb-4">
+                                                <h6 className="mb-3 fw-bold">Detail Penerima</h6>
+                                                <div className="rounded-4 px-4 py-2 border border-black">
+                                                    <table width="100%" cellpadding="5">
+                                                        <tr>
+                                                            <td width="40%">Nama Perusahaan</td>
+                                                            <td>{dataDetailRiwayat.namaperusahaan}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="40%">Nama Penerima</td>
+                                                            <td>{dataDetailRiwayat.namalengkap}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="40%">No Telepon</td>
+                                                            <td>{dataDetailRiwayat.telp}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="40%" valign="top">Lokasi Penerima</td>
+                                                            <td>
+                                                                <p>Nama Jalan & Nomor Gedung/Kantor : {address.Alamat}</p>
+                                                                <p>Nama Gedung : {address.NamaGedung}</p>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-12 text-center mb-3">
+                                            <img src={imageDetailRiwayat} alt="" className="w-md-25 w-75"></img>
+                                        </div>
+                                        <div className="col-12 text-center">
+                                            <img src={imageDetailRiwayatConsumable} alt="" className="w-md-25 w-75"></img>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {dataDetailRiwayat.statusid == 4 && (
+                                <div className="tracking-item">
+                                    <div className="track-icon">
+                                        <div className="track-icon-container bg-danger">
+                                            <i className="fa fa-times"></i>
+                                        </div>
+                                    </div>
+                                    <div className="track-content">
+                                        <div className="row">
+                                            <div className="col-12 mb-3">
+                                                Ditolak
+                                            </div>
+                                            <div className="col-6 mb-3">Tanggal Ditolak</div>
+                                            <div className="col-6 text-end mb-3">{dataDetailRiwayat.rejectdate}</div>
+                                            <div className="col-12 mb-3">
+                                                <div className="mb-4">
+                                                    <h6 className="mb-3 fw-bold">Note</h6>
+                                                    <div className="rounded-4 p-md-4 p-2 border border-black">
+                                                    {dataDetailRiwayat.rejectnote}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {(dataDetailRiwayat.statusid == 5 || (dataDetailRiwayat.statusid == 3 && dataDetailRiwayat.internalprosesdate !== "")) && (
+                            <div className="tracking-item">
+                                    <div className="track-icon">
+                                        <div className="track-icon-container bg-light">
+                                            <img src="/images/warn-icon.png" width="35" />
+                                        </div>
+                                    </div>
+                                    <div className="track-content">
+                                        <div className="row">
+                                            <div className="col-12 mb-3">
+                                                Internal Proses
+                                            </div>
+                                            <div className="col-6 mb-3">Tanggal Internal Proses</div>
+                                            <div className="col-6 text-end mb-3">{dataDetailRiwayat.internalprosesdate}</div>
+                                            <div className="col-12 mb-3">
+                                                <div className="mb-5">
+                                                    <h6 className="mb-3 fw-bold">Note</h6>
+                                                    <div className="rounded-4 p-md-4 p-2 border border-black">
+                                                    {dataDetailRiwayat.internalprosesnote}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {(dataDetailRiwayat.statusid == 2 || dataDetailRiwayat.statusid == 3) && (
+                                <div className="tracking-item">
+                                    {dataDetailRiwayat.statusid == 3 ? (
+                                    <div className="track-icon">
+                                        <div className="track-icon-container bg-succes">
+                                            <i className="fa fa-check"></i>
+                                        </div>
+                                    </div>
+                                    ) : (
+                                    <div className="track-icon">
+                                        <div className="track-icon-container bg-light">
+                                            <img src="/images/icon_diproses_new.png" width="35"/>
+                                        </div>
+                                    </div>
+                                    )}
+                                    <div className="track-content">
+                                        <div className="row">
+                                            <div className="col-12 mb-3">
+                                                Diproses
+                                            </div>
+                                            <div className="col-6 mb-3">Tanggal Diproses</div>
+                                            <div className="col-6 text-end mb-3">{dataDetailRiwayat.prosesdate}</div>
+                                            <div className="col-12 mb-1">
+                                                <div className="mb-4">
+                                                    <h6 className="mb-3 fw-bold">Detail Pengerjaan</h6>
+                                                    <div className="row rounded-4 p-md-4 p-2 py-2 border border-black">
+                                                        {tracking.filter(val => val.status === 'Accept').map((val,key) => (
+                                                            <table width="100%" cellPadding="5" key={key}>
+                                                                <tr>
+                                                                    <td width="50%">Service order</td>
+                                                                    <td>{val.serviceorder}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="50%">Nama Petugas</td>
+                                                                    <td>{val.Username}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="50%">Note</td>
+                                                                    <td>{val.notes}</td>
+                                                                </tr>
+                                                            </table>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button className="rounded-3 px-5 py-2 mb-4" style={{background: 'white', border: "1px solid", whiteSpace: 'nowrap'}} onClick={handlePopup} >
+                                            <i className="fa fa-truck me-2" style={{fontSize: '20px'}} />
+                                            Lacak Petugas
+                                        </button>
+                                    </div>
+                                    <TrackingAlert visible={showPopup} data={tracking} onClick={() => setShowPopup(false)} />
+                                </div>
+                            )}
+                            
+                            {dataDetailRiwayat.statusid == 3 && (
+                                <div className="tracking-item">
+                                        <div className="track-icon">
+                                        <div className="track-icon-container bg-succes">
+                                            <i className="fa fa-check"></i>
+                                        </div>
+                                    </div>
+                                    <div className="track-content">
+                                        <div className="row">
+                                            <div className={dataDetailRiwayat.review ? "col-12 pb-2 mb-1" : "col-12 pb-2 mb-1 border-bottom border-dark"}>
+                                                Selesai
+                                            </div>
+                                            <div className={dataDetailRiwayat.review ? "col-6 pb-1 mb-5" : "col-6 pb-1 mb-5 border-bottom border-dark"}>Tanggal Diproses</div>
+                                            <div className={dataDetailRiwayat.review ? "col-6 text-end pb-1 mb-5" : "col-6 text-end pb-1 mb-5 border-bottom border-dark"}>{dataDetailRiwayat.finishdate}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {dataDetailRiwayat.review && (
+                                <div className="tracking-item">
+                                        <div className="track-icon">
+                                        <div className="track-icon-container bg-succes">
+                                            <i className="fa fa-check"></i>
+                                        </div>
+                                    </div>
+                                    <div className="track-content">
+                                        <div className="row">
+                                            <div className="col-12 pb-2 mb-1">
+                                                Nilai & Review
+                                            </div>
+                                            <div className="col-12 mb-3">
+                                                <i class={ ratting[ratting.length - 1]?.Review > 0 ? 'fa fa-star fa-2x me-1 text-warning' : 'fa fa-star fa-2x me-1' }/>
+                                                <i class={ ratting[ratting.length - 1]?.Review > 1 ? 'fa fa-star fa-2x me-1 text-warning' : 'fa fa-star fa-2x me-1' }/>
+                                                <i class={ ratting[ratting.length - 1]?.Review > 2 ? 'fa fa-star fa-2x me-1 text-warning' : 'fa fa-star fa-2x me-1' }/>
+                                                <i class={ ratting[ratting.length - 1]?.Review > 3 ? 'fa fa-star fa-2x me-1 text-warning' : 'fa fa-star fa-2x me-1' }/>
+                                                <i class={ ratting[ratting.length - 1]?.Review > 4 ? 'fa fa-star fa-2x me-1 text-warning' : 'fa fa-star fa-2x me-1' }/>
+                                            </div>
+                                            <div className="col-12 mb-3">
+                                                <div className="mb-4">
+                                                    <div className="rounded-4 px-4 py-2 border border-black">{ratting[ratting.length - 1]?.Description}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            
+                            
+                        </div>
+                        {(dataDetailRiwayat.statusid == 1 || dataDetailRiwayat.statusid == 2 || dataDetailRiwayat.statusid == 5) && (
+                            <div className="col-12 text-center">
+                                <button className="btn btn-login px-5" onClick={() => navigate(`/tanya_tim_support/${params.id}`)}>Tanya Tim Support</button>
+                            </div>
+                        )}
                 </div>
-                <div className="card shadow p-3 border-0 responsive-detail-permintaan">
-                        {dataRiwayatorder.statusid == 1 && (
-                        <div className="card-body">
-                            <div className="row">
-                                <div className="d-flex">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <p className="lh-lg" style={{fontSize:'14px'}}>Awal Permintaan</p>
-                                        <div className="d-flex" style={{fontSize:'14px'}}>
-                                            <div className="col-10">
-                                                <p>Tanggal Permintaan</p>
-                                            </div>
-                                            <div className="col-3">
-                                                <p>{dataRiwayatorder.createdate}</p>
-                                            </div>
-                                        </div>
-                                        <div className="daftar-permintaan mb-3">
-                                            <b className="fw-medium" style={{fontSize:'14px'}}>Daftar Permintaan</b>
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <p className="lh-lg" style={{fontSize:'14px'}}>No. Request : {dataRiwayatorder.requestNo} <br/> {dataRiwayatorder.namarequest} <br/> EQ : {dataRiwayatorder.equipment} <br/> 1 Toner Cyan, 1 Drum Cyan <br/> {dataRiwayatorder.keterangan}</p>
-                                            </div>
-                                        </div>
-                                        <div className="daftar-penerima mb-3">
-                                            <b className="fw-medium" style={{fontSize:'14px'}}>Daftar Penerima</b>
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <div className="row">
-                                                    <div className="d-flex">
-                                                        <div className="col-3">
-                                                            <p className="lh-lg" style={{fontSize:'14px'}}>
-                                                                Nama Perusahaan <br/> 
-                                                                Nama Penerima <br/> 
-                                                                No Telepon <br/> 
-                                                                Lokasi Penerima
-                                                            </p>
-                                                        </div>
-                                                        <div className="col-3">
-                                                            <p className="lh-lg" style={{fontSize:'14px'}}>
-                                                                Kantor pusat <br/> 
-                                                                {dataRiwayatorder.namalengkap} <br/> 
-                                                                {dataRiwayatorder.telp} <br/> 
-                                                                Nama Jalan: unknow 000 city <br/> 
-                                                                No Gedung: 30 <br/> 
-                                                                Nama Gedung: Gedung1
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="images-menunggu-konfirmasi mb-4">
-                                            <div className="text-center">
-                                                <div className="col-lg-12 mb-4">
-                                                    <img src="images/Cahyo_MFD.png" style={{width:'25%'}}></img>
-                                                </div>
-                                                <div className="col-lg-12">
-                                                    <img src="" style={{width:'25%'}}></img>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="tanya text-center">
-                                            <Link to="/tanya_tim_support">
-                                                <button className="btn btn-tanya btn-login" style={{width:'25%'}}>Tanya Tim Support</button>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        )}
-                        {dataRiwayatorder.statusid == 2 && (
-                        <div className="card-body">
-                            <div className="row">
-                                <div className="d-flex">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <p className="lh-lg" style={{fontSize:'14px'}}>Awal Permintaan</p>
-                                        <div className="d-flex" style={{fontSize:'14px'}}>
-                                            <div className="col-10">
-                                                <p>Tanggal Permintaan</p>
-                                            </div>
-                                            <div className="col-3">
-                                                <p>{dataRiwayatorder.createdate}</p>
-                                            </div>
-                                        </div>
-                                        <div className="daftar-permintaan mb-3">
-                                            <b className="fw-medium" style={{fontSize:'14px'}}>Daftar Permintaan</b>
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <p className="lh-lg" style={{fontSize:'14px'}}>No. Request : {dataRiwayatorder.requestNo} <br/> {dataRiwayatorder.namarequest} <br/> EQ : {dataRiwayatorder.equipment} <br/> 1 Toner Cyan, 1 Drum Cyan <br/> {dataRiwayatorder.keterangan}</p>
-                                            </div>
-                                        </div>
-                                        <div className="daftar-penerima mb-3">
-                                            <b className="fw-medium" style={{fontSize:'14px'}}>Daftar Penerima</b>
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <div className="row">
-                                                    <div className="col-3">
-                                                        <p className="lh-lg" style={{fontSize:'14px'}}>Nama Perusahaan <br/> Nama Penerima <br/> No Telepon <br/> Lokasi Penerima</p>
-                                                    </div>
-                                                    <div className="col-3">
-                                                        <p className="lh-lg" style={{fontSize:'14px'}}>Kantor pusat <br/> {dataRiwayatorder.namalengkap} <br/> {dataRiwayatorder.telp} <br/> Nama Jalan: unknow 000 city <br/> No Gedung: 30 <br/> Nama Gedung: Gedung1</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="images-diproses mb-4">
-                                            <div className="text-center">
-                                                <div className="col-lg-12 mb-4">
-                                                    <img src="images/foto-sticker.png" style={{width:'25%'}}></img>
-                                                </div>
-                                                <div className="col-lg-12">
-                                                    <img src="" style={{width:'25%'}}></img>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="d-flex">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', width: 40 }}>
-                                                {/* <i className="fa fa-check"></i> */}
-                                                <img src="images/icon_diproses_new.png" style={{width:'100%'}}></img>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <div className="tanggal-diproses mb-5">
-                                            <p style={{fontSize:'14px'}}>Diproses</p>
-                                            <div className="d-flex" style={{fontSize:'14px'}}>
-                                                <div className="col-10">
-                                                    <p>Tanggal Diproses</p>
-                                                </div>
-                                                {/* <div className="col-3">
-                                                    <p>9/19/2023 2:02:16 PM</p>
-                                                </div> */}
-                                            </div>
-                                            <div className="detail-pengerjaan">
-                                                <b className="fw-bold" style={{fontSize:'14px'}}>Detail Pengerjaan</b>
-                                                <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                    <div className="d-flex">
-                                                        <div className="col-6">
-                                                            <p className="lh-lg mb-0" style={{fontSize:'14px'}}>Service Order</p>
-                                                            <p className="lh-lg mb-0" style={{fontSize:'14px'}}>Nama Petugas</p>
-                                                            <p className="lh-lg mb-0" style={{fontSize:'14px'}}>Note</p>
-                                                        </div>
-                                                        {/* <div className="col-4">
-                                                            <p className="lh-lg mb-0" style={{fontSize:'14px'}}>3517552</p>
-                                                            <p className="lh-lg mb-0" style={{fontSize:'14px'}}>STEVEN PRASETYO</p>
-                                                            <p className="lh-lg mb-0" style={{fontSize:'14px'}}>Permintaan sudah kami proses</p>
-                                                        </div> */}
-                                                    </div>
-                                                    {/* <p className="lh-lg" style={{fontSize:'14px'}}>Service Order <br/> Nama Petugas <br/> Note</p> */}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="chat text-center">
-                                            <Link to="/tanya_tim_support">
-                                                <button className="btn btn-login" style={{width:'25%'}}>Tanya Tim Support</button>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        )}
-                        {dataRiwayatorder.statusid == 3 && (
-                        <div className="card-body">
-                            <div className="row">
-                                <div className="d-flex">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <p className="lh-lg" style={{fontSize:'14px'}}>Awal Permintaan</p>
-                                        <div className="d-flex" style={{fontSize:'14px'}}>
-                                            <div className="col-10">
-                                                <p>Tanggal Permintaan</p>
-                                            </div>
-                                            <div className="col-3">
-                                                <p>{dataRiwayatorder.createdate}</p>
-                                            </div>
-                                        </div>
-                                        <div className="daftar-permintaan mb-3">
-                                            <b className="fw-medium" style={{fontSize:'14px'}}>Daftar Permintaan</b>
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <p className="lh-lg" style={{fontSize:'14px'}}>No. Request : {dataRiwayatorder.requestNo} <br/> {dataRiwayatorder.namarequest} <br/> EQ : {dataRiwayatorder.equipment} <br/> 1 Toner Cyan, 1 Drum Cyan <br/> {dataRiwayatorder.keterangan}</p>
-                                            </div>
-                                        </div>
-                                        <div className="daftar-penerima mb-3">
-                                            <b className="fw-medium" style={{fontSize:'14px'}}>Daftar Penerima</b>
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <div className="row">
-                                                    <div className="d-flex">
-                                                        <div className="col-3">
-                                                            <p className="lh-lg" style={{fontSize:'14px'}}>
-                                                                Nama Perusahaan <br/> 
-                                                                Nama Penerima <br/> 
-                                                                No Telepon <br/> 
-                                                                Lokasi Penerima
-                                                            </p>
-                                                        </div>
-                                                        <div className="col-3">
-                                                            <p className="lh-lg" style={{fontSize:'14px'}}>
-                                                                Kantor pusat <br/> 
-                                                                {dataRiwayatorder.namalengkap} <br/> 
-                                                                {dataRiwayatorder.telp} <br/> 
-                                                                Nama Jalan: unknow 000 city <br/> 
-                                                                No Gedung: 30 <br/> 
-                                                                Nama Gedung: Gedung1
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="images-selesai mb-4">
-                                            <div className="text-center">
-                                                <div className="col-lg-12 mb-4">
-                                                    <img src="images/beranda.png" style={{width:'25%'}}></img>
-                                                </div>
-                                                <div className="col-lg-12">
-                                                    <img src="" style={{width:'25%'}}></img>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="d-flex mt-5 mb-5">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <p>Internal Proses</p>
-                                        <div className="d-flex">
-                                            <div className="col-10">
-                                                <p>Tanggal Internal Proses</p>
-                                            </div>
-                                            <div className="col-3">
-                                                <p>8/1/2022 2:20:36 PM</p>
-                                            </div>
-                                        </div>
-                                        <div className="notes">
-                                            <b className="fw-bold" style={{fontSize:'14px'}}>Note</b>
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <p className="lh-lg" style={{fontSize:'14px'}}> Notes: Permintaan saat ini belum memenuhi rasio pemakaian, namun sudah diajukan dan masih menunggu konfirmasi dari tim terkait.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="d-flex">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <div className="tanggal-diproses mb-5">
-                                            <p style={{fontSize:'14px'}}>Diproses</p>
-                                            <div className="d-flex" style={{fontSize:'14px'}}>
-                                                <div className="col-10">
-                                                    <p>Tanggal Diproses</p>
-                                                </div>
-                                                <div className="col-3">
-                                                    <p>8/1/2022 2:52:12 PM</p>
-                                                </div>
-                                            </div>
-                                            <div className="detail-pengerjaan">
-                                                <b className="fw-bold" style={{fontSize:'14px'}}>Detail Pengerjaan</b>
-                                                <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                    <div className="row">
-                                                        <div className="d-flex">
-                                                            <div className="col-3">
-                                                                <p className="lh-lg" style={{fontSize:'14px'}}>
-                                                                    Service Order <br/> 
-                                                                    Nama Petugas <br/> 
-                                                                    Note
-                                                                </p>
-                                                            </div>
-                                                            <div className="col-3">
-                                                                <p className="lh-lg" style={{fontSize:'14px'}}>
-                                                                    3517552 <br/>
-                                                                    STEVEN PRASETYO <br/>
-                                                                    Permintaan sudah proses
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button className="shadow-sm border rounded-4 py-2 px-5" style={{color:'#000', background:'none'}}>
-                                            <i className="fa fa-truck me-2"></i>
-                                                <label style={{fontSize:'14px'}} >
-                                                    Lacak Petugas
-                                                </label>
-                                        </button>
-                                        {/* <TrackingAlert visible={showPopup} titleMessage="Lacak Petugas" customClass="col-sm-8" onClick={handlePopup} /> */}
-                                    </div>
-                                </div>
-                                <div className="d-flex mt-5">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <p style={{fontSize:'14px'}}>Selesai</p>
-                                            <div className="d-flex" style={{fontSize:'14px'}}>
-                                                <div className="col-10">
-                                                    <p className="mb-0" style={{fontSize:'14px'}}>Tanggal Selesai</p>
-                                                </div>
-                                                <div className="col-3">
-                                                    <p className="mb-0" style={{fontSize:'14px'}}>9/19/2022 10:15:15 AM</p>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-                                <div className="d-flex mt-5">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <p style={{fontSize:'14px'}}>Nilai & Review</p>
-                                        <div className="nilai fs-2">
-                                            <i className="fa fa-star px-1" style={{color: '#FEE717'}}></i>
-                                            <i className="fa fa-star px-1" style={{color: '#FEE717'}}></i>
-                                            <i className="fa fa-star px-1" style={{color: '#FEE717'}}></i>
-                                            <i className="fa fa-star px-1" style={{color: '#FEE717'}}></i>
-                                            <i className="fa fa-star px-1" style={{color: '#FEE717'}}></i>
-                                        </div>
-                                        <div className="review">
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <p className="lh-lg" style={{fontSize:'14px'}}> keren </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        )}
-                        {dataRiwayatorder.statusid == false && (
-                            <div className="card-body">
-                            <div className="row">
-                                <div className="d-flex">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <p className="lh-lg" style={{fontSize:'14px'}}>Awal Permintaan</p>
-                                        <div className="d-flex" style={{fontSize:'14px'}}>
-                                            <div className="col-10">
-                                                <p>Tanggal Permintaan</p>
-                                            </div>
-                                            <div className="col-3">
-                                                <p>{dataRiwayatorder.createdate}</p>
-                                            </div>
-                                        </div>
-                                        <div className="daftar-permintaan mb-3">
-                                            <b className="fw-medium" style={{fontSize:'14px'}}>Daftar Permintaan</b>
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <p className="lh-lg" style={{fontSize:'14px'}}>No. Request : {dataRiwayatorder.requestNo} <br/> {dataRiwayatorder.namarequest} <br/> EQ : {dataRiwayatorder.equipment} <br/> 1 Toner Cyan, 1 Drum Cyan <br/> {dataRiwayatorder.keterangan}</p>
-                                            </div>
-                                        </div>
-                                        <div className="daftar-penerima mb-3">
-                                            <b className="fw-medium" style={{fontSize:'14px'}}>Daftar Penerima</b>
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <div className="row">
-                                                    <div className="col-3">
-                                                        <p className="lh-lg" style={{fontSize:'14px'}}>Nama Perusahaan <br/> Nama Penerima <br/> No Telepon <br/> Lokasi Penerima</p>
-                                                    </div>
-                                                    <div className="col-3">
-                                                        <p className="lh-lg" style={{fontSize:'14px'}}>Kantor pusat <br/> {dataRiwayatorder.namalengkap} <br/> {dataRiwayatorder.telp} <br/> Nama Jalan: unknow 000 city <br/> No Gedung: 30 <br/> Nama Gedung: Gedung1</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="images-selesai mb-4">
-                                            <div className="text-center">
-                                                <div className="col-lg-12 mb-4">
-                                                    <img src="images/beranda.png" style={{width:'25%'}}></img>
-                                                </div>
-                                                <div className="col-lg-12">
-                                                    <img src="" style={{width:'25%'}}></img>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="d-flex mt-5 mb-5">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <p>Internal Proses</p>
-                                        <div className="d-flex">
-                                            <div className="col-10">
-                                                <p>Tanggal Internal Proses</p>
-                                            </div>
-                                            <div className="col-3">
-                                                <p>8/1/2022 2:20:36 PM</p>
-                                            </div>
-                                        </div>
-                                        <div className="notes">
-                                            <b className="fw-bold" style={{fontSize:'14px'}}>Note</b>
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <p className="lh-lg" style={{fontSize:'14px'}}> Notes: Permintaan saat ini belum memenuhi rasio pemakaian, namun sudah diajukan dan masih menunggu konfirmasi dari tim terkait.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="d-flex">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <div className="tanggal-diproses mb-5">
-                                            <p style={{fontSize:'14px'}}>Diproses</p>
-                                            <div className="d-flex" style={{fontSize:'14px'}}>
-                                                <div className="col-10">
-                                                    <p>Tanggal Diproses</p>
-                                                </div>
-                                                <div className="col-3">
-                                                    <p>8/1/2022 2:52:12 PM</p>
-                                                </div>
-                                            </div>
-                                            <div className="detail-pengerjaan">
-                                                <b className="fw-bold" style={{fontSize:'14px'}}>Detail Pengerjaan</b>
-                                                <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                    <p className="lh-lg" style={{fontSize:'14px'}}>Service Order <br/> Nama Petugas <br/> Note</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button className="shadow-sm border rounded-4 py-2 px-5" style={{color:'#000', background:'none'}}>
-                                            <i className="fa fa-truck me-2"></i>
-                                                <label style={{fontSize:'14px'}} >
-                                                    Lacak Petugas
-                                                </label>
-                                        </button>
-                                        {/* <TrackingAlert visible={showPopup} titleMessage="Lacak Petugas" customClass="col-sm-8" onClick={handlePopup} /> */}
-                                    </div>
-                                </div>
-                                <div className="d-flex mt-5">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <p style={{fontSize:'14px'}}>Selesai</p>
-                                        <hr/>
-                                            <div className="d-flex" style={{fontSize:'14px'}}>
-                                                <div className="col-10">
-                                                    <p className="mb-0" style={{fontSize:'14px'}}>Tanggal Selesai</p>
-                                                </div>
-                                                <div className="col-3">
-                                                    <p className="mb-0" style={{fontSize:'14px'}}>9/19/2022 10:15:15 AM</p>
-                                                </div>
-                                            </div>
-                                        <hr/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        )}
-                        {dataRiwayatorder.statusid == 4 && (
-                    <div className="card-body">
-                            <div className="row">
-                                <div className="d-flex">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '4px', background: '#23ad4c', color: '#fff', borderRadius: '50%', border: '3px solid #fff', width: 40 }}>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <p className="lh-lg" style={{fontSize:'14px'}}>Awal Permintaan</p>
-                                        <div className="d-flex" style={{fontSize:'14px'}}>
-                                                <div className="col-10">
-                                                    <p>Tanggal Permintaan</p>
-                                                </div>
-                                                <div className="col-3">
-                                                    <p>{dataRiwayatorder.createdate}</p>
-                                                </div>
-                                            </div>
-                                        <div className="daftar-permintaan mb-3">
-                                            <b className="fw-medium" style={{fontSize:'14px'}}>Daftar Permintaan</b>
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <p className="lh-lg" style={{fontSize:'14px'}}>No. Request : {dataRiwayatorder.requestNo}  <br/> {dataRiwayatorder.namarequest} <br/> EQ : {dataRiwayatorder.equipment} <br/> 1 Toner Cyan, 1 Drum Cyan <br/> {dataRiwayatorder.keterangan}</p>
-                                            </div>
-                                        </div>
-                                        <div className="daftar-penerima mb-3">
-                                            <b className="fw-medium" style={{fontSize:'14px'}}>Daftar Penerima</b>
-                                            <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                <div className="row">
-                                                    <div className="d-flex">
-                                                        <div className="col-3">
-                                                            <p className="lh-lg" style={{fontSize:'14px'}}>
-                                                                Nama Perusahaan <br/> 
-                                                                Nama Penerima <br/> 
-                                                                No Telepon <br/> 
-                                                                Lokasi Penerima
-                                                            </p>
-                                                        </div>
-                                                        <div className="col-3">
-                                                            <p className="lh-lg" style={{fontSize:'14px'}}>
-                                                                Kantor pusat <br/> 
-                                                                {dataRiwayatorder.namalengkap} <br/> 
-                                                                {dataRiwayatorder.telp} <br/> 
-                                                                Nama Jalan: unknow 000 city <br/> 
-                                                                No Gedung: 30 <br/> 
-                                                                Nama Gedung: Gedung1
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="images-ditolak mb-4">
-                                            <div className="text-center">
-                                                <div className="col-lg-12 mb-4">
-                                                    <img src="images/quality.png" style={{width:'25%'}}></img>
-                                                </div>
-                                                <div className="col-lg-12">
-                                                <img src="images/satisfaction.png" style={{width:'25%'}}></img>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="d-flex">
-                                    <div className="col-1" style={{width:'4%'}}>
-                                        <div style={{ position: 'absolute', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
-                                            <div className="mx-auto" style={{ padding: '2px 6px', background: '#ff2020', color: '#fff', borderRadius: '50%', border: '3px solid #fff', fontWeight: 'bold', fontSize: 18, width: 38 }}>
-                                                &times;
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-11">
-                                        <div className="tanggal-ditolak mb-5">
-                                            <p style={{fontSize:'14px'}}>Ditolak</p>
-                                            <div className="d-flex" style={{fontSize:'14px'}}>
-                                                <div className="col-10">
-                                                    <p>Tanggal Ditolak</p>
-                                                </div>
-                                                <div className="col-3">
-                                                    <p>4/12/2023 12:44:05 PM</p>
-                                                </div>
-                                            </div>
-                                            <div className="notes">
-                                                <b className="fw-bold" style={{fontSize:'14px'}}>Note</b>
-                                                <div className="card shadow-sm p-3 my-2 rounded-4">
-                                                    <p className="lh-lg" style={{fontSize:'14px'}}> Notes: {dataRiwayatorder.rejectnote} </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        )}
-                    </div>
+                <ConfirmAlert visible={showErrorPopup} titleMessage={alertOption.title} message={alertOption.message} customClass="col-md-3 col-9" onClick={handlePopup} />
+                <LoadingAlert visible={loading} customClass="col-md-2 col-8" />
+            </div>
         </>
     )
 }
 
-export default DetailPermintaan
-
-// export default class extends Component {
-
-//     componentDidMount() {
-//         this.init();
-//     }
-
-//     async init() {
-//         this.setState({
-//             DataisLoaded: false,
-//         });
-
-//         var res = await getDetailRiwayatOrder();
-//         console.log("res : ", res);
-
-
-
-
-//         this.setState({
-//             DataisLoaded: true,
-//             dataRiwayatorder: res,
-//         });
-//         console.log("dataRiwayatorder L ", this.state.dataRiwayatorder);
-//     }
-
-
-
-//     constructor(props) {
-//         super(props)        
-//         this.state = {
-
-//             dataRiwayatorder: [
-//                 {
-
-//                 }
-//             ],
-//         }
-//     }
-
-//     render() {
-//         return (
-//             <>
-//                 {this.state.dataRiwayatorder.map((item) => (
-//                     <div className="container-fluid py-4">
-//                         <div className="d-flex" style={{ alignItems: 'baseline', height: '55px' }}>
-//                             <Link className="list-items" to="/riwayat">
-//                                 <i className="fa fa-arrow-left me-3" style={{ fontSize: '18px', color: '#014C90' }}></i>
-//                                 <span className="title-icare fw-bold py-1" style={{ borderBottom: '3px solid #014C90', fontSize: '18px' }}>Detail Permintaan</span>
-//                             </Link>
-//                         </div>
-//                         <div className="card shadow p-3 border-0 ">
-//                             <div className="card-body">
-//                                 <p className="lh-lg" style={{ fontSize: '14px' }}>Awal Permintaan <br /> Tanggal Permintaan : {item.createdate}</p>
-//                                 <div className="daftar-permintaan mb-3">
-//                                     <b className="fw-medium" style={{ fontSize: '14px' }}>Daftar Permintaan</b>
-//                                     <div className="card shadow-sm p-3 my-2 rounded-4">
-//                                         <p className="lh-lg" style={{ fontSize: '14px' }}>No. Request : {item.requestNo} <br /> {item.namarequest} <br /> EQ : {item.equipment} <br /> 1 Toner Cyan, 1 Drum Cyan <br /> {item.keterangan}</p>
-//                                     </div>
-//                                 </div>
-//                                 <div className="daftar-penerima mb-3">
-//                                     <b className="fw-medium" style={{ fontSize: '14px' }}>Daftar Penerima</b>
-//                                     <div className="card shadow-sm p-3 my-2 rounded-4">
-//                                         <div className="row">
-//                                             <div className="col-3">
-//                                                 <p className="lh-lg" style={{ fontSize: '14px' }}>Nama Perusahaan <br /> Nama Penerima <br /> No Telepon <br /> Lokasi Penerima</p>
-//                                             </div>
-//                                             <div className="col-3">
-//                                                 <p className="lh-lg" style={{ fontSize: '14px' }}>Kantor pusat <br /> {item.namalengkap} <br /> {item.telp} <br /> Nama Jalan: unknow 000 city <br /> No Gedung: 30 <br /> Nama Gedung: Gedung1</p>
-//                                             </div>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                                 <div className="tanggal-diproses mb-5">
-//                                     <p style={{ fontSize: '14px' }}>Tanggal Diproses</p>
-//                                     <div className="detail-pengerjaan">
-//                                         <b className="fw-medium" style={{ fontSize: '14px' }}>Detail Pengerjaan</b>
-//                                         <div className="card shadow-sm p-3 my-2 rounded-4">
-//                                             <p className="lh-lg" style={{ fontSize: '14px' }}>Service Order <br /> Nama Petugas <br /> Note : {item.rejectnote}</p>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                                 <Link className="shadow-sm border rounded-4 py-2 px-5" style={{ color: '#000' }}>
-//                                     <i className="fa fa-truck me-2"></i>
-//                                     <label style={{ fontSize: '14px' }} >
-//                                         Lacak Petugas
-//                                     </label>
-//                                 </Link>
-//                                 <hr className="mt-5" />
-//                                 <p style={{ fontSize: '14px' }}>Tanggal selesai</p>
-//                                 <hr />
-//                             </div>
-//                         </div>
-//                     </div>
-
-
-//                 ))}
-//             </>
-//         )
-//     }
-// }
+export default DetailRiwayat

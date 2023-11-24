@@ -1,10 +1,11 @@
 import { appConfig } from '../../config';
 import {
     jsonHeaderAuth,
-    // refreshAuthLogic
+    refreshAuthLogic
 } from '../fetchTools';
-// import axios from 'axios';
-// import createAuthRefreshInterceptor from 'axios-auth-refresh';
+import axios from 'axios';
+import { saveAs } from 'file-saver';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
 export const getDaftarEq = async () => {
     // createAuthRefreshInterceptor(axios, refreshAuthLogic);
@@ -31,6 +32,16 @@ export const getDaftarEq = async () => {
     } catch (error) {
         throw error
     }
+
+
+    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    // try {
+    //     const res = await axios.post(`${appConfig.BASE_API}/equipment/read/${localStorage.getItem('id')}`, jsonHeaderAuth())
+
+    //     return {status: res.status, data: res.data}
+    // } catch (error) {
+    //     throw error
+    // }
 }
 
 export const createDaftarEq = async (payload) => {
@@ -46,6 +57,20 @@ export const createDaftarEq = async (payload) => {
     } catch (error) {
         throw error
     }
+
+
+    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    // try {
+    //     const res = await axios.post(`${appConfig.BASE_API}/equipment/create`, payload, {
+    //         headers: {
+    //             ...jsonHeaderAuth()
+    //         }
+    //     })
+
+    //     return {status: res.status, data: res.data}
+    // } catch (error) {
+    //     throw error
+    // }
 }
 
 export const deleteDaftarEq = async (id) => {
@@ -60,6 +85,16 @@ export const deleteDaftarEq = async (id) => {
     } catch (error) {
         throw error
     }
+
+
+    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    // try {
+    //     const res = await axios.post(`${appConfig.BASE_API}/equipment/delete/${id}`, jsonHeaderAuth())
+
+    //     return {status: res.status, data: res.data}
+    // } catch (error) {
+    //     throw error
+    // }
 }
 
 export const updateDaftarEq = async (id, payload) => {
@@ -75,18 +110,55 @@ export const updateDaftarEq = async (id, payload) => {
     } catch (error) {
         throw error
     }
+
+
+    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    // try {
+    //     const res = await axios.post(`${appConfig.BASE_API}/equipment/update/${id}`, payload, {
+    //         ...jsonHeaderAuth()
+    //     })
+
+    //     return {status: res.status, data: res.data}
+    // } catch (error) {
+    //     throw error
+    // }
 }
 
-// export const getDaftarEqReadAll = async () => {
-//     try {
-//         const res = await fetch(`${appConfig.BASE_API}/equipment/readall`, {
-//             method: 'GET',
-//             ...jsonHeaderAuth(),
-//             mode: 'cors'
-//         })
-//         var data = await res.json()
-//         return{status: res.status, data: data}
-//     } catch (error) {
-//         throw error
-//     }
-// }
+export const getDownloadEquipment = async (id) => {
+    try {
+        await axios({url:`${appConfig.BASE_API}/equipment/download`,method:'get',responseType: 'blob'})
+        .then(res => {
+            console.log(res)
+            const blob = new Blob([res.data], {
+                type: 'application/octet-stream'
+            })
+
+            saveAs(blob, "equipments.xlsx")
+        })
+        .catch(error => {
+            console.log(error.message);
+        });
+        
+        return 0
+    } catch (error) {
+        throw error
+    }
+}
+export const UploadEquipment = async (file) => {
+    try {
+        var formData = new FormData()
+        formData.append('file',file)
+        let data=await axios.post(`${appConfig.BASE_API}/equipment/upload`,formData,
+            {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+            })
+        console.log(data)
+        return data.data
+        
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}

@@ -6,6 +6,14 @@ import ConfirmAlert from "../../component/alert/confirmAlert";
 import { verifyOtp } from "../../services";
 import { reSendOtp } from "../../services/API/mod_verifyOtp";
 import LoadingAlert from "../../component/alert/loadingAlert";
+import { authUser } from "../../services/API";
+import { setNamaPerusahaan, setUser } from "../../core/local-storage";
+import { setEmail as setEmailAddress, } from "../../core/local-storage";
+import { setTelp } from "../../core/local-storage";
+import { setId } from "../../core/local-storage";
+import {
+    settoken,setrefreshtoken
+} from '../../services/fetchTools';
 
  function Otp() {
     const navigate = useNavigate();
@@ -29,10 +37,16 @@ import LoadingAlert from "../../component/alert/loadingAlert";
     const [telp,settelp]=useState(location.state.telp)
     const [msg,setmsg]=useState(location.state.msg)
     const [firstlogin,setfirstlogin]=useState(location.state.firstlogin)
+
+    console.log(location.state.msg);
     
         
     useEffect(()=> {
-        
+        if (telp.substring(0,2)=="62")
+            settelp('+'+telp)
+        else if (telp.substring(0,2)=="08"){
+            settelp('+62'+telp.substring(1))
+        }
         const interval=setInterval(() => {
             if(iteration === 0) {
                 setresendCodeDisabled(true)
@@ -52,9 +66,23 @@ import LoadingAlert from "../../component/alert/loadingAlert";
         setshowPopup(false)
     }
 
+    const successlogin = async (response)=> {
+        localStorage.setItem('status_internal', response.status_internal)
+        settoken(response.token)
+        setrefreshtoken(response.refreshtoken)
+        setUser(response.namalengkap)
+        setEmailAddress(response.emailaddress)
+        setTelp(response.telp)
+        setNamaPerusahaan(response.namaperusahaan)
+        setId(response.id)
+        
+    }
+
     async function useSubmit(e) {
         e.preventDefault()
+        setLoading(true)
         const res = await verifyOtp({userid: userid, action: msg.action , otp: otp})
+        setLoading(false)
         if(res.status == 200 && res.data !== 'Succes, OTP match') {
             setshowPopup(true) 
             seterrorMessage(res.data)
@@ -64,15 +92,25 @@ import LoadingAlert from "../../component/alert/loadingAlert";
                 localStorage.setItem('telp', location.state.phone)
                 navigate('/data_diri')
             } else {
-                var data = res.data
-                navigate('/update_password', {
-                    state: {
-                        firstlogin: false,
-                        userid: location.state.userid,
-                        otp: otp,
-                        msg: data
+                if(msg.action === 'First Login') {
+                    setLoading(true)
+                    const res = await authUser({username: location.state.email, password: location.state.password, type:'normal'})
+                    setLoading(false)
+                    if(res != null ){
+                        successlogin(res)
+                        navigate('/dashboard')
                     }
-                })
+                } else {
+                    var data = res.data
+                    navigate('/update_password', {
+                        state: {
+                            firstlogin: false,
+                            userid: location.state.userid,
+                            otp: otp,
+                            msg: data
+                        }
+                    })
+                }
             }
         } 
     } 
@@ -112,7 +150,7 @@ import LoadingAlert from "../../component/alert/loadingAlert";
                                     className="mb-2 text-otp" 
                                     style={{fontSize:'14px', textAlign:'justify'}}
                                 >
-                                    Silahkan masukkan kode OTP yang telah dikirimkan melalui sms ke No. + 
+                                    Silahkan masukkan kode OTP yang telah dikirimkan melalui sms ke No.  
                                     {telp}
                                 </p>
                                 <form 

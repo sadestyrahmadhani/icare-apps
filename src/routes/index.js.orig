@@ -81,8 +81,8 @@ export default [
                 key:"1.5.4"
             },
             {
-                title: 'Form EQ',
-                path: 'form_eq',
+                title: 'Tambah EQ',
+                path: 'tambah_eq',
                 component: import('../views/daftar-eq/form'),
                 auth:true,
                 key:"1.5.5"

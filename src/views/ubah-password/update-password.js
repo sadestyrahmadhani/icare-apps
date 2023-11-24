@@ -29,7 +29,7 @@ function UpdatePassword() {
     ])
     const [ iconClass, setIconClass ] = useState([
         'fa-eye',
-        'fa-eye',
+        'fa-eye'
     ])
 
      const handlePopup = () => {
@@ -46,6 +46,11 @@ function UpdatePassword() {
          e.preventDefault()
          if(newPassword === "") setErrorNewPassword('Silahkan isi kata sandi baru')
          if(repeatPassword === "") setErrorRepeatPassword('Silahkan ulangi isi kata sandi') 
+         if(newPassword !== repeatPassword) {
+            setShowPopup(true)
+            setAlertOption({title: '', message: 'Inputkan konfirmasi password sesuai password baru', redirect: false})
+            return
+         }
          if(newPassword !== "" && repeatPassword !== ""){
             setLoading(true)
             const res = await resetPassword({userid: location.state.userid, otp: location.state.otp, newpassword: newPassword})
@@ -59,7 +64,7 @@ function UpdatePassword() {
             }
          } else {
              setShowPopup(true)
-             setAlertOption({title: '', message: 'Harap isi seluruh data', redirect: false, url: ''})
+             setAlertOption({title: '', message: 'Opps! terjadi kesalahan', redirect: false, url: ''})
          }
      }
     
@@ -105,13 +110,16 @@ function UpdatePassword() {
                 <div className="card mb-5 px-2 px-md-4" style={{border:'1px solid #ababab'}}>
                     <div className="card-body p-lg-5 px-0 input-mobile">
                         <form onSubmit={submit}>
-                            <div className="mb-4">
+                            <div className="input-update-password mb-4">
                                 <label className="fw-medium form-control border border-dark size-13px d-md-block d-none" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Baru</label>
-                                <label className="label-update d-block d-lg-none">New Password</label>
+                                <label className="label-update d-md-none d-block">New Password</label>
                                 <div className="border border-dark">
                                     <div className="d-flex">
-                                        <div className="col-11">
+                                        <div className="col-11 d-md-block d-none">
                                             <input type={ typeInput[0] } className={`form-control border-0 ${errorNewPassword === "" ? "" : "is-invalid"}`} style={{boxShadow: 'none', textDecoration: 'none'}} onChange={validationNewPassword}/>
+                                        </div>
+                                        <div className="col-11 d-md-none d-block">
+                                            <input type={ typeInput[0] } className={`form-control border-0 ${errorNewPassword === "" ? "" : "is-invalid"}`} style={{boxShadow: 'none', textDecoration: 'none', height:'48px'}} onChange={validationNewPassword}/>
                                         </div>
                                         <div className="col-1 my-auto text-center" style={{paddingLeft: 0}}>
                                             <i 
@@ -119,11 +127,11 @@ function UpdatePassword() {
                                                 onClick={ 
                                                     () => { 
                                                         setTypeInput([
-                                                            typeInput[0] == 'password' ? 'text' : 'password',
+                                                            typeInput[0] === 'password' ? 'text' : 'password',
                                                             typeInput[1],
                                                         ])
                                                         setIconClass([
-                                                            typeInput[0] == 'password' ? 'fa-eye-slash' : 'fa-eye',
+                                                            typeInput[0] === 'password' ? 'fa-eye-slash' : 'fa-eye',
                                                             iconClass[1],
                                                         ])
                                                     }
@@ -132,47 +140,48 @@ function UpdatePassword() {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-12">
+                                        <div className="text-danger-update-pass col-12">
                                             <span className={`text-danger small mx-2 ${errorNewPassword === "" ? "d-none" : ""}`} style={{fontSize: 12}}>{errorNewPassword}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="mb-5">
+                            <div className="input-update-password mb-5">
                                 <label className="fw-medium form-control border border-dark size-13px d-md-block d-none" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Ulangi Kata Sandi Baru</label>
-                                <label className="label-update d-block d-lg-none">Confirm Password</label>
+                                <label className="label-update d-md-none d-block">Confirm Password</label>
                                 <div className="border border-dark">
                                     <div className="d-flex">
-                                        <div className="col-11">
-                                            <input type={ typeInput[1] } className={`form-control border-0 ${errorRepeatPassword === "" ? "" : "is-invalid"}`} style={{boxShadow: 'none', textDecoration: 'none'}} onChange={validationRepeatPassword} />
+                                        <div className="col-11 d-md-block d-none">
+                                            <input type={ typeInput[1] } className={`form-control border-0 input-ubahh-pass ${errorRepeatPassword === "" ? "" : "is-invalid"}`} style={{boxShadow: 'none', textDecoration: 'none'}} onChange={validationRepeatPassword}/>
+                                        </div>
+                                        <div className="col-11 d-md-none d-block">
+                                            <input type={ typeInput[1] } className={`form-control border-0 input-ubahh-pass ${errorRepeatPassword === "" ? "" : "is-invalid"}`} style={{boxShadow: 'none', textDecoration: 'none', height:'48px'}} onChange={validationRepeatPassword}/>
                                         </div>
                                         <div className="col-1 my-auto text-center" style={{paddingLeft: 0}}>
                                             <i 
-                                                className={ `fa ${ iconClass[1] } fa-lg` } 
-                                                onClick={ 
-                                                    () => { 
-                                                        setTypeInput([
-                                                            typeInput[0],
-                                                            typeInput[1] == 'password' ? 'text' : 'password',
-                                                        ])
-                                                        setIconClass([
-                                                            iconClass[0],
-                                                            iconClass[1] == 'password' ? 'fa-eye-slash' : 'fa-eye',
-                                                        ])
-                                                    }
-                                                }
+                                                className={ `fa ${iconClass[1] } fa-lg` } 
+                                                onClick={ () => {
+                                                    setTypeInput([
+                                                        typeInput[0],
+                                                        typeInput[1] === 'password' ? 'text' : 'password',
+                                                    ])
+                                                    setIconClass([
+                                                        iconClass[0],
+                                                        typeInput[1] === 'password' ? 'fa-eye-slash' : 'fa-eye',
+                                                    ])
+                                                } }
                                             ></i>
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-12">
-                                            <span className={`text-danger small mx-2 ${errorRepeatPassword === "" ? "d-none" : ""}`} style={{fontSize: '12px'}}> {errorRepeatPassword} </span>
+                                        <div className="text-danger-update-pass col-12">
+                                            <span className={`text-danger small mx-2 ${errorRepeatPassword === "" ? "d-none" : ""}`} style={{fontSize: 12}}>{errorRepeatPassword}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="text-center">
-                                <button className="btn btn-login px-5 py-2 fw-medium" type="submit">Submit</button>
+                                <button className="btn btn-ubah-pass btn-login px-5 py-2 fw-medium" type="submit">Submit</button>
                             </div>
                         </form>
                         <ConfirmAlert visible={showPopup} message={alertOption.message} onClick={handlePopup} customClass="col-md-3 col-sm-6 col-9" />
