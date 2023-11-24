@@ -149,8 +149,12 @@ function TambahAnggota() {
             setErrorNama('')
         }
 
-        if(email === "") {
-            setErrorEmail("Silahkan isi email")
+        if(email === "" || !emailText.test(email)) {
+            if(!emailText.test(email)) {
+                setErrorEmail("Format email tidak valid")
+            } else {
+                setErrorEmail("Silahkan isi email")
+            }
             isValid = false
         } else {
             setErrorEmail('')
