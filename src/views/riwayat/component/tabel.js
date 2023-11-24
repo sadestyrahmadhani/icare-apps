@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import PesananditerimaAlert from "./pesananditerimaAlert";
 import { updateStatusId } from "../../../services/API/mod_riwayatOrder";
 
-function RiwayatTabel({tabActive, cardBg, data}) {
+function RiwayatTabel({tabActive, skip, cardBg, data}) {
     const navigate = useNavigate()
     const [showPopup, setShowPopup] = useState(false)
     // console.log(data.requesttype);
@@ -39,7 +39,7 @@ function RiwayatTabel({tabActive, cardBg, data}) {
 
     const handleRedirect = (e) => {
         e.preventDefault()
-        window.history.replaceState({ currentTabActive: tabActive }, document.title)
+        window.history.replaceState({ currentTabActive: tabActive, currentSkip: skip }, document.title)
         navigate( `/detail_permintaan/${data.id}`,{
             state: {
                 currentTabActive: tabActive

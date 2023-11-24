@@ -20,7 +20,7 @@ function Riwayat() {
     const [originalData, setOriginalData] = useState([])
     const [dataRiwayatOrder, setDataRiwayatOrder] = useState([])
     const [skipData, setSkipData] = useState(0)
-    const [rowCount, setRowCount] = useState(10)
+    const [rowCount, setRowCount] = useState(location.state?.currentSkip ? location.state?.currentSkip + 10 : 10)
     const [searchValue, setSearchValue] = useState('')
     const [loading, setLoading] = useState(false)
     const [showPopup, setShowPopup] = useState(false)
@@ -89,10 +89,8 @@ function Riwayat() {
         setSkipData(0)
         setRowCount(10)
         if(status === 'all') {
-            console.log(1);
             init("0", skipData.toString(), rowCount.toString())
         } else {
-            console.log(2);
             init(status.toString(), skipData.toString(), rowCount.toString())
         }
     }
@@ -167,8 +165,8 @@ function Riwayat() {
                         </Link>
                     </div>
                     <div className='d-md-flex d-none col-md-9'>
-                        <div className="col-6 d-flex ms-auto">
-                            <form className='w-75' onSubmit={(e) => e.preventDefault()}>    
+                        <form className='w-75' onSubmit={(e) => e.preventDefault()}>    
+                            <div className="col-6 d-flex ms-auto">
                                 <span className="my-auto" style={{ color: '#014C90' }}>
                                     <i className="fa fa-search fa-fw" style={{ marginRight: 'auto' }}></i>
                                 </span>
@@ -180,8 +178,8 @@ function Riwayat() {
                                 <button style={{ margin: 'auto', cursor: 'pointer', border: '0', background: 'none' }} type="reset" onClick={handleClear}>
                                     <i className="fa fa-close"></i>
                                 </button>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -202,7 +200,7 @@ function Riwayat() {
 
                     {
                         dataRiwayatOrder.map((val, key) => (
-                            <RiwayatTabel tabActive={ tabActivated } key={ key } data={ val } cardBg={ cardBg } dataRiwayatOrder={ val } />
+                            <RiwayatTabel tabActive={ tabActivated } skip={ skipData } key={ key } data={ val } cardBg={ cardBg } dataRiwayatOrder={ val } />
                         ))
                     }
                     {

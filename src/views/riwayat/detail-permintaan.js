@@ -87,9 +87,10 @@ function DetailRiwayat() {
     const handleRedirect = (e) => {
         e.preventDefault()
         
-        navigate(-1, {
+        navigate('/riwayat', {
             state: {
-                currentTabActive: location.state?.currentTabActive
+                currentTabActive: location.state?.currentTabActive,
+                currentSkip: location.state?.currentSkip
             }
         })
     }
