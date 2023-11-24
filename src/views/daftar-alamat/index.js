@@ -21,7 +21,19 @@ function AddressList() {
     const [showErrorPopup, setShowErrorPopup] = useState(false)
     const [alertOption, setAlertOption] = useState({ title: '', message: '', reload: false })
     const [dataisLoaded, setDataisLoaded] = useState(false)
-    const [dataDaftarAlamat, setDataDaftarAlamat] = useState([])
+    const [dataDaftarAlamat, setDataDaftarAlamat] = useState([
+        {
+            id: 1,
+            Nama_Alamat: 'Test 23',
+            Penerima: 'Test',
+            Alamat: 'Jl. Test No. 23',
+            NoGedung: '123',
+            NamaGedung: 'Gedung Test',
+            Telp_Penerima: '+62897874673',
+            isPin: true,
+            verified: false,
+        }
+    ])
     const [loading, setLoading] = useState(false)
     const [originalData, setOriginalData] = useState('')
     const [daftarAlamatToDelete, setDaftarAlamatToDelete] = useState('')
@@ -41,9 +53,17 @@ function AddressList() {
 
 
     useEffect(() => {
+<<<<<<< HEAD
         init()
     }, []);
 
+=======
+     return () => {
+        // init()
+     }
+    },[]);
+    
+>>>>>>> 3cc0dcd1f0f16c7122f8bad41fbe9875590e7bd2
     async function init() {
         setLoading(true)
         const res = await getDaftarAlamat();
@@ -344,6 +364,7 @@ function AddressList() {
                 </div>
             </div>
 
+<<<<<<< HEAD
             <div className="p-3 shadow rounded-4">
                 {sortedAddresses.slice(0, itemsAddress).map((item, key) => (!item.deleted && (
                     <div className="card responsive-form rounded m-lg-4 m-0 mb-lg-0 mb-3" onClick={handleAddressItem} data-item={JSON.stringify(item)} key={key}>
@@ -382,6 +403,100 @@ function AddressList() {
                                                 }
                                             </thead>
                                         </table>
+=======
+                        {dataDaftarAlamat.map((item,key) => (
+                            <div className="card shadow-sm rounded m-lg-4 m-0" onClick={handleAddressItem} data-item={JSON.stringify(item)} key={key}>
+                                <div className="card-body">
+                                    <h6 className="card-title title-icare fw-bold" style={{ fontSize: '14px' }}>{item.Nama_Alamat}</h6>
+                                    <div className="row fw-bold">
+                                        <div className="col-6">
+                                            <p className="mb-0" style={{ fontSize: '13px' }}>{item.Penerima}</p>
+                                            <table className="table table-borderless mb-0">
+                                                <thead>
+                                                    <tbody className="px-auto py-auto">
+                                                        <tr>
+                                                            <td style={{ fontSize: '13px' }}>Jalan : {item.Alamat}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{ fontSize: '13px' }}>No Gedung : {item.NoGedung}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{ fontSize: '13px' }}>Nama Gedung : {item.NamaGedung}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{ fontSize: '13px' }} >{item.Telp_Penerima}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    {
+                                                        item.isPin ?
+                                                            (
+                                                                <button style={{ border: '0', background: 'none', fontWeight: 'bold' }}>
+                                                                    <i className="fa fa-map-marker fa-lg my-auto" style={{ padding: 'initial' }}></i>
+                                                                    <span style={{ fontSize: '14px', padding: 'inherit', color: '#014C90' }}> Sudah Pinpoint</span>
+                                                                </button>
+                                                            ) : (
+                                                                <div></div>
+                                                            )
+                                                    }
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        {
+                                            item.verified ?
+                                                (
+                                                    <div className="col-6 text-end">
+                                                     <div className="d-lg-block d-md-block d-none">
+                                                        <img src="images/verify.png" alt="" style={{ paddingTop: '5px', paddingBottom: '10px', width: "15%" }} />
+                                                        <div className="">
+                                                            <ol className="title-icare mb-0" style={{ fontSize: '14px' }}>
+                                                                <li className="nav-item" style={{ marginRight: '30px' }}>
+                                                                    <a 
+                                                                        href="/tambah_alamat"
+                                                                        className="nav-link"
+                                                                        onClick={handleUpdate}
+                                                                        data-id={item.id}
+                                                                    >
+                                                                        Ubah
+                                                                    </a>
+                                                                </li>
+                                                                <li className="nav-item">
+                                                                    <button onClick={() => handleDelete(item.id)} className="nav-link" >Hapus</button>
+                                                                </li>
+                                                            </ol>
+                                                        </div>
+                                                        </div>
+                                                            <div className="d-lg-none d-md-none d-block my-4">
+                                                                    <img src="images/verify.png" alt="" style={{ width: '32%' }} />
+                                                            </div>
+                                                    </div>
+                                                ) : (
+                                                    <div className="col-6 text-end">
+                                                     <div className="d-ld-block d-md-block d-none">
+                                                        <div style={{ marginTop: "70px" }}>
+                                                            <ol className="title-icare mb-4" style={{ fontSize: '14px', position: 'relative', bottom: '-25px', paddingTop: '10px' }}>
+                                                                <li className="nav-item" style={{ marginRight: '30px' }}>
+                                                                    <button onClick={() => handlePrioritize(item.Nama_Alamat)} className="nav-link">Utamakan</button>
+                                                                </li>
+                                                                <li className="nav-item" style={{ marginRight: '30px' }}>
+                                                                    <a 
+                                                                        href="/tambah_alamat"
+                                                                        className="nav-link"
+                                                                        onClick={handleUpdate}
+                                                                        data-id={item.id}
+                                                                    >
+                                                                        Ubah
+                                                                    </a>
+                                                                </li>
+                                                                <li className="nav-item">
+                                                                    <button onClick={() => handleDelete(item.id)} className="nav-link" >Hapus</button>
+                                                                </li>
+                                                            </ol>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                        }
+>>>>>>> 3cc0dcd1f0f16c7122f8bad41fbe9875590e7bd2
                                     </div>
                                     <div className="col-md-4 col-3 d-block ms-md-0 verified-icon text-end">
                                         {
