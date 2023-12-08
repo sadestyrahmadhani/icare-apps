@@ -31,7 +31,31 @@ const Maps = () => {
             state.id = location.state.id
         }
 
-        navigate('/tambah_alamat/0', { state })
+        
+        if (location.state.input.redirect === -1) {
+            navigate('/tambah_alamat', { 
+                state: {
+                    latitude: lat,
+                    longitude: lng,
+                    location: lat + ',' + lng,
+                    input:location.state?.input,
+                    isPin: true,
+                }
+             })
+        } else if (location.state.input.redirect === -2) {
+            navigate('/tambah_eq', { 
+                state: {
+                    latitude: lat,
+                    longitude: lng,
+                    location: lat + ',' + lng,
+                    input:location.state?.input,
+                    isPin: true,
+                    activeRadio: location.state?.currentNavigate
+                }
+             })
+            // console.log(states)
+        }
+
     }
 
     return (

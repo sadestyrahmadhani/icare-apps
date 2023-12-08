@@ -4,27 +4,27 @@ import { jsonHeaderAuth, imageHeaderAuth, refreshAuthLogic } from "../fetchTools
 import axios from 'axios';
 
 export const getStatusAccountById = async () => {
-    try {
-        const res = await fetch(`${appConfig.BASE_API}/userstatus/${localStorage.getItem('id')}`, {
-            method: 'GET',
-            ...jsonHeaderAuth(),
-            mode: 'cors'
-        })
-        
-        var data = await res.json()
-        return {status: res.status, data: data}
-    } catch (error) {
-        throw error
-    }
-    
-    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
     // try {
-    // const res = await axios.get(`${appConfig.BASE_API}/userstatus/${localStorage.getItem('id')}`, jsonHeaderAuth())
-
-    // return {status: res.status, data: res.data}
+    //     const res = await fetch(`${appConfig.BASE_API}/userstatus/${localStorage.getItem('id')}`, {
+    //         method: 'GET',
+    //         ...jsonHeaderAuth(),
+    //         mode: 'cors'
+    //     })
+        
+    //     var data = await res.json()
+    //     return {status: res.status, data: data}
     // } catch (error) {
     //     throw error
     // }
+    
+    createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    try {
+    const res = await axios.get(`${appConfig.BASE_API}/userstatus/${localStorage.getItem('id')}`, jsonHeaderAuth())
+
+    return {status: res.status, data: res.data}
+    } catch (error) {
+        throw error
+    }
 }
 
 export const acUploadRegister = async (file) => {
@@ -40,6 +40,15 @@ export const acUploadRegister = async (file) => {
     } catch (error) {
         throw error
     }
+
+    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    // try {
+    //     const res = await axios.post(`${appConfig.BASE_API}/image/register`, file, imageHeaderAuth())
+
+    //     return {status: res.status, data: res.data}
+    // } catch (error) {
+    //     throw error
+    // }
 }
 
 export const upgradeAccountPremium = async (payload) => {
@@ -57,4 +66,13 @@ export const upgradeAccountPremium = async (payload) => {
     } catch (error) {
         throw error
     }
+
+    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    // try {
+    //     const res = await axios.post(`${appConfig.BASE_API}/user/updatepremium/${localStorage.getItem('id')}`, payload, jsonHeaderAuth())
+
+    //     return {status: res.status, data: res.data}
+    // } catch (error) {
+    //     throw error
+    // }
 }

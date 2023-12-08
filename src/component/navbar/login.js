@@ -9,6 +9,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
 import {auth} from '../../services/auth'
+
+import iCareLogo from '../../images/iCareLogo.png';
+
 const NavbarLogin = (props) => {
     const [ scrolling, setScrolling ] = useState(false)
     const [openDropdown, setOpenDropdown] = useState(false)
@@ -21,6 +24,7 @@ const NavbarLogin = (props) => {
     const [isInformasiActive, setIsInformasiActive] = useState(false);
     const [isPengaturanActive, setIsPengaturanActive] = useState(false);
     const navigate = useNavigate();
+    
     useEffect(() => {
         const handleScroll = () => {
             if(window.scrollY > 0) {
@@ -76,7 +80,7 @@ const NavbarLogin = (props) => {
                                 <hr className="m-0 p-0 hr-custom" />
                                 <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
                                     <div className="container">
-                                        <img src="/images/iCareLogo.png" alt="logo" height="55"/>
+                                        <img src={iCareLogo} alt="logo" height="55"/>
                                         <ul className="navbar-nav">
                                             <li className="nav-item">
                                                 <a className="nav-link text-link mx-3 fw-semibold" href="#beranda" onClick={(e) => onClickToScroll(e, '#beranda')}> Beranda </a>
@@ -101,7 +105,7 @@ const NavbarLogin = (props) => {
                                 <hr className="m-0 p-0 hr-custom" />
                                 <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
                                     <div className="container">
-                                        <img src="/images/iCareLogo.png" alt="logo" height="50"/>
+                                        <img src={iCareLogo} alt="logo" height="50"/>
                                         <ul className="navbar-nav">
                                             <li className="nav-item">
                                                 <Link className="nav-link text-link fw-semibold" to="/"> Beranda </Link>

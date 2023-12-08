@@ -73,7 +73,7 @@ function TambahAnggota() {
     // }
     
     const handleNoTelp = (e) => {
-        if(typeof e.key != 'undefined' && !e.key.match(/^\d+$/) && e.keyCode !== 8 && e.keyCode !== 187 && e.keyCode !== 16 && e.keyCode !== 36 && e.keyCode !== 35 && e.keyCode !== 9) {
+        if(typeof e.key != 'undefined' && !e.key.match(/^\d+$/) && e.keyCode !== 8 && e.keyCode !== 187 && e.keyCode !== 16 && e.keyCode !== 36 && e.keyCode !== 35 && e.keyCode !== 9 && e.keyCode !== 39 && e.keyCode !== 37) {
             e.preventDefault()
             setErrorNoTelp('Nomor telepon harus berupa angka')
             return
@@ -160,6 +160,11 @@ function TambahAnggota() {
             setErrorEmail('')
         }
 
+        if(!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            setErrorEmail("Format email tidak valid")
+            isValid = false
+        }
+
         if(noTelp === "") {
             setErrorNoTelp("Silahkan isi nomor telepon")
             isValid = false
@@ -190,16 +195,13 @@ function TambahAnggota() {
         setIsFormValid(isValid)
 
         if(isValid) {
-            var phone = noTelp
-            if(phone.charAt(0) === '0') {
-                phone = `+62${phone.substring(1)}`
-            } else {
-                if(phone !== '' && phone != '+') {
-                    phone = `+${phone}`
-                }
-            }
 
             if(location.state?.id) {
+                var phone = noTelp
+                if(phone.charAt(0) === '0') {
+                    phone = `+62${phone.substring(1)}`
+                }
+
                 setLoading(true)
                 const res = await updateMember(location.state?.id,{namalengkap: nama, email: email, telp: phone})
                 setLoading(false)
@@ -211,6 +213,15 @@ function TambahAnggota() {
                     setAlertOption({title: '', message: res.data, redirect: false})
                 }
             } else {
+                var phone = noTelp
+                if(phone.charAt(0) === '0') {
+                    phone = `+62${phone.substring(1)}`
+                } else {
+                    if(phone !== '' && phone !== '+') {
+                        phone = `+${phone}`
+                    }
+                }
+                
                 setLoading(true)
                 const res = await createNewMember({namalengkap: nama, emailaddress: email, telp: phone, password: password})
                 setLoading(false)
@@ -241,7 +252,7 @@ function TambahAnggota() {
                 </div>
             </div>
             <div className="">
-                <div className="card shadow border-0 responsive-form mt-lg-4 mt-md-4 mt-0" style={{borderRadius:'20px'}}>
+                <div className="card border-0 responsive-member mt-lg-4 mt-md-4 mt-0" style={{borderRadius:'20px'}}>
                     <form onSubmit={submit}>
                         <div className="card-body px-lg-4 px-md-2 px-2 pt-0">
                             <div className="row">
@@ -274,7 +285,7 @@ function TambahAnggota() {
                                         !location.state?.id && (
                                             <div className="p-0">
                                                 <div className="card-body">
-                                                    <div className="card-label font-size12px-mobile">
+                                                    <div className="card-label font-size-12px-mobile">
                                                         <label style={{fontWeight:'bold'}}>Password</label>
                                                     </div>
                                                     <div className="d-flex col-12">
@@ -328,7 +339,7 @@ function TambahAnggota() {
                             <button type="submit" className="btn btn-login py-2 px-5" style={{fontSize:'14px', maxWidth:'200px', height:'43px'}}>SIMPAN</button>
                         </div>
                     </form>
-                    <ConfirmAlert visible={showPopup} titleMessage={alertOption.title} message={alertOption.message} customClass="col-md-3" onClick={handlePopup}/>
+                    <ConfirmAlert visible={showPopup} titleMessage={alertOption.title} message={alertOption.message} customClass="col-md-3 col-sm-6 col-8" onClick={handlePopup}/>
                     <LoadingAlert visible={loading} customClass="col-md-2 col-8"/>
                 </div>
             </div>

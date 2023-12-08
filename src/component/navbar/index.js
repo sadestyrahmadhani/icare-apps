@@ -9,6 +9,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
 import {auth} from '../../services/auth'
+
+import iCareLogo from '../../images/iCareLogo.png';
+
 const Navbar = (props) => {
     const [ scrolling, setScrolling ] = useState(false)
     const [openDropdown, setOpenDropdown] = useState(false)
@@ -79,7 +82,7 @@ const Navbar = (props) => {
                         <hr className="m-0 p-0 hr-custom" />
                         <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
                             <div className="container">
-                                <img src="/images/iCareLogo.png" alt="logo" height="50"/>
+                                <img src={iCareLogo} alt="logo" height="50"/>
                                 <ul className="navbar-nav">
                                     <li className="nav-item">
                                         <Link className="nav-link text-link fw-semibold" to="/"> Beranda </Link>
@@ -97,7 +100,7 @@ const Navbar = (props) => {
                             <nav className={`navbar navbar-exspand-lg py-1 px-1`} >
                                 <div className="container-fluid">
                                     <div className="img"> 
-                                        <img src="/images/iCareLogo.png" alt="logo" height="40"/>
+                                        <img src={iCareLogo} alt="logo" height="40"/>
                                     </div>
                                     <ul className="navbar-nav mx-auto"> 
                                         <li className="nav-item mx-3">
@@ -122,7 +125,7 @@ const Navbar = (props) => {
                                                 className={`nav-link nav-app ${(
                                                     location.pathname === '/riwayat' || 
                                                     location.pathname.includes('/detail_permintaan') || 
-                                                    location.pathname.includes('/tanya_team_support') || 
+                                                    location.pathname.includes('/tanya_tim_support') || 
                                                     location.pathname.includes('/tulis_review')) ? 'active-link' : ''}`} 
                                                 to="/riwayat" 
                                                 onClick={() => handleNavClick('riwayat')}
@@ -151,7 +154,7 @@ const Navbar = (props) => {
                                                     location.pathname.includes('/ubah_kata_sandi'))  ? 'active-link' : ''}`} 
                                                 > 
                                                     <i className="fa fa-gear me-2 nav-app" style={{fontSize:'14px'}}></i> PENGATURAN</span>}>
-                                                <NavDropdown.Item href="/data_diri">
+                                                <NavDropdown.Item href="data_diri">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}} >Data Diri</span>
@@ -161,7 +164,7 @@ const Navbar = (props) => {
                                                         </div>
                                                     </div>
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/daftar_anggota">
+                                                <NavDropdown.Item href="daftar_anggota">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}}>Daftar Anggota</span>
@@ -171,7 +174,7 @@ const Navbar = (props) => {
                                                         </div>
                                                     </div>
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/daftar_alamat">
+                                                <NavDropdown.Item href="daftar_alamat">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}}>Daftar Alamat</span>
@@ -181,7 +184,7 @@ const Navbar = (props) => {
                                                         </div>
                                                     </div>
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/daftar_eq">
+                                                <NavDropdown.Item href="daftar_eq">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}}>Daftar EQ</span>
@@ -191,7 +194,7 @@ const Navbar = (props) => {
                                                         </div>
                                                     </div>
                                                 </NavDropdown.Item>
-                                                <NavDropdown.Item href="/ubah_kata_sandi">
+                                                <NavDropdown.Item href="ubah_kata_sandi">
                                                     <div className="item-drop d-flex align-items-center">
                                                         <div className="col-11">
                                                             <span className="text-decoration-none nav-app" style={{color:'#000'}}>Kata Sandi</span>
@@ -334,7 +337,7 @@ const Navbar = (props) => {
                                 <hr className="m-0 p-0 hr-custom" />
                                 <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
                                     <div className="container">
-                                        <img src="/images/iCareLogo.png" alt="logo" height="55"/>
+                                        <img src={iCareLogo} alt="logo" height="55"/>
                                         <ul className="navbar-nav">
                                             <li className="nav-item">
                                                 <a className="nav-link text-link mx-3 fw-semibold" href="#beranda" onClick={(e) => onClickToScroll(e, '#beranda')}> Beranda </a>
@@ -359,7 +362,7 @@ const Navbar = (props) => {
                                 <hr className="m-0 p-0 hr-custom" />
                                 <nav className={`navbar navbar-exspand-lg p-0 py-3`} >
                                     <div className="container">
-                                        <img src="/images/iCareLogo.png" alt="logo" height="50"/>
+                                        <img src={iCareLogo} alt="logo" height="50"/>
                                         <ul className="navbar-nav">
                                             <li className="nav-item">
                                                 <Link className="nav-link text-link fw-semibold" to="/"> Beranda </Link>

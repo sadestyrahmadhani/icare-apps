@@ -5,6 +5,8 @@ import ConfirmAlert from "../../component/alert/confirmAlert";
 import OptionAlert from "../../component/alert/optionAlert";
 import LoadingAlert from "../../component/alert/loadingAlert";
 
+import uploadImage from '../../images/upload.png'
+import riwayatFotoCollect from './../../images/riwayat-foto-collect.png'
 
 function CollectMeter() {
   const params = useParams()
@@ -31,14 +33,11 @@ function CollectMeter() {
   const [collectMeterNumber, setCollectMeterNumber] = useState('')
   const [image, setImage] = useState('')
   const [errorEquipmentNumber, setErrorEquipmentNumber] = useState('')
-  const [errorPhotoMeter, setErrorPhotoMeter] = useState('')
   const [originalData, setOriginalData] = useState('')
   const [imageName, setImageName] = useState('')
   const [loading, setLoading] = useState(true)
 
   const [activeTab, setActiveTab] = useState("foto-meter")
-  
-
 
   useEffect(() => {
     Promise.all([
@@ -47,8 +46,8 @@ function CollectMeter() {
     ]).then(() => {
       setLoading(false)
     })
-    // if (location.state?.equipment !== '') {
-    //   setSearchText(location.state?.equipment)
+    if (location.state?.equipment !== '') {
+      setSearchText(location.state?.equipment)
     //   setSelectedEquipment({
     //     equipment: location.state?.equipment,
     //     modelName: location.state?.modelName,
@@ -61,10 +60,10 @@ function CollectMeter() {
     //     Latitude: location.state?.address.Latitude,
     //     Longitude: location.state?.address.Longitude
     //   })
-    // }
-
-    // console.log("RES : ", location.state)
+    }
     
+    // console.log("RES : ", location.state)
+
     if (location.state?.selectedTab) {
       setActiveTab(location.state?.selectedTab)
     }
@@ -86,6 +85,15 @@ function CollectMeter() {
       setEquipmentList(res.data.Table)
       setOriginalData(res.data.Table)
     }
+  }
+
+  const handleClickItems = (e, dataId) => {
+    e.preventDefault()
+    navigate('/riwayat_meter', {
+      state: {
+        id: dataId
+      }
+    })
   }
 
   const toggleVisibility = () => {
@@ -186,6 +194,15 @@ function CollectMeter() {
     document.getElementById("display-image").classList.add("d-block")
   }
 
+  const handleScanRedirect = (e) => {
+    e.preventDefault()
+    navigate('/qr-scanner', {
+      state: {
+        redirect: '/collect_meter'
+        }
+    })
+  }
+
 
   // async function submit(e) {
   const submit = async (e) => {
@@ -196,11 +213,11 @@ function CollectMeter() {
     if (!selectedEquipment.equipment || !searchText) {
       isValid = false
       setShowPopup(true)
-      setAlertOption({title: 'Error', message: 'Pilih Equipment', redirect: false})
+      setAlertOption({ title: 'Error', message: 'Pilih Equipment', redirect: false })
     } else if (!imageName) {
       isValid = false
       setShowPopup(true)
-      setAlertOption({title: 'Error', message: 'Unggah Photo Meter', redirect: false})
+      setAlertOption({ title: 'Error', message: 'Unggah Photo Meter', redirect: false })
     }
 
     setIsFormValid(isValid)
@@ -234,7 +251,7 @@ function CollectMeter() {
       } else {
         setLoading(false)
         setShowPopup(true)
-        setAlertOption({ title: 'Error', message: 'Gagal melakukan Collect Meter', redirect: false})
+        setAlertOption({ title: 'Error', message: 'Gagal melakukan Collect Meter', redirect: false })
       }
       // }
     }
@@ -352,7 +369,7 @@ function CollectMeter() {
                                 <LoadingAlert visible={loading} customClass="col-md-2 col-8" />
                               </div>
                               <div className="col-1 col-lg-0 d-lg-none d-block my-auto text-center">
-                                <Link className="fa fa-qrcode" to={'/qr-scanner'} style={{ fontSize: '34px', textDecoration: 'none', color: '#000', right: 5 }}></Link>
+                                <Link className="fa fa-qrcode" onClick={handleScanRedirect} style={{ fontSize: '34px', textDecoration: 'none', color: '#000', right: 5 }}></Link>
                               </div>
                             </div>
 
@@ -364,7 +381,7 @@ function CollectMeter() {
                               <div className="d-md-block d-none">
                                 <label className="file-icon" htmlFor="inputFiles-displayName">
                                   <div className="text-center rounded-circle p2" style={{ backgroundColor: "#014C90", color: "#fff", width: "50px", height: "50px" }}>
-                                    <img src="/images/upload.png" alt="upload image"
+                                    <img src={uploadImage} alt="upload image"
                                       style={{ width: "22px", marginTop: "10px" }} />
                                   </div>
                                 </label>
@@ -372,7 +389,7 @@ function CollectMeter() {
                               <div className="d-md-none d-block">
                                 <label className="file-icon" onClick={() => setShowOptionAlert(true)} >
                                   <div className="text-center rounded-circle p2" style={{ backgroundColor: "#014C90", color: "#fff", width: "50px", height: "50px", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                      <i className="fa fa-camera fs-2"></i>
+                                    <i className="fa fa-camera fs-2"></i>
                                   </div>
                                 </label>
                               </div>
@@ -502,20 +519,19 @@ function CollectMeter() {
                       <div className="scrolling-riwayat">
 
                         {
-                          dataCollectMeter.map((value, key) => (
+                          dataCollectMeter.map((value, index) => (
                             // !value.deleted && ()
                             <Link
+                              key={index}
                               className="mb-lg-0 mb-2"
-                              to=""
+                              onClick={(e) => handleClickItems(e, value.id)}
                               style={{ textDecoration: "none", color: '#000', fontSize: '16px', display: 'block' }}>
-                              <div className="row" key={key}>
+                              <div className="row" >
                                 <div className="col">
                                   <div className="card border-0">
                                     <div className="card-body p-5px">
                                       <Link
-                                        to={`/riwayat_meter/${value.id}`}
                                         className="link-riwayat-meter"
-                                        // onClick={() => handleSelectedItem(value.id)}
                                       >
                                         <div className="row">
                                           <div className="d-flex col-12">
@@ -574,7 +590,7 @@ function CollectMeter() {
                                             <div className="col-2 col-lg-1 col-md-1 my-auto text-position-right">
                                               <img
                                                 className="image-collect-meter"
-                                                src="images/riwayat-foto-collect.png"
+                                                src={ riwayatFotoCollect }
                                                 alt="Logo Install"
                                               // height={52}
                                               ></img>

@@ -45,83 +45,83 @@ export const getDaftarEq = async () => {
 }
 
 export const createDaftarEq = async (payload) => {
-    try {
-        const res = await fetch(`${appConfig.BASE_API}/equipment/create`, {
-            method: 'POST',
-            ...jsonHeaderAuth(),
-            mode: 'cors',
-            body: JSON.stringify(payload)
-        })
-        var data = await res.text()
-        return{status: res.status, data: data}
-    } catch (error) {
-        throw error
-    }
-
-
-    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
     // try {
-    //     const res = await axios.post(`${appConfig.BASE_API}/equipment/create`, payload, {
-    //         headers: {
-    //             ...jsonHeaderAuth()
-    //         }
+    //     const res = await fetch(`${appConfig.BASE_API}/equipment/create`, {
+    //         method: 'POST',
+    //         ...jsonHeaderAuth(),
+    //         mode: 'cors',
+    //         body: JSON.stringify(payload)
     //     })
-
-    //     return {status: res.status, data: res.data}
+    //     var data = await res.text()
+    //     return{status: res.status, data: data}
     // } catch (error) {
     //     throw error
     // }
+
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    try {
+        const res = await axios.post(`${appConfig.BASE_API}/equipment/create`, payload, {
+            headers: {
+                ...jsonHeaderAuth()
+            }
+        })
+
+        return {status: res.status, data: res.data}
+    } catch (error) {
+        throw error
+    }
 }
 
 export const deleteDaftarEq = async (id) => {
-    try {
-        const res = await fetch(`${appConfig.BASE_API}/equipment/delete/${id}`, {
-            method: 'POST',
-            ...jsonHeaderAuth(),
-            mode: 'cors'
-        })
-        var data = await res.text()
-        return{status: res.status, data: data}
-    } catch (error) {
-        throw error
-    }
-
-
-    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
     // try {
-    //     const res = await axios.post(`${appConfig.BASE_API}/equipment/delete/${id}`, jsonHeaderAuth())
-
-    //     return {status: res.status, data: res.data}
+    //     const res = await fetch(`${appConfig.BASE_API}/equipment/delete/${id}`, {
+    //         method: 'POST',
+    //         ...jsonHeaderAuth(),
+    //         mode: 'cors'
+    //     })
+    //     var data = await res.text()
+    //     return{status: res.status, data: data}
     // } catch (error) {
     //     throw error
     // }
+
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    try {
+        const res = await axios.post(`${appConfig.BASE_API}/equipment/delete/${id}`, jsonHeaderAuth())
+
+        return {status: res.status, data: res.data}
+    } catch (error) {
+        throw error
+    }
 }
 
 export const updateDaftarEq = async (id, payload) => {
-    try {
-        const res = await fetch(`${appConfig.BASE_API}/equipment/update/${id}`, {
-            method: 'POST',
-            ...jsonHeaderAuth(),
-            mode: 'cors',
-            body: JSON.stringify(payload)
-        })
-        var data = await res.text()
-        return{status: res.status, data: data}
-    } catch (error) {
-        throw error
-    }
-
-
-    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
     // try {
-    //     const res = await axios.post(`${appConfig.BASE_API}/equipment/update/${id}`, payload, {
-    //         ...jsonHeaderAuth()
+    //     const res = await fetch(`${appConfig.BASE_API}/equipment/update/${id}`, {
+    //         method: 'POST',
+    //         ...jsonHeaderAuth(),
+    //         mode: 'cors',
+    //         body: JSON.stringify(payload)
     //     })
-
-    //     return {status: res.status, data: res.data}
+    //     var data = await res.text()
+    //     return{status: res.status, data: data}
     // } catch (error) {
     //     throw error
     // }
+
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    try {
+        const res = await axios.post(`${appConfig.BASE_API}/equipment/update/${id}`, payload, {
+            ...jsonHeaderAuth()
+        })
+
+        return {status: res.status, data: res.data}
+    } catch (error) {
+        throw error
+    }
 }
 
 export const getDownloadEquipment = async (id) => {

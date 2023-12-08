@@ -3,7 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import PesananditerimaAlert from "./pesananditerimaAlert";
 import { updateStatusId } from "../../../services/API/mod_riwayatOrder";
 
-function RiwayatTabel({tabActive, skip, cardBg, data}) {
+import processIcon from './../../../images/icon_diproses_new.png'
+import warnIcon from './../../../images/warn-icon.png'
+
+function RiwayatTabel({tabActive, skip, cardBg, data, init}) {
     const navigate = useNavigate()
     const [showPopup, setShowPopup] = useState(false)
     // console.log(data.requesttype);
@@ -29,7 +32,7 @@ function RiwayatTabel({tabActive, skip, cardBg, data}) {
             internalprosesnote: ''
         })
         if(res.status == 200) {
-            navigate(0)
+            init(tabActive.toString(), skip.toString(), (skip+10).toString())
         }
     }
 
@@ -40,9 +43,11 @@ function RiwayatTabel({tabActive, skip, cardBg, data}) {
     const handleRedirect = (e) => {
         e.preventDefault()
         window.history.replaceState({ currentTabActive: tabActive, currentSkip: skip }, document.title)
-        navigate( `/detail_permintaan/${data.id}`,{
+        navigate( `/detail_permintaan`,{
             state: {
-                currentTabActive: tabActive
+                currentTabActive: tabActive,
+                currentSkip: skip,
+                id: data.id
             }
         })
     }
@@ -90,7 +95,7 @@ function RiwayatTabel({tabActive, skip, cardBg, data}) {
                                     parseInt(data.statusid) === 2 && (
                                         <div style={{ position: 'absolute', fontSize: '12px', left: '35%', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
                                             <div className="mx-auto" style={{ padding: '4px', width: 35 }}>
-                                                <img src="images/icon_diproses_new.png" style={{width:'100%'}}></img>
+                                                <img src={ processIcon } style={{width:'100%'}}></img>
                                             </div>
                                             Diproses
                                         </div>
@@ -100,7 +105,7 @@ function RiwayatTabel({tabActive, skip, cardBg, data}) {
                                     parseInt(data.statusid) === 5 && (
                                         <div style={{ position: 'absolute', fontSize: '12px', left: '35%', transform: 'translate(-50%, 0)', textAlign: 'center' }}>
                                             <div className="mx-auto" style={{ padding: '4px', width: 35 }}>
-                                                <img src="images/warn-icon.png" style={{width:'100%'}}></img>
+                                                <img src={ warnIcon } style={{width:'100%'}}></img>
                                             </div>
                                             Diproses
                                         </div>
@@ -137,7 +142,7 @@ function RiwayatTabel({tabActive, skip, cardBg, data}) {
                         <div className="col-md-2 col-12 p-4 column-btn remove-border">
                             {
                                 data.statusid == 2 && (
-                                    <button className="btn btn-view d-flex shadow rounded-2 d-flex align-items-center p-0 mx-auto mb-3 ms-2" style={{ width: '90%', border: 'none', backgroundColor: '#14caa9', position: 'relative', overflow: 'hidden' }} type="submit" onClick={handlePopup} >
+                                    <button className="btn btn-view d-flex shadow rounded-2 d-flex align-items-center p-0 mx-auto mb-3 ms-2 button-action-history" style={{ width: '90%', border: 'none', backgroundColor: '#14caa9', position: 'relative', overflow: 'hidden' }} type="submit" onClick={handlePopup} >
                                         <div className="w-100 p-2 text-center" style={{ color: '#fff', fontSize: '11px', whiteSpace: 'nowrap', zIndex: 1111 }}>
                                             PESANAN DITERIMA
                                         </div>
@@ -151,7 +156,7 @@ function RiwayatTabel({tabActive, skip, cardBg, data}) {
                             }
                             {
                             data && (
-                            <Link className="btn btn-view d-flex shadow rounded-2 d-flex align-items-center p-0 mx-auto mb-3 ms-2" style={{ width: '90%', border: 'none', backgroundColor: '#014C90', position: 'relative', overflow: 'hidden' }} onClick={handleRedirect}>
+                            <button className="btn btn-view d-flex shadow rounded-2 d-flex align-items-center p-0 mx-auto mb-3 ms-2 button-view-detail" style={{ width: '90%', border: 'none', backgroundColor: '#014C90', position: 'relative', overflow: 'hidden' }} type="submit" onClick={handleRedirect}>
                                 <div className="w-100 p-2 text-center" style={{ color: '#fff', fontSize: '11px' }}>
                                     VIEW DETAIL
                                 </div>
@@ -160,11 +165,11 @@ function RiwayatTabel({tabActive, skip, cardBg, data}) {
                                     <div style={{ position: 'absolute', width: 30, height: 30, borderRadius: '50%', background: '#014C90', left: '-18px', top: '1.3rem' }} />
                                     <i className="fa fa-chevron-right ms-2"></i>
                                 </div>
-                            </Link>
+                            </button>
                             )}
                             {
                                 (data.statusid == 3 && !data.review )&& (
-                                    <button className="btn btn-view d-flex shadow rounded-2 d-flex align-items-center p-0 mx-auto mb-3 ms-2" style={{ width: '90%', border: 'none', backgroundColor: '#14caa9', position: 'relative', overflow: 'hidden' }} onClick={handleRatting}>
+                                    <button className="btn btn-view d-flex shadow rounded-2 d-flex align-items-center p-0 mx-auto mb-3 ms-2 button-action-history" style={{ width: '90%', border: 'none', backgroundColor: '#14caa9', position: 'relative', overflow: 'hidden' }} onClick={handleRatting}>
                                         <div className="w-100 p-2 text-center" style={{ color: '#fff', fontSize: '11px', zIndex: 1111 }}>
                                             BERIKAN NILAI
                                         </div>

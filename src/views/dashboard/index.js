@@ -4,9 +4,20 @@ import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { getDaftarEq, getDataBerita, getDataProduct } from "../../services/API";
 import LoadingAlert from "../../component/alert/loadingAlert";
 import { getStatusAccountById } from "../../services/API/mod_upgradeAccount";
+
+import banner1 from './../../images/banner1.png';
+import bannerMobile from './../../images/bannerMobile-edit.png';
+import breakfix from './../../images/breakfix.png';
+import supplies from './../../images/supplies.png';
+import install from './../../images/install.png';
+import collectMeter from './../../images/collectMeter.png';
+import callCenter from './../../images/callCenter.png';
+import informasiTagihan from './../../images/informasiTagihan.png'
+
 const Riwayat = React.lazy(() => import('../riwayat'));
 const Informasi = React.lazy(() => import('../informasi'));
 const innerWidth = window.innerWidth
+
 
 const ProtectedRoute = ({ children }) => {
 
@@ -25,15 +36,15 @@ function Dashboard() {
     const [dataNews, setDataNews] = useState([])
     const [hotNews, setHotNews] = useState(null)
     const [dataProduct, setDataProduct] = useState([])
-    const [newsNumber, setNewsNumber] = useState('')
     const isDesktop = window.innerWidth > 768
-    const [loading, setLoading] = useState(false) //MATIKAN LOADING PADA DASHBOARD
-    const { id } = useParams()
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
+    const [activeLink, setActiveLink] = useState(0)
 
     useEffect(() => {
-        if(location.state?.EQ) {
+        const equipment = localStorage.getItem('equipment')
+        if(location.state?.EQ || equipment?.EQ) {
             checkEQ()
         }
         // Promise.all([
@@ -53,13 +64,13 @@ function Dashboard() {
 
         if(res.status == 200) {
             var isFound = res.data.Table.filter(val => val.equipment == location.state.EQ).length > 0
-            
+            var equipment = localStorage.getItem('equipment')
             if(!isFound) {
                 navigate('/tambah_eq', {
                     state: {
                         input: {
-                            equipment: location.state.EQ,
-                            modelName: location.state.ModelName
+                            equipment: equipment?.EQ ?? location.state.EQ,
+                            modelName: equipment?.ModelName ?? location.state.ModelName
                         }
                     }
                 })
@@ -118,8 +129,26 @@ function Dashboard() {
         return div.textContent || div.innerHTML || ""
     }
 
-    const handleSelectedItem = (idNews) => {
-        setNewsNumber(idNews)
+    const handleDataNews = (e, newsId) => {
+        e.preventDefault()
+
+        navigate("/news_detail", {
+            state: {
+                id: newsId,
+                type: "data-news"
+            }
+        })
+    }
+
+    const handleDataProduct = (e, productId) => {
+        e.preventDefault()
+
+        navigate("/news_detail", {
+            state: {
+                id: productId,
+                type: "data-product"
+            }
+        })
     }
 
     const limitChar = (text, limit, surfix) => {
@@ -149,14 +178,16 @@ function Dashboard() {
                 behavior: 'smooth'
             })
             return
+            setActiveLink(0)
         }
 
         if (parent == 1) {
             document.getElementById('contentMenus').scroll({
-                left: bottomBarLineWidth,
+                left: bottomBarLineWidth * 1,
                 behavior: 'smooth'
             })
             return
+            setActiveLink(1)
         }
 
         if (parent == 2) {
@@ -165,7 +196,16 @@ function Dashboard() {
                 behavior: 'smooth'
             })
             return
+            setActiveLink(2)
         }
+
+        setActiveLink(parseInt(parent, 3))
+
+        document.querySelectorAll('.bottom-bar a').forEach((link) => {
+            link.classList.remove('active')
+        })
+
+        e.target.classList.add('active')
     }
 
     const handleScroll = (e) => {
@@ -225,13 +265,13 @@ function Dashboard() {
                 <div className="menu-items col-12">
                     <Link className="text-white" to="/settings" style={{ position: 'absolute', top: 15, right: 20, fontSize: '26px', zIndex: '11111' }}><i className="fa fa-cog d-md-none"></i></Link>
                     <div className="col-md-7 col-12 mx-auto py-xs-0 m-0">
-                        <img className="banner-desktop d-md-block d-none" src="images/banner1.png" alt="Beranda" width='100%' />
-                        <img className="banner-desktop d-md-none d-block" src="images/bannerMobile-edit.png" alt="Beranda" width='100%' />
+                        <img className="banner-desktop d-md-block d-none" src={ banner1 } alt="Beranda" width='100%' />
+                        <img className="banner-desktop d-md-none d-block" src={ bannerMobile } alt="Beranda" width='100%' />
                         <div className="row col-md-12 col-10 px-2 my-md-3 m-0 mx-auto menus justify-content-center">
                             <div className="col-4 text-center mb-md-4"> 
                                 <Link className="list-items" to="/breakfix_request" >
                                     <div className="col-md-5 col-12 mx-auto mb-2 menus-icon" style={{ width: '45%' }}>
-                                        <img src="images/breakfix.png" alt="Breakfix" width="100%" />
+                                        <img src={ breakfix } alt="Breakfix" width="100%" />
                                     </div>
                                     <p className="menus-title small fw-bold">Breakfix</p>
                                 </Link>
@@ -239,7 +279,7 @@ function Dashboard() {
                             <div className="col-4 text-center mb-md-4"> 
                                 <Link className="list-items" style={{border: 'none', backgroundColor: '#ffff'}} onClick={checkPremium}>
                                     <div className="col-md-5 col-12 mx-auto mb-2 menus-icon" style={{ width: '45%' }}>
-                                        <img src="images/supplies.png" alt="Supplies" width="100%" />
+                                        <img src={ supplies } alt="Supplies" width="100%" />
                                     </div>
                                     <p className="menus-title small fw-bold">Supplies</p>
                                 </Link>
@@ -247,7 +287,7 @@ function Dashboard() {
                             <div className="col-4 text-center mb-md-4"> 
                                 <Link className="list-items" to="/install_request" >
                                     <div className="col-md-5 col-12 mx-auto mb-2 menus-icon" style={{ width: '45%' }}>
-                                        <img src="images/install.png" alt="Install" width="100%" />
+                                        <img src={ install } alt="Install" width="100%" />
                                     </div>
                                     <p className="menus-title small fw-bold">Install</p>
                                 </Link>
@@ -255,7 +295,7 @@ function Dashboard() {
                             <div className="col-4 text-center mb-md-4"> 
                                 <Link className="list-items" to="/collect_meter" >
                                     <div className="col-md-5 col-12 mx-auto mb-2 menus-icon" style={{ width: '45%' }}>
-                                        <img src="images/collectMeter.png" alt="Collect Meter" width="100%" />
+                                        <img src={ collectMeter } alt="Collect Meter" width="100%" />
                                     </div>
                                     <p className="menus-title small fw-bold">Collect Meter</p>
                                 </Link>
@@ -263,7 +303,7 @@ function Dashboard() {
                             <div className="col-4 text-center mb-md-4"> 
                                 <Link className="list-items" to="" onClick={redirectToContact} >
                                     <div className="col-md-5 col-12 mx-auto mb-2 menus-icon" style={{ width: '45%' }}>
-                                        <img src="images/callCenter.png" alt="Call Center" width="100%" />
+                                        <img src={ callCenter } alt="Call Center" width="100%" />
                                     </div>
                                     <p className="menus-title small fw-bold">Call Center</p>
                                 </Link>
@@ -271,7 +311,7 @@ function Dashboard() {
                             <div className="col-4 text-center mb-md-4"> 
                                 <Link className="list-items" to="/informasi" >
                                     <div className="col-md-5 col-12 mx-auto mb-2 menus-icon" style={{ width: '45%' }}>
-                                        <img src="images/informasiTagihan.png" alt="Informasi Tagihan" width="100%" />
+                                        <img src={ informasiTagihan } alt="Informasi Tagihan" width="100%" />
                                     </div>
                                     <p className="menus-title small fw-bold nowrap">Informasi Tagihan</p>
                                 </Link>
@@ -287,7 +327,7 @@ function Dashboard() {
                         </div>
                         {
                             hotNews && (
-                                <Link to={`/news_detail/${hotNews.id}`} onClick={() => handleSelectedItem(hotNews.id)} style={{ textDecoration: 'none' }}>
+                                <Link onClick={(e) => handleDataNews(e, hotNews.id)} style={{ textDecoration: 'none' }}>
                                     <div className="card news border-0 mx-auto text-white mb-4" style={{ position: 'relative', background: 'rgba(0,0,0,.3' }}>
                                         <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: -1, overflow: 'hidden' }} >
                                             <img src={`https://documentsolution.com/uploads/news/banners/${hotNews.image}`} alt="Astragraphia News" className="banner-news" style={{ objectFit: 'cover' }} />
@@ -313,7 +353,7 @@ function Dashboard() {
                             {
                                 dataNews.map((item, key) => (
                                     <div className="col-md-4 col-12 mb-5" key={key}>
-                                        <Link style={{ textDecoration: 'none' }} to={`/news_detail/${item.id}`} onClick={() => handleSelectedItem(item.id)}>
+                                        <Link style={{ textDecoration: 'none' }} onClick={(e) => handleDataNews(e, item.id)}>
                                             <div className="card h-100 border-0 mx-0" style={{ backgroundColor: '#EBEBEB' }} >
                                                 <div className="m-2 border" style={{ height: '150px', position: 'relative' }}>
                                                     <img src={`https://documentsolution.com/uploads/news/banners/${item.image}`} className=" w-100 h-100" alt={item.image} style={{ objectFit: 'cover' }} />
@@ -329,7 +369,8 @@ function Dashboard() {
                             }{
                                 dataProduct.map((item, key) => (
                                     <div className="col-md-4 col-12 mb-5" key={key}>
-                                        <Link style={{ textDecoration: 'none' }} to={`/product_detail/${item.id}`} onClick={() => handleSelectedItem(item.id)}>
+                                        <Link style={{ textDecoration: 'none' }} onClick={(e) => handleDataProduct(e, item.id)}>
+                                        {/* <Link style={{ textDecoration: 'none' }} to={`/product_detail/${item.id}`}> */}
                                             <div className="card h-100 border-0 mx-0" style={{ backgroundColor: '#EBEBEB' }} >
                                                 <div className="m-2 border" style={{ height: '150px', position: 'relative' }}>
                                                     <img src={`https://documentsolution.com/uploads/products/${item.image}`} className=" w-100 h-100" alt={item.image} style={{ objectFit: 'cover' }} />
@@ -350,28 +391,28 @@ function Dashboard() {
                 <div className="menu-items col-12 d-md-none d-block">
                     {
                         innerWidth <= 768 && (
-                            <Suspense fallback="Loading..."><ProtectedRoute><Riwayat /></ProtectedRoute></Suspense>
+                            <Suspense fallback="Loading..."><ProtectedRoute><Riwayat loading={false} /></ProtectedRoute></Suspense>
                         )
                     }
                 </div>
                 <div className="menu-items col-12 d-md-none d-block">
                     {
                         innerWidth <= 768 && (
-                            <Suspense fallback="Loading..."><ProtectedRoute><Informasi /></ProtectedRoute></Suspense>
+                            <Suspense fallback="Loading..."><ProtectedRoute><Informasi loading={false} /></ProtectedRoute></Suspense>
                         )
                     }
                 </div>
             </div>
             <div className="bottom-bar d-md-none d-flex">
-                <a href="" onClick={navigationScroll} parent={0} className="col-4 text-center active">
+                <a href="" onClick={navigationScroll} parent={0} className={`col-4 text-center ${activeLink === 0 ? 'active' : '' }`}>
                     <i style={{ pointerEvents: 'none', fontSize: '22px' }} className="fa fa-home "></i>
                     <span className="menus-bottom" style={{ pointerEvents: 'none', fontSize: '12px' }}>BERANDA</span>
                 </a>
-                <a href="" onClick={navigationScroll} parent={1} className="col-4 text-center">
+                <a href="" onClick={navigationScroll} parent={1} className={`col-4 text-center ${activeLink === 1 ? 'active' : ''}`}>
                     <i style={{ pointerEvents: 'none', fontSize: '22px' }} className="fa fa-clipboard"></i>
                     <span className="menus-bottom" style={{ pointerEvents: 'none', fontSize: '12px' }}>RIWAYAT</span>
                 </a>
-                <a href="" onClick={navigationScroll} parent={2} className="col-4 text-center">
+                <a href="" onClick={navigationScroll} parent={2} className={`col-4 text-center ${activeLink === 2 ? 'active' : ''}`}>
                     <i style={{ pointerEvents: 'none', fontSize: '22px' }} className="fa fa-bell"></i>
                     <span className="menus-bottom" style={{ pointerEvents: 'none', fontSize: '12px' }}>INFORMASI</span>
                 </a>

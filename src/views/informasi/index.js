@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom';
 import { getInformasiByUserid, updateIsRead } from '../../services/API/mod_informasi';
 import LoadingAlert from '../../component/alert/loadingAlert';
 
-function Information() {
+function Information(props) {
     const [showPopup, setShowPopup] = useState(false)
     const [selectedInformation, setSelectedInformation] = useState(null)
     const [clickedCard, setClickedCard] = useState([])
     const [dataInformation, setDataInformation] = useState([])
     const [number, setNumber] = useState(10)
     const [loading, setLoading] = useState(false)
+    const [defaultLoading, setDefaultLoading] = useState(props?.loading ?? true)
 
     useEffect(() => {
         init()
@@ -18,7 +19,8 @@ function Information() {
 
 
     const init = async () => {
-        setLoading(true)
+        setLoading(defaultLoading)
+        setDefaultLoading(true)
         const res = await getInformasiByUserid(number)
         setLoading(false)
         if(res.status == 200) {
@@ -57,7 +59,7 @@ function Information() {
         <>
             <div className="responsive-bar">
                 <div className="card-title mb-md-4 m-0 p-0">
-                    <span className="title-icare tittle-fitur fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}> Informasi </span>
+                    <span className="title-icare title-fitur fw-bold py-1" style={{borderBottom:'3px solid #014C90', fontSize:'18px'}}> Informasi </span>
                     <Link className="text-white" to="/settings" style={{position:'absolute', top: 12, right: 20, fontSize:'26px', zIndex:'11111'}}><i className="fa fa-cog d-md-none"></i></Link>
                 </div>
             </div>
@@ -82,8 +84,8 @@ function Information() {
                                 ))
                             }
                         
-                            <div className="button-informasi p-0">
-                                <button type="button" className="btn btn-informasi btn-primary" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}} onClick={() => setNumber(number+10)}>Lihat lebih banyak ...</button>
+                            <div className="button-informasi p-0 pb-lg-0 pb-3">
+                                <button type="button" className="btn btn-informasi btn-primary font-size-14px-mobile" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}} onClick={() => setNumber(number+10)}>Lihat lebih banyak...</button>
                             </div>
                         </div>
                         <LoadingAlert visible={loading} customClass="col-md-2 col-8" />

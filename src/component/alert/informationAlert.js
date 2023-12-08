@@ -1,4 +1,5 @@
 import { Component } from "react";
+import detailInformasi from './../../images/detail-informasi.png';
 
 export default class extends Component {
     render() {
@@ -21,7 +22,7 @@ export default class extends Component {
                             <div className="card-body p-lg-5 p-md-5 p-3 popup-content" style={{fontSize:'14px'}}>
                                 <button onClick={onClick} style={{background:'none', border:'none', marginLeft:'98%', fontSize:'20px'}}><i className="fa fa-close margin-close popup-button"></i></button>
                                 <div className="text-center mb-4">
-                                    <img src="images/detail-informasi.png" className="image-information popup-img" alt="Image" style={{width:'20%'}}></img>
+                                    <img src={ detailInformasi } className="image-information popup-img" alt="Image" style={{width:'20%'}}></img>
                                 </div>
                                 <p className="popup-title" style={{marginBottom:'0'}}>INFO</p>
                                 <p className="popup-date">{formatDate(dataInformation.createDate)}</p>

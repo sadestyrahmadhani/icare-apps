@@ -8,7 +8,7 @@ import LoadingAlert from "../../component/alert/loadingAlert";
 import UploadFileAlert from "../../component/alert/uploadFileAlert";
 import { NavDropdown } from "react-bootstrap";
 import ErrorAlert from "../../component/alert/errorAlert";
-
+import verifyIcon from './../../images/verify.png'
 
 
 
@@ -20,35 +20,19 @@ function AddressList() {
     const [showSuccessPopup, setShowSuccessPopup] = useState(false)
     const [showErrorPopup, setShowErrorPopup] = useState(false)
     const [alertOption, setAlertOption] = useState({ title: '', message: '', reload: false })
-    const [dataisLoaded, setDataisLoaded] = useState(false)
-    const [dataDaftarAlamat, setDataDaftarAlamat] = useState([
-        {
-            id: 1,
-            Nama_Alamat: 'Test 23',
-            Penerima: 'Test',
-            Alamat: 'Jl. Test No. 23',
-            NoGedung: '123',
-            NamaGedung: 'Gedung Test',
-            Telp_Penerima: '+62897874673',
-            isPin: true,
-            verified: false,
-        }
-    ])
+    const [dataDaftarAlamat, setDataDaftarAlamat] = useState([])
     const [loading, setLoading] = useState(false)
-    const [originalData, setOriginalData] = useState('')
+    const [dataDaftarAlamatDefault, setDataDaftarAlamatDefault] = useState([])
     const [daftarAlamatToDelete, setDaftarAlamatToDelete] = useState('')
     const [addressDefault, setAddressDefault] = useState('')
     const [addressId, setAddressId] = useState('')
     const [addressVerified, setAddressVerified] = useState('')
-    const [showPopupUpload, setShowPopupUpload] = useState(false)
     const [searchActive, setSearchActive] = useState(false)
     const [isActive, setIsActive] = useState(false)
-    const [itemsAddress, setItemsAddress] = useState(5)
+    const [itemsAddress, setItemsAddress] = useState(10)
     const [showMoreAddress, setShowMoreAddress] = useState(true)
     const [clickSearch, setClickSearch] = useState(false)
 
-    const [uploading, setUploading] = useState(false)
-    const [uploadedData, setUploadedData] = useState([])
     const inputFileRef = React.useRef();
 
 
@@ -60,28 +44,32 @@ function AddressList() {
         setLoading(true)
         const res = await getDaftarAlamat();
         setLoading(false)
-        console.log(res.data.Table)
+        // console.log(res.data.Table)
         if (res.status == 200) {
             setDataDaftarAlamat(res.data.Table)
-            setOriginalData(res.data.Table)
+            setDataDaftarAlamatDefault(res.data.Table)
             // console.log(res)
+
+            if (res.data.Table.length <= itemsAddress) {
+                setShowMoreAddress(false)
+            } else {
+                setShowMoreAddress(true)
+            }
         }
-
-        // console.log('res : ', res);
-
-        // const Table = res['Table'];
-        // setDataisLoaded(true);
-        // setDataDaftarAlamat(Table);
-
-        // console.log('dataDaftarAlamat ', setDataDaftarAlamat());
     }
 
-    const getAddressWithoutLoading = async() => {
+    const getAddressWithoutLoading = async () => {
         const res = await getDaftarAlamat()
 
         if (res.status === 200) {
             setDataDaftarAlamat(res.data.Table)
-            setOriginalData(res.data.Table)
+            setDataDaftarAlamatDefault(res.data.Table)
+
+            if (res.data.Table.length <= itemsAddress) {
+                setShowMoreAddress(false)
+            } else {
+                setShowMoreAddress(true)
+            }
         }
     }
 
@@ -112,6 +100,7 @@ function AddressList() {
         setShowPopupPrioritize(false)
         setShowSuccessPopup(false)
         setShowErrorPopup(false)
+        document.getElementById('keyword').value = '';
 
         if (alertOption.reload) {
             init()
@@ -134,7 +123,7 @@ function AddressList() {
         if (res.status == 200) {
             setShowSuccessPopup(true)
             setDaftarAlamatToDelete('')
-            
+
             if (res.data.includes('Succes delete')) {
                 setAlertOption({ title: 'Berhasil', message: 'Alamat berhasil dihapus', reload: true })
             } else if (res.data.includes('User Address terpakai pada equipment, tidak bisa dihapus')) {
@@ -182,16 +171,38 @@ function AddressList() {
 
     const handleSearch = (e) => {
         if (e.target.value != '') {
-            var filterData = originalData.filter(val => (val.Nama_Alamat.toString().toLowerCase().includes(e.target.value.toLowerCase())) || val.Penerima.toLowerCase().includes(e.target.value.toLowerCase()) || val.Alamat.toLowerCase().includes(e.target.value.toLowerCase()) || val.Kota.toLowerCase().includes(e.target.value.toLowerCase()) || val.Kode_Pos.toLowerCase().includes(e.target.value.toLowerCase()) || val.Telp_Penerima.toLowerCase().includes(e.target.value.toLowerCase()))
+            var filterData = dataDaftarAlamatDefault.filter(val => (val.Nama_Alamat.toString().toLowerCase().includes(e.target.value.toLowerCase())) || val.Penerima.toLowerCase().includes(e.target.value.toLowerCase()) || val.Alamat.toLowerCase().includes(e.target.value.toLowerCase()) || val.Kota.toLowerCase().includes(e.target.value.toLowerCase()) || val.Kode_Pos.toLowerCase().includes(e.target.value.toLowerCase()) || val.Telp_Penerima.toLowerCase().includes(e.target.value.toLowerCase()) || val.NamaGedung.toLowerCase().includes(e.target.value.toLowerCase()))
             setDataDaftarAlamat(filterData)
+
+            if ( filterData.length <= itemsAddress ) {
+                setShowMoreAddress(false)
+            } else {
+                setShowMoreAddress(true)
+            }
         } else {
-            setDataDaftarAlamat(originalData)
+            setDataDaftarAlamat(dataDaftarAlamatDefault)
+            
+            if ( dataDaftarAlamatDefault.length >= itemsAddress ) {
+                setShowMoreAddress(true)
+            } else {
+                setShowMoreAddress(false)
+            }
         }
     }
 
     const handleSearchActive = () => {
         setSearchActive(false)
         setClickSearch(false)
+    }
+
+    const handleResetSearch = () => {
+        setDataDaftarAlamat(dataDaftarAlamatDefault)
+
+        if ( dataDaftarAlamatDefault.length >= itemsAddress ) {
+            setShowMoreAddress(true)
+        } else {
+            setShowMoreAddress(false)
+        }
     }
 
     const handleDownloadCSV = async () => {
@@ -221,21 +232,21 @@ function AddressList() {
             setLoading(true)
             const res = await UploadAlamat(file)
             e.target.value = null
-            console.log('upload address', res)
+            // console.log('upload address', res)
             if (res.result == "Sukses") {
                 setShowSuccessPopup(true)
                 setAlertOption({ title: 'Upload', message: `Berhasil upload`, reload: true })
                 init()
             } else {
-                console.log("masuk error")
+                // console.log("masuk error")
                 setShowErrorPopup(true)
                 let message = ""
                 if (res.error) {
-                    message += "<ul>"
+                    message += "<p>"
                     res.error.forEach(e => {
-                        message += "<li>" + e + "</li>"
+                        message += "<span>" + e + "</span>"
                     })
-                    message += "</ul>"
+                    message += "</p>"
                 }
                 setAlertOption({ title: res.result, message: message, redirect: false })
             }
@@ -274,7 +285,7 @@ function AddressList() {
 
     return (
         <>
-            <div className="responsive-bar d-md-flex h-address">
+            <div className="responsive-bar d-md-flex">
                 <div className="col-md-3 col-12 mb-md-5">
                     <div className="row">
                         {
@@ -283,16 +294,18 @@ function AddressList() {
                                     <span className="nav-link d-inline d-md-none me-3" onClick={handleSearchActive}>
                                         <i className="fa fa-arrow-left color-arrow-left"></i>
                                     </span>
-                                    <input onKeyUp={handleSearch} onClick={() => setClickSearch(true)} type="text" className="form-control search-riwayat d-md-none d-inline" placeholder="Telusuri..." style={{ position: 'absolute', right: 65 }} />
-                                    <button className="d-md-none d-inline" type="reset" style={{background: 'none', cursor: 'pointer', border: 0, right: 35, position: 'absolute' }} onClick={() => setDataDaftarAlamat(originalData)}>
-                                        <i className="fa fa-close" style={{color: clickSearch === true ? '#fff' : 'transparent'}}></i>
-                                    </button>
+                                    <form style={{ display: 'contents' }} onSubmit={(e) => e.preventDefault()}>
+                                        <input onKeyUp={handleSearch} id="keyword" onClick={() => setClickSearch(true)} type="text" className="form-control search-riwayat d-md-none d-inline" placeholder="Telusuri..." style={{ position: 'absolute', right: 65 }} />
+                                        <button className="d-md-none d-inline" type="reset" style={{ background: 'none', cursor: 'pointer', border: 0, right: 35, position: 'absolute' }} onClick={handleResetSearch}>
+                                            <i className="fa fa-close" style={{ color: clickSearch === true ? '#fff' : 'transparent' }}></i>
+                                        </button>
+                                    </form>
                                     <NavDropdown className={`custom-dropdown text-white ${isActive ? 'active-link' : ''}`} onClick={() => handleNavClick('active')} id="nav-dropdown" title={<i className="fa fa-ellipsis-v d-md-none nav-app" style={{ fontSize: '20px' }}></i>} style={{ position: 'absolute', right: 20, zIndex: '1111' }}>
                                         {/* <i className="fa fa-ellipsis-v d-md-none"></i> */}
-                                        <NavDropdown.Item href="/tambah_alamat/0">
+                                        <NavDropdown.Item href="/tambah_alamat">
                                             <div classname="item-drop d-flex align-items-center">
                                                 <div className="col-9">
-                                                    <span className="text-decoration-none nav-app" style={{ color: '#000' }}>Tambah Alamat</span>
+                                                    <span className="text-decoration-none nav-app font-size-12px-mobile" style={{ color: '#000' }}>Tambah Alamat</span>
                                                 </div>
                                             </div>
                                         </NavDropdown.Item>
@@ -311,7 +324,7 @@ function AddressList() {
                                         </h4>
                                     </div>
                                     <div className="col-2 d-md-none d-block text-end">
-                                        <Link to="/tambah_alamat/0">
+                                        <Link to="/tambah_alamat">
                                             <i className="fa fa-plus-circle" style={{ fontSize: '20px' }}></i>
                                         </Link>
                                     </div>
@@ -328,12 +341,12 @@ function AddressList() {
 
                 <div className="col-md-10 row d-md-flex d-none">
                     <div className="col-lg-5 col-md-5 col-12 px-lg-0">
-                        <form className="d-flex" style={{ width: '100%' }}>
+                        <form className="d-flex" style={{ width: '100%' }} onSubmit={(e) => e.preventDefault()}>
                             <span className="my-auto" style={{ color: '#014C90' }}>
                                 <i className="fa fa-search fa-fw" style={{ marginRight: 'auto' }}></i>
                             </span>
-                            <input onKeyUp={handleSearch} type="text" className="form-control me-2 border-0 border-only-bottom" style={{ fontSize: '14px', marginLeft: '5px', color: 'black' }} />
-                            <button style={{ margin: 'auto', cursor: 'pointer', border: '0', background: 'none' }} type="reset" onClick={() => setDataDaftarAlamat(originalData)}>
+                            <input onKeyUp={handleSearch} type="text" id="keyword" className="form-control me-2 border-0 border-only-bottom" style={{ fontSize: '14px', marginLeft: '5px', color: 'black' }} />
+                            <button style={{ margin: 'auto', cursor: 'pointer', border: '0', background: 'none' }} type="reset" onClick={handleResetSearch}>
                                 <i className="fa fa-close"></i>
                             </button>
                         </form>
@@ -349,7 +362,7 @@ function AddressList() {
                         <button onClick={handleDownloadCSV} className="btn btn-outline-primary btn-download me-3" style={{ fontSize: '14px', padding: '8px 23.5px', color: '#014C90' }}>
                             Download <i className="fa fa-download" style={{ marginLeft: '5px' }}></i>
                         </button>
-                        <Link to="/tambah_alamat/0">
+                        <Link to="/tambah_alamat">
                             <button className="btn btn-login" style={{ padding: '8px 15px', fontSize: '14px' }}><i className="fa fa-plus" style={{ marginRight: '5px' }}></i> Tambah Alamat</button>
                         </Link>
                     </div>
@@ -360,33 +373,33 @@ function AddressList() {
                 {sortedAddresses.slice(0, itemsAddress).map((item, key) => (!item.deleted && (
                     <div className="card responsive-form rounded m-lg-4 m-0 mb-lg-0 mb-3" onClick={handleAddressItem} data-item={JSON.stringify(item)} key={key}>
                         <div className="card-body py-md-3 py-2 px-md-3">
-                            <h6 className="card-title title-icare fw-bold fs-mobile-bold" style={{ fontSize: '14px' }}>{item.Nama_Alamat}</h6>
+                            <h6 className="card-title title-icare fw-bold font-size-12px-mobile" style={{ fontSize: '14px' }}>{item.Nama_Alamat}</h6>
                             <div className="col-12">
                                 <div className="row fw-bold">
                                     <div className="col-8 pe-0">
-                                        <p className="mb-0 fs-mobile" style={{ fontSize: '13px' }}>{item.Penerima}</p>
+                                        <p className="mb-0 font-size-11px-mobile" style={{ fontSize: '13px' }}>{item.Penerima}</p>
                                         <table className="table table-borderless mb-0">
                                             <thead>
                                                 <tbody className="px-auto py-auto">
                                                     <tr>
-                                                        <td className="fs-mobile" style={{ fontSize: '13px' }}>Jalan : {item.Alamat} {item.NoGedung}</td>
+                                                        <td className="font-size-11px-mobile" style={{ fontSize: '13px' }}>Jalan : {item.Alamat} {item.NoGedung}</td>
                                                     </tr>
                                                     {/* <tr>
-                                                            <td className="fs-mobile" style={{ fontSize: '13px' }}>No Gedung : {item.NoGedung}</td>
+                                                            <td className="font-size-11px-mobile" style={{ fontSize: '13px' }}>No Gedung : {item.NoGedung}</td>
                                                         </tr> */}
                                                     <tr>
-                                                        <td className="fs-mobile" style={{ fontSize: '13px' }}>Nama Gedung : {item.NamaGedung}</td>
+                                                        <td className="font-size-11px-mobile" style={{ fontSize: '13px' }}>Nama Gedung : {item.NamaGedung}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td className="fs-mobile" style={{ fontSize: '13px' }} >{item.Telp_Penerima}</td>
+                                                        <td className="font-size-11px-mobile" style={{ fontSize: '13px' }} >{item.Telp_Penerima}</td>
                                                     </tr>
                                                 </tbody>
                                                 {
                                                     item.isPin ?
                                                         (
-                                                            <div className="fs-mobile-bold" style={{ border: '0', background: 'none', fontWeight: 'bold' }}>
-                                                                <i className="fa fa-map-marker fa-lg my-auto fs-mobile-bold" style={{ padding: 'initial' }}></i>
-                                                                <span className="fs-mobile-bold" style={{ fontSize: '14px', padding: 'inherit', color: '#014C90' }}> Sudah Pinpoint</span>
+                                                            <div className="font-size-12px-mobile" style={{ border: '0', background: 'none', fontWeight: 'bold' }}>
+                                                                <i className="fa fa-map-marker fa-lg my-auto font-size-12px-mobile" style={{ padding: 'initial' }}></i>
+                                                                <span className="font-size-12px-mobile" style={{ fontSize: '14px', padding: 'inherit', color: '#014C90' }}> Sudah Pinpoint</span>
                                                             </div>
                                                         ) : (
                                                             <div></div>
@@ -395,10 +408,10 @@ function AddressList() {
                                             </thead>
                                         </table>
                                     </div>
-                                    <div className="col-md-4 col-3 d-block ms-md-0 verified-icon text-end">
+                                    <div className="col-md-4 col-4 d-block ms-md-0 text-end">
                                         {
                                             item.verified ? (
-                                                <img src="images/verify.png" alt="" style={{width: '25%'}} className="mt-md-0 mt-4" />
+                                                <img src={ verifyIcon} alt="" style={{ width: '25%' }} className="mt-md-0 mt-4 verified-icon" />
                                             ) : (
                                                 <div style={{ height: '100%' }}></div>
                                             )
@@ -406,13 +419,13 @@ function AddressList() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-12 d-block text-end">          
+                            <div className="col-12 d-block text-end">
                                 <ol className="title-icare mb-0 p-0" style={{ fontSize: '14px' }}>
                                     {
                                         !item.Default ?
                                             (
                                                 <li className="nav-item space-option">
-                                                    <button onClick={() => handlePrioritize(item.id, item.Default, item.Nama_Alamat)} className="nav-link fs-mobile-bold fw-bold">Utamakan</button>
+                                                    <button onClick={() => handlePrioritize(item.id, item.Default, item.Nama_Alamat)} className="nav-link font-size-12px-mobile fw-bold">Utamakan</button>
                                                 </li>
                                             ) : (
                                                 <div></div>
@@ -420,8 +433,8 @@ function AddressList() {
                                     }
                                     <li className="nav-item space-option ms-md-4">
                                         <a
-                                            href="/tambah_alamat/1"
-                                            className="nav-link fs-mobile-bold fw-bold"
+                                            href="/tambah_alamat"
+                                            className="nav-link font-size-12px-mobile fw-bold"
                                             onClick={handleUpdate}
                                             data-id={item.id}
                                         >
@@ -429,7 +442,7 @@ function AddressList() {
                                         </a>
                                     </li>
                                     <li className="nav-item p-0 ms-md-4">
-                                        <button onClick={() => handleDelete(item.id, item.Nama_Alamat)} className="nav-link fs-mobile-bold fw-bold" >Hapus</button>
+                                        <button onClick={() => handleDelete(item.id, item.Nama_Alamat)} className="nav-link font-size-12px-mobile fw-bold" >Hapus</button>
                                     </li>
                                 </ol>
                             </div>
@@ -440,7 +453,7 @@ function AddressList() {
                     showMoreAddress &&
                     (
                         <div className="p-0 mx-4 mt-3">
-                            <button type="button" className="btn btn-primary" style={{ width: '100%', height: '50px', backgroundColor: '#014C90', borderRadius: '15px' }} onClick={handleShowMoreAddress}>Lihat lebih banyak...</button>
+                            <button type="button" className="btn btn-primary font-size-14px-mobile" style={{ width: '100%', height: '50px', backgroundColor: '#014C90', borderRadius: '15px' }} onClick={handleShowMoreAddress}>Lihat lebih banyak...</button>
                         </div>
                     )
                 }
@@ -463,7 +476,7 @@ function AddressList() {
                 }
                 {
                     showErrorPopup && (
-                        <ErrorAlert visible={showErrorPopup} titleMessage={alertOption.title} message={alertOption.message} onClick={handlePopup} customClass="col-md-3 sol-sm-6 col-9" />
+                        <ErrorAlert visible={showErrorPopup} message={alertOption.message} onClick={handlePopup} customClass="col-md-3 sol-sm-6 col-9" />
                     )
                 }
                 {/* {
@@ -476,29 +489,29 @@ function AddressList() {
                 {dataDaftarAlamat.slice(0, itemsAddress).map((item, key) => (!item.deleted && (
                     <div className="card responsive-form rounded m-lg-4 m-0 mb-lg-0 mb-3" onClick={handleAddressItem} data-item={JSON.stringify(item)} key={key}>
                         <div className="card-body py-md-3 py-1 px-3">
-                            <h6 className="card-title title-icare fw-bold fs-mobile-bold" style={{ fontSize: '14px' }}>{item.Nama_Alamat}</h6>
+                            <h6 className="card-title title-icare fw-bold font-size-12px-mobile" style={{ fontSize: '14px' }}>{item.Nama_Alamat}</h6>
                             <div className="row fw-bold">
                                 <div className="col-6 pe-0">
-                                    <p className="mb-0 fs-mobile" style={{ fontSize: '13px' }}>{item.Penerima}</p>
+                                    <p className="mb-0 font-size-11px-mobile" style={{ fontSize: '13px' }}>{item.Penerima}</p>
                                     <table className="table table-borderless mb-0">
                                         <thead>
                                             <tbody className="px-auto py-auto">
                                                 <tr>
-                                                    <td className="fs-mobile" style={{ fontSize: '13px' }}>Jalan : {item.Alamat} {item.NoGedung}</td>
+                                                    <td className="font-size-11px-mobile" style={{ fontSize: '13px' }}>Jalan : {item.Alamat} {item.NoGedung}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="fs-mobile" style={{ fontSize: '13px' }}>Nama Gedung : {item.NamaGedung}</td>
+                                                    <td className="font-size-11px-mobile" style={{ fontSize: '13px' }}>Nama Gedung : {item.NamaGedung}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td className="fs-mobile" style={{ fontSize: '13px' }} >{item.Telp_Penerima}</td>
+                                                    <td className="font-size-11px-mobile" style={{ fontSize: '13px' }} >{item.Telp_Penerima}</td>
                                                 </tr>
                                             </tbody>
                                             {
                                                 item.isPin ?
                                                     (
-                                                        <div className="fs-mobile-bold" style={{ border: '0', background: 'none', fontWeight: 'bold' }}>
-                                                            <i className="fa fa-map-marker fa-lg my-auto fs-mobile-bold" style={{ padding: 'initial' }}></i>
-                                                            <span className="fs-mobile-bold" style={{ fontSize: '14px', padding: 'inherit', color: '#014C90' }}> Sudah Pinpoint</span>
+                                                        <div className="font-size-12px-mobile" style={{ border: '0', background: 'none', fontWeight: 'bold' }}>
+                                                            <i className="fa fa-map-marker fa-lg my-auto font-size-12px-mobile" style={{ padding: 'initial' }}></i>
+                                                            <span className="font-size-12px-mobile" style={{ fontSize: '14px', padding: 'inherit', color: '#014C90' }}> Sudah Pinpoint</span>
                                                         </div>
                                                     ) : (
                                                         <div></div>
@@ -558,7 +571,7 @@ function AddressList() {
                                                     !item.Default ?
                                                         (
                                                             <li className="nav-item space-option" style={{ marginRight: '5px' }}>
-                                                                <button onClick={() => handlePrioritize(item.id, item.Default, item.Nama_Alamat)} className="nav-link fs-mobile-bold">Utamakan</button>
+                                                                <button onClick={() => handlePrioritize(item.id, item.Default, item.Nama_Alamat)} className="nav-link font-size-12px-mobile">Utamakan</button>
                                                             </li>
                                                         ) : (
                                                             <div></div>
@@ -567,7 +580,7 @@ function AddressList() {
                                                 <li className="nav-item space-option" style={{ marginRight: '5px' }}>
                                                     <a
                                                         href="/tambah_alamat/1"
-                                                        className="nav-link fs-mobile-bold"
+                                                        className="nav-link font-size-12px-mobile"
                                                         onClick={handleUpdate}
                                                         data-id={item.id}
                                                     >
@@ -575,7 +588,7 @@ function AddressList() {
                                                     </a>
                                                 </li>
                                                 <li className="nav-item p-0">
-                                                    <button onClick={() => handleDelete(item.id, item.Nama_Alamat)} className="nav-link fs-mobile-bold" >Hapus</button>
+                                                    <button onClick={() => handleDelete(item.id, item.Nama_Alamat)} className="nav-link font-size-12px-mobile" >Hapus</button>
                                                 </li>
                                             </ol>
                                         </div>

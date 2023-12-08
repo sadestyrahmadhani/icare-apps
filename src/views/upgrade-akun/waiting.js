@@ -1,6 +1,8 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 
+import bannerWaiting from '../../images/hourglass.png'
+
 function UpgradeStep3() {
     return (
         <>
@@ -18,7 +20,7 @@ function UpgradeStep3() {
                 <div className="responsive-upgrade-step3">
                     <div className="col-md-8 col-sm-4 col-12 mx-auto">
                         <div className="text-center">
-                            <img src="/images/hourglass.png" alt=""  style={{width: '24%'}}/>
+                            <img src={bannerWaiting} alt=""  style={{width: '24%'}}/>
                             <h5 className="mt-4 fw-bold title-icare" style={{fontSize: '18px'}}>APLIKASI DALAM PROSES</h5>
                             <h4 className="mt-3" style={{fontSize: '14px'}}>Aplikasi Anda sedang kami proses. Kami akan memberikan notifikasi dalam waktu 24 jam.</h4>
                         </div>

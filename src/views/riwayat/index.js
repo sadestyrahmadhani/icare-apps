@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { getRiwayatOrderByStatus } from '../../services/API/mod_riwayatOrder.js'
 
-function Riwayat() {
+function Riwayat(props) {
     const location = useLocation()
     // const history = useHistory()
     // console.log(location.state);
@@ -15,14 +15,16 @@ function Riwayat() {
     const [tabActivated, setTabActivated] = useState(location.state?.currentTabActive ?? 'all')
     const [alertVisible, setAlertVisible] = useState(false)
     const [searchActive, setSearchActive] = useState(false)
+    const [clickSearch, setClickSeacrh] = useState(false)
     // const [pageSize, setPageSize] = useState(10)
     
     const [originalData, setOriginalData] = useState([])
     const [dataRiwayatOrder, setDataRiwayatOrder] = useState([])
     const [skipData, setSkipData] = useState(0)
-    const [rowCount, setRowCount] = useState(location.state?.currentSkip ? location.state?.currentSkip + 10 : 10)
+    const [rowCount, setRowCount] = useState((location.state?.currentSkip ?? 0) + 10)
     const [searchValue, setSearchValue] = useState('')
     const [loading, setLoading] = useState(false)
+    const [defaultLoading, setDefaultLoading] = useState(props?.loading ?? true)
     const [showPopup, setShowPopup] = useState(false)
     const [alertOption, setAlertOption] = useState({title:'', message: ''})
 
@@ -53,25 +55,33 @@ function Riwayat() {
         // alert(1)
         window.history.replaceState({}, document.title)
         init(tabActivated === 'all' ? "0" : tabActivated.toString(), skipData.toString(), rowCount.toString())
+        // console.log(location.state?.currentSkip ? location.state?.currentSkip + 10 : 10);
+        // console.log(rowCount)
     }, [])
 
     const init = async (status, skip, row) => {
         setDataRiwayatOrder([])
-        setLoading(true)
+        setLoading(defaultLoading)
+        setDefaultLoading(true)
         var res = await getRiwayatOrderByStatus({status: status, skip: skip, rowcount: row})
         setLoading(false)
-        console.log(status);
+        // console.log(status);
         if(res.status == 200 && res.data !== 'Not Found') {
             var data = res.data.map(({id, namarequest, requestNo, requestd, statusid, keterangan, equipment, createdate, review}) => {
                 var requesttype = requestd.map(val => val.namarequesttype).join(', ')
                 return{id, namarequest, requestNo, requesttype, statusid, keterangan, equipment, createdate, review}
             })
-            console.log(data);
+            // console.log(data);
             setOriginalData(data)
             setDataRiwayatOrder(data)
         } else {
-            setShowPopup(true)
-            setAlertOption({title: 'Error', message: 'Oops! Terjadi kesalahan'})
+            if(res.status != 200 && res.data === 'Not Found') {
+                setShowPopup(defaultLoading)
+                setAlertOption({title: 'Error', message: 'Oops! Terjadi kesalahan'})
+            } else {
+                setShowPopup(defaultLoading)
+                setAlertOption({title: '', message: 'Belum pernah melakukan permintaan'})
+            }
         }
 
     }
@@ -89,8 +99,10 @@ function Riwayat() {
         setSkipData(0)
         setRowCount(10)
         if(status === 'all') {
+            // console.log(1);
             init("0", skipData.toString(), rowCount.toString())
         } else {
+            // console.log(2);
             init(status.toString(), skipData.toString(), rowCount.toString())
         }
     }
@@ -114,6 +126,7 @@ function Riwayat() {
             setDataRiwayatOrder(filteredData)
         } else {
             setDataRiwayatOrder(originalData)
+            setSearchValue('')
         }
     }
 
@@ -130,7 +143,7 @@ function Riwayat() {
                 return{id, namarequest, requestNo, requesttype, statusid, keterangan, equipment, createdate, review}
             })
             temp = [...originalData, ...data]
-            console.log(temp);
+            // console.log(temp);
             setOriginalData(temp)
             setDataRiwayatOrder(temp)
         }
@@ -143,10 +156,15 @@ function Riwayat() {
                     <div className="card-title col-md-3 col-12">
                         {searchActive ? (
                             <div className="d-flex align-items-center">
-                                <span className="nav-link d-inline d-md-none me-3" onClick={ () => setSearchActive(false) }>
+                                <span className="nav-link d-inline d-md-none me-3" onClick={ () => {setSearchActive(false); setClickSeacrh(false)} }>
                                     <i className="fa fa-arrow-left color-arrow-left"></i>
                                 </span>
-                                <input type="text" className="form-control search-riwayat d-md-none d-inline" placeholder="Telusuri..." style={{position:'absolute', right: 35}}></input>
+                                <form style={{ display: 'contents'}} onSubmit={(e) => e.preventDefault()}>
+                                    <input type="text" onClick={() => setClickSeacrh(true)} onKeyUp={handleSearch} className="form-control search-riwayat d-md-none d-inline" placeholder="Telusuri..." style={{position:'absolute', right: 65}} />
+                                    <button className="d-md-none d-inline" type='reset' style={{background: 'none', cursor: 'pointer', border: 0, right: 35, position: 'absolute'}} onClick={handleClear}>
+                                        <i className='fa fa-close' style={{color: clickSearch === true ? '#fff' : 'transparent'}}></i>
+                                    </button>
+                                </form>
                             </div>
                         ) : (
                             <>
@@ -165,7 +183,7 @@ function Riwayat() {
                         </Link>
                     </div>
                     <div className='d-md-flex d-none col-md-9'>
-                        <form className='w-75' onSubmit={(e) => e.preventDefault()}>    
+                        <form className='w-100' onSubmit={(e) => e.preventDefault()}>    
                             <div className="col-6 d-flex ms-auto">
                                 <span className="my-auto" style={{ color: '#014C90' }}>
                                     <i className="fa fa-search fa-fw" style={{ marginRight: 'auto' }}></i>
@@ -200,13 +218,13 @@ function Riwayat() {
 
                     {
                         dataRiwayatOrder.map((val, key) => (
-                            <RiwayatTabel tabActive={ tabActivated } skip={ skipData } key={ key } data={ val } cardBg={ cardBg } dataRiwayatOrder={ val } />
+                            <RiwayatTabel tabActive={ tabActivated } skip={skipData} init={init} key={ key } data={ val } cardBg={ cardBg } dataRiwayatOrder={ val } />
                         ))
                     }
                     {
                         dataRiwayatOrder.length >= 10 ? (
                             <div className="button-list-riwayat p-0">
-                                <button type="button" className="btn btn-list-riwayat btn-primary" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}} onClick={handleShowMore} >Lihat lebih banyak ...</button>
+                                <button type="button" className="btn btn-list-riwayat btn-primary font-size-14px-mobile" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}} onClick={handleShowMore} >Lihat lebih banyak...</button>
                             </div>
                         ) : (
                             <div></div>

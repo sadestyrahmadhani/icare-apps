@@ -8,6 +8,8 @@ import { getDaftarEq, getMasterRequest } from "../../services/API";
 import { masterRequestSupplies } from "../../services/API/mod_masterRequest";
 import { createRequest } from "../../services/API/mod_request";
 
+import uploadImage from './../../images/upload.png'
+
 function Supplies() {
     const navigate = useNavigate()
     const location = useLocation()
@@ -27,7 +29,8 @@ function Supplies() {
     const [showMoreEquipment, setShowMoreEquipment] = useState(false)
     const [equipmentList, setEquipmentList] = useState([])
     const [originalData, setOriginalData] = useState('')
-    const [showOptionAlert, setShowOptionAlert] = useState(false)
+    const [showOptionAlertMeter, setShowOptionAlertMeter] = useState(false)
+    const [showOptionAlertStatus, setShowOptionAlertStatus] = useState(false)
     const [masterCheckbox, setMasterCheckbox] = useState([])
     const [requestd, setRequestd] = useState([])
     const [isCheckBoxDisabled, setIsCheckBoxDisabled] = useState(true)
@@ -100,6 +103,18 @@ function Supplies() {
         }
     }
 
+    const handleKeyupConsumable = (e) => {
+        var id = e.currentTarget.getAttribute('data-target')
+
+        var temp = requestd.map(val => {
+        if(val.requesttypeid === id) val.description = e.currentTarget.value
+
+        return val
+        })
+
+        setRequestd(temp)
+    }
+
     const handleCheckboxRequestValue = (e) => {
         var id = e.currentTarget.getAttribute('data-id'),
             inputTarget = document.querySelector(`input[data-id="input-consumable-${id}"]`)
@@ -157,38 +172,45 @@ function Supplies() {
         }
     }
 
-    const previewImage = (e, type) => {
+    const previewImageMeter = (e) => {
         const file = e.target
         if (file.files[0]) {
             setCountFileInput(file.files.length)
             const reader = new FileReader()
             reader.onload = (e) => {
-                if (type === 'meter') {
-                    setMeterImage(file.files[0])
-                    document.getElementById('preview-image-meter').src = e.target.result
-                } else if (type === 'status') {
-                    setStatusImage(file.files[0])
-                    document.getElementById('preview-image-status').src = e.target.result
-                }
+                setMeterImage(file.files[0])
+                document.getElementById('preview-image-meter').src = e.target.result
             }
             reader.readAsDataURL(file.files[0])
         }
-        if (type === 'meter') {
-            document.getElementById('display-image-meter').classList.remove('d-none')
-            document.getElementById('display-image-meter').classList.add('d-block')
-        } else if (type === 'status') {
-            document.getElementById('display-image-status').classList.remove('d-none')
-            document.getElementById('display-image-status').classList.add('d-block')
+        document.getElementById('display-image-meter').classList.remove('d-none')
+        document.getElementById('display-image-meter').classList.add('d-block')
+    }
+
+    const previewImageStatus = (e) => {
+        const file = e.target
+        if (file.files[0]) {
+            setCountFileInput(file.files.length)
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                setStatusImage(file.files[0])
+                document.getElementById('preview-image-status').src = e.target.result
+            }
+            reader.readAsDataURL(file.files[0])
         }
+        document.getElementById('display-image-status').classList.remove('d-none')
+        document.getElementById('display-image-status').classList.add('d-block')
     }
 
-    const handleOpenOptionAlert = () => {
-        setShowOptionAlert(true)
-    }
+    // const handleOpenOptionAlert = () => {
+    //     setShowOptionAlertMeter(true)
+    //     setShowOptionAlertStatus(true)
+    // }
 
-    const handleCloseOptionAlert = () => {
-        setShowOptionAlert(false)
-    }
+    // const handleCloseOptionAlert = () => {
+    //     setShowOptionAlertMeter(false)
+    //     setShowOptionAlertStatus(false)
+    // }
 
     const handlePopup = () => {
         setShowPopup(false) 
@@ -302,7 +324,7 @@ function Supplies() {
         e.preventDefault()
         navigate(`/tambah_eq`, {
             state: {
-                redirect: -3
+                redirect: '/supplies_request'
             }
         })
     }
@@ -312,6 +334,15 @@ function Supplies() {
         navigate('/breakfix_request', {
             state: {
                 redirect: 3
+            }
+        })
+    }
+
+    const handleScanRedirect = (e) => {
+        e.preventDefault()
+        navigate('/qr-scanner', {
+            state: {
+                redirect: '/supplies_request'
             }
         })
     }
@@ -337,7 +368,7 @@ function Supplies() {
                             <div className="d-flex p-0">
                                 <div className="col-sm-11 col-9">
                                     <div className="custom-search-dropdown-supplies mb-4">
-                                        <input id="search-dropdown-supplies" onKeyUp={filteredEquipmentList} className={`form-control form-supplies shadow-none small fw-bold rounded-0 ${ errorMessageEquipmentNumber !== '' ? 'border-danger border' : '' }`} style={{border:'1px solid #797979', height:'53px'}} type="text" value={searchText} onChange={handleSearchInputChange} onClick={handleInputClick} autoComplete="off" />
+                                        <input id="search-dropdown-supplies" onKeyUp={filteredEquipmentList} className={`form-control form-eq form-supplies shadow-none small fw-bold rounded-0 ${ errorMessageEquipmentNumber !== '' ? 'border-danger border' : '' }`} style={{border:'1px solid #797979', height: '53px'}} type="text" value={searchText} onChange={handleSearchInputChange} onClick={handleInputClick} autoComplete="off" />
                                         <span className={`text-danger small ${ errorMessageEquipmentNumber !== '' ? '' : 'd-none' }`} style={{fontSize:'12px'}} >{ errorMessageEquipmentNumber }</span>
                                         {showDropdown && (
                                             <div className="dropdown-supplies" style={{position:'absolute', backgroundColor:'white', overflow:'hidden', width:'986px', top:'112px', zIndex:'1', overflowY:'auto', maxHeight:'360px', borderRight:'1px solid #797979', borderLeft:'1px solid #797979', borderTop:'1px solid #797979'}}>
@@ -362,14 +393,14 @@ function Supplies() {
                                     </button>
                                 </div>
                                 <div className="col-1 d-block d-lg-none">
-                                    <Link className="fa fa-qrcode" to='/qr-scanner' style={{fontSize: '34px', textDecoration: 'none', color: '#000', right: 5}} />
+                                    <Link className="fa fa-qrcode" onClick={handleScanRedirect} style={{fontSize: '34px', textDecoration: 'none', color: '#000', right: 5}} />
                                 </div>
                             </div>
 
                             <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                 <label className="fw-medium" style={{fontSize:'12px', color:'white'}}>Alamat/Lokasi Mesin</label>
                             </div>
-                            <div className={`form-supplies w-100 d-block md-4 ${ errorAddressOrMachineLocation !== '' ? 'border-danger border' : '' }`} style={{border:'1px solid #797979', height:'53px    '}} onChange={handleSearchInputChange}>
+                            <div className={`form-supplies w-100 d-block md-4 py-2 ${ errorAddressOrMachineLocation !== '' ? 'border-danger border' : '' }`} style={{border:'1px solid #797979'}} onChange={handleSearchInputChange}>
                                 <strong className="small"> {selectedEquipment?.Penerima} {selectedEquipment !== null ? '-' : ''} {selectedEquipment?.Nama_Alamat} </strong><br/>
                                 <strong className="small d-flex mt-0"> {selectedEquipment?.Alamat} {selectedEquipment !== null ? '-' : ''} {selectedEquipment?.Kota} </strong>
                             </div>
@@ -396,7 +427,7 @@ function Supplies() {
                                                         </div>
                                                     </div>
                                                     <div className="ms-2" style={{backgroundColor: value.color ?? 'transparent', display: 'inline-block', width: '40px', height: '25px'}}></div>
-                                                    <input type="number" className="input-consumable custom-input-number ms-3 py-md-2 py-1 my-2" onKeyDown={(e) => {if(e.currentTarget.value.length > 0 && e.keyCode != 8) e.preventDefault()}} data-target={value.Request_TypeId} data-id={`input-consumable-${value.Request_TypeId}`} style={{width:'20%'}} onClick={handleConsumableInput} disabled={isCheckBoxDisabled}></input>
+                                                    <input type="number" className="input-consumable custom-input-number ms-3 py-md-2 py-1 px-0 text-center my-2" onKeyDown={(e) => {if(e.currentTarget.value.length > 0 && e.keyCode != 8) e.preventDefault()}} onKeyUp={handleKeyupConsumable} data-target={value.Request_TypeId} data-id={`input-consumable-${value.Request_TypeId}`} style={{width:'15%', minWidth: '35px'}} onClick={handleConsumableInput} disabled={isCheckBoxDisabled}></input>
                                                 </div>
                                             </div>
                                         )
@@ -414,7 +445,7 @@ function Supplies() {
                                                             </div>
                                                         </div>
                                                         <div className="ms-2" style={{backgroundColor: value.color ?? 'transparent', display: 'inline-block', width: '40px', height: '25px'}}></div>
-                                                        <input type="number" className="input-consumable custom-input-number ms-3 py-md-2 py-1 my-2" onKeyDown={(e) => {if(e.currentTarget.value.length > 0 && e.keyCode != 8) e.preventDefault()}} data-target={value.Request_TypeId} data-id={`input-consumable-${value.Request_TypeId}`} style={{width:'20%'}} onClick={handleConsumableInput} disabled={isCheckBoxDisabled}></input>
+                                                        <input type="number" className="input-consumable custom-input-number ms-3 py-md-2 py-1 px-0 text-center my-2" onKeyDown={(e) => {if(e.currentTarget.value.length > 0 && e.keyCode != 8) e.preventDefault()}} onKeyUp={handleKeyupConsumable} data-target={value.Request_TypeId} data-id={`input-consumable-${value.Request_TypeId}`} style={{width:'15%', minWidth: '35px'}} onClick={handleConsumableInput} disabled={isCheckBoxDisabled}></input>
                                                     </div>
                                                 </div>
                                                 <div className="col-6" key={key}>
@@ -426,7 +457,7 @@ function Supplies() {
                                                             </div>
                                                         </div>
                                                         <div className="ms-2" style={{backgroundColor: masterCheckbox[customKey].color ?? 'transparent', display: 'inline-block', width: '40px', height: '25px'}}></div>
-                                                        <input type="number" className="input-consumable custom-input-number ms-3 py-md-2 py-1 my-2" onKeyDown={(e) => {if(e.currentTarget.value.length > 0 && e.keyCode != 8) e.preventDefault()}} data-target={masterCheckbox[customKey].Request_TypeId} data-id={`input-consumable-${masterCheckbox[customKey].Request_TypeId}`} style={{width:'20%'}} onClick={handleConsumableInput} disabled={isCheckBoxDisabled}></input>
+                                                        <input type="number" className="input-consumable custom-input-number ms-3 py-md-2 py-1 px-0 text-center my-2" onKeyDown={(e) => {if(e.currentTarget.value.length > 0 && e.keyCode != 8) e.preventDefault()}} onKeyUp={handleKeyupConsumable} data-target={masterCheckbox[customKey].Request_TypeId} data-id={`input-consumable-${masterCheckbox[customKey].Request_TypeId}`} style={{width:'15%', minWidth: '35px'}} onClick={handleConsumableInput} disabled={isCheckBoxDisabled}></input>
                                                     </div>
                                                 </div>
                                             </>
@@ -447,18 +478,18 @@ function Supplies() {
                                     <label className="fw-medium" style={{fontSize:'12px', color:'white'}}>Photo Meter</label>
                                 </div>
                                 <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'14px', color:'pink'}}>Please upload photo meter information on machine</p>
-                                <input type="file" className="d-none" id="input-file-meter" onChange={(e) => previewImage(e, 'meter')} accept="image/*" />
+                                <input type="file" className="d-none" id="input-file-meter" onChange={previewImageMeter} accept="image/*" />
                                 <label className="file-icon mb-3 d-block text-center d-md-block d-none" htmlFor="input-file-meter">
                                     <div className="rounded-circle p-2 mx-auto" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px'}}>
-                                        <img className="mt-1" src="images/upload.png" style={{width:'22px'}}></img>
+                                        <img className="mt-1" src={ uploadImage } style={{width:'22px'}}></img>
                                     </div>
                                 </label>
-                                <label className="file-icon mb-3 d-block text-center d-md-none d-block" onClick={handleOpenOptionAlert}>
+                                <label className="file-icon mb-3 d-block text-center d-md-none d-block" onClick={() => setShowOptionAlertMeter(true)}>
                                     <div className="rounded-circle p-2 mx-auto" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px'}}>
                                         <i className="fa fa-camera fs-2 my-1"></i>
                                     </div>
                                 </label>
-                                <div className="d-none col-md-6 col-sm-8 mx-auto my-5 text-center" id="display-image-meter">
+                                <div className="d-none col-md-6 col-8 mx-auto my-5 text-center" id="display-image-meter">
                                     <img className="w-100" src="#" alt="" id="preview-image-meter" />
                                 </div>
                             </div>
@@ -468,31 +499,30 @@ function Supplies() {
                                     <label className="fw-medium" style={{fontSize:'12px', color:'white'}}>Photo Status Consumable</label>
                                 </div>
                                 <p className="text-decoration-underline fw-medium fst-italic text-center mt-3" style={{fontSize:'14px', color:'pink'}}>Please upload photo status consumable on machine</p>
-                                <input type="file" className="d-none" id="input-file-status" onChange={(e) => previewImage(e, 'status')} accept="image/*" />
+                                <input type="file" className="d-none" id="input-file-status" onChange={previewImageStatus} accept="image/*" />
                                 <label className="file-icon mb-3 d-block text-center d-md-block d-none" htmlFor="input-file-status">
                                     <div className="text-center rounded-circle p-2 mx-auto" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px'}}>
-                                        <img className="mt-1" src="images/upload.png" style={{width:'22px'}}></img>
+                                        <img className="mt-1" src={ uploadImage } style={{width:'22px'}}></img>
                                     </div>
                                 </label>
-                                <label className="file-icon mb-3 d-block text-center d-md-none d-block" onClick={handleOpenOptionAlert}>
+                                <label className="file-icon mb-3 d-block text-center d-md-none d-block" onClick={() => setShowOptionAlertStatus(true)}>
                                     <div className="text-center rounded-circle p-2 mx-auto" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px'}}>
                                         <i className="fa fa-camera fs-2 my-1"></i>
                                     </div>
                                 </label>
-                                <div className="d-none col-md-6 col-sm-8 mx-auto my-5 text-center" id="display-image-status">
+                                <div className="d-none col-md-6 col-8 mx-auto my-5 text-center" id="display-image-status">
                                     <img className="w-100" src="#" alt="" id="preview-image-status" />
                                 </div>
                             </div>
-
                             <div className="col-md-12 text-center d-flex justify-content-center">
                                 <button className="btn btn-login py-2 px-5" style={{fontSize:'14px', maxWidth:'200px'}}>Submit</button>
                             </div>
-                            
                         </div>
                     </form>
                     <LoadingAlert visible={loading} customClass="col-md-2 col-8" />
                     <ConfirmAlert visible={showPopup} titleMessage={alertOption.title} message={alertOption.message} customClass="col-md-3 col-sm-8 col-8" onClick={handlePopup} />
-                    <OptionAlert visible={showOptionAlert} message="Ambil foto dari" customClass="col-sm-3" onClick={handleCloseOptionAlert}/>
+                    <OptionAlert visible={showOptionAlertMeter} message="Ambil foto dari" customClass="col-sm-3" handlePopup={() => setShowOptionAlertMeter(false)} previewImage={previewImageMeter} />
+                    <OptionAlert visible={showOptionAlertStatus} message="Ambil foto dari" customClass="col-sm-3" handlePopup={() => setShowOptionAlertStatus(false)} previewImage={previewImageStatus} />
                 </div>
             </div>
         </div>

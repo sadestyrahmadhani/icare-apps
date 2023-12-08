@@ -1,6 +1,8 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 
+import mapImage from './../../images/map.png'
+
 export default class extends Component {
     render(){
         return(
@@ -67,7 +69,7 @@ export default class extends Component {
                                         </div>
                                         <div className="row">
                                             <div className="col-1 mb-2">
-                                                <img src="/images/map.png" alt="" style={{width: '60px'}}/>
+                                                <img src={ mapImage } alt="" style={{width: '60px'}}/>
                                             </div>
                                             <div className="col-11 mb-2">
                                                 <input type="text" className="border-only-bottom" style={{fontSize: '14px', width: '-webkit-fill-available', paddingTop: '30px'}}/>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import bannerUpgrade from '../../images/upgrade.png'
 
 function UpgradeStep1() {
     return (
@@ -20,7 +21,7 @@ function UpgradeStep1() {
                 <div className="col-md-7 col-sm-5 col-9 mx-auto">
                     <div className="card mb-4 px-2 px-md-2 text-center border border-dark" style={{ borderRadius: '20px' }}>
                         <div className="card-body p-lg-4 px-0">
-                            <img src="/images/upgrade.png" alt="" style={{ width: '28%' }} />
+                            <img src={bannerUpgrade} alt="" style={{ width: '28%' }} />
                             <h5 className="mt-4 fw-bold title-icare" style={{ fontSize: '16px' }}>Upgrade akun iCare anda untuk dapat melakukan Consumable Request</h5>
                         </div>
                     </div>

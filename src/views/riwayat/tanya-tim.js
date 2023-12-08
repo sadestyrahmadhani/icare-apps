@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 import { getDetailRiwayatOrder, getDataHelpDesk, createQuestionHelpDesk } from "../../services/API";
 import LoadingAlert from "../../component/alert/loadingAlert";
 
@@ -9,9 +9,15 @@ function Chat() {
     const [chatContainerRef, setChatContainerRef] = useState(null);
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(true)
+    const [scrollMode, setScrollMode] = useState(false)
+    const [mobileMode, setMobileMode] = useState(false)
     const [messageRows, setMessageRows] = useState(1)
+    const [chatHeight, setChatHeight] = useState(410)
     const { id } = useParams()
+    const maxRows = 1
 
+    const location = useLocation()
+    const navigate = useNavigate()
     const chatRef = useRef(null)
 
     useEffect(() => {
@@ -21,11 +27,18 @@ function Chat() {
             if (chatContainerRef) {
                 chatContainerRef.scrollTop = chatContainerRef.scrollHeight;
             }
+
+            // if (window.innerHeight <= 768) {
+            if (window.innerHeight <= 900) {
+                const newChatHeight = window.innerHeight
+                setChatHeight(newChatHeight)
+                setMobileMode(true)
+            }
         })
-    }, [chatContainerRef]);
+    }, [chatContainerRef, window.innerHeight]);
 
     const getDataRiwayatOrder = async () => {
-        const res = await getDetailRiwayatOrder(id)
+        const res = await getDetailRiwayatOrder(location.state?.id)
         const response = await getDataHelpDesk(res.data.requestNo)
 
         if (res.status === 200 && response.status === 200) {
@@ -53,20 +66,35 @@ function Chat() {
         }
     }
 
+    const adjustTextAreaRows = (textarea) => {
+        const value = textarea.value || ''
+        const rows = value.split('\n').length
+        setMessageRows(rows > maxRows ? maxRows : rows)
+        setScrollMode(rows > maxRows)
+    }
+
     const handleChat = (e) => {
         // e.preventDefault()
         setMessage(e.target.value)
-        const lineCount = (e.target.value.match(/\n/g) || []).length + 1;
-        setMessageRows(lineCount > 4 ? 4 : lineCount); 
+        adjustTextAreaRows(e.target.value)
+        // const lineCount = (e.target.value.match(/\n/g) || []).length + 1;
+        // setMessageRows(lineCount > 4 ? 4 : lineCount); 
     }
 
     const handleEnter = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault()
-            if (messageRows < 4) {
-                setMessage((prevMessage) => prevMessage + '\n')
-                setMessageRows((prevRows) => prevRows + 1)
-            }
+            setMessage((prevMessage) => prevMessage + '\n')
+            setMessageRows(maxRows)
+            setScrollMode(true)
+            // if (messageRows < 4) {
+            //     setMessage((prevMessage) => prevMessage + '\n')
+            //     setMessageRows((prevRows) => prevRows + 1)
+            // } else {
+            //     setMessage((prevMessage) => prevMessage + '\n')
+            //     setMessageRows((prevRows) => prevRows + 1)
+            //     setScrollMode(true)
+            // }
         }
     }
 
@@ -85,6 +113,25 @@ function Chat() {
         const milliseconds = String(currentDate.getMilliseconds()).padStart(3, '0');
 
         return `${year}-${month}-${date}T${hours}:${minutes}:${seconds}.${milliseconds}`;
+    }
+
+    const limitChar = (text, limit, surfix) => {
+        var a = ""
+        for (var i = 0; i < limit; i++) {
+            a += text.charAt(i)
+        }
+        a += surfix
+        return a
+    }
+
+    const handleGoBack = (e) => {
+        e.preventDefault()
+        
+        navigate('/detail_permintaan', {
+            state: {
+                id : location.state?.id
+            }
+        })
     }
 
 
@@ -127,6 +174,8 @@ function Chat() {
             }
         }
     }
+    console.log(chatHeight);
+    console.log(mobileMode);
 
     return (
         <>
@@ -139,7 +188,7 @@ function Chat() {
                 </div> */}
                 <div className="responsive-bar" style={{ alignItems: 'baseline', height: '55px' }}>
                     <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{ fontSize: '18px' }}>
-                        <Link className="nav-link d-inline me-3" to={`/detail_permintaan/${dataRiwayatOrder.id}`}>
+                        <Link className="nav-link d-inline me-3" onClick={handleGoBack}>
                             <i className="fa fa-arrow-left color-arrow-left" style={{ color: '#014C90' }}></i>
                         </Link>
                         <span className="title-bold" style={{ borderBottom: '3px solid #014C90' }}>Tim Support iCare</span>
@@ -150,21 +199,22 @@ function Chat() {
                         <div className="card-body">
                             <div className="row">
                                 <div className="card-support d-flex p-0" style={{ height: '400px', border: '2px solid black', borderRadius: '10px', backgroundColor: 'white' }}>
-                                    <div className="col-md-3 text-center info px-lg-2 px-md-2" style={{ fontSize: '13px', borderRadius: '10px 0 0 10px', backgroundColor: 'white' }}>
+                                    <div className="col-md-3 text-center info px-lg-2 px-md-2" style={{overflow: 'auto', fontSize: '13px', borderRadius: '10px 0 0 10px', backgroundColor: 'white' }}>
                                         <p className={`title-icare mt-4 fw-bold fs-5 mb-0 request ${isQuestion(dataRiwayatOrder) ? 'request' : 'response'}`}>{dataRiwayatOrder.namarequest}</p>
                                         <p className="mt-2 mb-0 date">{dataRiwayatOrder.createdate}</p>
                                         <p className="mt-2 mb-0 code-request">{dataRiwayatOrder.requestNo}</p>
                                         <p className="mt-2 mb-0 noeq">{handleEq()}</p>
+                                        {/* <p className="mt-2 note">{limitChar(`${getNameRequestType()}`, 70, "...")}</p> */}
                                         <p className="mt-2 note">{getNameRequestType()}</p>
                                     </div>
-                                    <div className="col-md-8 chat" ref={(ref) => setChatContainerRef(ref)} style={{ backgroundColor: '#bfbfbf', width: '804px', borderLeft: '3px solid #014C90', borderRadius: '0 10px 10px 0', position:'relative'}} >
+                                    <div className="col-md-8 chat" ref={(ref) => setChatContainerRef(ref)} style={{ height: mobileMode ? `${chatHeight} !important` : '396px', backgroundColor: '#bfbfbf', width: '804px', borderLeft: '3px solid #014C90', borderRadius: '0 10px 10px 0', position:'relative' }} >
                                         <div className="card-chat px-3" style={{maxHeight: '348px', overflowY: 'auto', position:'relative' }}>
                                             {
                                                 dataChat.map((item, index) => (
                                                     <div
                                                         key={index}
                                                         className={"card-buble card-bubble-chat d-md-block d-block"}
-                                                        style={{ backgroundColor: isQuestion(item) ? '#B0E0E6' : 'white', width: 'fit-content', maxWidth: '350px', height: 'fit-content', borderRadius: isQuestion(item) ? '5px 0 5px 5px' : '0 5px 5px 5px', marginTop: '5px', marginLeft: isQuestion(item) ? 'auto' : '0px' }}>
+                                                        style={{ backgroundColor: isQuestion(item) ? '#B0E0E6' : 'white', width: 'fit-content', maxWidth: '350px', height: 'fit-content', borderRadius: isQuestion(item) ? '5px 0 5px 5px' : '0 5px 5px 5px', marginTop: '15px', marginLeft: isQuestion(item) ? 'auto' : '0px' }}>
                                                         <p className="p-1 px-2 pe-3 mb-0" style={{ fontSize: '12px' }}>{item.Description}</p>
                                                         <p className="p-lg-1 p-md-1 p-1 py-0" style={{ fontSize: '12px', textAlign: 'right', marginBottom: '10px' }}>{item.CreateDate.split('T')[1].slice(0, 5)}</p>
                                                     </div>
@@ -172,9 +222,9 @@ function Chat() {
                                             }
                                         </div>
                                         <div className="card-message-send" style={{...cardMessageSendPosition}} >
-                                            <form onSubmit={submit} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
+                                            <form onSubmit={submit} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: '5px'}}>
                                                 {/* <input className="no-hover mx-2 mt-2 input-chat" type="text" style={{width:'92%', height:'auto', border:'2px solid #014C90', borderRadius:'5px', paddingLeft:'10px'}} onChange={handleChat} value={message} onKeyDown={handleEnter}/> */}
-                                                <textarea rows={messageRows} className="no-hover mx-2 mt-2 input-chat" style={{width: '92%', height: 'auto', border: '2px solid #014C90', borderRadius: '5px', paddingLeft: '10px'}} onChange={handleChat} value={message} onKeyDown={handleEnter}></textarea>
+                                                <textarea rows={messageRows} className="no-hover mx-2 mt-2 input-chat" style={{width: '92%', height: 'auto', resize:'none', border: '2px solid #014C90', borderRadius: '5px', paddingLeft: '10px', overflowY: messageRows >= 4 && scrollMode ? 'scroll' : ''}} onChange={handleChat} value={message} onKeyDown={handleEnter}></textarea>
                                                 <button type="submit" style={{ height: '95%', border: 'none', background: 'none', paddingRight: '15px' }}>
                                                     <i className="fa fa-paper-plane mx-1" style={{ color: '#014C90' }}></i>
                                                 </button>

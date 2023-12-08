@@ -248,7 +248,11 @@ body {
 /*tulis review*/
 .review-text::placeholder {
     display: none;
-    color: #bfbfbf;
+    color: #d0d0d0;
+}
+
+.card-review {
+    border: 1px solid black;
 }
 
 
@@ -768,8 +772,6 @@ td {
     background-color: #014C90;
     color: #ffffff !important;
 }
-/* .btn-download:hover span {
-} */
 
 .card-message-send {
     height: 12%;
@@ -784,12 +786,22 @@ td {
     /* white-space: normal; */
 }
 
+.responsive-member {
+    border: none !important;
+    box-shadow: var(--bs-box-shadow)!important;
+    background: white !important;
+}
+
 /* Media Query */
 @media(max-width: 768px) {
 
     .space-option {
         padding: 0px !important;
         margin-right: 10px !important;
+    }
+
+    .font-size-14px-mobile {
+        font-size: 14px !important;
     }
 
     .font-size-12px-mobile, .label-supplies {
@@ -818,6 +830,12 @@ td {
     .text-help {
         font-size: 12px !important;
         line-height: 17px !important;
+    }
+    .margin-top-52px {
+        margin-top: 52px !important;
+    }
+    .margin-top-49px {
+        margin-top: 49px !important;
     }
 
     /* bottom-bar */
@@ -925,8 +943,9 @@ td {
     }
 
     .cp-mobile {
-        position: fixed;
-        bottom: 0;
+        position: absolute;
+        /* top: 90vh; */
+        bottom: 10px !important;
         left: 0;
         right: 0;
         font-size: 12px;
@@ -1071,11 +1090,11 @@ td {
     }
 
     .input-mobile .size-13px {
-        background: #014C90;
-        width: 100%;
-        padding-top: 4px;
-        padding-bottom: 4px;
-        padding-left: 5px;
+            background: #014C90;
+            width: 100%;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            padding-left: 5px;
     }
 
     .input-mobile label {
@@ -1132,7 +1151,7 @@ td {
     }
 
     .form-breakfix {
-        height: 35px !important;
+        /* height: 35px !important; */
         font-size: 12px;
     }
 
@@ -1193,7 +1212,7 @@ td {
     }
 
     .form-supplies {
-        height: 35px !important;
+        /* height: 35px !important; */
         font-size: 12px;
     }
 
@@ -1246,6 +1265,18 @@ td {
         border: none !important;
         box-shadow: none !important;
     }
+    
+    .center-edit-pass {
+        height: 100vh;
+        display: flex;
+        align-items: center !important;
+        justify-content: center !important;
+        /* padding-left: 0 !important; */
+    }
+/* 
+    .custom-width {
+        width: 100% !important;
+    } */
 
     .responsive-ubah-pass .label-update {
         font-size: 15px !important;
@@ -1471,8 +1502,12 @@ td {
     }
 
     .form-install {
-        height: 35px !important;
+        /* height: 35px !important; */
         font-size: 12px;
+    }
+
+    .form-eq {
+        height: 35px !important;
     }
 
     .dropdown-install {
@@ -1486,10 +1521,6 @@ td {
     }
 
     /* Alamat */
-    .h-address {
-        height: 61px !important;
-    }
-
     .responsive-address {
         margin-top: -25px !important;
     }
@@ -1515,20 +1546,12 @@ td {
         text-align: center !important;
     }
 
-    .fs-mobile {
-        font-size: 11px !important;
-    }
-
-    .fs-mobile-bold {
-        font-size: 12px !important;
-    }
-
     .icon-maps {
         width: calc(100% ) !important;
     }
 
     .verified-icon {
-        width: 100% !important;
+        width: 60% !important;
     }
 
     .responsive-eq img {
@@ -1536,10 +1559,16 @@ td {
     }
 
     /* Tulis Review Rating */
-    .responsive-tulis-review {
+    .responsive-tulis-review .card {
         border: none !important;
         box-shadow: none !important;
-        margin-top: 15%;
+        border-radius: 0 !important;
+    }
+
+    .card-review {
+        box-shadow: 1px 5px 5px 1px rgb(218, 213, 213) !important;
+        border: none !important;
+        margin-top: -15px !important;
     }
 
     .review-container .mt-2 {
@@ -1549,6 +1578,17 @@ td {
 
     .review-container .review-text {
         padding: 0 !important;
+    }
+
+    .review-text {
+        border-bottom: 2px solid grey !important;
+        border-radius: 0 !important;
+        max-height: 180px !important;
+    }
+
+    .review-text::placeholder {
+        display: none;
+        color: grey !important;
     }
 
     /* Collect Meter */
@@ -1607,7 +1647,7 @@ td {
         border: 2px solid #014C90;
         border-radius: 10px !important;
         width: 90% !important;
-        height: 17% !important;
+        height: 20% !important;
         box-shadow: 1px 1px 5px 1px gray !important;
     }
 
@@ -1632,17 +1672,17 @@ td {
         border-left: none !important;
         border-top: 3px solid #014C90;
         border-radius: 0 !important;
-        height: 490px !important;
+        height: 370px !important;
         margin-top: 50% !important;
         /* box-shadow: 0px 1px 2px 0px gray !important; */
     }
 
     .card-chat {
-        max-height: 420px !important;
+        max-height: 370px !important;
     }
 
     .card-bubble-chat {
-        /* margin-top: 5% !important; */
+        /* margin-top: 15% !important; */
         width: 50% !important;
         /* margin-left: 75% !important; */
     }
@@ -1652,6 +1692,11 @@ td {
         border-radius: 0 !important;
         /* height: 10% !important; */
         /* box-shadow: 0 1px 2px 0 gray !important; */
+    }
+
+    .card-message-send .fa {
+        font-size: 135% !important;
+        margin-top: 10px !important;
     }
 
     .input-chat {
@@ -1698,16 +1743,10 @@ td {
         padding: 10px !important;
     }
 
-    .responsive-detail-permintaan .col-11 {
-        margin-left: 20px !important;
-    }
-
-    .responsive-detail-permintaan .col-10 {
-        width: 55% !important;
-    }
-
-    .responsive-detail-permintaan .col-3 {
-        width: 55% !important;
+    .responsive-detail-permintaan {
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
     }
 
     .internal-proses {
@@ -1812,6 +1851,37 @@ td {
 
     .w-75 {
         width: 75%!important;
+    }
+
+    .responsive-member {
+        border: none !important;
+        box-shadow: none !important;
+        background: white !important;
+    }
+
+    .button-action-history {
+        align-items: normal !important;
+        margin-left: auto !important;
+        margin-right: 0 !important;
+        max-width: 50% !important;
+    }
+
+    .button-action-history .w-100 {
+        margin-top: auto !important;
+        margin-bottom: auto !important;
+    }
+
+    .button-view-detail {
+        margin-right: 2px !important;
+        margin-left: auto !important;
+    }
+
+    .btn-view {
+        max-width: 50% !important;
+    }
+
+    .column-btn {
+        display: flex !important;
     }
 }   
 
@@ -1938,4 +2008,58 @@ ul[role="listbox"] li:hover {
 
 .tracking-item:nth-last-child(-n + 1)::after {
     display: none!important;
+}
+
+/* Tracking Alert */
+
+.close-track {
+    margin-left: -30px !important;
+}
+
+.card-data {
+    margin: 15px !important;
+}
+
+.data-track {
+    margin-left: 2px !important;
+    margin-right: 5px !important;
+}
+
+@media(max-width: 768px) {
+    .row-reverse {
+        flex-direction: column-reverse;
+    }
+
+    .tracking-item .track-icon .track-icon-container img {
+        width: 30px !important;
+    }
+
+    .track-icon {
+        padding: 0px 10px 10px 10px !important;
+    }
+
+    .w-95-mobile {
+        width: 95% !important;
+    }
+
+    .margin-left {
+        margin-left: 3rem !important;
+    }
+
+    .w-input-mobile {
+        width: 67% !important;
+    }
+
+    /* .element{
+        position:absolute;
+        top:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.4) ;
+        z-index: 9999;
+        
+        -webkit-clip-path: polygon(0% 0%, 0% 100%, 25% 100%, 25% 25%, 75% 25%, 75% 75%, 25% 75%, 25% 100%, 100% 100%, 100% 0%);
+        clip-path: polygon(0% 0%, 0% 100%, 25% 100%, 25% 25%, 75% 25%, 75% 75%, 25% 75%, 25% 100%, 100% 100%, 100% 0%);
+        
+      } */
 }

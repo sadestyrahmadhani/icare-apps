@@ -8,8 +8,6 @@ export default class extends Component {
         // input.capture = source === "CAMERA" ? "environment" : "user"
         if(source === "CAMERA") {
             input.capture = "environment"
-        } else {
-            input.capture = ""
         }
 
         input.onchange = this.props.previewImage

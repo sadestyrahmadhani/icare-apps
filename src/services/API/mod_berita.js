@@ -4,9 +4,9 @@ import axios from 'axios';
 
 export const getDataBerita = async () => {
     try {
-        const res = await fetch('http://documentsolution.com/api/berita', {
+        const res = await fetch('https://documentsolution.com/api/berita', {
             method: 'GET',
-            mode: 'cors'
+            // mode: 'cors'
             // ...jsonHeader()
         })
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import { getCollectMeterById, getImageCollectMeter } from "../../services/API";
 import LoadingAlert from "../../component/alert/loadingAlert";
 
@@ -12,16 +12,18 @@ function DetailHistoryMeter() {
   const { id } = useParams()
 
   const navigate = useNavigate()
+  const location = useLocation()
   
 
   useEffect(() => {
+    // console.log(location.state)
       detailDataCollectMeter()
-  }, [id]);
+  }, []);
 
   const detailDataCollectMeter = async () => {
     setLoading(true)
-    const res = await getCollectMeterById(id)
-    const response = await getImageCollectMeter(id)
+    const res = await getCollectMeterById(location.state?.id)
+    const response = await getImageCollectMeter(location.state?.id)
     setLoading(false)
     // console.log(res)
     if(res.status == 200 && response.status == 200){

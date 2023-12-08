@@ -9,6 +9,8 @@ import UploadFileAlert from "../../component/alert/uploadFileAlert";
 import ErrorAlert from "../../component/alert/errorAlert";
 import { deleteDaftarEq, getDaftarEq, getDownloadEquipment, UploadEquipment } from "../../services/API/mod_daftarEQ";
 import { NavDropdown } from "react-bootstrap";
+import verifiedImage from './../../images/Verified.png'
+
 function DaftarEQ() {
     const { id } = useParams()
     const location = useLocation()
@@ -25,8 +27,9 @@ function DaftarEQ() {
     const [searchActive, setSearchActive] = useState(false)
     const [isActive, setIsActive] = useState(false)
     const [showPopupUpload, setShowPopupUpload] = useState(false)
-    const [itemDaftarEQ, setItemDaftarEQ] = useState(5)
+    const [itemDaftarEQ, setItemDaftarEQ] = useState(10)
     const [showMoreDaftarEQ, setShowMoreDaftarEQ] = useState(true)
+    const [clickSearch, setClickSearch] = useState(false)
     const inputFileRef = React.useRef();
 
     useEffect(() => {
@@ -40,18 +43,22 @@ function DaftarEQ() {
         if(res.status == 200) {
             setDaftarEQ(res.data.Table)
             setOriginalData(res.data.Table)
-            // console.log(res)
+
+            if (res.data.Table.length < itemDaftarEQ) {
+                setShowMoreDaftarEQ(false)
+            } else {
+                setShowMoreDaftarEQ(true)
+            }
         }
     }
 
     const handleUpdate = (e) => {
-        // console.log(e.target)
         e.preventDefault()
-        var item = 
-        JSON.parse(e.target.getAttribute('data-item'))
+        var item = JSON.parse(e.target.getAttribute('data-item'))
         navigate(e.target.getAttribute('href'), {
             state: {
                 input: {
+                    id: item.id,
                     equipment: item.equipment.toString(),
                     modelName: item.eqmodelName,
                     description: item.description,
@@ -79,6 +86,7 @@ function DaftarEQ() {
         setShowSuccessPopup(false)
         daftarEq()
         setShowPopupUpload(false)
+        document.getElementById('keyword').value = '';
     }
 
     const handleDeletedItem = (noEQToDelete) => {
@@ -120,22 +128,22 @@ function DaftarEQ() {
             setLoading(true)
             const res=await UploadEquipment(file)
             e.target.value=null
-            console.log('upload equipment',res)
+            // console.log('upload equipment',res)
             if (res.result=="Sukses") {
-                console.log("masuk error")
+                // console.log("masuk error")
                 setShowSuccessPopup(true)
-                setAlertOption({ title: 'Upload', message: `Sukses`, redirect: false })
+                setAlertOption({ title: 'Upload', message: `Berhasil upload`, redirect: false })
                 daftarEq()
             }else{
-                console.log("masuk error")
+                // console.log("masuk error")
                 setShowErrorPopup(true)
                 let message=""
                 if (res.error){                    
-                    message+="<ul>"
+                    message+="<p>"
                     res.error.forEach(e=>{
-                        message+="<li>"+ e +"</li>"
+                        message+="<span>"+ e +"</span>"
                     })
-                    message+="</ul>"
+                    message+="</p>"
                 }
                 setAlertOption({ title: res.result, message: message, redirect: false })
             }
@@ -149,8 +157,30 @@ function DaftarEQ() {
         if(e.target.value != '') {
             var filterData = originalData.filter(val => (val.equipment.toString().toLowerCase().includes(e.target.value.toLowerCase())) || val.eqmodelName.toLowerCase().includes(e.target.value.toLowerCase()) || val.description.toLowerCase().includes(e.target.value.toLowerCase()))
             setDaftarEQ(filterData)
+
+            if (filterData.length < itemDaftarEQ) {
+                setShowMoreDaftarEQ(false)
+            } else {
+                setShowMoreDaftarEQ(true)
+            }
         } else {
             setDaftarEQ(originalData)
+
+            if (originalData.length > itemDaftarEQ) {
+                setShowMoreDaftarEQ(true)
+            } else {
+                setShowMoreDaftarEQ(false)
+            }
+        }
+    }
+
+    const handleResetSearch = () => {
+        setDaftarEQ(originalData)
+
+        if ( originalData.length > itemDaftarEQ ) {
+            setShowMoreDaftarEQ(true)
+        } else {
+            setShowMoreDaftarEQ(false)
         }
     }
 
@@ -162,6 +192,11 @@ function DaftarEQ() {
         }
     }
 
+    const handleReset = () => {
+        setDaftarEQ(originalData)
+        setShowMoreDaftarEQ(true)
+    }
+
     const handleShowMoreDaftarEQ = () => {
         const showItem = 5
         const newItemDaftarEQ = itemDaftarEQ + showItem
@@ -170,6 +205,8 @@ function DaftarEQ() {
 
         if(newItemDaftarEQ >= daftarEQ.length) {
             setShowMoreDaftarEQ(false)
+        } else {
+            setShowMoreDaftarEQ(true)
         }
     }
 
@@ -215,8 +252,6 @@ function DaftarEQ() {
     //     }
     // }
 
-        
-    // const buttonDaftarEQ = daftarEQ.length > 10;
     
     return (
         <>
@@ -229,9 +264,17 @@ function DaftarEQ() {
                                     <span className="nav-link d-inline d-md-none me-3" onClick={() => setSearchActive(false)}>
                                         <i className="fa fa-arrow-left color-arrow-left"></i>
                                     </span>
-                                    <input type="text" onKeyUp={handleSearch} className="form-control search-riwayat" placeholder="Telusuri..." style={{position: 'absolute', right: 35}} />
+                                    <form style={{display: 'contents'}} onSubmit={(e) => e.preventDefault()}>
+                                    <input type="text" id="keyword" onClick={() => setClickSearch(true)} onKeyUp={handleSearch} className="form-control search-riwayat" placeholder="Telusuri..." style={{position: 'absolute', right: 65}} />
+                                    <button className="d-md-none d-inline" type="reset" style={{background: 'none', cursor: 'pointer', border: 0, right: 35, position: 'absolute'}} onClick={handleResetSearch}>
+                                        <i className="fa fa-close" style={{color: clickSearch === true ? '#fff' : 'transparent'}}></i>
+                                    </button>
+                                    {/* <button className="d-md-none d-inline" type="reset" style={{background: 'none', cursor: 'pointer', border: 0, right: 35, position: 'absolute'}} onClick={() => setDaftarEQ(originalData)}>
+                                        <i className="fa fa-close" style={{color: clickSearch === true ? '#fff' : 'transparent'}}></i>
+                                    </button> */}
+                                    </form>
                                     <NavDropdown className={`custom-dropdown text-white ${isActive ? 'active-link' : ''}`} onClick={() => handleNavClick('active')} id="nav-dropdown" title={<i className="fa fa-ellipsis-v d-md-none nav-app" style={{fontSize: '20px',}}></i>} style={{position: 'absolute', right: 20, zIndex: '1111'}}>
-                                        <NavDropdown.Item href="/tambah_eq/0">
+                                        <NavDropdown.Item href="/tambah_eq">
                                             <div className="item-drop d-flex align-items-center">
                                                 <div className="col-9">
                                                     <span className="text-decoration-none nav-app" style={{color: '#000'}}>Tambah EQ</span>
@@ -251,7 +294,7 @@ function DaftarEQ() {
                                         </h4>
                                     </div>
                                     <div className="col-2 d-md-none d-block text-center">
-                                        <Link to="/tambah_eq/0">
+                                        <Link to="/tambah_eq">
                                             <i className="fa fa-plus-circle" style={{fontSize: '20px'}}></i>
                                         </Link>
                                     </div>
@@ -268,14 +311,17 @@ function DaftarEQ() {
                 </div>
                 <div className="d-md-flex d-none">
                     <div className="col-sm-8" style={{marginRight:'10%'}}>
-                        <form className="d-flex" style={{ width: '108%' }}>
+                        <form className="d-flex" style={{ width: '108%' }} onSubmit={(e) => e.preventDefault()}>
                             <span className="my-auto" style={{color: '#014C90'}}>
                                 <i className="fa fa-search fa-fw" style={{marginRight: 'auto'}}></i>
                             </span>
-                            <input type="text" onKeyUp={handleSearch} className="form-control me-2 border-0 border-only-bottom" style={{fontSize: '14px', marginLeft: '5px', color: 'black'}} />
-                            <button style={{margin: 'auto', cursor: 'pointer', border: '0', background: 'none' }} type="reset" onClick={() => setDaftarEQ(originalData)}>
+                            <input type="text" id="keyword" onKeyUp={handleSearch} className="form-control me-2 border-0 border-only-bottom" style={{fontSize: '14px', marginLeft: '5px', color: 'black'}} />
+                            <button style={{margin: 'auto', cursor: 'pointer', border: '0', background: 'none' }} type="reset" onClick={handleResetSearch}>
                                 <i className="fa fa-close"></i>
                             </button>
+                            {/* <button style={{margin: 'auto', cursor: 'pointer', border: '0', background: 'none' }} type="reset" onClick={() => setDaftarEQ(originalData)}>
+                                <i className="fa fa-close"></i>
+                            </button> */}
                         </form>
                     </div>
                     <div className="col-md-8 col-3 text-end px-0">
@@ -297,7 +343,7 @@ function DaftarEQ() {
                     </div>                    
                 </div>
             </div>
-                <div className="card shadow border-0 px-lg-4 px-md-4 py-lg-4 py-md-4 pb-lg-0 responsive-form" style={{borderRadius:'20px'}}>
+                <div className="card shadow border-0 px-lg-4 px-md-4 py-lg-4 py-md-4 pb-lg-0 responsive-form" style={{paddingLeft:'10px', paddingRight:'10px'}}>
                     <div className="card-body">
                         <div className="row">
                             {
@@ -305,27 +351,27 @@ function DaftarEQ() {
                                     !value.deleted && (
                                     <div className="card-eq d-flex mb-lg-5 mb-3" key={value.id} style={{borderRadius:'10px', boxShadow:'1px 1px 2px 2px #bfbfbf'}}>
                                         <div className="col-lg-9 col-7 px-2 pt-0">
-                                            <p className="mb-0 mt-2 fw-bold font-eq" style={{fontSize:'15px'}}>{value.equipment}</p>
-                                            <p className="title-icare fw-bold mb-0 font-eq" style={{fontSize:'15px'}}>{value.eqmodelName}</p>
-                                            <p className="fw-bold font-eq" style={{fontSize:'14px'}}>{value.description}</p>
+                                            <p className="mb-0 mt-2 fw-bold font-size-11px-mobile" style={{fontSize:'14px'}}>{value.equipment}</p>
+                                            <p className="title-icare fw-bold mb-0 font-size-11px-mobile" style={{fontSize:'14px'}}>{value.eqmodelName}</p>
+                                            <p className="fw-bold font-size-11px-mobile" style={{fontSize:'14px'}}>{value.description}</p>
                                         </div>
                                         <div className="col-lg-3 col-5 d-lg-flex responsive-eq mb-2 py-2 text-center">
                                             <div className="col-lg-4 col-2 text-position-right ">
-                                                <a href={`/tambah_eq/${value.id}`}
+                                                <a href={'/tambah_eq'}
                                                     className="text-decoration-none "
                                                     onClick={handleUpdate}
                                                     data-item={JSON.stringify(value)}
                                                 >
-                                                        <h6 className="text title-icare font-eq" style={{marginTop:'70px', fontWeight: 'bold', pointerEvents: 'none'}}>Ubah</h6>
+                                                        <h6 className="text title-icare font-size-12px-mobile" style={{marginTop:'70px', fontWeight: 'bold', pointerEvents: 'none'}}>Ubah</h6>
                                                 </a>
                                             </div>
                                             <div className="col-lg-4 col-1 my-lg-0 my-3 ">
                                                 {value.eqVerified && (
-                                                    <img src="images/Verified.png" style={{height:'70px'}} alt="Image"></img>
+                                                    <img src={ verifiedImage } style={{height:'70px'}} alt="Image"></img>
                                                 )}
                                             </div>
                                             <div className="col-lg-4 col-2 text-position-center">
-                                                <button className="title-icare fw-bold font-eq" style={{background:'none', border:'none', marginTop:'70px'}} onClick={() => handleDeletedItem(value.id)}>Hapus</button>
+                                                <button className="title-icare fw-bold font-size-12px-mobile" style={{background:'none', border:'none', marginTop:'67px'}} onClick={() => handleDeletedItem(value.id)}>Hapus</button>
                                             </div>
                                         </div>
                                     </div>
@@ -333,7 +379,7 @@ function DaftarEQ() {
                             }
                             { showMoreDaftarEQ && (
                                 <div className="button-daftar-eq p-0">
-                                    <button type="button" className="btn btn-primary" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}} onClick={handleShowMoreDaftarEQ}>Lihat lebih banyak ...</button>
+                                    <button type="button" className="btn btn-primary font-size-14px-mobile" style={{width:'100%', height:'50px', backgroundColor:'#014C90', borderRadius:'15px'}} onClick={handleShowMoreDaftarEQ}>Lihat lebih banyak...</button>
                                 </div>
                             )
                                 // daftarEQ.length > 10 ?
@@ -353,17 +399,17 @@ function DaftarEQ() {
                         </div> 
                         <LoadingAlert visible={loading} customClass="col-md-2 col-8" />
                         {showPopup && (
-                            <RemoveAlert visible={showPopup} message={`Hapus EQ: ${getEquipmentToDelete()}`} customClass="col-md-3 col-8" onCancel={handleCancelDelete} onClick={() => {handleConfirmDelete(); }} />
+                            <RemoveAlert visible={showPopup} message={`Hapus EQ: ${getEquipmentToDelete()}`} customClass="col-md-3 col-9" onCancel={handleCancelDelete} onClick={() => {handleConfirmDelete(); }} />
                         )}
                         {showSuccessPopup && (
-                            <ConfirmAlert visible={showSuccessPopup} message={alertOption.message} customClass="col-md-2 col-8" onClick={handleSuccessPopup}/>
+                            <ConfirmAlert visible={showSuccessPopup} message={alertOption.message} customClass="col-md-3 sol-sm-6 col-9" onClick={handleSuccessPopup}/>
                         )}
                         {showPopupUpload && (
                             <UploadFileAlert visible={showPopupUpload} onClick={handleCSVUpload} onCancel={handleSuccessPopup}/>
                         )}
                         {
                             showErrorPopup && (
-                                <ErrorAlert visible={showErrorPopup} titleMessage={alertOption.title} message={alertOption.message} onClick={handlePopup} customClass="col-md-3 sol-sm-6 col-9" />
+                                <ErrorAlert visible={showErrorPopup} message={alertOption.message} onClick={handlePopup} customClass="col-md-3 sol-sm-6 col-9" />
                             )
                         }
                     </div>

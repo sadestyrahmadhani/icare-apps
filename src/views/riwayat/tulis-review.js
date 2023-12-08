@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ConfirmAlert from "../../component/alert/confirmAlert";
 import { createReview } from "../../services/API/mod_riwayatOrder";
@@ -17,8 +17,26 @@ function Review() {
     const [namaRequest, setNamaRequest] = useState(location.state.requestName)
     const [description, setDescription] = useState('')
     const [rating, setRating] = useState(0)
+    const [textareaHeight, setTextareaHeight] = useState('auto')
 
     // console.log(location.state);
+
+    useEffect(() => {
+        const setInitialHeight = () => {
+            if(window.innerWidth <= 768) {
+                setTextareaHeight('25px')
+            } else {
+                setTextareaHeight('200px')
+            }
+        }
+
+        setInitialHeight()
+        window.addEventListener('resize', setInitialHeight)
+
+        return () => {
+            window.removeEventListener('resize', setInitialHeight)
+        }
+    }, [])
 
     const handleRatingClick = (rating) => {
         setRating(rating);
@@ -27,6 +45,36 @@ function Review() {
     const handleDescription = (e) => {
         e.preventDefault()
         setDescription(e.target.value)
+
+        if(e.target.value === '') {
+            if(window.innerWidth <= 768) {
+                setTextareaHeight('25px')
+            } else {
+                setTextareaHeight('200px')
+            }
+        } else {
+            if(window.innerWidth <= 768) {
+                const numberOfLineBreaks = (e.target.value.match(/\n/g) || []).length + 1
+                setTextareaHeight(`${numberOfLineBreaks * 25}px`)
+            }
+        }
+    }
+
+    const handleKeyDown = (e) => {
+        const setInitialHeight = () => {
+            if(window.innerWidth <= 768) {
+                const numberOfLineBreaks = (description.match(/\n/g) || []).length + 1
+                const newHeight = numberOfLineBreaks * 25
+                const maxHeight = 10
+                setTextareaHeight(`${Math.min(newHeight, maxHeight)}px`)
+            }
+        }
+
+        if(e.key === 'Enter') {
+            if(window.innerHeight <= 768) {
+                setInitialHeight()
+            }
+        }
     }
 
     const handlePopup = () => {
@@ -90,10 +138,10 @@ function Review() {
                 <div className="card px-3 mt-4 shadow border-0" style={{borderRadius:'20px'}}>
                     <div className="card-body">
                         <div className="row py-2">
-                            <div className="card-review py-3 px-4" style={{height:'100px', border:'1px solid black', borderRadius:'10px'}}>
+                            <div className="card-review py-2 px-4" style={{height:'75px', borderRadius:'10px'}}>
                                 <th className="pe-3">
                                     <tr>
-                                        <td className="pb-3">{namaRequest}</td>
+                                        <td className="pb-2">{namaRequest}</td>
                                     </tr>
                                     <tr>
                                         <td>EQ</td>
@@ -101,7 +149,7 @@ function Review() {
                                 </th>
                                 <th className="pe-3">
                                     <tr>
-                                        <td className="pb-3">:</td>
+                                        <td className="pb-2">:</td>
                                     </tr>
                                     <tr>
                                         <td>:</td>
@@ -109,7 +157,7 @@ function Review() {
                                 </th>
                                 <th>
                                     <tr>
-                                        <td className="pb-3">{requestNo}</td>
+                                        <td className="pb-2">{requestNo}</td>
                                     </tr>
                                     <tr>
                                         <td>{equipment}</td>
@@ -148,7 +196,7 @@ function Review() {
                                         <span className="d-none d-sm-block py-1 px-0" style={{ fontSize: '15px' }}>Berikan Review</span>
                                     </div>
                                     <div className="col-sm-12">
-                                        <textarea type="text" className="mt-2 review-text" onChange={handleDescription} style={{border: 'none', backgroundColor:'#d0d0d0', borderRadius:'4px', paddingBottom:'10%', width:'100%'}} />
+                                        <textarea type="text" placeholder="Berikan review..." className="mt-2 review-text no-hover border-only-bottom" onChange={handleDescription} onKeyDown={handleKeyDown} style={{border: 'none', backgroundColor:'#d0d0d0', borderRadius:'4px', width:'100%', resize:'none', caretColor:'#41abf1', height: textareaHeight}} />
                                     </div>
                                 </div>
                             </div>

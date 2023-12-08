@@ -8,6 +8,8 @@ import { getDaftarEq } from "../../services/API"
 import { masterRequestBreakfix } from "../../services/API/mod_masterRequest";
 import { createRequest } from "../../services/API/mod_request";
 
+import uploadImage from '../../images/upload.png'
+
 function Breakfix () {
     const navigate = useNavigate()
     const location = useLocation()
@@ -68,7 +70,15 @@ function Breakfix () {
         e.preventDefault()
         navigate(`/tambah_eq`, {
             state: {
-                redirect: -2
+                redirect: '/breakfix_request'
+            }
+        })
+    }
+    const handleScanRedirect = (e) => {
+        e.preventDefault()
+        navigate('/qr-scanner', {
+            state: {
+                redirect: '/breakfix_request'
             }
         })
     }
@@ -360,7 +370,7 @@ function Breakfix () {
                             </div>
                             <div className="d-flex p-0">
                                 <div className="col-lg-11 col-9 mb-4">
-                                    <input id="search-dropdown-breakfix" onKeyUp={filteredEquipmentList} className={`form-control form-breakfix shadow-none small fw-bold rounded-0 ${ errorMessageEquipmentNumber !== '' ? 'border-danger border' : '' }`} style={{border:'1px solid #797979', height:'53px'}} type="text" value={searchText} onChange={handleSearchInputChange} onClick={handleInputClick} autoComplete="off" />
+                                    <input id="search-dropdown-breakfix" onKeyUp={filteredEquipmentList} className={`form-control form-breakfix form-eq shadow-none small fw-bold rounded-0 ${ errorMessageEquipmentNumber !== '' ? 'border-danger border' : '' }`} style={{border:'1px solid #797979', height:'53px'}} type="text" value={searchText} onChange={handleSearchInputChange} onClick={handleInputClick} autoComplete="off" />
                                     <span className={`text-danger small ${ errorMessageEquipmentNumber !== '' ? '' : 'd-none' }`} style={{fontSize:'12px'}} >{ errorMessageEquipmentNumber }</span>
                                     {showDropdown && (
                                         <div className="dropdown-breakfix" style={{position:'absolute', backgroundColor:'white', overflow:'hidden', width:'87%', top:'10%', zIndex:'1', overflowY:'auto', maxHeight:'360px', borderRight:'1px solid #797979', borderLeft:'1px solid #797979', borderTop:'1px solid #797979'}}>
@@ -384,13 +394,13 @@ function Breakfix () {
                                     </button>
                                 </div>
                                 <div className="col-1 d-block d-lg-none">
-                                    <Link className="fa fa-qrcode" to={'/qr-scanner'} style={{fontSize:'34px', textDecoration:'none', color:'#000', right:5}} />
+                                    <Link className="fa fa-qrcode" onClick={handleScanRedirect} style={{fontSize:'34px', textDecoration:'none', color:'#000', right:5}} />
                                 </div>
                             </div>
                             <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                 <label className="fw-medium title-lable" style={{fontSize:'14px', color:'#fff'}}>Alamat/Lokasi Mesin</label>
                             </div>
-                            <div className={`form-breakfix w-100 d-block md-4 ${ errorAddressOrMachineLocation !== '' ? 'border-danger border' : '' }`} style={{border:'1px solid #797979', height:'53px    '}} onChange={handleSearchInputChange}>
+                            <div className={`form-breakfix w-100 d-block md-4 py-2 ${ errorAddressOrMachineLocation !== '' ? 'border-danger border' : '' }`} style={{border:'1px solid #797979'}} onChange={handleSearchInputChange}>
                                 <strong className="small"> {selectedEquipment?.Penerima} {selectedEquipment !== null ? '-' : ''} {selectedEquipment?.Nama_Alamat} </strong><br/>
                                 <strong className="small d-flex mt-0"> {selectedEquipment?.Alamat} {selectedEquipment !== null ? '-' : ''} {selectedEquipment?.Kota} </strong>
                             </div>
@@ -465,7 +475,7 @@ function Breakfix () {
                                 <label className="file-icon mb-3 d-md-block d-none" htmlFor="input-file">
                                     <div className="text-center rounded-circle p-2 mx-auto" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px'}}>
                                         <div className="d-md-block d-none">
-                                            <img className="mt-1" src="images/upload.png" style={{width:'22px'}}></img>
+                                            <img className="mt-1" src={ uploadImage } style={{width:'22px'}}></img>
                                         </div>
                                     </div>
                                 </label>

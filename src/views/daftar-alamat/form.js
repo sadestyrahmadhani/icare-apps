@@ -1,13 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, redirect, useNavigate, useLocation, useParams } from "react-router-dom";
 import { createDaftarAlamat, getDaftarAlamatById, updateDaftarAlamat } from "../../services/API/mod_daftarAlamat";
 import ConfirmAlert from "../../component/alert/confirmAlert";
 import LoadingAlert from "../../component/alert/loadingAlert";
+import OptionAddAlert from "../../component/alert/optionAddAlert"
+
+import imageMaps from '../../images/map.png';
 
 function FormAddress(){
     const navigate = useNavigate()
     const location = useLocation()
     const params = useParams()
+    const scrollToTopRef = useRef(null)
+
+
     const [addressLabel, setAddressLabel] = useState(location.state?.input?.Nama_Alamat)
     const [recipientName, setRecipientName] = useState(location.state?.input?.Penerima)
     const [streetName, setStreetName] = useState(location.state?.input?.Alamat)
@@ -24,6 +30,9 @@ function FormAddress(){
     const [loading, setLoading] = useState(false)
     const [showPopup, setShowPopup] = useState(false)
     const [validated, setValidated] = useState(false)
+    const [showPopupOption, setShowPopupOption] = useState(false)
+    const [scrollToTop, setScrollToTop] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
 
     const [errorAddressLabel, setErrorAddressLabel] = useState('')
     const [errorBuildingName, setErrorBuildingName] = useState('')
@@ -55,7 +64,8 @@ function FormAddress(){
                     Kota: city, 
                     Kode_Pos: postalCode, 
                     Telp_Penerima: phoneNumber,
-                    NamaGedung: buildingName
+                    NamaGedung: buildingName,
+                    redirect: location.state?.redirect || -1
                 }
             }
         } else {
@@ -67,12 +77,29 @@ function FormAddress(){
                     Kota: city, 
                     Kode_Pos: postalCode, 
                     Telp_Penerima: phoneNumber,
-                    NamaGedung: buildingName
+                    NamaGedung: buildingName,
+                    redirect: location.state?.redirect || -1
                 }
             }
         }
         
         navigate('/google_maps', {state})
+    }
+
+    const handleAddingData = () => {
+        setShowPopupOption(false)
+        setTimeout(() => {
+            window.scrollTo({top: 0, behavior: 'smooth'})
+            setScrollToTop(false)
+        }, 500)
+        setAddressLabel('')
+        setRecipientName('')
+        setStreetName('')
+        setCity('')
+        setPostalCode('')
+        setPhoneNumber('')
+        setBuildingName('')
+        setDeliveryLocation('')
     }
 
     const validationAddressLabel = (e) =>{
@@ -196,6 +223,12 @@ function FormAddress(){
         if (location.state?.id) {
             daftarAlamatById()
         }
+
+        // if (window.innerWidth <= 768) {
+        //     setIsMobile(true)
+        // } else {
+        //     setIsMobile(false)
+        // }
     }, []);
 
     const daftarAlamatById = async () => {
@@ -329,8 +362,9 @@ function FormAddress(){
                     NoGedung: ''
                 })
                 setLoading(false)
-                if(res.status == 200 && res.data.includes('Succes insert')) {
-                    setShowPopup(true)
+                if(res.status == 200 && res.data.message.includes('Succes insert')) {
+                    // setShowPopup(true)
+                    setShowPopupOption(true)
                     setAlertOption({
                         title: '', 
                         message: 'Alamat berhasil ditambahkan',
@@ -350,7 +384,7 @@ function FormAddress(){
 
     return (
         <>
-            <div className="responsive-bar">
+            <div className="responsive-bar" >
                 <div className="d-flex mx-md-auto my-md-2 my-0 default-height" style={{alignItems: 'baseline', height: '55px'}}>
                     <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{fontSize: '18px'}}>
                         <Link className="nav-link d-inline me-3" to="/daftar_alamat">
@@ -360,19 +394,19 @@ function FormAddress(){
                     </h4>
                 </div>
             </div>
-            <div className="">
-                <div className="card p-lg-2 p-md-2 p-0 py-2 px-lg-3 shadow border-0 responsive-form" style={{borderRadius: '20px'}}>
+            <div ref={scrollToTopRef}>
+                <div className="card p-lg-2 p-md-2 p-0 py-2 px-lg-3 shadow border-0" style={{borderRadius: '20px'}}>
                     <div className="card-body px-lg-0 px-md-0 px-2">
                         <form onSubmit={sumbit}>
                             <div className="card p-md-2 p-0 mb-3" style={{borderRadius: '10px', boxShadow: '1px 1px 2px 2px #bfbfbf'}}>
                                 <div className="card-body" style={{fontSize: '14px'}}>
                                     <div className="card-label py-1">
-                                        <label className="fw-bold fs-mobile-bold">Simpan Alamat Sebagai (Contoh: Kantor Pusat PT Angin Ribut)</label>
+                                        <label className="fw-bold font-size-12px-mobile">Simpan Alamat Sebagai (Contoh: Kantor Pusat PT Angin Ribut)</label>
                                     </div>
                                     <input type="text" className={`py-md-1 py-0 border-only-bottom ${errorAddressLabel === "" ? "" : "invalid"}`} onChange={validationAddressLabel} style={{fontSize: '14px', color: 'GrayText', width: '-webkit-fill-available'}} value={addressLabel} />
                                     <span className={`${errorAddressLabel === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {errorAddressLabel} </span>
                                     <div className="card-label py-1 mt-3">
-                                        <label className="fw-bold fs-mobile-bold">Nama Penerima</label>
+                                        <label className="fw-bold font-size-12px-mobile">Nama Penerima</label>
                                     </div>
                                     <input type="text" className={`py-md-1 py-0 border-only-bottom ${errorRecipientName === "" ? "" : "invalid"}`} onChange={validationRecipientName} style={{fontSize: '14px', color: 'GrayText', width: '-webkit-fill-available'}} value={recipientName} />
                                     <span className={`${errorRecipientName === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {errorRecipientName} </span>
@@ -380,8 +414,8 @@ function FormAddress(){
                             </div>
                             <div className="card p-md-2 p-0 mb-3" style={{borderRadius: '10px', boxShadow: '1px 1px 2px 2px #bfbfbf'}}>
                                 <div className="card-body" style={{fontSize: '14px'}}>
-                                    <label className="mb-md-3 mb-2 fw-bold fs-mobile-bold">Alamat Lengkap</label>
-                                    <div className="card-label py-1 fs-mobile-bold">
+                                    <label className="mb-md-3 mb-2 fw-bold font-size-12px-mobile">Alamat Lengkap</label>
+                                    <div className="card-label py-1 font-size-12px-mobile">
                                         <label>Nama Jalan & Nomor Gedung/Kantor (Contoh: Jl. Keramat Raya No.43 / Jl. Salemba Tengah Blok B2)</label>
                                     </div>
                                     <input type="text" className={`py-md-1 py-0 border-only-bottom ${errorStreetName === "" ? "" : "invalid"}`} onChange={validationStreetName} style={{fontSize: '14px', color: 'GrayText', width: '-webkit-fill-available'}} value={streetName} />
@@ -395,17 +429,17 @@ function FormAddress(){
                                     <span className={`${errorBuildingNumber === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {errorBuildingNumber} </span> */}
 
                                     
-                                    <div className="card-label py-1 mt-3 fs-mobile-bold">
+                                    <div className="card-label py-1 mt-3 font-size-12px-mobile">
                                         <label>Nama Gedung/Kantor (Contoh: Gedung Astagraphia, lantai 4 / Ruko Boulevard / Kios Cetak ABC)</label>
                                     </div>
                                     <input type="text" className={`py-md-1 py-0 border-only-bottom ${errorBuildingName === "" ? "" : "invalid"}`} onChange={validationBuildingName} style={{fontSize: '14px', color: 'GrayText', width: '-webkit-fill-available'}} value={buildingName} />
                                     <span className={`${errorBuildingName === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {errorBuildingName} </span>
-                                    <div className="card-label py-1 mt-3 fs-mobile-bold">
+                                    <div className="card-label py-1 mt-3 font-size-12px-mobile">
                                         <label>Kota (Contoh: Jakarta Pusat)</label>
                                     </div>
                                     <input type="text" className={`py-md-1 py-0 border-only-bottom ${errorCity === "" ? "" : "invalid"}`} onChange={validationCity} style={{fontSize: '14px', color: 'GrayText', width: '-webkit-fill-available'}} value={city} />
                                     <span className={`${errorCity === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {errorCity} </span>
-                                    <div className="card-label py-1 mt-3 fs-mobile-bold">
+                                    <div className="card-label py-1 mt-3 font-size-12px-mobile">
                                         <label>Kode Pos (Contoh: 10450)</label>
                                     </div>
                                     <input type="text" className={`py-md-1 py-0 border-only-bottom ${errorPostalCode === "" ? "" : "invalid"}`} onChange={validationPostalCode} style={{fontSize: '14px', color: 'GrayText', width: '-webkit-fill-available'}} value={postalCode} inputMode="numeric" maxLength={5}/>
@@ -415,7 +449,7 @@ function FormAddress(){
                             <div className="card p-md-2 p-0 mb-3" style={{borderRadius: '10px', boxShadow: '1px 1px 2px 2px #bfbfbf'}}>
                                 <div className="card-body" style={{fontSize: '14px'}}>
                                     <div className="card-label py-1">
-                                        <label className="fw-bold fs-mobile-bold">No Telepon Penerima</label>
+                                        <label className="fw-bold font-size-12px-mobile">No Telepon Penerima</label>
                                     </div>
                                     <input type="text" className={`py-md-1 py-0 border-only-bottom ${errorPhoneNumber === "" ? "" : "invalid"}`} onChange={validationPhoneNumber} style={{fontSize: '14px', color: 'GrayText', width: '-webkit-fill-available'}} value={phoneNumber} inputMode="tel"/>
                                     <span className={`${errorPhoneNumber === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {errorPhoneNumber} </span>
@@ -424,17 +458,17 @@ function FormAddress(){
                             <div className="card p-md-2 p-0 mb-5" style={{borderRadius: '10px', boxShadow: '1px 1px 2px 2px #bfbfbf'}}>
                                 <div className="card-body" style={{fontSize: '14px'}}>
                                     <div className="card-label py-1">
-                                        <label className="fw-bold fs-mobile-bold">Lokasi Pengiriman</label>
+                                        <label className="fw-bold font-size-12px-mobile">Lokasi Pengiriman</label>
                                     </div>
                                     <div className="row">
                                         <div className="col-lg-1 col-md-1 col-2 mb-2">
-                                            <img className="icon-maps" src="/images/map.png" alt="" style={{width: '50px'}}/>
+                                            <img className="icon-maps" src={imageMaps} alt="" style={{width: '50px'}}/>
                                         </div>
                                         <div className="col-lg-11 col-md-11 col-10 mb-2">
                                             <input type="text" className={`py-1 py-md-3 border-only-bottom ${errorDeliveryLocation === "" ? "" : "invalid"}`} onChange={validationDeliveryLocation} style={{fontSize: '14px', color: 'GrayText', width: '-webkit-fill-available', paddingTop: '20px'}} value={deliveryLocation} onClick={handleMaps} />
                                             <span className={`${errorDeliveryLocation === "" ? "d-none" : ""} text-danger small`} style={{fontSize: '12px'}}> {errorDeliveryLocation} </span>
                                         </div>
-                                        <span className="fw-bold fs-mobile-bold">Pastikan lokasi yang anda tandai di peta sesuai dengan alamat yang anda isi diatas</span>
+                                        <span className="fw-bold font-size-12px-mobile">Pastikan lokasi yang anda tandai di peta sesuai dengan alamat yang anda isi diatas</span>
                                     </div>
                                 </div>
                             </div>
@@ -444,6 +478,7 @@ function FormAddress(){
                         </form>
                         <LoadingAlert visible={loading} customClass="col-md-2 col-8" />
                         <ConfirmAlert visible={showPopup} titleMessage={alertOption.title} message={alertOption.message} onClick={handlePopup} customClass="col-md-3 col-sm-6 col-8" />
+                        <OptionAddAlert visible={showPopupOption} message={alertOption.message} onList={handlePopup} onClick={handleAddingData} customClass="col-md-4 col-sm-4 col-11" textButton="Tambah Alamat Baru"/>
                     </div>
                 </div>
             </div>

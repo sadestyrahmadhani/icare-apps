@@ -2,6 +2,8 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import 'font-awesome/css/font-awesome.min.css';
 
+import callCenter from '../../images/halo23.png'
+
 export default class extends Component {
     render() {
         return (
@@ -22,7 +24,7 @@ export default class extends Component {
                                         </li>
                                         <li className="mt-2">
                                             <Link className="footer-items" style={{textDecoration:'none', fontSize:'14px'}}>
-                                                <img src="/images/halo23.png" alt="astragraphia" width="160" />
+                                                <img src={callCenter} alt="astragraphia" width="160" />
                                             </Link>
                                         </li>
                                 </ol>

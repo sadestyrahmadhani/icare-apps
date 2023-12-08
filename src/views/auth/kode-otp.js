@@ -29,24 +29,24 @@ import {
     const [showPopup,setshowPopup]=useState( false)
     const [loading,setLoading]=useState( false)
     const [otp,setotp]=useState( '')
-    const [titleMessage,settitleMessage]=useState('')
+    // const [titleMessage,settitleMessage]=useState('')
     const [errorMessage,seterrorMessage]=useState('')
     const [userid,setuserid]=useState(location.state.userid)
-    const [email,setemail]=useState(location.state.email)
-    const [password,setpassword]=useState(location.state.password)
-    const [telp,settelp]=useState(location.state.telp)
     const [msg,setmsg]=useState(location.state.msg)
-    const [firstlogin,setfirstlogin]=useState(location.state.firstlogin)
+    // const [email,setemail]=useState(location.state.email)
+    // const [password,setpassword]=useState(location.state.password)
+    // const [telp,settelp]=useState(location.state.telp)
+    // const [firstlogin,setfirstlogin]=useState(location.state.firstlogin)
 
-    console.log(location.state.msg);
+    console.log(location.state);
     
         
     useEffect(()=> {
-        if (telp.substring(0,2)=="62")
-            settelp('+'+telp)
-        else if (telp.substring(0,2)=="08"){
-            settelp('+62'+telp.substring(1))
-        }
+        // if (telp.substring(0,2)=="62")
+        //     settelp('+'+telp)
+        // else if (telp.substring(0,2)=="08"){
+        //     settelp('+62'+telp.substring(1))
+        // }
         const interval=setInterval(() => {
             if(iteration === 0) {
                 setresendCodeDisabled(true)
@@ -81,7 +81,8 @@ import {
     async function useSubmit(e) {
         e.preventDefault()
         setLoading(true)
-        const res = await verifyOtp({userid: userid, action: msg.action , otp: otp})
+        // console.log(msg.memberid);
+        const res = await verifyOtp({userid: userid, action: msg?.action , otp: otp, memberid: msg?.memberid})
         setLoading(false)
         if(res.status == 200 && res.data !== 'Succes, OTP match') {
             setshowPopup(true) 
@@ -94,7 +95,7 @@ import {
             } else {
                 if(msg.action === 'First Login') {
                     setLoading(true)
-                    const res = await authUser({username: location.state.email, password: location.state.password, type:'normal'})
+                    const res = await authUser({username: msg.email, password: location.state?.password, type: location.state?.type, googleToken: location.state?.googleToken})
                     setLoading(false)
                     if(res != null ){
                         successlogin(res)
@@ -117,7 +118,7 @@ import {
 
     const handleReSendOtp = async () => {
         if(iteration === 0 ) {
-            const res = await reSendOtp({email: email, telp: telp, action: msg.action})
+            const res = await reSendOtp({email: msg?.email, action: msg.action})
             if(res.status == 200 && res.data === null) {
                 setshowPopup(true)
                 seterrorMessage('Opps! terjadi kesalahan')
@@ -150,8 +151,8 @@ import {
                                     className="mb-2 text-otp" 
                                     style={{fontSize:'14px', textAlign:'justify'}}
                                 >
-                                    Silahkan masukkan kode OTP yang telah dikirimkan melalui sms ke No.  
-                                    {telp}
+                                    Silahkan masukkan kode OTP yang telah dikirimkan melalui email ke&nbsp;
+                                    <p className="fw-bold d-inline">{msg?.email}</p>
                                 </p>
                                 <form 
                                     className="mb-3" 

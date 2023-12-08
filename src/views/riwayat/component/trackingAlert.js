@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { getTrackingRiwayat, getDetailRiwayatOrder } from "../../../services/API/mod_riwayatOrder";
 import { useParams } from "react-router-dom";
 
+import mapImage from './../../../images/map.png'
+
 // function TrackingAlert() {
 //     const [visible, setVisible] = useState(false)
 
@@ -24,23 +26,23 @@ export default class extends Component {
                                             <div className="col-11 mx-2">
                                                 <h6 className="text-center fw-bold">Lacak Petugas</h6>
                                             </div>
-                                            <div className="col-2">
+                                            <div className="col-2 close-track">
                                                 <button onClick={this.props.onClick} style={{background:'none', border:'none', fontSize:'20px'}}><i className="fa fa-close" style={{color:'black'}}></i></button>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="card-data mx-5 mb-2 pt-3" style={{border:'1px solid black', borderRadius:'8px'}}>
                                         {this.props.data.map((val,key) => (
-                                            <div className="d-flex gap-4 mx-5" key={key}>
-                                                <div className="nowrap">
+                                            <div className="d-flex gap-4 mx-5 data-track" key={key}>
+                                                <div className="col-5">
                                                     <p style={{fontSize:'14px'}}>{val.StatusUpdate}</p>
                                                 </div>
                                                 <div className="col-auto pt-1">
                                                     <i className={ val.status === "Accept" ? "fa fa-dot-circle-o text-success" : "fa fa-dot-circle-o text-muted"} style={{fontSize: '18px'}}/>
                                                 </div>
-                                                <div className="col-auto">
+                                                <div className="col-5">
                                                     <Link to={`https://www.google.com/maps/search/?api=1&query=${val.LongLat}&z=15`} target="_blank">
-                                                        <img src="/images/map.png" style={{width:'25px'}}></img>
+                                                        <img src={ mapImage } style={{width:'25px'}}></img>
                                                     </Link>
                                                     <p className="mb-0 fw-bold" style={{fontSize:'14px'}}>{val.Username}</p>
                                                     <p className={ val.status === 'Accept' ? "mb-0 text-success" : "mb-0"} style={{fontSize:'13px'}}>{val.status}</p>

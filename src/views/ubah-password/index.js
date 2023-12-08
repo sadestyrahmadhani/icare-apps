@@ -63,10 +63,14 @@ function UpdatePassword() {
             if(res.status === 200 && res.data !== null) {
                 if(res.data === "Old password not match") {
                     setShowPopup(true)
-                    setAlertOption({title: '', message: res.data, redirect: false, url: ''})
+                    // setAlertOption({title: '', message: res.data, redirect: false, url: ''})
+                    setAlertOption({title: '', message: 'Password lama tidak cocok. Silakan coba lagi', redirect: false, url: ''})
+                } else if (res.data === "Userid not found") {
+                    setShowPopup(true)
+                    setAlertOption({title: '', message: 'Gagal ubah password. Silakan coba lagi', redirect: false, url: ''})
                 } else {
                     setShowPopup(true)
-                    setAlertOption({title: '', message: res.data, redirect: true, url: '/dashboard'})
+                    setAlertOption({title: '', message: 'Sukses ubah password', redirect: true, url: '/dashboard'})
                 }
                 // console.log(res.data)
             }

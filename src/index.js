@@ -41,7 +41,7 @@ const UpgradeAkun = React.lazy(() => import('./views/upgrade-akun/upgrade'));
 const UpgradeAkunForm = React.lazy(() => import('./views/upgrade-akun/form'));
 const UpgradeAkunWaiting = React.lazy(() => import('./views/upgrade-akun/waiting'));
 const BeritaTerbaru = React.lazy(() => import('./views/berita-terbaru'));
-const BeritaTerbaruProduk = React.lazy(() => import('./views/berita-terbaru/produk'));
+// const BeritaTerbaruProduk = React.lazy(() => import('./views/berita-terbaru/produk'));
 const Setting = React.lazy(() => import('./views/setting'));
 const KebijakanPrivasi = React.lazy(() => import('./views/auth/kebijakan-privasi'));
 const Register = React.lazy(() => import('./views/auth/register'));
@@ -63,16 +63,16 @@ const serverkey = "AAAA9VTiNyE:APA91bGzoX4grTE-2Wcy2f3fPrrTDSEm86nRTLV5uUjJEkx1w
     appId: "1:191941183516:web:d6c05110720ea5075077d9"
   });
   let messaging = getMessaging(firebaseApp);
-// if ("serviceWorker" in navigator) {
-  // navigator.serviceWorker
-  //   .register("./firebase-messaging-sw.js")
-  //   .then(function(registration) {
-  //     console.log("Registration successful, scope is:", registration.scope);
-  //   })
-  //   .catch(function(err) {
-  //     console.log("Service worker registration failed, error:", err);
-  //   });
-// }
+  // if ("serviceWorker" in navigator) {
+  //   navigator.serviceWorker
+  //     .register("./firebase-messaging-sw.js")
+  //     .then(function(registration) {
+  //       console.log("Registration successful, scope is:", registration.scope);
+  //     })
+  //     .catch(function(err) {
+  //       console.log("Service worker registration failed, error:", err);
+  //     });
+  // }
     Notification.requestPermission()
         .then((permission) => {
           if (permission === 'granted') {
@@ -157,7 +157,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback="Loading..."><ProtectedRoute><Riwayat /></ProtectedRoute></Suspense>,    
       },
       {
-        path: "/detail_permintaan/:id",
+        path: "/detail_permintaan",
         element: <Suspense fallback="Loading..."><ProtectedRoute><DetailPermintaan /></ProtectedRoute></Suspense>,    
       },
       {
@@ -165,7 +165,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback="Loading..."><ProtectedRoute><TulisReview /></ProtectedRoute></Suspense>,    
       },
       {
-        path: "/tanya_tim_support/:id",
+        path: "/tanya_tim_support",
         element: <Suspense fallback="Loading..."><ProtectedRoute><TanyaTim /></ProtectedRoute></Suspense>,    
       },
       {
@@ -181,7 +181,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback="Loading..."><ProtectedRoute><DaftarAnggota /></ProtectedRoute></Suspense>,
       },
       {
-        path: "/tambah_anggota/:id",
+        path: "/tambah_anggota",
         element: <Suspense fallback="Loading..."><ProtectedRoute><DaftarAnggotaForm /></ProtectedRoute></Suspense>,
       },
       {
@@ -197,7 +197,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback="Loading..."><ProtectedRoute><DaftarEq /></ProtectedRoute></Suspense>,    
       },
       {
-        path: "/tambah_eq/:id?",
+        path: "/tambah_eq",
         element: <Suspense fallback="Loading..."><ProtectedRoute><DaftarEqForm /></ProtectedRoute></Suspense>,    
       },
       {
@@ -217,7 +217,7 @@ const router = createBrowserRouter([
         element: <Suspense fallback="Loading..."><ProtectedRoute><CollectMeter /></ProtectedRoute></Suspense>,    
       },
       {
-        path: "/riwayat_meter/:id",
+        path: "/riwayat_meter",
         element: <Suspense fallback="Loading..."><ProtectedRoute><RiwayatMeter /></ProtectedRoute></Suspense>,    
       },
       {
@@ -233,13 +233,13 @@ const router = createBrowserRouter([
         element: <Suspense fallback="Loading..."><ProtectedRoute><UpgradeAkunWaiting /></ProtectedRoute></Suspense>,    
       },
       {
-        path: "/news_detail/:id",
+        path: "/news_detail",
         element: <Suspense fallback="Loading..."><ProtectedRoute><BeritaTerbaru /></ProtectedRoute></Suspense>,    
       },
-      {
-        path: "/product_detail/:id",
-        element: <Suspense fallback="Loading..."><ProtectedRoute><BeritaTerbaruProduk /></ProtectedRoute></Suspense>,    
-      },
+      // {
+      //   path: "/product_detail/:id",
+      //   element: <Suspense fallback="Loading..."><ProtectedRoute><BeritaTerbaruProduk /></ProtectedRoute></Suspense>,    
+      // },
       ]    
   },
   {
@@ -252,6 +252,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
+    element: <Suspense fallback="Loading..."><Register /></Suspense>,    
+  },
+  {
+    path: "/ticket/:id",
     element: <Suspense fallback="Loading..."><Register /></Suspense>,    
   },
   {
@@ -274,7 +278,9 @@ const router = createBrowserRouter([
     path: "/qr-scanner",
     element: <Suspense fallback="Loading..."><ProtectedRoute><QRScanner /></ProtectedRoute></Suspense>,    
   },
-]);
+],{
+    basename: "/client",
+});
 
 root.render(
   <>

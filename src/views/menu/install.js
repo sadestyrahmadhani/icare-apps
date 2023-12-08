@@ -7,6 +7,8 @@ import { masterRequestInstall } from "../../services/API/mod_masterRequest";
 import { createRequest } from "../../services/API/mod_request";
 import LoadingAlert from "../../component/alert/loadingAlert";
 
+import uploadImage from './../../images/upload.png'
+
 function Install() {
     const navigate = useNavigate()
     const location = useLocation()
@@ -286,7 +288,16 @@ function Install() {
         e.preventDefault()
         navigate(`/tambah_eq`, {
             state: {
-                redirect: -1
+                redirect: '/install_request'
+            }
+        })
+    }
+
+    const handleScanRedirect = (e) => {
+        e.preventDefault()
+        navigate('/qr-scanner', {
+            state: {
+                redirect: '/install_request'
             }
         })
     }
@@ -313,7 +324,7 @@ function Install() {
                                 <div className="d-flex p-0">
                                     <div className="col-lg-11 col-9">
                                         <div className="custom-search-dropdown-install mb-4" >
-                                                <input type="text" onKeyUp={filteredEquipmentList} className="form-control form-install shadow-none fw-bold small rounded-0" style={{height:'53px', border:'1px solid #797979'}} value={searchText} onChange={handleSearchInputChange} onClick={ () => setShowDropdown(!showDropdown) }></input>
+                                                <input type="text" onKeyUp={filteredEquipmentList} className="form-control form-install form-eq shadow-none fw-bold small rounded-0" style={{height:'53px', border:'1px solid #797979'}} value={searchText} onChange={handleSearchInputChange} onClick={ () => setShowDropdown(!showDropdown) }></input>
                                                 <span className={`text-danger small px-0 ${errorMessageEquipmentNumber !== '' ? '' : 'd-none'}`} style={{fontSize:'12px'}}> {errorMessageEquipmentNumber} </span>
                                                 {showDropdown && (
                                                     <div className="dropdown-install" style={{position:'absolute', backgroundColor:'white', overflow:'hidden', width:'88%', top:'110px', zIndex:'1', overflowY:'auto', maxHeight:'360px', borderRight:'1px solid #797979', borderLeft:'1px solid #797979', borderTop:'1px solid #797979'}}>
@@ -338,14 +349,14 @@ function Install() {
                                         </button>
                                     </div>
                                     <div className="col-1 d-block d-lg-none">
-                                        <Link className="fa fa-qrcode" to="/qr-scanner" style={{fontSize:'34px', textDecoration:'none', color:'#000',right:5}}></Link>
+                                        <Link className="fa fa-qrcode" onClick={handleScanRedirect} style={{fontSize:'34px', textDecoration:'none', color:'#000',right:5}}></Link>
                                     </div>
                                 </div>
                                 
                                 <div className="card-lable py-1 mb-2" style={{backgroundColor:'#014C90'}}>
                                     <label className="fw-medium" style={{fontSize:'12px', color:'#fff'}}>Alamat/Lokasi Mesin</label>
                                 </div>
-                                <div className="form-install" style={{border:'1px solid #797979', height:'53px', paddingTop:'1px'}} >
+                                <div className="form-install py-2" style={{border:'1px solid #797979', paddingTop:'1px'}} >
                                     <strong className="small">{selectedEquipment?.Penerima} {selectedEquipment && location.state?.equipment ? "-" : ""} {selectedEquipment?.Nama_Alamat}</strong><br/>
                                     <strong className="small d-flex mt-0">{selectedEquipment?.Alamat} {selectedEquipment && location.state?.equipment ? "-" : ""} {selectedEquipment?.Kota}</strong>
                                 </div>
@@ -404,7 +415,7 @@ function Install() {
                                     <input type="file" className="d-none" id="input-file" onChange={previewImage} accept="image/*" />
                                     <label className="file-icon mb-3 d-md-block d-none" htmlFor="input-file">
                                         <div className="text-center rounded-circle p-2 mx-auto" style={{backgroundColor:'#014C90', color:'#fff', width:'50px', height:'50px', marginLeft:'48%'}}>
-                                            <img className="mt-1" src="images/upload.png" style={{width:'22px'}}></img>
+                                            <img className="mt-1" src={ uploadImage } style={{width:'22px'}}></img>
                                         </div>
                                     </label>
                                     <label className="file-icon mb-3 d-md-none d-block" onClick={() => setShowOptionAlert(true)}>

@@ -19,6 +19,22 @@ import { GoogleLogin } from '@react-oauth/google';
 import { getEQByCodeWithoutAuth } from "../../services/API/mod_request";
 import auth from "../../services/auth";
 
+import iCareLogo from '../../images/iCareLogo.png';
+import banner1 from '../../images/Cahyo_MFD.png';
+import fitur1 from '../../images/breakfix-fitur.png';
+import fitur2 from '../../images/supplies-fitur.png';
+import fitur3 from '../../images/collect-meter-install.png';
+import fitur4 from '../../images/riwayat.png';
+import fitur5 from '../../images/informasi.png';
+import fitur6 from '../../images/setting.png';
+import profit1 from '../../images/easy.png'
+import profit2 from '../../images/monitoring.png'
+import profit3 from '../../images/quality.png'
+import profit4 from '../../images/satisfaction.png'
+import peta from '../../images/peta.png'
+import backroundLogin from '../../images/Vector1.png'
+
+
 function Login ({getToken}) {
     
     // constructor(props) {
@@ -31,12 +47,12 @@ function Login ({getToken}) {
                                                     title:'',
                                                     message:''
                                                 })
-	    const [username, setUsername]= useState('')
+	    // const [username, setUsername]= useState('')
         const [password, setPassword]= useState('')
         const [loading, setLoading]= useState(false) 
         const [error, setError]= useState(false)
-        const [errMsg, setErrMsg]= useState('')
-        const [login, setLogin]= useState(false)
+        // const [errMsg, setErrMsg]= useState('')
+        // const [login, setLogin]= useState(false)
         const [showPopup, setShowPopup]= useState(false)
         const [showPermissionPopup, setShowPermissionPopup]= useState(false)
         const [email, setEmail]= useState('')
@@ -51,7 +67,7 @@ function Login ({getToken}) {
                     xs: 12,
                     imgHeight: 140,
                     borderColor: '#2DB5F9',
-                    img: '/images/breakfix-fitur.png',
+                    img: fitur1,
                     title: 'Breakfix',
                     description: 'Sebagai layanan customer untuk permintaan perbaikan pada mesin.'
                 },
@@ -62,7 +78,7 @@ function Login ({getToken}) {
                     xs: 12,
                     imgHeight: 140,
                     borderColor: '#F58B09',
-                    img: '/images/supplies-fitur.png',
+                    img: fitur2,
                     title: 'Supplies',
                     description: 'Sebagai layanan customer untuk permintaan consumable dan sparepart.'
                 },
@@ -73,7 +89,7 @@ function Login ({getToken}) {
                     xs: 12,
                     imgHeight: 140,
                     borderColor: '#0EDA52',
-                    img: '/images/collect-meter-install.png',
+                    img: fitur3,
                     title: 'Install',
                     description: 'Sebagai layanan customer untuk permintaan setting konfigurasi mesin.'
                 },
@@ -84,7 +100,7 @@ function Login ({getToken}) {
                     xs: 12,
                     imgHeight: 140,
                     borderColor: '#B40EDE',
-                    img: '/images/collect-meter-install.png',
+                    img: fitur3,
                     title: 'Collect Meter',
                     description: 'Sebagai layanan customer untuk permintaan informasi billing meter yang ada pada mesin printer Astragraphia.'
                 },
@@ -96,7 +112,7 @@ function Login ({getToken}) {
                     imgHeight: 70,
                     style: {marginBottom:'1.5rem', marginTop:'2rem'},
                     borderColor: '#E23845',
-                    img: '/images/riwayat.png',
+                    img: fitur4,
                     title: 'Riwayat',
                     description: 'Untuk melihat histori permintaan layanan sebelumnya.'
                 },
@@ -108,7 +124,7 @@ function Login ({getToken}) {
                     imgHeight: 70,
                     style: {marginBottom:'1.5rem', marginTop:'2rem'},
                     borderColor: '#B629DD',
-                    img: '/images/informasi.png',
+                    img: fitur5,
                     title: 'Informasi',
                     description: 'Untuk melihat status notifikasi dari permintaan layanan yang dibuat.'
                 },
@@ -120,7 +136,7 @@ function Login ({getToken}) {
                     imgHeight: 70,
                     style: {marginBottom:'1.5rem', marginTop:'2rem'},
                     borderColor: '#EE31A3',
-                    img: '/images/setting.png',
+                    img: fitur6,
                     title: 'Setting',
                     description: 'Untuk melihat konfigurasi pada aplikasi iCare seperti perubahan Data Diri, Alamat, EQ, dll.'
                 },
@@ -177,32 +193,33 @@ function Login ({getToken}) {
         setShowPermissionPopup(false)
     }
     const googleLogin = async (credential)=> {
-        console.log(credential)
+        // console.log(credential)
         const d = decode(credential.credential);
-        console.log('decoded',d)
+        // console.log('decoded',d)
         const response = await authUser({
             username: d.email, password: '', type:"google",googleToken:credential.credential
           });
 
         setLoading(false)
-        console.log('testingresponseLogin', response)
-        
-        if (response != null) {
-        
-            successlogin(response)
+        // console.log('testingresponseLogin', response)
+        // console.log('response type',typeof(response), typeof response)
+        if (response != null && (typeof(response)) === 'object') {
+            successlogin(response,'google', credential.credential)
         
         } else {
             setShowPopup(true)
-            setAlertOption({title:"Error", message:"Username / Password salah"})
+            setAlertOption({title:"Error", message:response})
         }
     }
-    const successlogin = async (response)=> {
+    const successlogin = async (response, type='normal', googleToken=null)=> {
         if (response.action){                
             setOtp(false)
             setFirstLogin(response)
+            console.log(response);
+            setShowPopup(true)
             navigate('/kode-otp',{                      
                     state: {firstlogin:true,email:email,password:password,
-                    telp:response.number,userid:response.userid,msg:response
+                    telp:response.number,userid:response.userid,msg:response,type:type,googleToken:googleToken
                     }} // your data array of objects
                 )
         }else{
@@ -220,6 +237,7 @@ function Login ({getToken}) {
             // console.log('testinguserid :', response.id) 
             await getToken()   
             if(params?.id && equipment) {
+                localStorage.setItem('equipment',equipment)
                 navigate('/dashboard', {
                     state: equipment
                 })
@@ -248,8 +266,9 @@ function Login ({getToken}) {
 
         setLoading(false)
 
-        console.log('testingresponseLogin', response)
-        if (response != null && typeof response == 'object') {
+        // console.log('testingresponseLogin', response)
+        // console.log('response type',typeof(response), typeof response)
+        if (response != null && (typeof(response)) === 'object') {
             successlogin(response)
 
         // console.log('iCare_user', cookies.get('iCare_user')); // Pacman
@@ -257,8 +276,14 @@ function Login ({getToken}) {
         // window.location.reload(false);
             
         } else {
-            setShowPopup(true)
-            setAlertOption({title:"Error", message: response})
+            console.log(response);
+            if(response === null) {
+                setShowPopup(true)
+                setAlertOption({title:"Error", message: 'Mohon periksa koneksi jaringan anda'})
+            } else {
+                setShowPopup(true)
+                setAlertOption({title:"Error", message: response})
+            }
         }
 
         
@@ -272,14 +297,14 @@ function Login ({getToken}) {
                 <div className="container py-4 py-xs-0" id="layout">                    
             <div className="intro-y">
                 {/* Beranda */}
-                <div className="d-lg-block d-none" style={{ background: 'url(/images/Vector1.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100vh', position: 'absolute', top: 0, left: 0, right: 0, zIndex: -1 }} id="beranda"></div>
+                <div className="d-lg-block d-none" style={{ background: `url(${backroundLogin})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', height: '100vh', position: 'absolute', top: 0, left: 0, right: 0, zIndex: -1 }} id="beranda"></div>
 
                 <div className="d-flex align-items-center row-height" style={{ height: '85vh' }}>
                     <div className="col-lg-6 col-md-8 col-sm-10 col-12 mx-lg-0 mx-auto">
                         <div className="card shadow-sm" style={{border:'1px solid #a2d2ff'}}>
                             <div className="card-body px-4 py-5">
                                 <div className="col-12 text-center mb-3">
-                                    <img src="/images/iCareLogo.png" alt="Logo iCare" className="h-50 login-image"/>
+                                    <img src={iCareLogo} alt="Logo iCare" className="h-50 login-image"/>
                                 </div>
                                 <form onSubmit={ useLogin }>
                                     <div className="mb-3">
@@ -296,9 +321,9 @@ function Login ({getToken}) {
                                         <button className="btn btn-login my-1" style={{paddingLeft:'70px', paddingRight:'70px', paddingBottom:'10px', paddingTop:'10px'}}>LOGIN</button>
                                     </div>
                                     <div className="text-center">
-                                        <Link className="nav-link size-13px fw-medium my-2" to="kebijakan-privasi/register">Belum Punya akun ?</Link>
-                                        <Link className="nav-link size-13px fw-medium my-2 mb-3"  to="/lupa-password">Lupa Password ?</Link>
-                                        <div className="btn btn-google shadow-sm me-2 fw-medium px-3 text-muted py-1">
+                                        <Link className="size-13px fw-medium my-2" style={{textDecoration: 'none'}} to="kebijakan-privasi/register">Belum Punya akun ?</Link><br/>
+                                        <Link className="size-13px fw-medium my-2 mb-3" style={{textDecoration: 'none'}} to="/lupa-password">Lupa Password ?</Link><br/>
+                                        <div className="btn btn-google shadow-sm me-2 mt-4 fw-medium px-3 text-muted py-1">
                                         <GoogleLogin 
                                             onSuccess={credentialResponse => {
                                               googleLogin(credentialResponse);
@@ -323,7 +348,7 @@ function Login ({getToken}) {
                         </div>
                     </div>
                     <div className="col-4 ms-auto d-lg-block d-none">
-                        <img src="/images/Cahyo_MFD.png" alt="images 1" width="80%" className="mb-3" style={{marginLeft:'70px'}}/>
+                        <img src={banner1} alt="images 1" width="80%" className="mb-3" style={{marginLeft:'70px'}}/>
                         <h2 className="title-icare title-solusi text-center fw-bold" style={{marginLeft:'70px', fontSize:'35px'}}>Solusi untuk eskalasi problem dan permintaan layanan.</h2>
                     </div>
                 </div>
@@ -360,7 +385,7 @@ function Login ({getToken}) {
                                 <div className="card custom-height shadow-lg mb-5">
                                     <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'5rem 3rem'}}>
                                         <div className="text-center">
-                                            <img src="/images/easy.png" alt="riwayat" width="50" />
+                                            <img src={profit1} alt="riwayat" width="50" />
                                             <h5 className="card-title mt-3 fw-bold"> Riwayat </h5>
                                             <p className="card-text" style={{fontSize:'14px'}}>Memudahkan customer pada saat permintaan layanan.</p>
                                         </div>
@@ -371,7 +396,7 @@ function Login ({getToken}) {
                                 <div className="card custom-height shadow-lg mb-5">
                                     <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'5rem 3rem'}}>
                                         <div className="text-center">
-                                            <img src="/images/monitoring.png" alt="monitoring" width="50" />
+                                            <img src={profit2} alt="monitoring" width="50" />
                                             <h5 className="card-title mt-3 fw-bold"> Monitoring </h5>
                                             <p className="card-text" style={{fontSize:'14px'}}>Customer dapat memonitor status permintaan layanan.</p>
                                         </div>
@@ -382,7 +407,7 @@ function Login ({getToken}) {
                                 <div className="card custom-height shadow-lg mb-5">
                                     <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'5rem 3rem'}}>
                                         <div className="text-center">
-                                            <img src="/images/quality.png" alt="setting" width="50" />
+                                            <img src={profit3} alt="setting" width="50" />
                                             <h5 className="card-title mt-3 fw-bold"> Settings </h5>
                                             <p className="card-text" style={{fontSize:'14px'}}>Meningkatkan kualitas layanan Astragraphia.</p>
                                         </div>
@@ -393,7 +418,7 @@ function Login ({getToken}) {
                                 <div className="card custom-height shadow-lg mb-5">
                                     <div className="card-body d-flex align-items-center justify-content-center" style={{padding:'5rem 3rem'}}>
                                         <div className="text-center">
-                                            <img src="/images/satisfaction.png" alt="satisfaction" width="50" />
+                                            <img src={profit4} alt="satisfaction" width="50" />
                                             <h5 className="card-title mt-3 fw-bold "> Satisfaction </h5>
                                             <p className="card-text" style={{fontSize:'14px'}}>Meningkatkan kepuasan pelanggan.</p>
                                         </div>
@@ -415,13 +440,13 @@ function Login ({getToken}) {
                 {/* Use iCare Now */}
                 <div className="row d-lg-flex d-none" style={{borderTop: '1px solid #d4d8ff', marginTop: '6rem'}}>
                     <div className="col-lg-5 col-md-5 col-12 py-5">
-                        <img src="/images/iCareLogo.png" alt="Logo iCare" className="mb-2" width="150" />
+                        <img src={iCareLogo} alt="Logo iCare" className="mb-2" width="150" />
                         <p className="mb-1" style={{fontSize:'28px'}}>Pakai iCare Sekarang!</p>
                         <p className="text-danger" style={{fontSize:'14px'}}>Kemudahan <b>eskalasi problem</b> dan <b>permintaan layanan</b> dalam satu genggaman.</p>
                     </div>
                     <div className="col-lg-7 col-md-7 col-12">
                         <div className="container">
-                            <img src="/images/peta.png" alt="iCare" height="260" />
+                            <img src={peta} alt="iCare" height="260" />
                         </div>
                     </div>
                 </div>

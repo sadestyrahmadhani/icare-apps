@@ -4,6 +4,9 @@ import ConfirmAlert from "../../component/alert/confirmAlert";
 import LoadingAlert from "../../component/alert/loadingAlert";
 import { acUploadRegister, upgradeAccountPremium } from "../../services/API/mod_upgradeAccount";
 
+import icon1 from '../../images/contoh_ktp.png'
+import icon2 from '../../images/selfie_ktp.png'
+
 function UpgradeStep2() {
     const navigate = useNavigate()
     const params = useParams()
@@ -138,7 +141,7 @@ function UpgradeStep2() {
                             </div>
                             <div className="row border border-top-0 border-dark" style={{paddingTop: '5px', paddingBottom: '5px'}}>
                                 <div className="col-lg-3 col-md-3 col-4 text-center my-auto">
-                                    <img src="/images/contoh_ktp.png" alt="" style={{width: '100px'}} className=""/>
+                                    <img src={icon1} alt="" style={{width: '100px'}} className=""/>
                                 </div>
                                 <div className="col-lg-9 col-md-9 col-8" style={{fontSize: '14px', paddingTop: '10px'}}>
                                     <span className="font-size-12px-mobile">Panduan Foto KTP</span>
@@ -171,7 +174,7 @@ function UpgradeStep2() {
                             </div>
                             <div className="row border border-top-0 border-dark" style={{paddingTop: '5px', paddingBottom: '5px'}}>
                                 <div className="col-lg-3 col-md-3 col-4 text-center my-auto">
-                                    <img src="/images/selfie_ktp.png" alt="" style={{width: '50px'}} className=""/>
+                                    <img src={icon2} alt="" style={{width: '50px'}} className=""/>
                                 </div>
                                 <div className="col-lg-9 col-md-9 col-8" style={{fontSize: '14px', paddingTop: '10px'}}>
                                     <span className="font-size-12px-mobile">Panduan Selfie KTP</span>

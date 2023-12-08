@@ -9,134 +9,134 @@ import { saveAs } from 'file-saver';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
 export const getDaftarAlamat = async () => {
-    try { 
-        const res = await fetch(`${appConfig.BASE_API}/useraddress/read/${localStorage.getItem('id')}`, {
-            method: 'GET',
-            ...jsonHeaderAuth(),
-            mode: 'cors'
-        })
-        var data = await res.json()
-        return{status: res.status, data: data}
-    } catch (error) {
-        throw error
-    }
-
-
-    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
-    // try {
-    //     const res = await axios.get(`${appConfig.BASE_API}/useraddress/read/${localStorage.getItem('id')}`, jsonHeaderAuth())
-
-    //     return {status: res.status, data: res.data}
+    // try { 
+    //     const res = await fetch(`${appConfig.BASE_API}/useraddress/read/${localStorage.getItem('id')}`, {
+    //         method: 'GET',
+    //         ...jsonHeaderAuth(),
+    //         mode: 'cors'
+    //     })
+    //     var data = await res.json()
+    //     return{status: res.status, data: data}
     // } catch (error) {
     //     throw error
     // }
+
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    try {
+        const res = await axios.get(`${appConfig.BASE_API}/useraddress/read/${localStorage.getItem('id')}`, jsonHeaderAuth())
+
+        return {status: res.status, data: res.data}
+    } catch (error) {
+        throw error
+    }
 
 };
 
 export const getDaftarAlamatById = async (id) => {
-    try {
-        const res = await fetch(`${appConfig.BASE_API}/useraddress/readid/${id}`, {
-            method: 'GET',
-            ...jsonHeaderAuth(),
-            mode: 'cors'
-        })
-        var data = await res.json()
-        return{status: res.status, data: data}
-    } catch (error) {
-        throw error
-    }
-
-
-    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
     // try {
-    //     const res = await axios.get(`${appConfig.BASE_API}/useraddress/readid/${id}`, jsonHeaderAuth())
-
-    //     return {status: res.status, data: res.data}
+    //     const res = await fetch(`${appConfig.BASE_API}/useraddress/readid/${id}`, {
+    //         method: 'GET',
+    //         ...jsonHeaderAuth(),
+    //         mode: 'cors'
+    //     })
+    //     var data = await res.json()
+    //     return{status: res.status, data: data}
     // } catch (error) {
     //     throw error
     // }
+
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    try {
+        const res = await axios.get(`${appConfig.BASE_API}/useraddress/readid/${id}`, jsonHeaderAuth())
+
+        return {status: res.status, data: res.data}
+    } catch (error) {
+        throw error
+    }
 }
 
 export const createDaftarAlamat = async (payload) => {
-    try {
-        const res = await fetch(`${appConfig.BASE_API}/useraddress/create`, {
-            method: 'POST',
-            ...jsonHeaderAuth(),
-            mode: 'cors',
-            body: JSON.stringify(payload)
-        })
-        var data = await res.text()
-        return{status: res.status, data: data}
-    } catch (error) {
-        throw error
-    }
-
-
-    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
     // try {
-    //     const res = await axios.post(`${appConfig.BASE_API}/useraddress/create`, payload, {
-    //         headers: {
-    //             ...jsonHeaderAuth()
-    //         }
+    //     const res = await fetch(`${appConfig.BASE_API}/useraddress/create`, {
+    //         method: 'POST',
+    //         ...jsonHeaderAuth(),
+    //         mode: 'cors',
+    //         body: JSON.stringify(payload)
     //     })
-
-    //     return {status: res.status, data: res.data}
+    //     var data = await res.text()
+    //     return{status: res.status, data: data}
     // } catch (error) {
     //     throw error
     // }
+
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    try {
+        const res = await axios.post(`${appConfig.BASE_API}/useraddress/create`, payload, {
+            headers: {
+                ...jsonHeaderAuth()
+            }
+        })
+
+        return {status: res.status, data: res.data}
+    } catch (error) {
+        throw error
+    }
 }
 
 export const deleteDaftarAlamat = async (id) => {
-    try {
-        const res = await fetch(`${appConfig.BASE_API}/useraddress/delete/${id}`, {
-            method: 'POST',
-            ...jsonHeaderAuth(),
-            mode: 'cors'
-        })
-        var data = await res.text()
-        return{status: res.status, data: data}
-    } catch (error) {
-        throw error
-    }
-
-
-    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
     // try {
-    //     const res = await axios.post(`${appConfig.BASE_API}/useraddress/delete/${id}`, jsonHeaderAuth())
-
-    //     return {status: res.status, data: res.data}
+    //     const res = await fetch(`${appConfig.BASE_API}/useraddress/delete/${id}`, {
+    //         method: 'POST',
+    //         ...jsonHeaderAuth(),
+    //         mode: 'cors'
+    //     })
+    //     var data = await res.text()
+    //     return{status: res.status, data: data}
     // } catch (error) {
     //     throw error
     // }
+
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    try {
+        const res = await axios.post(`${appConfig.BASE_API}/useraddress/delete/${id}`, jsonHeaderAuth())
+
+        return {status: res.status, data: res.data}
+    } catch (error) {
+        throw error
+    }
 }
 
 export const updateDaftarAlamat = async (id, payload) => {
-    try {
-        const res = await fetch(`${appConfig.BASE_API}/useraddress/update/${id}`, {
-            method: 'POST',
-            ...jsonHeaderAuth(),
-            mode: 'cors',
-            body: JSON.stringify(payload)
-        })
-        var data = await res.text()
-        return{status: res.status, data: data}
-    } catch (error) {
-        throw error
-    }
-
-
-    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
     // try {
-    //     const res = await axios.post(`${appConfig.BASE_API}/useraddress/update/${id}`, payload, {
-    //         headers: {
-    //             ...jsonHeaderAuth()
-    //         }
+    //     const res = await fetch(`${appConfig.BASE_API}/useraddress/update/${id}`, {
+    //         method: 'POST',
+    //         ...jsonHeaderAuth(),
+    //         mode: 'cors',
+    //         body: JSON.stringify(payload)
     //     })
-        
-    //     return {status: res.status, data: res.data}
+    //     var data = await res.text()
+    //     return{status: res.status, data: data}
     // } catch (error) {
     //     throw error
     // }
+
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    try {
+        const res = await axios.post(`${appConfig.BASE_API}/useraddress/update/${id}`, payload, {
+            headers: {
+                ...jsonHeaderAuth()
+            }
+        })
+        
+        return {status: res.status, data: res.data}
+    } catch (error) {
+        throw error
+    }
 }
 
 export const updateVerified = async (id, payload) => {
@@ -164,32 +164,32 @@ export const updateVerified = async (id, payload) => {
 }
 
 export const updateDefault = async (id, payload) => {
-    try {
-        const res = await fetch(`${appConfig.BASE_API}/useraddress/updatedefault/${id}`, {
-            method: 'POST',
-            ...jsonHeaderAuth(),
-            mode: 'cors',
-            body: JSON.stringify(payload)
-        })
-        var data = await res.text()
-        return{status: res.status, data: data}
-    } catch (error) {
-        throw error
-    }
-
-
-    // createAuthRefreshInterceptor(axios, refreshAuthLogic)
     // try {
-    //     const res = await axios.post(`${appConfig.BASE_API}/useraddress/updatedefault/${id}`, payload, {
-    //         headers: {
-    //             ...jsonHeaderAuth()
-    //         }
+    //     const res = await fetch(`${appConfig.BASE_API}/useraddress/updatedefault/${id}`, {
+    //         method: 'POST',
+    //         ...jsonHeaderAuth(),
+    //         mode: 'cors',
+    //         body: JSON.stringify(payload)
     //     })
-
-    //     return {status: res.status, data: res.data}
+    //     var data = await res.text()
+    //     return{status: res.status, data: data}
     // } catch (error) {
     //     throw error
     // }
+
+
+    createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    try {
+        const res = await axios.post(`${appConfig.BASE_API}/useraddress/updatedefault/${id}`, payload, {
+            headers: {
+                ...jsonHeaderAuth()
+            }
+        })
+
+        return {status: res.status, data: res.data}
+    } catch (error) {
+        throw error
+    }
 }
 export const getDownloadAlamat = async (id) => {
     try {

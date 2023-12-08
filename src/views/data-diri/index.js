@@ -119,14 +119,17 @@ function DataDiri() {
       setLoading(false)
       if(res.status == 200 && res.data !== null) {
         if(!res.data.includes('action')) {
-          if(res.data !== 'Nomer telepon sudah terdaftar') {
-            setShowSuccessPopup(true)
-            setUser(name)
-          } else {
+          if(res.data.includes('Nomer telepon  sudah terdaftar')) {
             setShowErrorPopup(true)
             setErrorMessage(res.data)
+            console.log(1);
+          } else {
+            setShowSuccessPopup(true)
+            setUser(name)
+            console.log(res.data);
           }
         } else {
+          console.log(3);
           var data = JSON.parse(res.data)
           // navigate(`/kode-otp/${window.btoa(JSON.stringify({...data, email: email, telp: phone.toString().trim(), name: name}))}`)
           navigate('/kode-otp', {
@@ -143,9 +146,11 @@ function DataDiri() {
           
         }
       } else {
+        console.log(4);
         setShowErrorPopup(true)
       } 
     } else {
+      console.log(5);
       setShowErrorPopup(true)
     }
   }

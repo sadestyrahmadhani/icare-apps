@@ -115,7 +115,7 @@ export default [
             },
             {
                 title:'',
-                path:'tambah_anggota',
+                path:'tambah_anggota/:id',
                 component: import('../views/daftar-anggota/form'),
                 auth:true,
                 key:'1.5.8'

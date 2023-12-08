@@ -57,7 +57,7 @@ function UpdatePassword() {
             setLoading(false)
             if(res.status == 200 && res.data !== null) {
                 setShowPopup(true)
-                setAlertOption({title: '', message: res.data, redirect: true, url: '/'})
+                setAlertOption({title: '', message: "Sukses ubah password", redirect: true, url: '/'})
             } else {
                 setShowPopup(true)
                 setAlertOption({title: 'Error', message: 'Opps! terjadi kesalahan', redirect: true, url: '/'})
@@ -98,19 +98,19 @@ function UpdatePassword() {
             <div className="responsive-bar d-md-block d-none">
                 <div className="card-title mx-md-auto my-md-3 my-0" style={{borderBottom: '3px solid #014C90', width: '134px'}}>
                     <h4 className="title-icare title-fitur m-0 p-0 fw-bold" style={{fontSize: '18px'}}>
-                        <Link to="/settings" className="nav-link d-md-none d-inline me-3">
+                        {/* <Link to="/settings" className="nav-link d-md-none d-inline me-3">
                             <i className="fa fa-arrow-left"></i>
-                        </Link>
+                        </Link> */}
                         <span className="title-bold">Ubah Kata Sandi</span>
                     </h4>
                 </div>
             </div>
 
             <div className="col-md-6 col-12 mx-auto responsive-ubah-pass">
-                <div className="card mb-5 px-2 px-md-4" style={{border:'1px solid #ababab'}}>
-                    <div className="card-body p-lg-5 px-0 input-mobile">
-                        <form onSubmit={submit}>
-                            <div className="input-update-password mb-4">
+                <div className="card mb-md-5 mb-0 px-5 px-md-4" style={{border:'1px solid #ababab'}}>
+                    <div className="card-body p-lg-5 p-0 input-mobile center-edit-pass">
+                        <form onSubmit={submit} className="custom-width">
+                            <div className="mb-4">
                                 <label className="fw-medium form-control border border-dark size-13px d-md-block d-none" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Masukkan Kata Sandi Baru</label>
                                 <label className="label-update d-md-none d-block">New Password</label>
                                 <div className="border border-dark">
@@ -146,7 +146,7 @@ function UpdatePassword() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="input-update-password mb-5">
+                            <div className="mb-5">
                                 <label className="fw-medium form-control border border-dark size-13px d-md-block d-none" style={{backgroundColor: '#014C90', borderRadius: '0px', color:'white'}}>Ulangi Kata Sandi Baru</label>
                                 <label className="label-update d-md-none d-block">Confirm Password</label>
                                 <div className="border border-dark">
@@ -185,7 +185,7 @@ function UpdatePassword() {
                             </div>
                         </form>
                         <ConfirmAlert visible={showPopup} message={alertOption.message} onClick={handlePopup} customClass="col-md-3 col-sm-6 col-9" />
-                        <LoadingAlert visible={loading} customClass="col-md-2 col-9" />
+                        <LoadingAlert visible={loading} customClass="col-md-2 col-8" />
                     </div>
                 </div>
             </div>

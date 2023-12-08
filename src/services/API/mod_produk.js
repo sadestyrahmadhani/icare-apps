@@ -4,7 +4,7 @@ export const getDataProduct = async () => {
     try {
         const res = await fetch('https://documentsolution.com/api/produk', {
             method: 'GET',
-            mode: 'cors'
+            // mode: 'cors'
             // ...jsonHeaderAuth()
         })
 

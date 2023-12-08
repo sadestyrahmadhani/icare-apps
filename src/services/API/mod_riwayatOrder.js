@@ -116,3 +116,15 @@ export const updateStatusId = async (id, req) => {
         throw error
     }
 }
+
+export const insertNotifRequest = async (req) => {
+    createAuthRefreshInterceptor(axios, refreshAuthLogic)
+    try {
+        const {status,data} = await axios.post(`${appConfig.BASE_API}/notif/request/register`, req, {
+            ...jsonHeaderAuth()
+        })
+        return{status,data}
+    } catch (error) {
+        throw error
+    }
+}
